@@ -204,6 +204,17 @@ void CaptureCore::OnFrameArrived(
 				  CV_8UC4, mappedTex.pData, mappedTex.RowPitch);
 
 		{
+			auto sz = c.size();
+			if (sz.width != 1280 || sz.height != 720) {
+				cv::resize(
+					c, c,
+					cv::Size(1280, 720),
+					0.0, 0.0, cv::InterpolationFlags::INTER_CUBIC
+				);
+			}
+		}
+
+		{
 			std::lock_guard<std::mutex> lock(m_mutex_cap);
 			m_cap = c;
 		}
