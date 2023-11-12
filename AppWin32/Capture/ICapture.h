@@ -15,7 +15,6 @@ public:
 	virtual void Stop() = 0;
 
 	virtual void setNeedRefresh() = 0;
-	virtual void setClipClientArea(bool val) = 0;
 
 	virtual bool saveNow(bool C3, size_t id) = 0;
 	virtual const cv::Mat* getCapMat() = 0;

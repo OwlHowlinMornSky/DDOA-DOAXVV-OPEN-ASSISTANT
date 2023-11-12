@@ -16,10 +16,8 @@ HWND hButtonRf;
 HWND hButtonStop;
 HWND hButtonSave;
 HWND hButtonSaveC3;
-HWND hButtonSwitchClient;
 std::vector<ohms::WindowInfo> g_windows;
 
-bool isClient = true;
 LONG_PTR nowPlay = -1;
 size_t saveCount = 0;
 
@@ -94,13 +92,6 @@ LRESULT CALLBACK WndProc(
 			hwnd, NULL, ohms::global::hInst, NULL);
 		SendMessageW(hButtonStop, WM_SETFONT, (WPARAM)hFont, TRUE);
 
-		hButtonSwitchClient = CreateWindowW(
-			WC_BUTTONW, L"Switch Client",
-			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-			10, 190, 100, 40,
-			hwnd, NULL, ohms::global::hInst, NULL);
-		SendMessageW(hButtonSwitchClient, WM_SETFONT, (WPARAM)hFont, TRUE);
-
 		hButtonSaveC3 = CreateWindowW(
 			WC_BUTTONW, L"Save BGR",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
@@ -121,7 +112,6 @@ LRESULT CALLBACK WndProc(
 
 	case WM_DESTROY:
 	{
-		DestroyWindow(hButtonSwitchClient);
 		DestroyWindow(hButtonSaveC3);
 		DestroyWindow(hButtonSave);
 		DestroyWindow(hButtonStop);
@@ -144,12 +134,6 @@ LRESULT CALLBACK WndProc(
 
 		swprintf_s(str, 1024, (nowPlay != -1) ? L"Running" : L"Stopped");
 		rect = { 120, 80, 220, 120 };
-		DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOCLIP | DT_CALCRECT);
-		DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK);
-
-
-		swprintf_s(str, 1024, isClient ? L"Now:\nClient" : L"Now:\nWindow");
-		rect = { 120, 190, 220, 280 };
 		DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOCLIP | DT_CALCRECT);
 		DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK);
 
@@ -242,11 +226,6 @@ LRESULT CALLBACK WndProc(
 						MessageBoxW(hwnd, L"Failed saving.", L"ERROR", MB_ICONERROR);
 					}
 				}
-			}
-			else if ((HWND)lParam == hButtonSwitchClient) {
-				isClient = !isClient;
-				ohms::global::g_app->setClipClientArea(isClient);
-				InvalidateRect(hwnd, NULL, true);
 			}
 			break;
 		}

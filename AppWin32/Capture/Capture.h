@@ -24,7 +24,6 @@ public:
 	virtual void Stop() override;
 
 	virtual void setNeedRefresh() override;
-	virtual void setClipClientArea(bool val) override;
 
 	virtual bool saveNow(bool C3, size_t id) override;
 	virtual const cv::Mat* getCapMat() override;

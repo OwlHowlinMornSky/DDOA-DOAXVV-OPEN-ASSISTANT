@@ -27,7 +27,6 @@ public:
 	void Close();
 
 	void setNeedRefresh();
-	void setClipClientArea(bool val);
 
 	const cv::Mat& getCapMat();
 	bool getUpdated();
@@ -58,7 +57,6 @@ protected:
 
 	std::atomic<bool> m_img_needRefresh;
 	std::atomic<bool> m_img_updated;
-	std::atomic<bool> m_img_client;
 
 	D3D11_BOX m_client_box;
 	HWND m_target_window;

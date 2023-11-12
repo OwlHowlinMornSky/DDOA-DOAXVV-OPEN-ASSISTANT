@@ -88,7 +88,6 @@ CaptureCore::CaptureCore(
 
 	m_img_needRefresh(false),
 	m_img_updated(false),
-	m_img_client(true),
 
 	m_target_window(targetWindow) {
 	m_device = device;
@@ -149,10 +148,6 @@ void CaptureCore::setNeedRefresh() {
 	return m_img_needRefresh.store(true);
 }
 
-void CaptureCore::setClipClientArea(bool val) {
-	return m_img_client.store(val);
-}
-
 const cv::Mat& CaptureCore::getCapMat() {
 	std::lock_guard<std::mutex> lock(m_mutex_cap);
 	return m_cap;
@@ -181,7 +176,7 @@ void CaptureCore::OnFrameArrived(
 		frameSurface->GetDesc(&desc);
 
 		bool client_clip_success = false;
-		if (m_img_client.load() && get_client_box(m_target_window, desc.Width, desc.Height, &m_client_box)) {
+		if (get_client_box(m_target_window, desc.Width, desc.Height, &m_client_box)) {
 			desc.Width = m_client_box.right - m_client_box.left;
 			desc.Height = m_client_box.bottom - m_client_box.top;
 			client_clip_success = true;
@@ -196,7 +191,6 @@ void CaptureCore::OnFrameArrived(
 			m_texture->Release();
 			createTexture();
 		}
-
 
 		if (client_clip_success)
 			m_d3dContext->CopySubresourceRegion(m_texture, 0, 0, 0, 0, frameSurface.get(), 0, &m_client_box);
