@@ -6,15 +6,6 @@ namespace ohms {
 
 class Saver final {
 protected:
-	struct SAVERONETASK {
-		cv::Mat mat;
-		unsigned long long time;
-		bool c3;
-
-		SAVERONETASK(const cv::Mat& m, unsigned long long t, bool c);
-	};
-
-protected:
 	Saver() = default;
 public:
 	~Saver() = default;

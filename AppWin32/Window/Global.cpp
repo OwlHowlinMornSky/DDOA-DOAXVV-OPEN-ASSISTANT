@@ -3,9 +3,7 @@
 namespace ohms::global {
 
 HINSTANCE hInst = 0;
-
 HWND hMain = 0;
-
 std::unique_ptr<ohms::capture::wgc::ICapture> g_app;
 
 }

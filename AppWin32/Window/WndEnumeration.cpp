@@ -11,7 +11,6 @@ std::wstring myGetClassName(HWND hwnd) {
 	return title;
 }
 
-
 std::wstring myGetWindowText(HWND hwnd) {
 	std::array<WCHAR, 1024> windowText;
 
@@ -20,7 +19,6 @@ std::wstring myGetWindowText(HWND hwnd) {
 	std::wstring title(windowText.data());
 	return title;
 }
-
 
 bool isAltTabWindow(ohms::WindowInfo const& window) noexcept {
 	HWND hwnd = window.getHWnd();
@@ -57,7 +55,6 @@ bool isAltTabWindow(ohms::WindowInfo const& window) noexcept {
 	}
 	return true;
 }
-
 
 BOOL CALLBACK myEnumWindowsProc(HWND hwnd, LPARAM lParam) {
 	std::wstring class_name = myGetClassName(hwnd);

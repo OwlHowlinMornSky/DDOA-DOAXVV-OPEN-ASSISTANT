@@ -17,22 +17,21 @@ class Capture final :
 public:
 	Capture();
 	virtual ~Capture() = default;
+
 public:
 	virtual void Initialize() override;
-
 	virtual bool StartCapture(HWND hwnd) override;
-
 	virtual void Stop() override;
 
 	virtual void setNeedRefresh() override;
-
 	virtual void setDecimationMode(bool val) override;
-
 	virtual void setClipClientArea(bool val) override;
-
 	virtual void setShowScale(int val) override;
 
 	virtual bool saveNow(bool C3, size_t id) override;
+
+	virtual const cv::Mat* getCapMat() override;
+	virtual bool getUpdated() override;
 
 protected:
 	winrt::Windows::Graphics::DirectX::Direct3D11::IDirect3DDevice m_device;

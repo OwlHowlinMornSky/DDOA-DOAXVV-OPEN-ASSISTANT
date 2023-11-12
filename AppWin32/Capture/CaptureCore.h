@@ -9,7 +9,7 @@
 #include <mutex>
 #include <atomic>
 
-#include <opencv2/opencv.hpp>
+#include <opencv2/core/mat.hpp>
 
 namespace ohms::capture::wgc {
 
@@ -18,30 +18,27 @@ public:
 	CaptureCore(
 		winrt::Windows::Graphics::DirectX::Direct3D11::IDirect3DDevice const& device,
 		winrt::Windows::Graphics::Capture::GraphicsCaptureItem const& item,
-		HWND targetWindow);
+		HWND targetWindow
+	);
 
-	~CaptureCore() {
-		Close();
-	}
+	~CaptureCore();
 
 	void StartCapture();
-
 	void Close();
 
 	void setNeedRefresh();
-
 	void setDecimationMode(bool val);
-
 	void setShowScale(int val);
-
 	void setClipClientArea(bool val);
 
-	const cv::Mat& getCapMat();;
+	const cv::Mat& getCapMat();
+	bool getUpdated();
 
 protected:
 	void OnFrameArrived(
 		winrt::Windows::Graphics::Capture::Direct3D11CaptureFramePool const& sender,
-		winrt::Windows::Foundation::IInspectable const& args);
+		winrt::Windows::Foundation::IInspectable const& args
+	);
 
 	void createTexture();
 
@@ -62,6 +59,7 @@ protected:
 	winrt::Windows::Graphics::SizeInt32 m_lastTexSize;
 
 	std::atomic<bool> m_img_needRefresh;
+	std::atomic<bool> m_img_updated;
 	std::atomic<bool> m_img_decimation;
 	std::atomic<bool> m_img_client;
 	std::atomic<int> m_img_scale;

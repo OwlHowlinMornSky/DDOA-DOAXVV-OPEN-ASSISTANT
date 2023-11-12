@@ -27,14 +27,15 @@ int CALLBACK wWinMain(
 	}
 	// Run
 	{
-		ohms::MainWindow mainWnd;
-		mainWnd.create(nShowCmd);
+		std::unique_ptr<ohms::MainWindow> mainWnd =
+			std::make_unique<ohms::MainWindow>();
+		mainWnd->create(nShowCmd);
 		MSG msg;
 		while (GetMessageW(&msg, NULL, 0, 0)) {
 			TranslateMessage(&msg);
 			DispatchMessageW(&msg);
 		}
-		mainWnd.destroy();
+		mainWnd->destroy();
 	}
 	// Clear
 	{

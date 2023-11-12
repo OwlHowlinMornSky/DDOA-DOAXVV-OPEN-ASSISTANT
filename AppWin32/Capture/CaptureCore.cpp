@@ -1,5 +1,6 @@
 ﻿#include "CaptureCore.h"
 
+#include <opencv2/opencv.hpp>
 #include <dwmapi.h>
 #include "../Window/macro.h"
 
@@ -12,12 +13,10 @@ using namespace Windows::Graphics::DirectX::Direct3D11;
 
 namespace {
 
-
 struct __declspec(uuid("A9B3D012-3DF2-4EE3-B8D1-8695F457D3C1"))
 	IDirect3DDxgiInterfaceAccess : ::IUnknown {
 	virtual HRESULT __stdcall GetInterface(GUID const& id, void** object) = 0;
 };
-
 
 template <typename T> inline auto GetDXGIInterfaceFromObject(winrt::Windows::Foundation::IInspectable const& object) {
 	auto access = object.as<::IDirect3DDxgiInterfaceAccess>();
@@ -25,7 +24,6 @@ template <typename T> inline auto GetDXGIInterfaceFromObject(winrt::Windows::Fou
 	winrt::check_hresult(access->GetInterface(winrt::guid_of<T>(), result.put_void()));
 	return result;
 }
-
 
 bool get_client_box(HWND window, uint32_t width, uint32_t height, D3D11_BOX* client_box) {
 	RECT client_rect = { 0 };
@@ -68,14 +66,9 @@ bool get_client_box(HWND window, uint32_t width, uint32_t height, D3D11_BOX* cli
 	return client_box_available;
 }
 
-
 } // namespace 
 
-
-namespace ohms {
-namespace capture {
-namespace wgc {
-
+namespace ohms::capture::wgc {
 
 CaptureCore::CaptureCore(
 	IDirect3DDevice const& device,
@@ -94,6 +87,7 @@ CaptureCore::CaptureCore(
 	m_texture(nullptr),
 
 	m_img_needRefresh(false),
+	m_img_updated(false),
 	m_img_decimation(false),
 	m_img_client(true),
 	m_img_scale(1000),
@@ -123,6 +117,9 @@ CaptureCore::CaptureCore(
 	createTexture();
 }
 
+CaptureCore::~CaptureCore() {
+	Close();
+}
 
 // Start sending capture frames
 void CaptureCore::StartCapture() {
@@ -130,7 +127,6 @@ void CaptureCore::StartCapture() {
 		m_session.StartCapture();
 	}
 }
-
 
 // Process captured frames
 void CaptureCore::Close() {
@@ -150,32 +146,35 @@ void CaptureCore::Close() {
 	cv::destroyAllWindows();
 }
 
-
 void CaptureCore::setNeedRefresh() {
+	m_img_updated.store(false);
 	return m_img_needRefresh.store(true);
 }
-
 
 void CaptureCore::setDecimationMode(bool val) {
 	return m_img_decimation.store(val);
 }
 
-
 void CaptureCore::setShowScale(int val) {
 	return m_img_scale.store(val);
 }
 
-
 void CaptureCore::setClipClientArea(bool val) {
 	return m_img_client.store(val);
 }
-
 
 const cv::Mat& CaptureCore::getCapMat() {
 	std::lock_guard<std::mutex> lock(m_mutex_cap);
 	return m_cap;
 }
 
+bool CaptureCore::getUpdated() {
+	bool expected = true;
+	if (m_img_updated.compare_exchange_weak(expected, false)) {
+		return true;
+	}
+	return false;
+}
 
 void CaptureCore::OnFrameArrived(
 	Direct3D11CaptureFramePool const& sender,
@@ -221,10 +220,6 @@ void CaptureCore::OnFrameArrived(
 		cv::Mat c(m_lastTexSize.Height, m_lastTexSize.Width,
 				  CV_8UC4, mappedTex.pData, mappedTex.RowPitch);
 
-		{
-			std::lock_guard<std::mutex> lock(m_mutex_cap);
-			m_cap = c;
-		}
 
 		if (m_img_decimation.load()) {
 			cv::resize(c, c,
@@ -238,7 +233,13 @@ void CaptureCore::OnFrameArrived(
 			cv::resize(c, c, (c.size() * m_img_scale.load()) / 1000);
 		}
 
-		cv::imshow("show", c);
+		{
+			std::lock_guard<std::mutex> lock(m_mutex_cap);
+			m_cap = c;
+		}
+
+		m_img_updated.store(true);
+		//cv::imshow("show", c);
 	}
 
 	if (m_lastSize.Width != frameContentSize.Width ||
@@ -247,7 +248,6 @@ void CaptureCore::OnFrameArrived(
 		m_framePool.Recreate(m_device, DirectXPixelFormat::B8G8R8A8UIntNormalized, 2, m_lastSize);
 	}
 }
-
 
 inline void CaptureCore::createTexture() {
 	D3D11_TEXTURE2D_DESC desc = { 0 };
@@ -265,7 +265,4 @@ inline void CaptureCore::createTexture() {
 	m_d3dDevice.get()->CreateTexture2D(&desc, nullptr, &m_texture);
 }
 
-
-} // namespace wgc
-} // namespace capture
-} // namespace ohms
+} // namespace ohms::capture::wgc

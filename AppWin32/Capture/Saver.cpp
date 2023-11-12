@@ -1,36 +1,37 @@
-﻿#include <queue>
+﻿
+#include "Saver.h"
 
+#include <queue>
 #include <thread>
 #include <atomic>
 #include <mutex>
 
-#include <opencv2/opencv.hpp>
-
-#include "Saver.h"
-
-#include <Windows.h>
+#include "../framework.h"
 
 #include <stdlib.h>
 #include <io.h>
 #include <stdio.h>
 
+namespace {
 
-namespace ohms {
+struct SAVERONETASK {
+	cv::Mat mat;
+	unsigned long long time;
+	bool c3;
 
-//--------------------------------------//
-// struct SAVERONETASK
+	SAVERONETASK(const cv::Mat& m, unsigned long long t, bool c);
+};
 
-Saver::SAVERONETASK::SAVERONETASK(const cv::Mat& m, unsigned long long t, bool c) :
+SAVERONETASK::SAVERONETASK(const cv::Mat& m, unsigned long long t, bool c) :
 	mat(m),
 	time(t),
 	c3(c) {}
 
-// struct SAVERONETASK
-//--------------------------------------//
-// class Saver
+} // namespace
+
+namespace ohms {
 
 Saver* Saver::m_instance = nullptr;
-
 
 bool Saver::save(const cv::Mat& mat, unsigned long long time, bool C3, size_t id) {
 	std::thread sub(Saver::output, mat, time, C3, id);
@@ -38,24 +39,20 @@ bool Saver::save(const cv::Mat& mat, unsigned long long time, bool C3, size_t id
 	return !sub.joinable();
 }
 
-
 void Saver::init() {
 	assert(m_instance == nullptr);
 	m_instance = new Saver;
 }
-
 
 Saver& Saver::instance() {
 	assert(m_instance != nullptr);
 	return *m_instance;
 }
 
-
 void Saver::drop() {
 	assert(m_instance != nullptr);
 	delete m_instance;
 }
-
 
 void Saver::output(cv::Mat mat, unsigned long long time, bool c3, size_t id) {
 	if (c3)
@@ -88,9 +85,5 @@ void Saver::output(cv::Mat mat, unsigned long long time, bool c3, size_t id) {
 		MessageBoxW(NULL, L"OpenCV:\ncv::imwrite() failed!", L"ERROR when SAVING IMAGE", MB_ICONERROR);
 	}
 }
-
-// class Saver
-//--------------------------------------//
-
 
 } // namespace ohms

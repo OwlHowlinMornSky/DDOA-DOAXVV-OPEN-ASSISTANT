@@ -28,7 +28,6 @@ int scale = 100;
 LONG_PTR nowPlay = -1;
 size_t saveCount = 0;
 
-
 void refreshCombox() {
 	g_windows.clear();
 	ohms::EnumerateWindows(g_windows);
@@ -47,7 +46,6 @@ void refreshCombox() {
 		SendMessageW(hComboBoxHwnd, CB_ADDSTRING, 0, (LPARAM)window.getTitle().c_str());
 	}
 }
-
 
 void stopCapture(bool special = false) {
 	nowPlay = -1;
@@ -321,6 +319,12 @@ LRESULT CALLBACK WndProc(
 		break;
 
 	case WM_TIMER:
+		if (ohms::global::g_app->getUpdated()) {
+			auto mat = ohms::global::g_app->getCapMat();
+			if (mat != nullptr) {
+				cv::imshow("show", *mat);
+			}
+		}
 		ohms::global::g_app->setNeedRefresh();
 		break;
 
@@ -370,8 +374,7 @@ bool registerClass() {
 namespace ohms {
 
 MainWindow::MainWindow() :
-	m_hwnd(NULL)
-{}
+	m_hwnd(NULL) {}
 
 bool ohms::MainWindow::create(int nShowCmd) {
 	if (!::registerClass())
@@ -392,11 +395,7 @@ bool ohms::MainWindow::create(int nShowCmd) {
 	ShowWindow(m_hwnd, nShowCmd);
 	UpdateWindow(m_hwnd);
 
-
-
-	//SetTimer(hMain, 1, 300, NULL);
-	SetTimer(m_hwnd, 1, 60, NULL);
-
+	SetTimer(m_hwnd, 1, 33, NULL);
 	return true;
 }
 
