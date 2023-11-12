@@ -2,7 +2,6 @@
 
 #include <opencv2/opencv.hpp>
 #include <dwmapi.h>
-#include "../Window/macro.h"
 
 using namespace winrt;
 using namespace Windows::Foundation;

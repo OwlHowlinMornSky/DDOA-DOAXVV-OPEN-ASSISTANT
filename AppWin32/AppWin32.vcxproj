@@ -98,9 +98,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UniqueInstance.h" />
     <ClInclude Include="Window\Global.h" />
-    <ClInclude Include="Window\Macro.h" />
     <ClInclude Include="Window\MainWindow.h" />
-    <ClInclude Include="Window\WndEnumeration.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Capture\Capture.cpp" />
@@ -110,7 +108,6 @@
     <ClCompile Include="UniqueInstance.cpp" />
     <ClCompile Include="Window\Global.cpp" />
     <ClCompile Include="Window\MainWindow.cpp" />
-    <ClCompile Include="Window\WndEnumeration.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="list.manifest" />

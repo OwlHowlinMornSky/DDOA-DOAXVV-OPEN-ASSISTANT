@@ -57,13 +57,7 @@
     <ClInclude Include="Window\Global.h">
       <Filter>Window\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Window\Macro.h">
-      <Filter>Window\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Window\MainWindow.h">
-      <Filter>Window\头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Window\WndEnumeration.h">
       <Filter>Window\头文件</Filter>
     </ClInclude>
     <ClInclude Include="UniqueInstance.h">
@@ -87,9 +81,6 @@
       <Filter>Window\源文件</Filter>
     </ClCompile>
     <ClCompile Include="Window\MainWindow.cpp">
-      <Filter>Window\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Window\WndEnumeration.cpp">
       <Filter>Window\源文件</Filter>
     </ClCompile>
     <ClCompile Include="UniqueInstance.cpp">

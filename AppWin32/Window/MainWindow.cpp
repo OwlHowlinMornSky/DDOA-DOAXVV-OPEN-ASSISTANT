@@ -4,60 +4,62 @@
 
 #include <opencv2/opencv.hpp>
 
-#include "WndEnumeration.h"
-#include "macro.h"
 #include "Global.h"
 
 namespace {
 
 HFONT hFont;
-HWND hComboBoxHwnd;
-HWND hButtonRf;
+HWND hMain;
+HWND hButtonStart;
 HWND hButtonStop;
 HWND hButtonSave;
 HWND hButtonSaveC3;
-std::vector<ohms::WindowInfo> g_windows;
 
-LONG_PTR nowPlay = -1;
+bool running = false;
 size_t saveCount = 0;
 
-void refreshCombox() {
-	g_windows.clear();
-	ohms::EnumerateWindows(g_windows);
+void stopCapture(bool special = false) {
+	running = false;
+	ohms::global::g_app->Stop();
+	cv::destroyAllWindows();
+	if (!special)
+		InvalidateRect(hMain, NULL, true);
+	return;
+}
 
-	SendMessageW(hComboBoxHwnd, CB_RESETCONTENT, 0, 0);
+void startCapture() {
+	stopCapture(true);
 
-	for (std::vector<ohms::WindowInfo>::iterator i = g_windows.begin(), n = g_windows.end(); i != n; ++i) {
-		if (i->getHWnd() == ohms::global::hMain) {
-			g_windows.erase(i);
-			break;
+	HWND dst = FindWindowW(L"DOAX VenusVacation", L"DOAX VenusVacation");
+
+	if (dst == NULL) {
+		MessageBoxW(NULL, L"Didn't find DOAXVV window.", L"ERROR", MB_ICONERROR);
+		return;
+	}
+
+	if (IsWindow(dst)) {
+		if (!IsIconic(dst)) {
+			if (ohms::global::g_app->StartCapture(dst)) {
+				running = true;
+			}
+			else {
+				MessageBoxW(NULL, L"This window cannot be captured.", L"ERROR", MB_ICONERROR);
+			}
+		}
+		else {
+			MessageBoxW(NULL, L"Please restore minimized window before capture.", L"WARNING", MB_ICONWARNING);
 		}
 	}
 
-	// Populate combo box
-	for (const ohms::WindowInfo& window : g_windows) {
-		SendMessageW(hComboBoxHwnd, CB_ADDSTRING, 0, (LPARAM)window.getTitle().c_str());
-	}
-}
-
-void stopCapture(bool special = false) {
-	nowPlay = -1;
-	ohms::global::g_app->Stop();
-
-	if (!special)
-		SendMessageW(hComboBoxHwnd, CB_SETCURSEL, -1, 0);
-
-	cv::destroyAllWindows();
-
-	if (!special)
-		InvalidateRect(ohms::global::hMain, NULL, true);
+	InvalidateRect(hMain, NULL, true);
 }
 
 LRESULT CALLBACK WndProc(
 	HWND   hwnd,
 	UINT   msg,
 	WPARAM wParam,
-	LPARAM lParam) {
+	LPARAM lParam
+) {
 	switch (msg) {
 	case WM_CREATE:
 	{
@@ -70,20 +72,12 @@ LRESULT CALLBACK WndProc(
 							DEFAULT_PITCH | FF_DONTCARE,
 							L"Segoe UI");
 
-		// Create combo box
-		hComboBoxHwnd = CreateWindowW(
-			WC_COMBOBOXW, L"",
-			CBS_DROPDOWNLIST | CBS_HASSTRINGS | WS_VSCROLL | WS_CHILD | WS_OVERLAPPED | WS_VISIBLE,
-			150, 10, 600, 300,
-			hwnd, NULL, ohms::global::hInst, NULL);
-		SendMessageW(hComboBoxHwnd, WM_SETFONT, (WPARAM)hFont, TRUE);
-
-		hButtonRf = CreateWindowW(
-			WC_BUTTONW, L"Refresh",
+		hButtonStart = CreateWindowW(
+			WC_BUTTONW, L"Start",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			10, 10, 100, 40,
 			hwnd, NULL, ohms::global::hInst, NULL);
-		SendMessageW(hButtonRf, WM_SETFONT, (WPARAM)hFont, TRUE);
+		SendMessageW(hButtonStart, WM_SETFONT, (WPARAM)hFont, TRUE);
 
 		hButtonStop = CreateWindowW(
 			WC_BUTTONW, L"Stop",
@@ -105,8 +99,6 @@ LRESULT CALLBACK WndProc(
 			10, 430, 100, 40,
 			hwnd, NULL, ohms::global::hInst, NULL);
 		SendMessageW(hButtonSave, WM_SETFONT, (WPARAM)hFont, TRUE);
-
-		SendMessageW(hwnd, WM_OHMS_REFRESH_COMBOX, 0, 0);
 		break;
 	}
 
@@ -115,8 +107,7 @@ LRESULT CALLBACK WndProc(
 		DestroyWindow(hButtonSaveC3);
 		DestroyWindow(hButtonSave);
 		DestroyWindow(hButtonStop);
-		DestroyWindow(hButtonRf);
-		DestroyWindow(hComboBoxHwnd);
+		DestroyWindow(hButtonStart);
 		DeleteObject(hFont);
 		break;
 	}
@@ -132,83 +123,34 @@ LRESULT CALLBACK WndProc(
 		WCHAR str[1024];
 		RECT rect;
 
-		swprintf_s(str, 1024, (nowPlay != -1) ? L"Running" : L"Stopped");
+		swprintf_s(str, 1024, running ? L"Running" : L"Stopped");
 		rect = { 120, 80, 220, 120 };
 		DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOCLIP | DT_CALCRECT);
 		DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK);
 
-		rect = { 230, 80, 750, 500 };
-		Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
-		if (nowPlay != -1) {
-			swprintf_s(str, 1024, L"Class:\n%s\n\nTitle:\n%s",
-					   g_windows[nowPlay].getClassName().c_str(),
-					   g_windows[nowPlay].getTitle().c_str());
-		}
-		else {
-			swprintf_s(str, 1024, L"Class:\n\n\nTitle:\n");
-		}
-		DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOPREFIX | DT_NOCLIP | DT_WORD_ELLIPSIS);
-
 		SelectObject(hdc, hOldFont);
 		EndPaint(hwnd, &ps);
-
 		break;
 	}
 
 	case WM_CLOSE:
-		SendMessageW(hwnd, WM_OHMS_STOP_CAPTURE, 0, 0);
+		stopCapture();
 		PostQuitMessage(0);
 		break;
 
 	case WM_COMMAND:
 		switch (HIWORD(wParam)) {
-		case CBN_SELCHANGE:
-		{
-			const LRESULT index = SendMessageW((HWND)lParam, CB_GETCURSEL, 0, 0);
-
-			if (nowPlay == index)
-				break;
-
-			stopCapture(true);
-
-			HWND dst = g_windows.at(index).getHWnd();
-
-			if (IsWindow(dst)) {
-				if (!IsIconic(dst)) {
-					if (ohms::global::g_app->StartCapture(dst)) {
-						nowPlay = index;
-					}
-					else {
-						stopCapture();
-						MessageBoxW(hwnd, L"This window cannot be captured.", L"ERROR", MB_ICONERROR);
-					}
-				}
-				else {
-					stopCapture();
-					MessageBoxW(hwnd, L"Please restore minimized window before capture.", L"WARNING", MB_ICONWARNING);
-				}
-			}
-			else {
-				stopCapture();
-				SendMessageW(hwnd, WM_OHMS_REFRESH_COMBOX, 0, 0);
-			}
-
-			InvalidateRect(hwnd, NULL, true);
-
-			break;
-		}
 		case BN_CLICKED:
 		{
 
-			if ((HWND)lParam == hButtonRf) {
-				SendMessageW(hwnd, WM_OHMS_STOP_CAPTURE, 0, 0);
-				SendMessageW(hwnd, WM_OHMS_REFRESH_COMBOX, 0, 0);
+			if ((HWND)lParam == hButtonStart) {
+				startCapture();
 			}
 			else if ((HWND)lParam == hButtonStop) {
-				SendMessageW(hwnd, WM_OHMS_STOP_CAPTURE, 0, 0);
+				stopCapture();
 			}
 			else if ((HWND)lParam == hButtonSave) {
-				if (nowPlay == -1) {
+				if (!running) {
 					MessageBoxW(hwnd, L"Please choose a window before save image.", L"ERROR", MB_ICONERROR);
 				}
 				else {
@@ -218,7 +160,7 @@ LRESULT CALLBACK WndProc(
 				}
 			}
 			else if ((HWND)lParam == hButtonSaveC3) {
-				if (nowPlay == -1) {
+				if (!running) {
 					MessageBoxW(hwnd, L"Please choose a window before save image.", L"ERROR", MB_ICONERROR);
 				}
 				else {
@@ -230,7 +172,7 @@ LRESULT CALLBACK WndProc(
 			break;
 		}
 		default:
-			break;
+			return DefWindowProc(hwnd, msg, wParam, lParam);
 		}
 		break;
 
@@ -244,19 +186,9 @@ LRESULT CALLBACK WndProc(
 		ohms::global::g_app->setNeedRefresh();
 		break;
 
-	case WM_OHMS_REFRESH_COMBOX:
-		refreshCombox();
-		break;
-
-	case WM_OHMS_STOP_CAPTURE:
-		stopCapture();
-		break;
-
 	default:
 		return DefWindowProc(hwnd, msg, wParam, lParam);
-		break;
 	}
-
 	return 0;
 }
 
@@ -276,7 +208,7 @@ bool registerClass() {
 	wcex.hCursor = LoadCursorW(NULL, IDC_ARROW);
 	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
 	wcex.lpszMenuName = NULL;
-	wcex.lpszClassName = L"CaptureWithOpenCV";
+	wcex.lpszClassName = L"OHMS.DOAXVVHELPER.WNDCLS";
 	wcex.hIconSm = LoadIconW(wcex.hInstance, IDI_APPLICATION);
 	auto res = RegisterClassExW(&wcex);
 
@@ -293,12 +225,12 @@ MainWindow::MainWindow() :
 	m_hwnd(NULL) {}
 
 bool ohms::MainWindow::create(int nShowCmd) {
-	if (!::registerClass())
+	if (m_hwnd != NULL || hMain != NULL || !::registerClass())
 		return false;
 
 	m_hwnd = CreateWindowW(
-		L"CaptureWithOpenCV",
-		L"CaptureWithOpenCV",
+		L"OHMS.DOAXVVHELPER.WNDCLS",
+		L"DOAXVV-helper",
 		WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME | WS_CLIPCHILDREN | WS_CLIPSIBLINGS,
 		CW_USEDEFAULT, CW_USEDEFAULT, 800, 600,
 		NULL, NULL, ohms::global::hInst, NULL);
@@ -306,7 +238,7 @@ bool ohms::MainWindow::create(int nShowCmd) {
 	if (m_hwnd == NULL)
 		return false;
 
-	ohms::global::hMain = m_hwnd;
+	hMain = m_hwnd;
 
 	ShowWindow(m_hwnd, nShowCmd);
 	UpdateWindow(m_hwnd);
