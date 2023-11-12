@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Window">
+      <UniqueIdentifier>{5fc00d83-06c5-404a-8662-3c4968eb2c03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Capture">
+      <UniqueIdentifier>{8c9b3fc5-bed7-421d-a137-d56d3ff09148}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window\头文件">
+      <UniqueIdentifier>{9dc88630-7f9e-4d86-b59b-a4cb2599ba09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window\源文件">
+      <UniqueIdentifier>{32bba709-cd33-4a06-95ad-a08e594fd365}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Capture\头文件">
+      <UniqueIdentifier>{8e483480-6ca7-40ec-a810-5708dd50dfcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Capture\源文件">
+      <UniqueIdentifier>{77519933-29e5-4011-ba40-2b69200b0f21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Capture\接口">
+      <UniqueIdentifier>{2048e927-e909-4f9d-b3c4-c652ac9ff83b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Capture\ICapture.h">
+      <Filter>Capture\接口</Filter>
+    </ClInclude>
+    <ClInclude Include="Capture\Capture.h">
+      <Filter>Capture\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Capture\CaptureCore.h">
+      <Filter>Capture\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Capture\Saver.h">
+      <Filter>Capture\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Window\Global.h">
+      <Filter>Window\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Window\Macro.h">
+      <Filter>Window\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Window\MainWindow.h">
+      <Filter>Window\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Window\WndEnumeration.h">
+      <Filter>Window\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UniqueInstance.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Capture\Capture.cpp">
+      <Filter>Capture\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Capture\CaptureCore.cpp">
+      <Filter>Capture\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Capture\Saver.cpp">
+      <Filter>Capture\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Window\Global.cpp">
+      <Filter>Window\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Window\MainWindow.cpp">
+      <Filter>Window\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Window\WndEnumeration.cpp">
+      <Filter>Window\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UniqueInstance.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="list.manifest">
+      <Filter>资源文件</Filter>
+    </Manifest>
+  </ItemGroup>
+</Project>
