@@ -27,8 +27,8 @@ public:
 	void Close();
 
 	void setNeedRefresh();
-	void setDecimationMode(bool val);
-	void setShowScale(int val);
+	//void setDecimationMode(bool val);
+	//void setShowScale(int val);
 	void setClipClientArea(bool val);
 
 	const cv::Mat& getCapMat();
@@ -60,9 +60,9 @@ protected:
 
 	std::atomic<bool> m_img_needRefresh;
 	std::atomic<bool> m_img_updated;
-	std::atomic<bool> m_img_decimation;
+	//std::atomic<bool> m_img_decimation;
 	std::atomic<bool> m_img_client;
-	std::atomic<int> m_img_scale;
+	//std::atomic<int> m_img_scale;
 
 	D3D11_BOX m_client_box;
 	HWND m_target_window;

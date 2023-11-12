@@ -24,9 +24,9 @@ public:
 	virtual void Stop() override;
 
 	virtual void setNeedRefresh() override;
-	virtual void setDecimationMode(bool val) override;
+	//virtual void setDecimationMode(bool val) override;
 	virtual void setClipClientArea(bool val) override;
-	virtual void setShowScale(int val) override;
+	//virtual void setShowScale(int val) override;
 
 	virtual bool saveNow(bool C3, size_t id) override;
 

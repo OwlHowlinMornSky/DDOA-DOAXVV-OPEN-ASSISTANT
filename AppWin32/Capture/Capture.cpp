@@ -102,20 +102,20 @@ void Capture::setNeedRefresh() {
 		m_capture->setNeedRefresh();
 }
 
-void Capture::setDecimationMode(bool val) {
+/*void Capture::setDecimationMode(bool val) {
 	if (m_capture != nullptr)
 		m_capture->setDecimationMode(val);
-}
+}*/
 
 void Capture::setClipClientArea(bool val) {
 	if (m_capture != nullptr)
 		m_capture->setClipClientArea(val);
 }
 
-void Capture::setShowScale(int val) {
+/*void Capture::setShowScale(int val) {
 	if (m_capture != nullptr)
 		m_capture->setShowScale(val * 10);
-}
+}*/
 
 bool Capture::saveNow(bool C3, size_t id) {
 	if (m_capture) {

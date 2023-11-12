@@ -88,9 +88,9 @@ CaptureCore::CaptureCore(
 
 	m_img_needRefresh(false),
 	m_img_updated(false),
-	m_img_decimation(false),
+	//m_img_decimation(false),
 	m_img_client(true),
-	m_img_scale(1000),
+	//m_img_scale(1000),
 
 	m_target_window(targetWindow) {
 	m_device = device;
@@ -151,13 +151,13 @@ void CaptureCore::setNeedRefresh() {
 	return m_img_needRefresh.store(true);
 }
 
-void CaptureCore::setDecimationMode(bool val) {
+/*void CaptureCore::setDecimationMode(bool val) {
 	return m_img_decimation.store(val);
 }
 
 void CaptureCore::setShowScale(int val) {
 	return m_img_scale.store(val);
-}
+}*/
 
 void CaptureCore::setClipClientArea(bool val) {
 	return m_img_client.store(val);
@@ -220,8 +220,7 @@ void CaptureCore::OnFrameArrived(
 		cv::Mat c(m_lastTexSize.Height, m_lastTexSize.Width,
 				  CV_8UC4, mappedTex.pData, mappedTex.RowPitch);
 
-
-		if (m_img_decimation.load()) {
+		/*if (m_img_decimation.load()) {
 			cv::resize(c, c,
 					   cv::Size(32, 32),
 					   0.0, 0.0, cv::InterpolationFlags::INTER_AREA);
@@ -231,7 +230,7 @@ void CaptureCore::OnFrameArrived(
 		}
 		else {
 			cv::resize(c, c, (c.size() * m_img_scale.load()) / 1000);
-		}
+		}*/
 
 		{
 			std::lock_guard<std::mutex> lock(m_mutex_cap);
