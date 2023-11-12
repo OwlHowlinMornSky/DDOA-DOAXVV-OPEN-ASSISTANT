@@ -14,17 +14,12 @@ HFONT hFont;
 HWND hComboBoxHwnd;
 HWND hButtonRf;
 HWND hButtonStop;
-//HWND hButtonSample;
-//HWND hButtonBigger;
-//HWND hButtonSmaller;
 HWND hButtonSave;
 HWND hButtonSaveC3;
 HWND hButtonSwitchClient;
 std::vector<ohms::WindowInfo> g_windows;
 
-//bool isSample = false;
 bool isClient = true;
-//int scale = 100;
 LONG_PTR nowPlay = -1;
 size_t saveCount = 0;
 
@@ -99,33 +94,12 @@ LRESULT CALLBACK WndProc(
 			hwnd, NULL, ohms::global::hInst, NULL);
 		SendMessageW(hButtonStop, WM_SETFONT, (WPARAM)hFont, TRUE);
 
-		/*hButtonSample = CreateWindowW(
-			WC_BUTTONW, L"Decimation",
-			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-			10, 130, 100, 40,
-			hwnd, NULL, ohms::global::hInst, NULL);
-		SendMessageW(hButtonSample, WM_SETFONT, (WPARAM)hFont, TRUE);*/
-
 		hButtonSwitchClient = CreateWindowW(
 			WC_BUTTONW, L"Switch Client",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			10, 190, 100, 40,
 			hwnd, NULL, ohms::global::hInst, NULL);
 		SendMessageW(hButtonSwitchClient, WM_SETFONT, (WPARAM)hFont, TRUE);
-
-		/*hButtonBigger = CreateWindowW(
-			WC_BUTTONW, L"Scale +",
-			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-			10, 250, 100, 40,
-			hwnd, NULL, ohms::global::hInst, NULL);
-		SendMessageW(hButtonBigger, WM_SETFONT, (WPARAM)hFont, TRUE);
-
-		hButtonSmaller = CreateWindowW(
-			WC_BUTTONW, L"Scale -",
-			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-			10, 310, 100, 40,
-			hwnd, NULL, ohms::global::hInst, NULL);
-		SendMessageW(hButtonSmaller, WM_SETFONT, (WPARAM)hFont, TRUE);*/
 
 		hButtonSaveC3 = CreateWindowW(
 			WC_BUTTONW, L"Save BGR",
@@ -150,9 +124,6 @@ LRESULT CALLBACK WndProc(
 		DestroyWindow(hButtonSwitchClient);
 		DestroyWindow(hButtonSaveC3);
 		DestroyWindow(hButtonSave);
-		//DestroyWindow(hButtonSmaller);
-		//DestroyWindow(hButtonBigger);
-		//DestroyWindow(hButtonSample);
 		DestroyWindow(hButtonStop);
 		DestroyWindow(hButtonRf);
 		DestroyWindow(hComboBoxHwnd);
@@ -174,26 +145,13 @@ LRESULT CALLBACK WndProc(
 		swprintf_s(str, 1024, (nowPlay != -1) ? L"Running" : L"Stopped");
 		rect = { 120, 80, 220, 120 };
 		DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOCLIP | DT_CALCRECT);
-		//Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
 		DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK);
 
-		//swprintf_s(str, 1024, isSample ? L"Now:\nDecimation" : L"Now:\nNormal");
-		//rect = { 120, 130, 220, 180 };
-		//DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOCLIP | DT_CALCRECT);
-		//Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
-		//DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK);
 
 		swprintf_s(str, 1024, isClient ? L"Now:\nClient" : L"Now:\nWindow");
 		rect = { 120, 190, 220, 280 };
 		DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOCLIP | DT_CALCRECT);
-		//Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
 		DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK);
-
-		//swprintf_s(str, 1024, L"Scale: %d %%", scale * (isSample ? 10 : 1));
-		//rect = { 120, 290, 220, 500 };
-		//DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOCLIP | DT_CALCRECT);
-		//Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
-		//DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK);
 
 		rect = { 230, 80, 750, 500 };
 		Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
@@ -234,9 +192,6 @@ LRESULT CALLBACK WndProc(
 			if (IsWindow(dst)) {
 				if (!IsIconic(dst)) {
 					if (ohms::global::g_app->StartCapture(dst)) {
-						//ohms::global::g_app->setDecimationMode(isSample);
-						//ohms::global::g_app->setShowScale(scale);
-
 						nowPlay = index;
 					}
 					else {
@@ -268,24 +223,6 @@ LRESULT CALLBACK WndProc(
 			else if ((HWND)lParam == hButtonStop) {
 				SendMessageW(hwnd, WM_OHMS_STOP_CAPTURE, 0, 0);
 			}
-			//else if ((HWND)lParam == hButtonSample) {
-				//isSample = !isSample;
-				//ohms::global::g_app->setDecimationMode(isSample);
-				//SetWindowTextW(hButtonSample, isSample ? L"Normal" : L"Decimation");
-				//InvalidateRect(hwnd, NULL, true);
-			//}
-			//else if ((HWND)lParam == hButtonBigger) {
-				//if (scale < 200)
-				//	scale += 10;
-				//ohms::global::g_app->setShowScale(scale);
-				//InvalidateRect(hwnd, NULL, true);
-			//}
-			//else if ((HWND)lParam == hButtonSmaller) {
-				//if (scale > 10)
-				//	scale -= 10;
-				//ohms::global::g_app->setShowScale(scale);
-				//InvalidateRect(hwnd, NULL, true);
-			//}
 			else if ((HWND)lParam == hButtonSave) {
 				if (nowPlay == -1) {
 					MessageBoxW(hwnd, L"Please choose a window before save image.", L"ERROR", MB_ICONERROR);
