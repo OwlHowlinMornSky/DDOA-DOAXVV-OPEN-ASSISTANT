@@ -35,6 +35,8 @@ bool MainWindow::create(int nShowCmd) noexcept {
 
 void MainWindow::destroy() noexcept {
 	KillTimer(m_hwnd, g_timer);
+	ohms::global::helper->set(HelperMessage::Stop);
+	ohms::global::helper->update();
 	return Window::destroy();
 }
 
@@ -162,62 +164,40 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 	return 0;
 }
 
-bool MainWindow::start() {
-	ohms::global::helper->start();
-	setBtnEnabled_start(false);
-
-	
-
-	stop();
-
-	HWND dst = FindWindowW(L"DOAX VenusVacation", L"DOAX VenusVacation");
-
-	if (dst == NULL) {
-		MessageBoxW(NULL, L"Cannot find DOAXVV window.", L"ERROR", MB_ICONERROR);
-		return false;
-	}
-	if (!IsWindow(dst)) {
-		MessageBoxW(NULL, L"Target is not a widnow.", L"ERROR", MB_ICONERROR);
-		return false;
-	}
-	if (IsIconic(dst)) {
-		MessageBoxW(NULL, L"Target is minimized.", L"ERROR", MB_ICONERROR);
-		return false;
-	}
-	if (!ohms::global::capture->startCapture(dst)) {
-		MessageBoxW(NULL, L"Target cannot be captured.", L"ERROR", MB_ICONERROR);
-		return false;
-	}
-	running = true;
-	InvalidateRect(m_hwnd, NULL, true);
-	return true;
+void MainWindow::start() {
+	ohms::global::helper->set(HelperMessage::Start);
+	return;
 }
 
 void MainWindow::stop() {
-	ohms::global::helper->stop();
-
-
-
-	running = false;
-	ohms::global::capture->stopCapture();
-	cv::destroyAllWindows();
-	InvalidateRect(m_hwnd, NULL, true);
+	ohms::global::helper->set(HelperMessage::Stop);
 	return;
 }
 
 void MainWindow::update() {
-	auto res = ohms::global::helper->update();
-	switch (res) {
-
-	}
-
-	if (ohms::global::capture->isRefreshed()) {
-		auto mat = ohms::global::capture->getMat();
-		if (mat != nullptr) {
-			cv::imshow("show", *mat);
+	ohms::global::helper->update();
+	while (!ohms::global::helperReturnMessage.empty()) {
+		switch (ohms::global::helperReturnMessage.front()) {
+		case HelperReturnMessage::BtnToStop:
+			running = true;
+			setBtnEnabled_start(false);
+			setBtnEnabled_stop(true);
+			InvalidateRect(m_hwnd, NULL, true);
+			break;
+		case HelperReturnMessage::BtnToStart:
+			running = false;
+			setBtnEnabled_start(true);
+			setBtnEnabled_stop(false);
+			InvalidateRect(m_hwnd, NULL, true);
+			break;
+		case HelperReturnMessage::BtnToWaitingForStop:
+			setBtnEnabled_start(false);
+			setBtnEnabled_stop(false);
+			InvalidateRect(m_hwnd, NULL, true);
+			break;
 		}
+		ohms::global::helperReturnMessage.pop();
 	}
-	ohms::global::capture->askForRefresh();
 	return;
 }
 

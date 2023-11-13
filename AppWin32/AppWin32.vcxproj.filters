@@ -82,7 +82,7 @@
       <Filter>Helper\接口</Filter>
     </ClInclude>
     <ClInclude Include="Helper\Helper.h">
-      <Filter>Helper\源文件</Filter>
+      <Filter>Helper\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -111,7 +111,7 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Helper\Helper.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Helper\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

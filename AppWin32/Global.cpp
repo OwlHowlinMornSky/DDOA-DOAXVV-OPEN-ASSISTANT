@@ -6,4 +6,6 @@ HINSTANCE hInst = 0;
 std::unique_ptr<ohms::capture::wgc::ICapture> capture;
 std::unique_ptr<ohms::IHelper> helper;
 
+std::queue<ohms::HelperReturnMessage> helperReturnMessage;
+
 }

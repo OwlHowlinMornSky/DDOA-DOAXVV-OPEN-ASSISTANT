@@ -16,7 +16,7 @@ public:
 	virtual LRESULT procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcept override;
 
 public:
-	bool start();
+	void start();
 	void stop();
 	void update();
 

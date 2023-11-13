@@ -6,15 +6,17 @@ namespace ohms {
 
 class Helper final :
 	public IHelper {
+public:
+	Helper();
+	virtual ~Helper() override;
 
 public:
-	virtual void start() override;
-	virtual void stop() override;
-
-	virtual int update() override;
+	virtual void set(HelperMessage h) override;
+	virtual void update() override;
 
 protected:
-
+	HelperMessage m_cmd;
+	bool running;
 };
 
 }
