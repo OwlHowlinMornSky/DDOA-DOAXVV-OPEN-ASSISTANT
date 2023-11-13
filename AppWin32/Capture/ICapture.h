@@ -8,8 +8,9 @@ namespace ohms::capture::wgc {
  * @brief 截图组件 的 接口。
 */
 class ICapture {
-public:
+protected:
 	ICapture() = default;
+public:
 	virtual ~ICapture() = default;
 
 public:

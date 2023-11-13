@@ -1,20 +1,37 @@
 ﻿#pragma once
 
-#include "../framework.h"
+#include "Window.h"
 
 namespace ohms {
 
-class MainWindow {
+class MainWindow :
+	public Window {
 public:
 	MainWindow();
+	virtual ~MainWindow() noexcept override;
 
 public:
-	bool create(int nShowCmd = SW_NORMAL);
-	void destroy();
-	bool available() const;
+	virtual bool create(int nShowCmd = SW_NORMAL) noexcept override;
+	virtual void destroy() noexcept override;
+	virtual LRESULT procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcept override;
+
+public:
+	bool start();
+	void stop();
+	void update();
+
+	void setBtnEnabled_start(bool enabled);
+	void setBtnEnabled_stop(bool enabled);
 
 protected:
-	HWND m_hwnd;
+	HFONT hFont;
+	HWND hButtonStart;
+	HWND hButtonStop;
+	HWND hButtonSave;
+	HWND hButtonSaveC3;
+
+	bool running = false;
+	size_t saveCount = 0;
 };
 
 } // namespace ohms

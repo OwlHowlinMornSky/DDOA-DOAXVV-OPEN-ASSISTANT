@@ -1,9 +1,10 @@
-﻿#include "framework.h"
+﻿#include "Window/framework.h"
 #include "UniqueInstance.h"
-#include "Window/Global.h"
+#include "Global.h"
 #include "Capture/Capture.h"
 #include "Capture/Saver.h"
 #include "Window/MainWindow.h"
+#include "Helper/Helper.h"
 
 int CALLBACK wWinMain(
 	_In_ HINSTANCE hInstance,
@@ -18,8 +19,9 @@ int CALLBACK wWinMain(
 	// Init
 	{
 		ohms::global::hInst = hInstance;
-		ohms::global::g_app = std::make_unique<ohms::capture::wgc::Capture>();
+		ohms::global::capture = std::make_unique<ohms::capture::wgc::Capture>();
 		ohms::Saver::init();
+		ohms::global::helper = std::make_unique<ohms::Helper>();
 	}
 	// Run
 	{
@@ -35,8 +37,9 @@ int CALLBACK wWinMain(
 	}
 	// Clear
 	{
+		ohms::global::helper.reset();
 		ohms::Saver::drop();
-		ohms::global::g_app.reset();
+		ohms::global::capture.reset();
 		ohms::global::hInst = 0;
 	}
 	UniqueInstance::drop();

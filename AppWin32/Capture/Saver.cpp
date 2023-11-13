@@ -6,7 +6,7 @@
 #include <atomic>
 #include <mutex>
 
-#include "../framework.h"
+#include "../Window/framework.h"
 
 #include <stdlib.h>
 #include <io.h>

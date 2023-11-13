@@ -4,62 +4,41 @@
 
 #include <opencv2/opencv.hpp>
 
-#include "Global.h"
+#include "../Global.h"
 
 namespace {
 
-HFONT hFont;
-HWND hMain;
-HWND hButtonStart;
-HWND hButtonStop;
-HWND hButtonSave;
-HWND hButtonSaveC3;
+const WCHAR g_clsName[] = L"OHMS.DOAXVVHELPER.WNDCLS.MAIN";
+const WCHAR g_wndName[] = L"DOAXVV-helper";
 
-bool running = false;
-size_t saveCount = 0;
+constexpr int g_timer{ 1 };
 
-void stopCapture(bool special = false) {
-	running = false;
-	ohms::global::g_app->stopCapture();
-	cv::destroyAllWindows();
-	if (!special)
-		InvalidateRect(hMain, NULL, true);
-	return;
+} // namespace
+
+namespace ohms {
+
+MainWindow::MainWindow() :
+	hButtonSave(NULL),
+	hButtonSaveC3(NULL),
+	hButtonStart(NULL),
+	hButtonStop(NULL),
+	hFont(NULL) {}
+
+MainWindow::~MainWindow() {}
+
+bool MainWindow::create(int nShowCmd) noexcept {
+	Window::create(nShowCmd);
+	SetWindowTextW(m_hwnd, g_wndName);
+	SetTimer(m_hwnd, g_timer, 33, NULL);
+	return false;
 }
 
-void startCapture() {
-	stopCapture(true);
-
-	HWND dst = FindWindowW(L"DOAX VenusVacation", L"DOAX VenusVacation");
-
-	if (dst == NULL) {
-		MessageBoxW(NULL, L"Didn't find DOAXVV window.", L"ERROR", MB_ICONERROR);
-		return;
-	}
-
-	if (IsWindow(dst)) {
-		if (!IsIconic(dst)) {
-			if (ohms::global::g_app->startCapture(dst)) {
-				running = true;
-			}
-			else {
-				MessageBoxW(NULL, L"This window cannot be captured.", L"ERROR", MB_ICONERROR);
-			}
-		}
-		else {
-			MessageBoxW(NULL, L"Please restore minimized window before capture.", L"WARNING", MB_ICONWARNING);
-		}
-	}
-
-	InvalidateRect(hMain, NULL, true);
+void MainWindow::destroy() noexcept {
+	KillTimer(m_hwnd, g_timer);
+	return Window::destroy();
 }
 
-LRESULT CALLBACK WndProc(
-	HWND   hwnd,
-	UINT   msg,
-	WPARAM wParam,
-	LPARAM lParam
-) {
+LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcept {
 	switch (msg) {
 	case WM_CREATE:
 	{
@@ -99,6 +78,8 @@ LRESULT CALLBACK WndProc(
 			10, 430, 100, 40,
 			hwnd, NULL, ohms::global::hInst, NULL);
 		SendMessageW(hButtonSave, WM_SETFONT, (WPARAM)hFont, TRUE);
+
+		setBtnEnabled_stop(false);
 		break;
 	}
 
@@ -120,13 +101,17 @@ LRESULT CALLBACK WndProc(
 
 		HGDIOBJ hOldFont = SelectObject(hdc, hFont);
 
-		WCHAR str[1024];
-		RECT rect;
-
-		swprintf_s(str, 1024, running ? L"Running" : L"Stopped");
-		rect = { 120, 80, 220, 120 };
-		DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOCLIP | DT_CALCRECT);
-		DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK);
+		RECT rect = { 10, 130, 220, 120 };
+		if (running) {
+			constexpr WCHAR str[] = L"Running";
+			DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOCLIP | DT_CALCRECT);
+			DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK);
+		}
+		else {
+			constexpr WCHAR str[] = L"Stopped";
+			DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOCLIP | DT_CALCRECT);
+			DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK);
+		}
 
 		SelectObject(hdc, hOldFont);
 		EndPaint(hwnd, &ps);
@@ -134,126 +119,110 @@ LRESULT CALLBACK WndProc(
 	}
 
 	case WM_CLOSE:
-		stopCapture();
+		stop();
 		PostQuitMessage(0);
 		break;
 
 	case WM_COMMAND:
-		switch (HIWORD(wParam)) {
+		switch (HIWORD(wp)) {
 		case BN_CLICKED:
 		{
-
-			if ((HWND)lParam == hButtonStart) {
-				startCapture();
+			if ((HWND)lp == hButtonStart) {
+				start();
 			}
-			else if ((HWND)lParam == hButtonStop) {
-				stopCapture();
+			else if ((HWND)lp == hButtonStop) {
+				stop();
 			}
-			else if ((HWND)lParam == hButtonSave) {
-				if (!running) {
-					MessageBoxW(hwnd, L"Please choose a window before save image.", L"ERROR", MB_ICONERROR);
-				}
-				else {
-					if (!ohms::global::g_app->saveMat(false, saveCount++)) {
-						MessageBoxW(hwnd, L"Failed saving.", L"ERROR", MB_ICONERROR);
-					}
+			else if ((HWND)lp == hButtonSave) {
+				if (!ohms::global::capture->saveMat(false, saveCount++)) {
+					MessageBoxW(hwnd, L"Failed to save.", L"ERROR", MB_ICONERROR);
 				}
 			}
-			else if ((HWND)lParam == hButtonSaveC3) {
-				if (!running) {
-					MessageBoxW(hwnd, L"Please choose a window before save image.", L"ERROR", MB_ICONERROR);
-				}
-				else {
-					if (!ohms::global::g_app->saveMat(true, saveCount++)) {
-						MessageBoxW(hwnd, L"Failed saving.", L"ERROR", MB_ICONERROR);
-					}
+			else if ((HWND)lp == hButtonSaveC3) {
+				if (!ohms::global::capture->saveMat(true, saveCount++)) {
+					MessageBoxW(hwnd, L"Failed to save.", L"ERROR", MB_ICONERROR);
 				}
 			}
 			break;
 		}
 		default:
-			return DefWindowProc(hwnd, msg, wParam, lParam);
+			return DefWindowProcW(hwnd, msg, wp, lp);
 		}
 		break;
 
 	case WM_TIMER:
-		if (ohms::global::g_app->isRefreshed()) {
-			auto mat = ohms::global::g_app->getMat();
-			if (mat != nullptr) {
-				cv::imshow("show", *mat);
-			}
+		if (wp == g_timer) {
+			update();
 		}
-		ohms::global::g_app->askForRefresh();
 		break;
 
 	default:
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		return DefWindowProc(hwnd, msg, wp, lp);
 	}
 	return 0;
 }
 
-bool g_classRegistered = false;
+bool MainWindow::start() {
+	ohms::global::helper->start();
+	setBtnEnabled_start(false);
 
-bool registerClass() {
-	if (g_classRegistered)
-		return true;
-	WNDCLASSEX wcex = {};
-	wcex.cbSize = sizeof(WNDCLASSEX);
-	wcex.style = CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc = WndProc;
-	wcex.cbClsExtra = 0;
-	wcex.cbWndExtra = 0;
-	wcex.hInstance = ohms::global::hInst;
-	wcex.hIcon = LoadIconW(ohms::global::hInst, IDI_APPLICATION);
-	wcex.hCursor = LoadCursorW(NULL, IDC_ARROW);
-	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszMenuName = NULL;
-	wcex.lpszClassName = L"OHMS.DOAXVVHELPER.WNDCLS";
-	wcex.hIconSm = LoadIconW(wcex.hInstance, IDI_APPLICATION);
-	auto res = RegisterClassExW(&wcex);
+	
 
-	if (res != 0)
-		g_classRegistered = true;
-	return g_classRegistered;
-}
+	stop();
 
-} // namespace
+	HWND dst = FindWindowW(L"DOAX VenusVacation", L"DOAX VenusVacation");
 
-namespace ohms {
-
-MainWindow::MainWindow() :
-	m_hwnd(NULL) {}
-
-bool ohms::MainWindow::create(int nShowCmd) {
-	if (m_hwnd != NULL || hMain != NULL || !::registerClass())
+	if (dst == NULL) {
+		MessageBoxW(NULL, L"Cannot find DOAXVV window.", L"ERROR", MB_ICONERROR);
 		return false;
-
-	m_hwnd = CreateWindowW(
-		L"OHMS.DOAXVVHELPER.WNDCLS",
-		L"DOAXVV-helper",
-		WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME | WS_CLIPCHILDREN | WS_CLIPSIBLINGS,
-		CW_USEDEFAULT, CW_USEDEFAULT, 800, 600,
-		NULL, NULL, ohms::global::hInst, NULL);
-
-	if (m_hwnd == NULL)
+	}
+	if (!IsWindow(dst)) {
+		MessageBoxW(NULL, L"Target is not a widnow.", L"ERROR", MB_ICONERROR);
 		return false;
-
-	hMain = m_hwnd;
-
-	ShowWindow(m_hwnd, nShowCmd);
-	UpdateWindow(m_hwnd);
-
-	SetTimer(m_hwnd, 1, 33, NULL);
+	}
+	if (IsIconic(dst)) {
+		MessageBoxW(NULL, L"Target is minimized.", L"ERROR", MB_ICONERROR);
+		return false;
+	}
+	if (!ohms::global::capture->startCapture(dst)) {
+		MessageBoxW(NULL, L"Target cannot be captured.", L"ERROR", MB_ICONERROR);
+		return false;
+	}
+	running = true;
+	InvalidateRect(m_hwnd, NULL, true);
 	return true;
 }
 
-void MainWindow::destroy() {
-	DestroyWindow(m_hwnd);
+void MainWindow::stop() {
+	ohms::global::helper->stop();
+
+
+
+	running = false;
+	ohms::global::capture->stopCapture();
+	cv::destroyAllWindows();
+	InvalidateRect(m_hwnd, NULL, true);
 	return;
 }
 
-bool MainWindow::available() const {
-	return m_hwnd != NULL;
+void MainWindow::update() {
+	auto res = ohms::global::helper->update();
+	switch (res) {
+
+	}
+
+	if (ohms::global::capture->isRefreshed()) {
+		auto mat = ohms::global::capture->getMat();
+		if (mat != nullptr) {
+			cv::imshow("show", *mat);
+		}
+	}
+	ohms::global::capture->askForRefresh();
+	return;
 }
+
+void MainWindow::setBtnEnabled_start(bool enabled) {}
+
+void MainWindow::setBtnEnabled_stop(bool enabled) {}
 
 } // namespace ohms

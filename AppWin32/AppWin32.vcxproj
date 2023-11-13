@@ -94,20 +94,25 @@
     <ClInclude Include="Capture\CaptureCore.h" />
     <ClInclude Include="Capture\ICapture.h" />
     <ClInclude Include="Capture\Saver.h" />
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="Helper\Helper.h" />
+    <ClInclude Include="Helper\IHelper.h" />
     <ClInclude Include="UniqueInstance.h" />
-    <ClInclude Include="Window\Global.h" />
+    <ClInclude Include="Window\framework.h" />
     <ClInclude Include="Window\MainWindow.h" />
+    <ClInclude Include="Window\targetver.h" />
+    <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Capture\Capture.cpp" />
     <ClCompile Include="Capture\CaptureCore.cpp" />
     <ClCompile Include="Capture\Saver.cpp" />
+    <ClCompile Include="Global.cpp" />
+    <ClCompile Include="Helper\Helper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UniqueInstance.cpp" />
-    <ClCompile Include="Window\Global.cpp" />
     <ClCompile Include="Window\MainWindow.cpp" />
+    <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="list.manifest" />
