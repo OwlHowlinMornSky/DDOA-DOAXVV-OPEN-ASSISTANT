@@ -110,15 +110,33 @@ CaptureCore::CaptureCore(
 	m_session.IsCursorCaptureEnabled(false);
 	m_session.IsBorderRequired(false);
 
-	createTexture();
+	CreateTexture();
 }
 
 CaptureCore::~CaptureCore() {
 	Close();
 }
 
+void CaptureCore::askForRefresh() {
+	m_img_updated.store(false);
+	return m_img_needRefresh.store(true);
+}
+
+bool CaptureCore::isRefreshed() {
+	bool expected = true;
+	if (m_img_updated.compare_exchange_weak(expected, false)) {
+		return true;
+	}
+	return false;
+}
+
+
+const cv::Mat& CaptureCore::getCapMat() {
+	std::lock_guard<std::mutex> lock(m_mutex_cap);
+	return m_cap;
+}
 // Start sending capture frames
-void CaptureCore::StartCapture() {
+void CaptureCore::Open() {
 	if (m_closed.load() != true) {
 		m_session.StartCapture();
 	}
@@ -140,24 +158,6 @@ void CaptureCore::Close() {
 		m_item = nullptr;
 	}
 	cv::destroyAllWindows();
-}
-
-void CaptureCore::setNeedRefresh() {
-	m_img_updated.store(false);
-	return m_img_needRefresh.store(true);
-}
-
-const cv::Mat& CaptureCore::getCapMat() {
-	std::lock_guard<std::mutex> lock(m_mutex_cap);
-	return m_cap;
-}
-
-bool CaptureCore::getUpdated() {
-	bool expected = true;
-	if (m_img_updated.compare_exchange_weak(expected, false)) {
-		return true;
-	}
-	return false;
 }
 
 void CaptureCore::OnFrameArrived(
@@ -188,7 +188,7 @@ void CaptureCore::OnFrameArrived(
 			m_lastTexSize.Height = desc.Height;
 
 			m_texture->Release();
-			createTexture();
+			CreateTexture();
 		}
 
 		if (client_clip_success)
@@ -229,7 +229,7 @@ void CaptureCore::OnFrameArrived(
 	}
 }
 
-inline void CaptureCore::createTexture() {
+inline void CaptureCore::CreateTexture() {
 	D3D11_TEXTURE2D_DESC desc = { 0 };
 	desc.MipLevels = 1;
 	desc.ArraySize = 1;

@@ -67,16 +67,21 @@ namespace ohms::capture::wgc {
 
 Capture::Capture() :
 	m_device(nullptr),
-	m_capture(nullptr) {}
+	m_capture(nullptr) {
+	winrt::init_apartment(winrt::apartment_type::single_threaded);
 
-void Capture::Initialize() {
 	com_ptr<ID3D11Device> d3dDevice = CreateD3DDevice();
 	com_ptr<IDXGIDevice> dxgiDevice = d3dDevice.as<IDXGIDevice>();
 	m_device = CreateDirect3DDevice(dxgiDevice.get());
 }
 
-bool Capture::StartCapture(HWND hwnd) {
-	Stop();
+Capture::~Capture() {
+	stopCapture();
+	m_capture.reset();
+}
+
+bool Capture::startCapture(HWND hwnd) {
+	stopCapture();
 
 	GraphicsCaptureItem item = { nullptr };
 
@@ -86,40 +91,40 @@ bool Capture::StartCapture(HWND hwnd) {
 
 	m_capture = std::make_unique<CaptureCore>(m_device, item, hwnd);
 
-	m_capture->StartCapture();
+	m_capture->Open();
 	return true;
 }
 
-void Capture::Stop() {
+void Capture::stopCapture() {
 	if (m_capture) {
 		m_capture->Close();
 		m_capture.reset();
 	}
 }
 
-void Capture::setNeedRefresh() {
+void Capture::askForRefresh() {
 	if (m_capture != nullptr)
-		m_capture->setNeedRefresh();
+		m_capture->askForRefresh();
 }
 
-bool Capture::saveNow(bool C3, size_t id) {
+bool Capture::isRefreshed() {
+	if (m_capture) {
+		return m_capture->isRefreshed();
+	}
+	return false;
+}
+
+bool Capture::saveMat(bool C3, size_t id) {
 	if (m_capture) {
 		return ohms::Saver::instance().save(m_capture->getCapMat(), static_cast<unsigned long long>(time(0)), C3, id);
 	}
 	return false;
 }
 
-const cv::Mat* Capture::getCapMat() {
+const cv::Mat* Capture::getMat() {
 	if (m_capture == nullptr)
 		return nullptr;
 	return &m_capture->getCapMat();
-}
-
-bool Capture::getUpdated() {
-	if (m_capture) {
-		return m_capture->getUpdated();
-	}
-	return false;
 }
 
 } // namespace ohms::capture::wgc

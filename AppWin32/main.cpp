@@ -18,11 +18,7 @@ int CALLBACK wWinMain(
 	// Init
 	{
 		ohms::global::hInst = hInstance;
-
-		winrt::init_apartment(winrt::apartment_type::single_threaded);
-		ohms::global::g_app = std::move(std::make_unique<ohms::capture::wgc::Capture>());
-		ohms::global::g_app->Initialize();
-
+		ohms::global::g_app = std::make_unique<ohms::capture::wgc::Capture>();
 		ohms::Saver::init();
 	}
 	// Run
@@ -40,10 +36,7 @@ int CALLBACK wWinMain(
 	// Clear
 	{
 		ohms::Saver::drop();
-
-		ohms::global::g_app->Stop();
 		ohms::global::g_app.reset();
-
 		ohms::global::hInst = 0;
 	}
 	UniqueInstance::drop();

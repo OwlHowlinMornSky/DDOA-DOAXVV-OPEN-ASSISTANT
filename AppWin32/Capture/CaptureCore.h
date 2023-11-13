@@ -13,6 +13,9 @@
 
 namespace ohms::capture::wgc {
 
+/**
+ * @brief 截取器。
+*/
 class CaptureCore final {
 public:
 	CaptureCore(
@@ -23,21 +26,21 @@ public:
 
 	~CaptureCore();
 
-	void StartCapture();
-	void Close();
-
-	void setNeedRefresh();
-
+public:
+	void askForRefresh();
+	bool isRefreshed();
 	const cv::Mat& getCapMat();
-	bool getUpdated();
+
+public:
+	void Open();
+	void Close();
 
 protected:
 	void OnFrameArrived(
 		winrt::Windows::Graphics::Capture::Direct3D11CaptureFramePool const& sender,
 		winrt::Windows::Foundation::IInspectable const& args
 	);
-
-	void createTexture();
+	void CreateTexture();
 
 protected:
 	std::atomic_bool m_closed;

@@ -20,7 +20,7 @@ size_t saveCount = 0;
 
 void stopCapture(bool special = false) {
 	running = false;
-	ohms::global::g_app->Stop();
+	ohms::global::g_app->stopCapture();
 	cv::destroyAllWindows();
 	if (!special)
 		InvalidateRect(hMain, NULL, true);
@@ -39,7 +39,7 @@ void startCapture() {
 
 	if (IsWindow(dst)) {
 		if (!IsIconic(dst)) {
-			if (ohms::global::g_app->StartCapture(dst)) {
+			if (ohms::global::g_app->startCapture(dst)) {
 				running = true;
 			}
 			else {
@@ -154,7 +154,7 @@ LRESULT CALLBACK WndProc(
 					MessageBoxW(hwnd, L"Please choose a window before save image.", L"ERROR", MB_ICONERROR);
 				}
 				else {
-					if (!ohms::global::g_app->saveNow(false, saveCount++)) {
+					if (!ohms::global::g_app->saveMat(false, saveCount++)) {
 						MessageBoxW(hwnd, L"Failed saving.", L"ERROR", MB_ICONERROR);
 					}
 				}
@@ -164,7 +164,7 @@ LRESULT CALLBACK WndProc(
 					MessageBoxW(hwnd, L"Please choose a window before save image.", L"ERROR", MB_ICONERROR);
 				}
 				else {
-					if (!ohms::global::g_app->saveNow(true, saveCount++)) {
+					if (!ohms::global::g_app->saveMat(true, saveCount++)) {
 						MessageBoxW(hwnd, L"Failed saving.", L"ERROR", MB_ICONERROR);
 					}
 				}
@@ -177,13 +177,13 @@ LRESULT CALLBACK WndProc(
 		break;
 
 	case WM_TIMER:
-		if (ohms::global::g_app->getUpdated()) {
-			auto mat = ohms::global::g_app->getCapMat();
+		if (ohms::global::g_app->isRefreshed()) {
+			auto mat = ohms::global::g_app->getMat();
 			if (mat != nullptr) {
 				cv::imshow("show", *mat);
 			}
 		}
-		ohms::global::g_app->setNeedRefresh();
+		ohms::global::g_app->askForRefresh();
 		break;
 
 	default:

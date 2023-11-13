@@ -12,22 +12,24 @@
 
 namespace ohms::capture::wgc {
 
+/**
+ * @brief 截图组件。
+*/
 class Capture final :
 	public ICapture {
 public:
 	Capture();
-	virtual ~Capture() = default;
+	virtual ~Capture() override;
 
 public:
-	virtual void Initialize() override;
-	virtual bool StartCapture(HWND hwnd) override;
-	virtual void Stop() override;
+	virtual bool startCapture(HWND hwnd) override;
+	virtual void stopCapture() override;
 
-	virtual void setNeedRefresh() override;
+	virtual void askForRefresh() override;
+	virtual bool isRefreshed() override;
 
-	virtual bool saveNow(bool C3, size_t id) override;
-	virtual const cv::Mat* getCapMat() override;
-	virtual bool getUpdated() override;
+	virtual bool saveMat(bool C3, size_t id) override;
+	virtual const cv::Mat* getMat() override;
 
 protected:
 	winrt::Windows::Graphics::DirectX::Direct3D11::IDirect3DDevice m_device;
