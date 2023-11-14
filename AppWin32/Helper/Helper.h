@@ -18,8 +18,14 @@ public:
 	virtual bool isRunning() override;
 
 protected:
+	/**
+	 * @brief 运行在子线程的任务。
+	*/
 	void work();
 
+	/**
+	 * @brief 子任务：作战。
+	*/
 	void subwork_fight();
 
 protected:

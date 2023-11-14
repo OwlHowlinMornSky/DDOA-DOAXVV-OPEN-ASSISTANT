@@ -49,34 +49,39 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 	switch (msg) {
 	case WM_CREATE:
 	{
-		m_hFont = CreateFontW(0, 0, 0, 0, FW_DONTCARE,
-							FALSE, FALSE, FALSE,
-							GB2312_CHARSET,
-							OUT_DEFAULT_PRECIS,
-							CLIP_DEFAULT_PRECIS,
-							CLEARTYPE_QUALITY,
-							DEFAULT_PITCH | FF_DONTCARE,
-							L"Segoe UI");
+		m_hFont = CreateFontW(
+			0, 0, 0, 0, FW_DONTCARE,
+			FALSE, FALSE, FALSE,
+			GB2312_CHARSET,
+			OUT_DEFAULT_PRECIS,
+			CLIP_DEFAULT_PRECIS,
+			CLEARTYPE_QUALITY,
+			DEFAULT_PITCH | FF_DONTCARE,
+			L"Segoe UI"
+		);
 
 		m_hBtn = CreateWindowW(
 			WC_BUTTONW, L"Start",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			10, 10, 100, 40,
-			hwnd, NULL, ohms::global::hInst, NULL);
+			hwnd, NULL, ohms::global::hInst, NULL
+		);
 		SendMessageW(m_hBtn, WM_SETFONT, (WPARAM)m_hFont, TRUE);
 
 		m_hButtonSaveC3 = CreateWindowW(
 			WC_BUTTONW, L"Save BGR",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			10, 370, 100, 40,
-			hwnd, NULL, ohms::global::hInst, NULL);
+			hwnd, NULL, ohms::global::hInst, NULL
+		);
 		SendMessageW(m_hButtonSaveC3, WM_SETFONT, (WPARAM)m_hFont, TRUE);
 
 		m_hButtonSave = CreateWindowW(
 			WC_BUTTONW, L"Save BGRA",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			10, 430, 100, 40,
-			hwnd, NULL, ohms::global::hInst, NULL);
+			hwnd, NULL, ohms::global::hInst, NULL
+		);
 		SendMessageW(m_hButtonSave, WM_SETFONT, (WPARAM)m_hFont, TRUE);
 		break;
 	}
@@ -89,19 +94,6 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 		DeleteObject(m_hFont);
 		break;
 	}
-
-	/*case WM_PAINT:
-	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hwnd, &ps);
-		//SetBkMode(hdc, TRANSPARENT);
-
-		//HGDIOBJ hOldFont = SelectObject(hdc, m_hFont);
-
-		//SelectObject(hdc, hOldFont);
-		EndPaint(hwnd, &ps);
-		break;
-	}*/
 
 	case WM_CLOSE:
 		stop();
@@ -215,6 +207,8 @@ void MainWindow::setBtnText(const WCHAR* text) {
 }
 
 void MainWindow::setBtnEnabled(bool enabled) {
+	EnableWindow(m_hBtn, enabled ? TRUE : FALSE);
+	return;
 }
 
 } // namespace ohms
