@@ -6,6 +6,8 @@
 
 #include "../Global.h"
 
+#include <iostream>
+
 namespace {
 
 const WCHAR g_clsName[] = L"OHMS.DOAXVVHELPER.WNDCLS.MAIN";
@@ -18,10 +20,10 @@ constexpr int g_timer{ 1 };
 namespace ohms {
 
 MainWindow::MainWindow() :
+	m_isStart(true),
 	hButtonSave(NULL),
 	hButtonSaveC3(NULL),
 	hButtonStart(NULL),
-	hButtonStop(NULL),
 	hFont(NULL) {}
 
 MainWindow::~MainWindow() {}
@@ -35,8 +37,10 @@ bool MainWindow::create(int nShowCmd) noexcept {
 
 void MainWindow::destroy() noexcept {
 	KillTimer(m_hwnd, g_timer);
-	ohms::global::helper->set(HelperMessage::Stop);
-	ohms::global::helper->update();
+	ohms::global::helper->askForStop();
+	while (ohms::global::helper->isRunning()) {
+		Sleep(10);
+	}
 	return Window::destroy();
 }
 
@@ -60,12 +64,12 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 			hwnd, NULL, ohms::global::hInst, NULL);
 		SendMessageW(hButtonStart, WM_SETFONT, (WPARAM)hFont, TRUE);
 
-		hButtonStop = CreateWindowW(
+		/*hButtonStop = CreateWindowW(
 			WC_BUTTONW, L"Stop",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			10, 70, 100, 40,
 			hwnd, NULL, ohms::global::hInst, NULL);
-		SendMessageW(hButtonStop, WM_SETFONT, (WPARAM)hFont, TRUE);
+		SendMessageW(hButtonStop, WM_SETFONT, (WPARAM)hFont, TRUE);*/
 
 		hButtonSaveC3 = CreateWindowW(
 			WC_BUTTONW, L"Save BGR",
@@ -80,8 +84,6 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 			10, 430, 100, 40,
 			hwnd, NULL, ohms::global::hInst, NULL);
 		SendMessageW(hButtonSave, WM_SETFONT, (WPARAM)hFont, TRUE);
-
-		setBtnEnabled_stop(false);
 		break;
 	}
 
@@ -89,7 +91,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 	{
 		DestroyWindow(hButtonSaveC3);
 		DestroyWindow(hButtonSave);
-		DestroyWindow(hButtonStop);
+		//DestroyWindow(hButtonStop);
 		DestroyWindow(hButtonStart);
 		DeleteObject(hFont);
 		break;
@@ -103,7 +105,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 
 		HGDIOBJ hOldFont = SelectObject(hdc, hFont);
 
-		RECT rect = { 10, 130, 220, 120 };
+		/*RECT rect = {10, 130, 220, 120};
 		if (running) {
 			constexpr WCHAR str[] = L"Running";
 			DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOCLIP | DT_CALCRECT);
@@ -113,7 +115,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 			constexpr WCHAR str[] = L"Stopped";
 			DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOCLIP | DT_CALCRECT);
 			DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK);
-		}
+		}*/
 
 		SelectObject(hdc, hOldFont);
 		EndPaint(hwnd, &ps);
@@ -130,10 +132,13 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 		case BN_CLICKED:
 		{
 			if ((HWND)lp == hButtonStart) {
-				start();
-			}
-			else if ((HWND)lp == hButtonStop) {
-				stop();
+				if (m_isStart) {
+					start();
+
+				}
+				else {
+					stop();
+				}
 			}
 			else if ((HWND)lp == hButtonSave) {
 				if (!ohms::global::capture->saveMat(false, saveCount++)) {
@@ -165,44 +170,73 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 }
 
 void MainWindow::start() {
-	ohms::global::helper->set(HelperMessage::Start);
+	HWND dst = FindWindowW(L"DOAX VenusVacation", L"DOAX VenusVacation Launcher");
+	if (dst == NULL) {
+		printf_s("Cannot find DOAXVV window.\n");
+		return;
+	}
+	if (!IsWindow(dst)) {
+		printf_s("Target is not a widnow.\n");
+		return;
+	}
+	if (IsIconic(dst)) {
+		printf_s("Target is minimized.\n");
+		return;
+	}
+	if (!ohms::global::capture->startCapture(dst)) {
+		printf_s("Target cannot be captured.\n");
+		return;
+	}
+	if (!ohms::global::helper->start()) {
+		std::cout << "Start Failed!" << std::endl;
+		ohms::global::capture->stopCapture();
+		return;
+	}
+	setBtnEnabled(false);
 	return;
 }
 
 void MainWindow::stop() {
-	ohms::global::helper->set(HelperMessage::Stop);
+	ohms::global::helper->askForStop();
+	setBtnEnabled(false);
 	return;
 }
 
 void MainWindow::update() {
-	ohms::global::helper->update();
-	while (!ohms::global::helperReturnMessage.empty()) {
-		switch (ohms::global::helperReturnMessage.front()) {
+	while (true) {
+		ohms::HelperReturnMessage msg;
+		{
+			std::lock_guard lg(ohms::global::mutexHRM);
+			if (ohms::global::helperReturnMessage.empty()) {
+				break;
+			}
+			msg = ohms::global::helperReturnMessage.front();
+			ohms::global::helperReturnMessage.pop();
+		}
+		switch (msg) {
+		case HelperReturnMessage::Stopped:
+			ohms::global::capture->stopCapture();
+			break;
 		case HelperReturnMessage::BtnToStop:
-			running = true;
-			setBtnEnabled_start(false);
-			setBtnEnabled_stop(true);
-			InvalidateRect(m_hwnd, NULL, true);
+			setBtnText(L"Stop");
+			setBtnEnabled(true);
+			m_isStart = false;
 			break;
 		case HelperReturnMessage::BtnToStart:
-			running = false;
-			setBtnEnabled_start(true);
-			setBtnEnabled_stop(false);
-			InvalidateRect(m_hwnd, NULL, true);
-			break;
-		case HelperReturnMessage::BtnToWaitingForStop:
-			setBtnEnabled_start(false);
-			setBtnEnabled_stop(false);
-			InvalidateRect(m_hwnd, NULL, true);
+			setBtnText(L"Start");
+			setBtnEnabled(true);
+			m_isStart = true;
 			break;
 		}
-		ohms::global::helperReturnMessage.pop();
 	}
 	return;
 }
 
-void MainWindow::setBtnEnabled_start(bool enabled) {}
+void MainWindow::setBtnText(const WCHAR* text) {
+	SetWindowTextW(hButtonStart, text);
+	return;
+}
 
-void MainWindow::setBtnEnabled_stop(bool enabled) {}
+void MainWindow::setBtnEnabled(bool enabled) {}
 
 } // namespace ohms

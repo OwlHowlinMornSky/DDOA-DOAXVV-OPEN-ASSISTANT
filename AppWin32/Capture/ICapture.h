@@ -47,6 +47,8 @@ public:
 	 * @return 当前 cv::Mat。可能为 nullptr。
 	*/
 	virtual const cv::Mat* getMat() = 0;
+
+	virtual bool copyMat(cv::Mat& target) = 0;
 };
 
 } // namespace ohms::capture::wgc

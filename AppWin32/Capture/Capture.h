@@ -31,6 +31,8 @@ public:
 	virtual bool saveMat(bool C3, size_t id) override;
 	virtual const cv::Mat* getMat() override;
 
+	virtual bool copyMat(cv::Mat& target) override;
+
 protected:
 	winrt::Windows::Graphics::DirectX::Direct3D11::IDirect3DDevice m_device;
 	std::unique_ptr<CaptureCore> m_capture;

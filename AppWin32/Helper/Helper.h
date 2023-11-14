@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 #include "IHelper.h"
+#include <mutex>
+#include <atomic>
 
 namespace ohms {
 
@@ -11,12 +13,18 @@ public:
 	virtual ~Helper() override;
 
 public:
-	virtual void set(HelperMessage h) override;
-	virtual void update() override;
+	virtual bool start() override;
+	virtual void askForStop() override;
+	virtual bool isRunning() override;
 
 protected:
-	HelperMessage m_cmd;
-	bool running;
+	void work();
+
+	void subwork_fight();
+
+protected:
+	std::atomic_bool m_running;
+	std::atomic_bool m_askedForStop;
 };
 
 }

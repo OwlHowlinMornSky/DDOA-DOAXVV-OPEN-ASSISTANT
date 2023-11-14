@@ -135,6 +135,13 @@ const cv::Mat& CaptureCore::getCapMat() {
 	std::lock_guard<std::mutex> lock(m_mutex_cap);
 	return m_cap;
 }
+
+void CaptureCore::copyMat(cv::Mat& target) {
+	std::lock_guard<std::mutex> lock(m_mutex_cap);
+	target = m_cap;
+    return;
+}
+
 // Start sending capture frames
 void CaptureCore::Open() {
 	if (m_closed.load() != true) {
@@ -203,7 +210,7 @@ void CaptureCore::OnFrameArrived(
 		cv::Mat c(m_lastTexSize.Height, m_lastTexSize.Width,
 				  CV_8UC4, mappedTex.pData, mappedTex.RowPitch);
 
-		{
+		/* {
 			auto sz = c.size();
 			if (sz.width != 1280 || sz.height != 720) {
 				cv::resize(
@@ -212,7 +219,7 @@ void CaptureCore::OnFrameArrived(
 					0.0, 0.0, cv::InterpolationFlags::INTER_CUBIC
 				);
 			}
-		}
+		}*/
 
 		{
 			std::lock_guard<std::mutex> lock(m_mutex_cap);

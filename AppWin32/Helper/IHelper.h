@@ -2,16 +2,11 @@
 
 namespace ohms {
 
-enum class HelperMessage {
-	None = 0,
-	Start,
-	Stop
-};
-
 enum class HelperReturnMessage {
-	BtnToStop = 0,
-	BtnToStart,
-	BtnToWaitingForStop
+	None = 0,
+	Stopped,
+	BtnToStop,
+	BtnToStart
 };
 
 class IHelper {
@@ -21,8 +16,9 @@ public:
 	virtual ~IHelper() = default;
 
 public:
-	virtual void set(HelperMessage h) = 0;
-	virtual void update() = 0;
+	virtual bool start() = 0;
+	virtual void askForStop() = 0;
+	virtual bool isRunning() = 0;
 };
 
 }

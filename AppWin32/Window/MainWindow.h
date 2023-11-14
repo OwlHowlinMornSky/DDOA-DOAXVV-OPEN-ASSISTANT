@@ -20,17 +20,16 @@ public:
 	void stop();
 	void update();
 
-	void setBtnEnabled_start(bool enabled);
-	void setBtnEnabled_stop(bool enabled);
+	void setBtnText(const WCHAR* text);
+	void setBtnEnabled(bool enabled);
 
 protected:
 	HFONT hFont;
 	HWND hButtonStart;
-	HWND hButtonStop;
 	HWND hButtonSave;
 	HWND hButtonSaveC3;
 
-	bool running = false;
+	bool m_isStart;
 	size_t saveCount = 0;
 };
 

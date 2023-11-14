@@ -30,6 +30,7 @@ public:
 	void askForRefresh();
 	bool isRefreshed();
 	const cv::Mat& getCapMat();
+	void copyMat(cv::Mat& target);
 
 public:
 	void Open();

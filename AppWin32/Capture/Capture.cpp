@@ -127,4 +127,11 @@ const cv::Mat* Capture::getMat() {
 	return &m_capture->getCapMat();
 }
 
+bool Capture::copyMat(cv::Mat& target) {
+	if (m_capture == nullptr)
+		return false;
+    m_capture->copyMat(target);
+	return true;
+}
+
 } // namespace ohms::capture::wgc

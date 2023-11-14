@@ -5,6 +5,7 @@
 #include "Capture/ICapture.h"
 #include "Helper/IHelper.h"
 #include <queue>
+#include <mutex>
 
 namespace ohms::global {
 
@@ -13,5 +14,8 @@ extern std::unique_ptr<ohms::capture::wgc::ICapture> capture; // 截图组件实
 extern std::unique_ptr<ohms::IHelper> helper; // 助手实例。
 
 extern std::queue<ohms::HelperReturnMessage> helperReturnMessage;
+extern std::mutex mutexHRM;
+
+void pushHRM(ohms::HelperReturnMessage hrm);
 
 } // namespace
