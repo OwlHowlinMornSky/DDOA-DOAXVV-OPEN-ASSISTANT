@@ -56,9 +56,9 @@ void Helper::subwork_fight() {
 		}
 		else {
 			if (ohms::global::capture->isRefreshed()) {
-				auto mat = ohms::global::capture->getMat();
-				if (mat != nullptr) {
-					cv::imshow("show", *mat);
+				cv::Mat mat;
+				if (ohms::global::capture->copyMat(mat)) {
+					cv::imshow("show", mat);
 				}
 			}
 			ohms::global::capture->askForRefresh();

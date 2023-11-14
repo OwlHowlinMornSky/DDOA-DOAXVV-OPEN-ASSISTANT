@@ -130,12 +130,6 @@ bool CaptureCore::isRefreshed() {
 	return false;
 }
 
-
-const cv::Mat& CaptureCore::getCapMat() {
-	std::lock_guard<std::mutex> lock(m_mutex_cap);
-	return m_cap;
-}
-
 void CaptureCore::copyMat(cv::Mat& target) {
 	std::lock_guard<std::mutex> lock(m_mutex_cap);
 	target = m_cap;

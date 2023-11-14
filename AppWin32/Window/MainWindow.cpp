@@ -20,11 +20,12 @@ constexpr int g_timer{ 1 };
 namespace ohms {
 
 MainWindow::MainWindow() :
+	m_saveCount(0),
 	m_isStart(true),
-	hButtonSave(NULL),
-	hButtonSaveC3(NULL),
-	hButtonStart(NULL),
-	hFont(NULL) {}
+	m_hButtonSave(NULL),
+	m_hButtonSaveC3(NULL),
+	m_hBtn(NULL),
+	m_hFont(NULL) {}
 
 MainWindow::~MainWindow() {}
 
@@ -48,7 +49,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 	switch (msg) {
 	case WM_CREATE:
 	{
-		hFont = CreateFontW(0, 0, 0, 0, FW_DONTCARE,
+		m_hFont = CreateFontW(0, 0, 0, 0, FW_DONTCARE,
 							FALSE, FALSE, FALSE,
 							GB2312_CHARSET,
 							OUT_DEFAULT_PRECIS,
@@ -57,70 +58,50 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 							DEFAULT_PITCH | FF_DONTCARE,
 							L"Segoe UI");
 
-		hButtonStart = CreateWindowW(
+		m_hBtn = CreateWindowW(
 			WC_BUTTONW, L"Start",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			10, 10, 100, 40,
 			hwnd, NULL, ohms::global::hInst, NULL);
-		SendMessageW(hButtonStart, WM_SETFONT, (WPARAM)hFont, TRUE);
+		SendMessageW(m_hBtn, WM_SETFONT, (WPARAM)m_hFont, TRUE);
 
-		/*hButtonStop = CreateWindowW(
-			WC_BUTTONW, L"Stop",
-			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-			10, 70, 100, 40,
-			hwnd, NULL, ohms::global::hInst, NULL);
-		SendMessageW(hButtonStop, WM_SETFONT, (WPARAM)hFont, TRUE);*/
-
-		hButtonSaveC3 = CreateWindowW(
+		m_hButtonSaveC3 = CreateWindowW(
 			WC_BUTTONW, L"Save BGR",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			10, 370, 100, 40,
 			hwnd, NULL, ohms::global::hInst, NULL);
-		SendMessageW(hButtonSaveC3, WM_SETFONT, (WPARAM)hFont, TRUE);
+		SendMessageW(m_hButtonSaveC3, WM_SETFONT, (WPARAM)m_hFont, TRUE);
 
-		hButtonSave = CreateWindowW(
+		m_hButtonSave = CreateWindowW(
 			WC_BUTTONW, L"Save BGRA",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			10, 430, 100, 40,
 			hwnd, NULL, ohms::global::hInst, NULL);
-		SendMessageW(hButtonSave, WM_SETFONT, (WPARAM)hFont, TRUE);
+		SendMessageW(m_hButtonSave, WM_SETFONT, (WPARAM)m_hFont, TRUE);
 		break;
 	}
 
 	case WM_DESTROY:
 	{
-		DestroyWindow(hButtonSaveC3);
-		DestroyWindow(hButtonSave);
-		//DestroyWindow(hButtonStop);
-		DestroyWindow(hButtonStart);
-		DeleteObject(hFont);
+		DestroyWindow(m_hButtonSaveC3);
+		DestroyWindow(m_hButtonSave);
+		DestroyWindow(m_hBtn);
+		DeleteObject(m_hFont);
 		break;
 	}
 
-	case WM_PAINT:
+	/*case WM_PAINT:
 	{
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hwnd, &ps);
-		SetBkMode(hdc, TRANSPARENT);
+		//SetBkMode(hdc, TRANSPARENT);
 
-		HGDIOBJ hOldFont = SelectObject(hdc, hFont);
+		//HGDIOBJ hOldFont = SelectObject(hdc, m_hFont);
 
-		/*RECT rect = {10, 130, 220, 120};
-		if (running) {
-			constexpr WCHAR str[] = L"Running";
-			DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOCLIP | DT_CALCRECT);
-			DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK);
-		}
-		else {
-			constexpr WCHAR str[] = L"Stopped";
-			DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK | DT_NOCLIP | DT_CALCRECT);
-			DrawTextW(hdc, str, -1, &rect, DT_LEFT | DT_TOP | DT_WORDBREAK);
-		}*/
-
-		SelectObject(hdc, hOldFont);
+		//SelectObject(hdc, hOldFont);
 		EndPaint(hwnd, &ps);
 		break;
-	}
+	}*/
 
 	case WM_CLOSE:
 		stop();
@@ -131,22 +112,19 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 		switch (HIWORD(wp)) {
 		case BN_CLICKED:
 		{
-			if ((HWND)lp == hButtonStart) {
-				if (m_isStart) {
+			if ((HWND)lp == m_hBtn) {
+				if (m_isStart)
 					start();
-
-				}
-				else {
+				else
 					stop();
-				}
 			}
-			else if ((HWND)lp == hButtonSave) {
-				if (!ohms::global::capture->saveMat(false, saveCount++)) {
+			else if ((HWND)lp == m_hButtonSave) {
+				if (!ohms::global::capture->saveMat(false, m_saveCount++)) {
 					MessageBoxW(hwnd, L"Failed to save.", L"ERROR", MB_ICONERROR);
 				}
 			}
-			else if ((HWND)lp == hButtonSaveC3) {
-				if (!ohms::global::capture->saveMat(true, saveCount++)) {
+			else if ((HWND)lp == m_hButtonSaveC3) {
+				if (!ohms::global::capture->saveMat(true, m_saveCount++)) {
 					MessageBoxW(hwnd, L"Failed to save.", L"ERROR", MB_ICONERROR);
 				}
 			}
@@ -158,9 +136,8 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 		break;
 
 	case WM_TIMER:
-		if (wp == g_timer) {
+		if (wp == g_timer)
 			update();
-		}
 		break;
 
 	default:
@@ -233,10 +210,11 @@ void MainWindow::update() {
 }
 
 void MainWindow::setBtnText(const WCHAR* text) {
-	SetWindowTextW(hButtonStart, text);
+	SetWindowTextW(m_hBtn, text);
 	return;
 }
 
-void MainWindow::setBtnEnabled(bool enabled) {}
+void MainWindow::setBtnEnabled(bool enabled) {
+}
 
 } // namespace ohms

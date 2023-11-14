@@ -24,13 +24,13 @@ public:
 	void setBtnEnabled(bool enabled);
 
 protected:
-	HFONT hFont;
-	HWND hButtonStart;
-	HWND hButtonSave;
-	HWND hButtonSaveC3;
+	HFONT m_hFont;
+	HWND m_hBtn;
+	HWND m_hButtonSave;
+	HWND m_hButtonSaveC3;
 
 	bool m_isStart;
-	size_t saveCount = 0;
+	size_t m_saveCount;
 };
 
 } // namespace ohms

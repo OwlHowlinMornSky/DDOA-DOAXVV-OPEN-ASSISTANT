@@ -44,10 +44,9 @@ public:
 	virtual bool saveMat(bool C3, size_t id) = 0;
 	/**
 	 * @brief 获取当前 cv::Mat。
-	 * @return 当前 cv::Mat。可能为 nullptr。
+	 * @param target: 保存 cv::Mat 的地方。
+	 * @return 操作是否成功。
 	*/
-	virtual const cv::Mat* getMat() = 0;
-
 	virtual bool copyMat(cv::Mat& target) = 0;
 };
 

@@ -116,15 +116,11 @@ bool Capture::isRefreshed() {
 
 bool Capture::saveMat(bool C3, size_t id) {
 	if (m_capture) {
-		return ohms::Saver::instance().save(m_capture->getCapMat(), static_cast<unsigned long long>(time(0)), C3, id);
+		cv::Mat mat;
+		m_capture->copyMat(mat);
+		return ohms::Saver::instance().save(mat, static_cast<unsigned long long>(time(0)), C3, id);
 	}
 	return false;
-}
-
-const cv::Mat* Capture::getMat() {
-	if (m_capture == nullptr)
-		return nullptr;
-	return &m_capture->getCapMat();
 }
 
 bool Capture::copyMat(cv::Mat& target) {

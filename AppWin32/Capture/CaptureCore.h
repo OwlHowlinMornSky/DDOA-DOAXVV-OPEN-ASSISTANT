@@ -27,9 +27,19 @@ public:
 	~CaptureCore();
 
 public:
+	/**
+	 * @brief 请求刷新 cv::Mat。
+	*/
 	void askForRefresh();
+	/**
+	 * @brief 是否已经刷新 cv::Mat。
+	 * @return ture 则 已经刷新。
+	*/
 	bool isRefreshed();
-	const cv::Mat& getCapMat();
+	/**
+	 * @brief 获取当前 cv::Mat。
+	 * @param target: 保存位置。
+	*/
 	void copyMat(cv::Mat& target);
 
 public:
