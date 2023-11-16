@@ -172,7 +172,7 @@ begin_point:
 	ohms::global::logger->addString(L"等待结算");
 	// 等待结束。
 	rect = { 640, 35, 320, 70 }; // 640 -> 960, 140 ( 35 -> 105 )
-	if (!step_waitFor(true, m_result, rect, seconds(5 * 60.0f), 30)) {
+	if (!step_waitFor(true, m_result, rect, seconds(5 * 60.0f), 25)) {
 		ohms::global::logger->addString(L" ");
 		ohms::global::logger->addString(L"任务出错: 挑战超时");
 		m_askedForStop = true;

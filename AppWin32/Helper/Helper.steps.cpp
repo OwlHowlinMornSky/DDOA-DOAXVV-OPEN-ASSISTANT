@@ -85,7 +85,7 @@ bool Helper::step_waitFor(
 			Sleep(30);
 		}
 	}
-	return res;
+	return res || m_askedForStop;
 }
 
 bool Helper::step_check(
@@ -187,6 +187,8 @@ bool Helper::keepClickingUntil(
 	unsigned int tried = 0;
 	cv::Rect oldRect = rect;
 	do {
+		if (m_askedForStop)
+			break;
 		if (maxTry > 0 && tried >= maxTry)
 			return false;
 		tried++;
