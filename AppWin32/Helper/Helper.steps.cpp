@@ -154,7 +154,7 @@ bool Helper::step_find(
 			srcImage,
 			matchLocation,
 			cv::Point(matchLocation.x + matTemplate.cols, matchLocation.y + matTemplate.rows),
-			cv::Scalar(0, 0, 255),
+			res ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255),
 			2, 8, 0
 		);
 		cv::imshow("show", srcImage);
