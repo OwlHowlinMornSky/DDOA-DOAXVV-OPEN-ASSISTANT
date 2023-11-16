@@ -45,6 +45,7 @@ protected:
 	HWND m_hBtn;
 	HWND m_hButtonSave;
 	HWND m_hButtonSaveC3;
+	HWND m_hList;
 
 	bool m_isStart;
 	size_t m_saveCount;

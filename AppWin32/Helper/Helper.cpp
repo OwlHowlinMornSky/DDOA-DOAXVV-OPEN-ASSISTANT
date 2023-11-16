@@ -3,7 +3,6 @@
 #include "../Global.h"
 
 #include <thread>
-#include <iostream>
 
 namespace ohms {
 
@@ -15,6 +14,8 @@ Helper::Helper() :
 	m_start = cv::imread("assets/start.png");
 	m_result = cv::imread("assets/result.png");
 	m_loading = cv::imread("assets/loading.png");
+	m_fp = cv::imread("assets/fp.png");
+	m_default = cv::imread("assets/default.png");
 
 	return;
 }
@@ -34,6 +35,8 @@ bool Helper::start() {
 
 void Helper::askForStop() {
 	m_askedForStop = true;
+	ohms::global::logger->addString(L" ");
+	ohms::global::logger->addString(L"正在停止...");
 	return;
 }
 
@@ -60,94 +63,162 @@ void Helper::work() {
 		SWP_NOZORDER | SWP_NOREDRAW | SWP_NOSIZE | SWP_NOSENDCHANGING
 	);*/
 
+#ifndef _DEBUG
+	if (ohms::global::show)
+#endif // _DEBUG
+		cv::destroyAllWindows();
+
 	m_running = false;
-	ohms::global::pushHRM(HelperReturnMessage::Stopped);
 	ohms::global::pushHRM(HelperReturnMessage::BtnToStart);
+	ohms::global::pushHRM(HelperReturnMessage::Stopped);
+
 	return;
 }
 
 void Helper::subwork_fight() {
+	ohms::global::logger->addString(L"开始任务: 挑战赛");
+
 	cv::Rect rect;
 	cv::Point pt;
 
-begin_point:
-	//goto debug_point;
+	size_t i = 0;
 
-	std::cout << "开始查找 上一次比赛" << std::endl;
+begin_point:
+	++i;
+	ohms::global::logger->addString(L" ");
+	ohms::global::logger->addString(
+		std::wstring(L"开始第 ") + std::to_wstring(i) + L" 次比赛"
+	);
+
+	ohms::global::logger->addString(L"开始查找 上一次比赛");
 	// 查找“上一次比赛”
 	rect = { 600, 240, 100, 300 }; // 600 -> 700, 240 -> 540
-	step_waitFor(true, m_lastFight, rect);
+	if (!step_waitFor(true, m_lastFight, rect, seconds(5.0f))) {
+		ohms::global::logger->addString(L" ");
+		ohms::global::logger->addString(L"任务出错: 找不到上一次比赛");
+		m_askedForStop = true;
+		MessageBoxW(NULL, L"找不到上一次比赛", L"DOAXVV-helper: Task Error", MB_ICONERROR);
+	}
 	if (m_askedForStop)
 		goto end_point;
-	std::cout << "找到 上一次比赛" << std::endl;
+	ohms::global::logger->addString(L"找到 上一次比赛");
 
-	std::cout << "点击 上一次比赛" << std::endl;
+	ohms::global::logger->addString(L"点击 上一次比赛");
 	// 点击上一次比赛，直到进入编队画面（找到挑战按钮）。
 	pt = cv::Point(rect.x + 150, rect.y);
 	rect = { 700, 470, 200, 70 }; // 700 -> 900, 470 -> 540
-	keepClickingUntil(
+	if (!keepClickingUntil(
 		pt,
 		rect,
-		m_start
-	);
+		m_start,
+		10
+	)) {
+		ohms::global::logger->addString(L" ");
+		ohms::global::logger->addString(L"任务出错: 无法进入上一次比赛");
+		m_askedForStop = true;
+		MessageBoxW(NULL, L"无法进入上一次比赛", L"DOAXVV-helper: Task Error", MB_ICONERROR);
+	}
 	if (m_askedForStop)
 		goto end_point;
-	std::cout << "已进入 编队页面" << std::endl;
+	ohms::global::logger->addString(L"已进入 编队页面");
 
-	std::cout << "开始查找 挑战 按钮" << std::endl;
+	ohms::global::logger->addString(L"开始查找 挑战 按钮");
 	// 查找“挑战”按钮。
 	rect = { 700, 470, 200, 70 }; // 700 -> 900, 470 -> 540
 	step_waitFor(true, m_start, rect);
 	if (m_askedForStop)
 		goto end_point;
-	std::cout << "找到 挑战 按钮" << std::endl;
+	ohms::global::logger->addString(L"找到 挑战 按钮");
 
-	std::cout << "点击 挑战 按钮" << std::endl;
-	// 点击挑战，直到进入加载画面。
-	pt = cv::Point(rect.x + 50, rect.y + 20);
-	rect = { 0, 0, 300, 180 }; // 300, 180
-	keepClickingUntil(
-		pt,
-		rect,
-		m_loading,
-		0, 
-		seconds(1.0f),
-		20
-	);
+	ohms::global::logger->addString(L"点击 挑战 按钮");
+	{
+		size_t tc = 0;
+		while (true) {
+			// 点击挑战，直到进入加载画面。
+			pt = cv::Point(rect.x + 50, rect.y + 20);
+			cv::Rect ld_rect{ 0, 0, 300, 180 }; // 300, 180
+			if (keepClickingUntil(
+				pt,
+				ld_rect,
+				m_loading,
+				4,
+				seconds(0.5f),
+				20
+			)) {
+				break;
+			}
+			cv::Rect fp_rect;
+			fp_rect = { 256, 60, 400, 210 }; // 256 -> 656, 60 -> 270
+			if (step_waitFor(true, m_fp, fp_rect, milliseconds(1000))) {
+				ohms::global::logger->addString(L" ");
+				ohms::global::logger->addString(L"任务出错: FP耗尽");
+				m_askedForStop = true;
+				MessageBoxW(NULL, L"FP耗尽", L"DOAXVV-helper: Task Error", MB_ICONERROR);
+				break;
+			}
+			if (++tc > 10) {
+				ohms::global::logger->addString(L" ");
+				ohms::global::logger->addString(L"任务出错: 进入挑战超时");
+				m_askedForStop = true;
+				MessageBoxW(NULL, L"进入挑战超时", L"DOAXVV-helper: Task Error", MB_ICONERROR);
+				break;
+			}
+		}
+	}
 	if (m_askedForStop)
 		goto end_point;
-	std::cout << "已进入 加载页面" << std::endl;
+	ohms::global::logger->addString(L"已进入 加载页面");
 
-	std::cout << "等待挑战结束" << std::endl;
+	ohms::global::logger->addString(L"等待结算");
 	// 等待结束。
-	rect = { 640, 0, 320, 140 }; // 640 -> 960, 140
-	step_waitFor(true, m_result, rect, Time::Zero, 30);
+	rect = { 640, 35, 320, 70 }; // 640 -> 960, 140 ( 35 -> 105 )
+	if (!step_waitFor(true, m_result, rect, seconds(5 * 60.0f), 30)) {
+		ohms::global::logger->addString(L" ");
+		ohms::global::logger->addString(L"任务出错: 挑战超时");
+		m_askedForStop = true;
+		MessageBoxW(NULL, L"挑战超时", L"DOAXVV-helper: Task Error", MB_ICONERROR);
+	}
 	if (m_askedForStop)
 		goto end_point;
-	std::cout << "已进入 挑战结束页面" << std::endl;
+	ohms::global::logger->addString(L"已进入 结算页面");
 
-	std::cout << "正在退出 挑战" << std::endl;
-	//step_click(cv::Point(rect.x + 150, rect.y + 40));
+	ohms::global::logger->addString(L"正在退出 结算");
 	// 点击，直到进入加载画面。
 	pt = cv::Point(rect.x + 50, rect.y + 20);
 	rect = { 0, 0, 300, 180 }; // 300, 180
-	keepClickingUntil(
+	if (!keepClickingUntil(
 		pt,
 		rect,
 		m_loading,
-		0,
+		60,
 		seconds(0.1f),
 		20
-	);
+	)) {
+		ohms::global::logger->addString(L" ");
+		ohms::global::logger->addString(L"任务出错: 退出结算超时");
+		m_askedForStop = true;
+		MessageBoxW(NULL, L"退出结算超时", L"DOAXVV-helper: Task Error", MB_ICONERROR);
+	}
 	if (m_askedForStop)
 		goto end_point;
-	std::cout << "已退出 挑战" << std::endl;
+	ohms::global::logger->addString(L"已退出 结算");
+
+	ohms::global::logger->addString(L"正在退出 挑战");
+	rect = { 640, 80, 320, 190 }; // 640 -> 960, 80 -> 270
+	if (!step_waitFor(true, m_default, rect, seconds(60.0f))) {
+		ohms::global::logger->addString(L" ");
+		ohms::global::logger->addString(L"任务出错: 退出挑战超时");
+		m_askedForStop = true;
+		MessageBoxW(NULL, L"退出挑战超时", L"DOAXVV-helper: Task Error", MB_ICONERROR);
+	}
+	if (m_askedForStop)
+		goto end_point;
+	ohms::global::logger->addString(L"已退出 挑战");
 
 	goto begin_point;
 
 end_point:
-	std::cout << "任务结束" << std::endl;
-	cv::destroyAllWindows();
+	ohms::global::logger->addString(L"结束任务: 挑战赛");
 	return;
 }
 

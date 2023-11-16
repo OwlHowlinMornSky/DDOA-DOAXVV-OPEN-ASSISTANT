@@ -67,6 +67,8 @@ protected:
 	cv::Mat m_start;
 	cv::Mat m_result;
 	cv::Mat m_loading;
+	cv::Mat m_fp;
+	cv::Mat m_default;
 };
 
 }

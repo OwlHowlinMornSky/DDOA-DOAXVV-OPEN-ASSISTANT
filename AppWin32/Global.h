@@ -6,6 +6,7 @@
 #include "Helper/IHelper.h"
 #include <queue>
 #include <mutex>
+#include "Window/Logger.h"
 
 namespace ohms::global {
 
@@ -36,6 +37,11 @@ extern std::mutex mutexHRM;
  * @brief 在 MainWindow 的 start 里写入，在整个任务周期使用。
 */
 extern HWND doaxvv;
+
+
+extern std::unique_ptr<ohms::Logger> logger;
+
+extern bool show;
 
 /**
  * @brief 向队列压入消息。

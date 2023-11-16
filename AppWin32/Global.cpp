@@ -11,6 +11,10 @@ std::mutex mutexHRM;
 
 HWND doaxvv = 0;
 
+std::unique_ptr<ohms::Logger> logger;
+
+extern bool show = false;
+
 void pushHRM(ohms::HelperReturnMessage hrm) {
 	std::lock_guard lg(mutexHRM);
 	helperReturnMessage.push(hrm);

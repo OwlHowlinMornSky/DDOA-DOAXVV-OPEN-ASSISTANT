@@ -103,6 +103,7 @@
     <ClInclude Include="Helper\Time.h" />
     <ClInclude Include="UniqueInstance.h" />
     <ClInclude Include="Window\framework.h" />
+    <ClInclude Include="Window\Logger.h" />
     <ClInclude Include="Window\MainWindow.h" />
     <ClInclude Include="Window\targetver.h" />
     <ClInclude Include="Window\Window.h" />
@@ -118,6 +119,7 @@
     <ClCompile Include="Helper\Time.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UniqueInstance.cpp" />
+    <ClCompile Include="Window\Logger.cpp" />
     <ClCompile Include="Window\MainWindow.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>

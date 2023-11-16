@@ -51,12 +51,16 @@ bool Helper::step_waitFor(
 	bool res = false;
 	Clock clk;
 	while (!m_askedForStop) {
-		MSG msg{ 0 };
-		if (PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
+		if (MSG msg{ 0 };
+#ifndef _DEBUG
+			ohms::global::show && 
+#endif // !_DEBUG
+			PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
 			TranslateMessage(&msg);
 			DispatchMessageW(&msg);
 		}
-		else {
+		else
+		{
 			if (ohms::global::capture->isRefreshed()) {
 				cv::Mat mat;
 				if (ohms::global::capture->copyMat(mat)) {
@@ -142,34 +146,19 @@ bool Helper::step_find(
 		rect = r;
 	}
 
-	/*cv::Mat sh(matSample);
-	cv::rectangle(
-		sh,
-		rect,
-		cv::Scalar(0, 0, 255),
-		2, 8, 0
-	);*/
-	cv::rectangle(
-		srcImage,
-		matchLocation,
-		cv::Point(matchLocation.x + matTemplate.cols, matchLocation.y + matTemplate.rows),
-		cv::Scalar(0, 0, 255),
-		2, 8, 0
-	);
-	/*
-	cv::rectangle(
-		resultImage,
-		matchLocation,
-		cv::Point(matchLocation.x + matTemplate.cols, matchLocation.y + matTemplate.rows),
-		cv::Scalar(0, 0, 255),
-		2, 8, 0
-	);
-
-	cv::imshow("sh", sh);
-	cv::imshow("test", srcImage);
-	cv::imshow("res", resultImage);
-	cv::waitKey();*/
-	cv::imshow("test", srcImage);
+#ifndef _DEBUG
+	if (ohms::global::show)
+#endif
+	{
+		cv::rectangle(
+			srcImage,
+			matchLocation,
+			cv::Point(matchLocation.x + matTemplate.cols, matchLocation.y + matTemplate.rows),
+			cv::Scalar(0, 0, 255),
+			2, 8, 0
+		);
+		cv::imshow("show", srcImage);
+	}
 
 	return res;
 }
@@ -195,7 +184,7 @@ bool Helper::keepClickingUntil(
 ) {
 	if (time < Time::Zero)
 		time = milliseconds(1000);
-	int tried = 0;
+	unsigned int tried = 0;
 	cv::Rect oldRect = rect;
 	do {
 		if (maxTry > 0 && tried >= maxTry)

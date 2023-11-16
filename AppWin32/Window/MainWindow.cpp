@@ -28,6 +28,7 @@ MainWindow::MainWindow() :
 	m_hButtonSave(NULL),
 	m_hButtonSaveC3(NULL),
 	m_hBtn(NULL),
+	m_hList(NULL),
 	m_hFont(NULL) {}
 
 MainWindow::~MainWindow() {}
@@ -36,7 +37,8 @@ bool MainWindow::create(int nShowCmd) noexcept {
 	Window::create(nShowCmd);
 	SetWindowTextW(m_hwnd, g_wndName);
 	SetTimer(m_hwnd, g_timer, 33, NULL);
-	return false;
+	ohms::global::logger = std::make_unique<ohms::Logger>(m_hList);
+	return true;
 }
 
 void MainWindow::destroy() noexcept {
@@ -86,6 +88,15 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 			hwnd, NULL, ohms::global::hInst, NULL
 		);
 		SendMessageW(m_hButtonSave, WM_SETFONT, (WPARAM)m_hFont, TRUE);
+
+		m_hList = CreateWindowW(
+			WC_LISTBOXW, L"Log",
+			WS_VISIBLE | WS_CHILD | WS_BORDER | LBS_HASSTRINGS | WS_VSCROLL | WS_HSCROLL,
+			160, 10, 600, 500,
+			hwnd, NULL, ohms::global::hInst, NULL
+		);
+		SendMessageW(m_hList, WM_SETFONT, (WPARAM)m_hFont, TRUE);
+
 		break;
 	}
 
@@ -142,6 +153,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 }
 
 void MainWindow::start() {
+	ohms::global::logger->clear();
 	HWND dst = FindWindowW(g_findCls, g_findWnd);
 	if (dst == NULL) {
 		printf_s("Cannot find DOAXVV window.\n");
@@ -190,6 +202,7 @@ void MainWindow::update() {
 		switch (msg) {
 		case HelperReturnMessage::Stopped:
 			ohms::global::capture->stopCapture();
+			ohms::global::logger->addString(L"已停止");
 			break;
 		case HelperReturnMessage::BtnToStop:
 			setBtnText(L"Stop");
