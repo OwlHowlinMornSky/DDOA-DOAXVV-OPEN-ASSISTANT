@@ -13,6 +13,9 @@ namespace {
 const WCHAR g_clsName[] = L"OHMS.DOAXVVHELPER.WNDCLS.MAIN";
 const WCHAR g_wndName[] = L"DOAXVV-helper";
 
+const WCHAR g_findCls[] = L"DOAX VenusVacation";
+const WCHAR g_findWnd[] = L"DOAX VenusVacation";
+
 constexpr int g_timer{ 1 };
 
 } // namespace
@@ -139,7 +142,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 }
 
 void MainWindow::start() {
-	HWND dst = FindWindowW(L"DOAX VenusVacation", L"DOAX VenusVacation Launcher");
+	HWND dst = FindWindowW(g_findCls, g_findWnd);
 	if (dst == NULL) {
 		printf_s("Cannot find DOAXVV window.\n");
 		return;

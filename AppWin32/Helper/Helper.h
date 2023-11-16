@@ -5,6 +5,7 @@
 #include <atomic>
 #include "Clock.h"
 #include "Rect.h"
+#include <opencv2/opencv.hpp>
 
 namespace ohms {
 

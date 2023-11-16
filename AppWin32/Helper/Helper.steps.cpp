@@ -1,7 +1,6 @@
 ﻿#include "Helper.h"
 
 #include "../Global.h"
-#include <opencv2/opencv.hpp>
 
 #include <thread>
 #include <iostream>
