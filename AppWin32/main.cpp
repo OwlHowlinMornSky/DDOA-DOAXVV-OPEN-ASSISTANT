@@ -21,7 +21,10 @@ int CALLBACK wWinMain(
 		ohms::global::hInst = hInstance;
 		ohms::global::capture = std::make_unique<ohms::capture::wgc::Capture>();
 		ohms::Saver::init();
-		ohms::global::helper = std::make_unique<ohms::Helper>();
+
+		auto helper = std::make_unique<ohms::Helper>();
+
+		ohms::global::helper = std::move(helper);
 	}
 	// Run
 	{

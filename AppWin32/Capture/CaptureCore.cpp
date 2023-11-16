@@ -132,8 +132,18 @@ bool CaptureCore::isRefreshed() {
 
 void CaptureCore::copyMat(cv::Mat& target) {
 	std::lock_guard<std::mutex> lock(m_mutex_cap);
-	target = m_cap;
-    return;
+	if (m_cap.size().width != 960 || m_cap.size().height != 540) {
+		auto sz = m_cap.size();
+		cv::resize(
+			m_cap, target,
+			cv::Size(960, 540),
+			0.0, 0.0, cv::InterpolationFlags::INTER_CUBIC
+		);
+	}
+	else {
+		m_cap.copyTo(target);
+	}
+	return;
 }
 
 // Start sending capture frames
@@ -201,25 +211,15 @@ void CaptureCore::OnFrameArrived(
 		m_d3dContext->Map(m_texture, 0, D3D11_MAP_READ, 0, &mappedTex);
 		m_d3dContext->Unmap(m_texture, 0);
 
-		cv::Mat c(m_lastTexSize.Height, m_lastTexSize.Width,
-				  CV_8UC4, mappedTex.pData, mappedTex.RowPitch);
-
-		/* {
-			auto sz = c.size();
-			if (sz.width != 1280 || sz.height != 720) {
-				cv::resize(
-					c, c,
-					cv::Size(1280, 720),
-					0.0, 0.0, cv::InterpolationFlags::INTER_CUBIC
-				);
-			}
-		}*/
-
+		cv::Mat c(
+			m_lastTexSize.Height, m_lastTexSize.Width,
+			CV_8UC4, mappedTex.pData, mappedTex.RowPitch
+		);
 		{
 			std::lock_guard<std::mutex> lock(m_mutex_cap);
-			m_cap = c;
+			cv::cvtColor(c, m_cap, cv::ColorConversionCodes::COLOR_BGRA2BGR, 3);
+			//c.copyTo(m_cap);
 		}
-
 		m_img_updated.store(true);
 	}
 

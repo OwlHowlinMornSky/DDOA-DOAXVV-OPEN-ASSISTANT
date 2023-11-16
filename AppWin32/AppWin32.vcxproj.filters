@@ -90,12 +90,6 @@
     <ClInclude Include="Helper\Clock.h">
       <Filter>Helper\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\Rect.h">
-      <Filter>Helper\头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Helper\Point.h">
-      <Filter>Helper\头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

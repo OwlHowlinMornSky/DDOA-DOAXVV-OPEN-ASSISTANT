@@ -4,7 +4,6 @@
 #include <mutex>
 #include <atomic>
 #include "Clock.h"
-#include "Rect.h"
 #include <opencv2/opencv.hpp>
 
 namespace ohms {
@@ -31,38 +30,43 @@ protected:
 	*/
 	void subwork_fight();
 
+public:
 	bool step_waitFor(
 		bool find,
-		const cv::Mat& temp,
-		Rect& rect,
-		Time maxTime,
-		int threshold
+		const cv::Mat& matTemplate,
+		cv::Rect& rect,
+		Time maxTime = Time::Zero,
+		unsigned int threshold = 10
 	);
 	bool step_check(
-		const cv::Mat& mat,
-		const cv::Mat& Mat,
-		int threshold
+		const cv::Mat& matSample,
+		const cv::Mat& matTemplate,
+		unsigned int threshold = 10
 	);
 	bool step_find(
-		const cv::Mat& mat,
-		const cv::Mat& Mat,
-		Rect& rect,
-		int threshold
+		const cv::Mat& matSample,
+		const cv::Mat& matTemplate,
+		cv::Rect& rect,
+		unsigned int threshold = 10
 	);
-	bool step_moveCursorTo(Point pt, Time time);
-	bool step_click(Point pt);
+	bool step_click(cv::Point pt);
 	bool keepClickingUntil(
-		Point pt,
-		Rect rect,
-		const cv::Mat& mat,
-		int maxTry,
-		Time time,
-		int threshold
+		cv::Point pt,
+		cv::Rect rect,
+		const cv::Mat& matTemplate,
+		unsigned int maxTry = 10,
+		Time time = seconds(1.0f),
+		unsigned int threshold = 10
 	);
 
 protected:
 	std::atomic_bool m_running;
 	std::atomic_bool m_askedForStop;
+
+	cv::Mat m_lastFight;
+	cv::Mat m_start;
+	cv::Mat m_result;
+	cv::Mat m_loading;
 };
 
 }

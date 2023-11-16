@@ -9,6 +9,8 @@ std::unique_ptr<ohms::IHelper> helper;
 std::queue<ohms::HelperReturnMessage> helperReturnMessage;
 std::mutex mutexHRM;
 
+HWND doaxvv = 0;
+
 void pushHRM(ohms::HelperReturnMessage hrm) {
 	std::lock_guard lg(mutexHRM);
 	helperReturnMessage.push(hrm);

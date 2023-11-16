@@ -66,6 +66,7 @@
       <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\opencv\4.8.0\build\x64\vc16\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>windowsapp.lib;dwmapi.lib;opencv_world480d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -87,6 +88,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\opencv\4.8.0\build\x64\vc16\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>windowsapp.lib;dwmapi.lib;opencv_world480.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -98,8 +100,6 @@
     <ClInclude Include="Helper\Clock.h" />
     <ClInclude Include="Helper\Helper.h" />
     <ClInclude Include="Helper\IHelper.h" />
-    <ClInclude Include="Helper\Point.h" />
-    <ClInclude Include="Helper\Rect.h" />
     <ClInclude Include="Helper\Time.h" />
     <ClInclude Include="UniqueInstance.h" />
     <ClInclude Include="Window\framework.h" />

@@ -147,6 +147,8 @@ void MainWindow::start() {
 		printf_s("Cannot find DOAXVV window.\n");
 		return;
 	}
+	ohms::global::doaxvv = dst;
+
 	if (!IsWindow(dst)) {
 		printf_s("Target is not a widnow.\n");
 		return;
