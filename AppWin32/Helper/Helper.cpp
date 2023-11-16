@@ -93,7 +93,7 @@ begin_point:
 	ohms::global::logger->addString(L"开始查找 上一次比赛");
 	// 查找“上一次比赛”
 	rect = { 600, 240, 100, 300 }; // 600 -> 700, 240 -> 540
-	if (!step_waitFor(true, m_lastFight, rect, seconds(5.0f))) {
+	if (!step_waitFor(true, m_lastFight, rect, seconds(15.0f))) {
 		ohms::global::logger->addString(L" ");
 		ohms::global::logger->addString(L"任务出错: 找不到上一次比赛");
 		m_askedForStop = true;

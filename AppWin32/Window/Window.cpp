@@ -64,7 +64,7 @@ bool Window::create(int nShowCmd) noexcept {
 		return false;
 	m_hwnd = CreateWindowExW(
 		0L, g_clsName, L"",
-		WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME | WS_CLIPCHILDREN | WS_CLIPSIBLINGS,
+		WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX | WS_CLIPCHILDREN | WS_CLIPSIBLINGS,
 		CW_USEDEFAULT, CW_USEDEFAULT, 800, 600,
 		NULL, NULL, GetModuleHandleW(NULL), this
 	);
