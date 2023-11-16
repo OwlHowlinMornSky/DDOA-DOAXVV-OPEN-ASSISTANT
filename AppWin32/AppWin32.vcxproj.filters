@@ -84,6 +84,18 @@
     <ClInclude Include="Helper\Helper.h">
       <Filter>Helper\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Helper\Time.h">
+      <Filter>Helper\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper\Clock.h">
+      <Filter>Helper\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper\Rect.h">
+      <Filter>Helper\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper\Point.h">
+      <Filter>Helper\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -111,6 +123,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Helper\Helper.cpp">
+      <Filter>Helper\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\Time.cpp">
+      <Filter>Helper\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\Clock.cpp">
+      <Filter>Helper\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\Helper.steps.cpp">
       <Filter>Helper\源文件</Filter>
     </ClCompile>
   </ItemGroup>

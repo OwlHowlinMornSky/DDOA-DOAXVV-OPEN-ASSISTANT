@@ -66,6 +66,8 @@ void Helper::subwork_fight() {
 		}
 	}
 	cv::destroyAllWindows();
+
+	return;
 }
 
 }
