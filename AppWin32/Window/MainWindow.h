@@ -2,6 +2,8 @@
 
 #include "Window.h"
 
+#include <ohms/WGC.h>
+
 namespace ohms {
 
 class MainWindow :
@@ -43,12 +45,14 @@ public:
 protected:
 	HFONT m_hFont;
 	HWND m_hBtn;
-	HWND m_hButtonSave;
-	HWND m_hButtonSaveC3;
+	//HWND m_hButtonSave;
+	//HWND m_hButtonSaveC3;
 	HWND m_hList;
 
 	bool m_isStart;
-	size_t m_saveCount;
+	//size_t m_saveCount;
+
+	wgc::ICapture* r_capture;
 };
 
 } // namespace ohms

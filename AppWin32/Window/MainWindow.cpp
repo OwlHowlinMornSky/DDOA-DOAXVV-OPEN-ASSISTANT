@@ -23,17 +23,23 @@ constexpr int g_timer{ 1 };
 namespace ohms {
 
 MainWindow::MainWindow() :
-	m_saveCount(0),
+	//m_saveCount(0),
 	m_isStart(true),
-	m_hButtonSave(NULL),
-	m_hButtonSaveC3(NULL),
+	//m_hButtonSave(NULL),
+	//m_hButtonSaveC3(NULL),
 	m_hBtn(NULL),
 	m_hList(NULL),
-	m_hFont(NULL) {}
+	m_hFont(NULL),
+	r_capture(nullptr) {}
 
 MainWindow::~MainWindow() {}
 
 bool MainWindow::create(int nShowCmd) noexcept {
+	r_capture = wgc::getInstance();
+	if (!r_capture) {
+		return false;
+	}
+
 	Window::create(nShowCmd);
 	SetWindowTextW(m_hwnd, g_wndName);
 	SetTimer(m_hwnd, g_timer, 33, NULL);
@@ -73,7 +79,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 		);
 		SendMessageW(m_hBtn, WM_SETFONT, (WPARAM)m_hFont, TRUE);
 
-		m_hButtonSaveC3 = CreateWindowW(
+		/*m_hButtonSaveC3 = CreateWindowW(
 			WC_BUTTONW, L"Save BGR",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			10, 370, 100, 40,
@@ -87,7 +93,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 			10, 430, 100, 40,
 			hwnd, NULL, ohms::global::hInst, NULL
 		);
-		SendMessageW(m_hButtonSave, WM_SETFONT, (WPARAM)m_hFont, TRUE);
+		SendMessageW(m_hButtonSave, WM_SETFONT, (WPARAM)m_hFont, TRUE);*/
 
 		m_hList = CreateWindowW(
 			WC_LISTBOXW, L"Log",
@@ -102,8 +108,8 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 
 	case WM_DESTROY:
 	{
-		DestroyWindow(m_hButtonSaveC3);
-		DestroyWindow(m_hButtonSave);
+		//DestroyWindow(m_hButtonSaveC3);
+		//DestroyWindow(m_hButtonSave);
 		DestroyWindow(m_hBtn);
 		DeleteObject(m_hFont);
 		break;
@@ -124,7 +130,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 				else
 					stop();
 			}
-			else if ((HWND)lp == m_hButtonSave) {
+			/*else if ((HWND)lp == m_hButtonSave) {
 				if (!ohms::global::capture->saveMat(false, m_saveCount++)) {
 					MessageBoxW(hwnd, L"Failed to save.", L"ERROR", MB_ICONERROR);
 				}
@@ -133,7 +139,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 				if (!ohms::global::capture->saveMat(true, m_saveCount++)) {
 					MessageBoxW(hwnd, L"Failed to save.", L"ERROR", MB_ICONERROR);
 				}
-			}
+			}*/
 			break;
 		}
 		default:
@@ -169,13 +175,13 @@ void MainWindow::start() {
 		printf_s("Target is minimized.\n");
 		return;
 	}
-	if (!ohms::global::capture->startCapture(dst)) {
+	if (!r_capture->startCapture(dst)) {
 		printf_s("Target cannot be captured.\n");
 		return;
 	}
 	if (!ohms::global::helper->start()) {
 		std::cout << "Start Failed!" << std::endl;
-		ohms::global::capture->stopCapture();
+		r_capture->stopCapture();
 		return;
 	}
 	setBtnEnabled(false);
@@ -201,7 +207,7 @@ void MainWindow::update() {
 		}
 		switch (msg) {
 		case HelperReturnMessage::Stopped:
-			ohms::global::capture->stopCapture();
+			r_capture->stopCapture();
 			ohms::global::logger->addString(L"已停止");
 			break;
 		case HelperReturnMessage::BtnToStop:

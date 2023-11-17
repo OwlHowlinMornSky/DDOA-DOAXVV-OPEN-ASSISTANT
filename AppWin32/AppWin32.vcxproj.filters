@@ -4,9 +4,6 @@
     <Filter Include="Window">
       <UniqueIdentifier>{5fc00d83-06c5-404a-8662-3c4968eb2c03}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Capture">
-      <UniqueIdentifier>{8c9b3fc5-bed7-421d-a137-d56d3ff09148}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Window\头文件">
       <UniqueIdentifier>{9dc88630-7f9e-4d86-b59b-a4cb2599ba09}</UniqueIdentifier>
     </Filter>
@@ -25,15 +22,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Capture\头文件">
-      <UniqueIdentifier>{8e483480-6ca7-40ec-a810-5708dd50dfcb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Capture\源文件">
-      <UniqueIdentifier>{77519933-29e5-4011-ba40-2b69200b0f21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Capture\接口">
-      <UniqueIdentifier>{2048e927-e909-4f9d-b3c4-c652ac9ff83b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Helper">
       <UniqueIdentifier>{a0af3ffa-7e45-4940-bcbf-5a714307cf34}</UniqueIdentifier>
     </Filter>
@@ -48,18 +36,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Capture\ICapture.h">
-      <Filter>Capture\接口</Filter>
-    </ClInclude>
-    <ClInclude Include="Capture\Capture.h">
-      <Filter>Capture\头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Capture\CaptureCore.h">
-      <Filter>Capture\头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Capture\Saver.h">
-      <Filter>Capture\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Window\MainWindow.h">
       <Filter>Window\头文件</Filter>
     </ClInclude>
@@ -97,15 +73,6 @@
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Capture\Capture.cpp">
-      <Filter>Capture\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Capture\CaptureCore.cpp">
-      <Filter>Capture\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Capture\Saver.cpp">
-      <Filter>Capture\源文件</Filter>
     </ClCompile>
     <ClCompile Include="Window\MainWindow.cpp">
       <Filter>Window\源文件</Filter>

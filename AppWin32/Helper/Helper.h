@@ -4,7 +4,10 @@
 #include <mutex>
 #include <atomic>
 #include "Clock.h"
+
 #include <opencv2/opencv.hpp>
+#include "../Window/framework.h"
+#include <ohms/WGC.h>
 
 namespace ohms {
 
@@ -69,6 +72,8 @@ protected:
 	cv::Mat m_loading;
 	cv::Mat m_fp;
 	cv::Mat m_default;
+
+	wgc::ICapture* r_capture;
 };
 
 }

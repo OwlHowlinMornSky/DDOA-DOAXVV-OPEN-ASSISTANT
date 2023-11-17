@@ -43,7 +43,7 @@ bool Helper::step_waitFor(
 	Time maxTime,
 	unsigned int threshold
 ) {
-	ohms::global::capture->askForRefresh();
+	r_capture->askForRefresh();
 	if (!find) {
 		rect.width = matTemplate.size().width;
 		rect.height = matTemplate.size().height;
@@ -61,9 +61,9 @@ bool Helper::step_waitFor(
 		}
 		else
 		{
-			if (ohms::global::capture->isRefreshed()) {
+			if (r_capture->isRefreshed()) {
 				cv::Mat mat;
-				if (ohms::global::capture->copyMat(mat)) {
+				if (r_capture->copyMatTo(mat, true)) {
 					cv::Rect trect = rect;
 					if (find) {
 						res = step_find(mat, matTemplate, trect, threshold);
@@ -81,7 +81,7 @@ bool Helper::step_waitFor(
 			if (maxTime > Time::Zero && clk.getElapsedTime() > maxTime) {
 				break;
 			}
-			ohms::global::capture->askForRefresh();
+			r_capture->askForRefresh();
 			Sleep(30);
 		}
 	}

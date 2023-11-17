@@ -2,7 +2,6 @@
 
 #include "Window/framework.h"
 #include <memory>
-#include "Capture/ICapture.h"
 #include "Helper/IHelper.h"
 #include <queue>
 #include <mutex>
@@ -14,10 +13,7 @@ namespace ohms::global {
  * @brief 本程序实例。
 */
 extern HINSTANCE hInst;
-/**
- * @brief 截图组件实例。
-*/
-extern std::unique_ptr<ohms::capture::wgc::ICapture> capture;
+
 /**
  * @brief 助手实例。
 */

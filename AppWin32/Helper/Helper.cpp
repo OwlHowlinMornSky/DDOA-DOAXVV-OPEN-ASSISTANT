@@ -8,7 +8,8 @@ namespace ohms {
 
 Helper::Helper() :
 	m_askedForStop(false),
-	m_running(false) {
+	m_running(false),
+	r_capture(nullptr) {
 
 	m_lastFight = cv::imread("assets/lastFight.png");
 	m_start = cv::imread("assets/start.png");
@@ -27,6 +28,11 @@ bool Helper::start() {
 		std::cout << "It is now running!" << std::endl;
 		return false;
 	}
+	r_capture = wgc::getInstance();
+	if (!r_capture) {
+		return false;
+	}
+
 	m_askedForStop = false;
 	std::thread sub(&Helper::work, this);
 	sub.detach();
