@@ -82,6 +82,7 @@ protected:
 	std::atomic_bool m_askedForStop;
 
 	cv::Mat m_lastFight;
+	cv::Mat m_newFight;
 	cv::Mat m_start;
 	cv::Mat m_result;
 	cv::Mat m_loading;
@@ -97,4 +98,4 @@ protected:
 	Logger* r_logger;
 };
 
-}
+} // namespace ohms

@@ -20,4 +20,4 @@ void IHelper::drop() {
 	delete ::g_helper;
 }
 
-}
+} // namespace ohms

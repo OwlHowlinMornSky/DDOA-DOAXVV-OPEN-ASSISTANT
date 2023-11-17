@@ -46,4 +46,4 @@ Time microseconds(int64_t amount) {
 	return Time(amount);
 }
 
-}
+} // namespace ohms

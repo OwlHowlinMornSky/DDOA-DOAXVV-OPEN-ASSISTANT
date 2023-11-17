@@ -4,6 +4,9 @@
 
 namespace ohms {
 
+/**
+ * @brief 精确时钟。
+*/
 class Clock final {
 public:
 	Clock();
@@ -15,4 +18,4 @@ protected:
 	Time m_startTime;
 };
 
-}
+} // namespace ohms

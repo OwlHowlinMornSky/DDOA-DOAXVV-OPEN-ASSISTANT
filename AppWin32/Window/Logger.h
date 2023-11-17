@@ -23,4 +23,4 @@ protected:
 	HWND m_tergetList;
 };
 
-}
+} // namespace ohms

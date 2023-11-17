@@ -24,4 +24,4 @@ void drop() {
 	return;
 }
 
-}
+}// namespace UniqueInstance

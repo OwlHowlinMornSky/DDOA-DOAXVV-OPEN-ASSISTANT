@@ -61,14 +61,14 @@ bool Helper::step_waitFor(
 	bool res = false;
 	Clock clk;
 	while (!m_askedForStop) {
-#ifdef _DEBUG
+#ifdef OHMS_DDOA_SHOW
 		if (MSG msg{ 0 };
 			PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
 			TranslateMessage(&msg);
 			DispatchMessageW(&msg);
 		}
 		else
-#endif // !_DEBUG
+#endif // OHMS_DDOA_SHOW
 		{
 			if (r_capture->isRefreshed()) {
 				cv::Mat mat;
@@ -94,7 +94,9 @@ bool Helper::step_waitFor(
 			Sleep(30);
 		}
 	}
-	return res || m_askedForStop;
+	if (m_askedForStop)
+		throw 0;
+	return res;
 }
 
 bool Helper::step_check(
@@ -154,7 +156,7 @@ bool Helper::step_find(
 		rect = r;
 	}
 
-#ifdef _DEBUG
+#ifdef OHMS_DDOA_SHOW
 	cv::rectangle(
 		srcImage,
 		matchLocation,
@@ -163,7 +165,7 @@ bool Helper::step_find(
 		2, 8, 0
 	);
 	cv::imshow("show", srcImage);
-#endif
+#endif // OHMS_DDOA_SHOW
 
 	return res;
 }
@@ -199,17 +201,19 @@ bool Helper::keepClickingUntil(
 	if (time < Time::Zero)
 		time = milliseconds(1000);
 	unsigned int tried = 0;
-	cv::Rect oldRect = rect;
+	cv::Rect trect = rect;
 	do {
 		if (m_askedForStop)
-			break;
+			throw 0;
 		if (maxTry > 0 && tried >= maxTry)
 			return false;
 		tried++;
 		step_click(pt);
-		rect = oldRect;
-	} while (!m_askedForStop && !step_waitFor(true, matTemplate, rect, time, threshold));
+		trect = rect;
+	} while (!m_askedForStop && !step_waitFor(true, matTemplate, trect, time, threshold));
+	if (m_askedForStop)
+		throw 0;
 	return true;
 }
 
-}
+} // namespace ohms

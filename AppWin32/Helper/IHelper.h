@@ -41,4 +41,4 @@ public:
 	virtual bool popMessage(HelperReturnMessage& hrm) = 0;
 };
 
-}
+} // namespace ohms

@@ -5,6 +5,9 @@
 
 namespace ohms {
 
+/**
+ * @brief 时间。
+*/
 class Time final {
 public:
 	Time();
@@ -34,4 +37,4 @@ Time seconds(float amount);
 Time milliseconds(int32_t amount);
 Time microseconds(int64_t amount);
 
-}
+} // namespace ohms

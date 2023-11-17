@@ -42,5 +42,5 @@ protected:
 	HWND m_hwnd; // 本窗口句柄。
 };
 
-}
+} // namespace ohms
 

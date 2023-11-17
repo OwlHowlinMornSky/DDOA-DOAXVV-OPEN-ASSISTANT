@@ -42,8 +42,16 @@ bool MainWindow::create(int nShowCmd) noexcept {
 void MainWindow::destroy() noexcept {
 	KillTimer(m_hwnd, g_timer);
 	r_helper->askForStop();
+
 	while (r_helper->isRunning()) {
-		Sleep(10);
+		MSG msg{ 0 };
+		if (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&msg);
+			DispatchMessageW(&msg);
+		}
+		else {
+			Sleep(30);
+		}
 	}
 	return Window::destroy();
 }

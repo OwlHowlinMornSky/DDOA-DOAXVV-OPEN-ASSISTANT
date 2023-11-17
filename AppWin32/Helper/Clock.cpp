@@ -23,7 +23,7 @@ ohms::Time getCurrentTime() {
 	return ohms::microseconds(static_cast<int64_t>(static_cast<double>(time.QuadPart) * inverse));
 }
 
-}
+} // namespace
 
 namespace ohms {
 
@@ -41,4 +41,4 @@ Time Clock::restart() {
 	return elapsed;
 }
 
-}
+} // namespace ohms

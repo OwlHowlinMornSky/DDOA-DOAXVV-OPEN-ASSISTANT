@@ -6,4 +6,4 @@ bool setup();
 
 void drop();
 
-}
+} // namespace UniqueInstance
