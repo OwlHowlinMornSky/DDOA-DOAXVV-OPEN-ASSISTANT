@@ -3,6 +3,8 @@
 #include "Window.h"
 
 #include <ohms/WGC.h>
+#include "../Helper/IHelper.h"
+#include "Logger.h"
 
 namespace ohms {
 
@@ -53,6 +55,9 @@ protected:
 	//size_t m_saveCount;
 
 	wgc::ICapture* r_capture;
+	IHelper* r_helper;
+
+	Logger m_logger;
 };
 
 } // namespace ohms

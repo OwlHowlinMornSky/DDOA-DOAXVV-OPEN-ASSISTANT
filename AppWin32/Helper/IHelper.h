@@ -1,5 +1,8 @@
 ﻿#pragma once
 
+#include "../Window/framework.h"
+#include "../Window/Logger.h"
+
 namespace ohms {
 
 /**
@@ -18,11 +21,14 @@ protected:
 public:
 	virtual ~IHelper() = default;
 
+	static IHelper* instance();
+	static void drop();
+
 public:
 	/**
 	 * @brief 尝试开始。任务将运行在子线程，如果已经运行则无效。
 	*/
-	virtual bool start() = 0;
+	virtual bool start(HWND doaxvv, Logger* logger) = 0;
 	/**
 	 * @brief 要求停止。
 	*/
@@ -31,6 +37,8 @@ public:
 	 * @brief 是否正在运行。
 	*/
 	virtual bool isRunning() = 0;
+
+	virtual bool popMessage(HelperReturnMessage& hrm) = 0;
 };
 
 }

@@ -36,6 +36,21 @@ int g_nMatchMethod = cv::TM_SQDIFF_NORMED;
 
 namespace ohms {
 
+bool ohms::Helper::copyMatResize(cv::Mat& target) {
+	if (r_capture->copyMatTo(target, true)) {
+		if (target.size().width != 960 || target.size().height != 540) {
+			auto sz = target.size();
+			cv::resize(
+				target, target,
+				cv::Size(960, 540),
+				0.0, 0.0, cv::InterpolationFlags::INTER_CUBIC
+			);
+		}
+		return true;
+	}
+	return false;
+}
+
 bool Helper::step_waitFor(
 	bool find,
 	const cv::Mat& matTemplate,
@@ -63,7 +78,7 @@ bool Helper::step_waitFor(
 		{
 			if (r_capture->isRefreshed()) {
 				cv::Mat mat;
-				if (r_capture->copyMatTo(mat, true)) {
+				if (copyMatResize(mat)) {
 					cv::Rect trect = rect;
 					if (find) {
 						res = step_find(mat, matTemplate, trect, threshold);
@@ -165,12 +180,21 @@ bool Helper::step_find(
 
 bool Helper::step_click(cv::Point pt) {
 	RECT rect{ 0 };
-	GetClientRect(ohms::global::doaxvv, &rect);
+	GetClientRect(m_doaxvv, &rect);
 	pt.x = static_cast<int>(pt.x / 960.0f * (rect.right - rect.left));
 	pt.y = static_cast<int>(pt.y / 540.0f * (rect.bottom - rect.top));
-	PostMessageW(ohms::global::doaxvv, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
-	PostMessageW(ohms::global::doaxvv, WM_LBUTTONDOWN, 0, MAKELPARAM(pt.x, pt.y));
-	PostMessageW(ohms::global::doaxvv, WM_LBUTTONUP, 0, MAKELPARAM(pt.x, pt.y));
+	PostMessageW(m_doaxvv, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
+	PostMessageW(m_doaxvv, WM_LBUTTONDOWN, 0, MAKELPARAM(pt.x, pt.y));
+	PostMessageW(m_doaxvv, WM_LBUTTONUP, 0, MAKELPARAM(pt.x, pt.y));
+	return true;
+}
+
+bool Helper::step_move(cv::Point pt) {
+	RECT rect{ 0 };
+	GetClientRect(m_doaxvv, &rect);
+	pt.x = static_cast<int>(pt.x / 960.0f * (rect.right - rect.left));
+	pt.y = static_cast<int>(pt.y / 540.0f * (rect.bottom - rect.top));
+	PostMessageW(m_doaxvv, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
 	return true;
 }
 

@@ -1,13 +1,14 @@
-﻿#include "Window/framework.h"
-#include <ohms/WGC.h>
-
+﻿
 #include "UniqueInstance.h"
+
+#include "Window/framework.h"
+#include "shellapi.h"
 #include "Global.h"
 
-#include "Window/MainWindow.h"
-#include "Helper/Helper.h"
+#include <ohms/WGC.h>
+#include "Helper/IHelper.h"
 
-#include "shellapi.h"
+#include "Window/MainWindow.h"
 
 int CALLBACK wWinMain(
 	_In_ HINSTANCE hInstance,
@@ -15,32 +16,38 @@ int CALLBACK wWinMain(
 	_In_ LPWSTR lpCmdLine,
 	_In_ int nShowCmd
 ) {
-	int cmdCnt = 0;
-	LPWSTR* cmds = CommandLineToArgvW(lpCmdLine, &cmdCnt);
-	for (int i = 0; i < cmdCnt; ++i) {
-		if (std::wstring(cmds[i]) == L"-show") {
-			ohms::global::show = true;
-			break;
-		}
-	}
-
 	if (!UniqueInstance::setup()) {
 		MessageBoxW(NULL, L"Another instance is running.", L"DOAXVV-helper", MB_ICONERROR);
 		return 1;
 	}
+	{
+		int cmdCnt = 0;
+		LPWSTR* cmds = CommandLineToArgvW(lpCmdLine, &cmdCnt);
+		for (int i = 0; i < cmdCnt; ++i) {
+			if (std::wstring(cmds[i]) == L"-show") {
+				ohms::global::show = true;
+				break;
+			}
+		}
+	}
 	// Init
 	{
-		ohms::global::hInst = hInstance;
+		auto wgc = ohms::wgc::getInstance();
+		if (!wgc) {
+			MessageBoxW(NULL, L"Capture initialization failed.", L"DOAXVV-helper", MB_ICONERROR);
+			return 1;
+		}
+		wgc->setClipToClientArea(true);
 
-		ohms::wgc::getInstance();
-
-		auto helper = std::make_unique<ohms::Helper>();
-
-		ohms::global::helper = std::move(helper);
+		auto hlp = ohms::IHelper::instance();
+		if (!hlp) {
+			MessageBoxW(NULL, L"Helper initialization failed.", L"DOAXVV-helper", MB_ICONERROR);
+			return 1;
+		}
 	}
 	// Run
 	{
-		std::unique_ptr<ohms::MainWindow> mainWnd =
+		std::unique_ptr<ohms::Window> mainWnd =
 			std::make_unique<ohms::MainWindow>();
 		mainWnd->create(nShowCmd);
 		MSG msg;
@@ -52,11 +59,8 @@ int CALLBACK wWinMain(
 	}
 	// Clear
 	{
-		ohms::global::helper.reset();
-
+		ohms::IHelper::drop();
 		ohms::wgc::drop();
-
-		ohms::global::hInst = 0;
 	}
 	UniqueInstance::drop();
 	return 0;

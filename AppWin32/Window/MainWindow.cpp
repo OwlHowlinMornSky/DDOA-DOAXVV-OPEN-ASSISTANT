@@ -30,27 +30,25 @@ MainWindow::MainWindow() :
 	m_hBtn(NULL),
 	m_hList(NULL),
 	m_hFont(NULL),
-	r_capture(nullptr) {}
+	r_capture(nullptr),
+	r_helper(nullptr) {}
 
 MainWindow::~MainWindow() {}
 
 bool MainWindow::create(int nShowCmd) noexcept {
 	r_capture = wgc::getInstance();
-	if (!r_capture) {
-		return false;
-	}
+	r_helper = IHelper::instance();
 
 	Window::create(nShowCmd);
 	SetWindowTextW(m_hwnd, g_wndName);
 	SetTimer(m_hwnd, g_timer, 33, NULL);
-	ohms::global::logger = std::make_unique<ohms::Logger>(m_hList);
 	return true;
 }
 
 void MainWindow::destroy() noexcept {
 	KillTimer(m_hwnd, g_timer);
-	ohms::global::helper->askForStop();
-	while (ohms::global::helper->isRunning()) {
+	r_helper->askForStop();
+	while (r_helper->isRunning()) {
 		Sleep(10);
 	}
 	return Window::destroy();
@@ -60,6 +58,8 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 	switch (msg) {
 	case WM_CREATE:
 	{
+		HINSTANCE hInst = GetModuleHandleW(NULL);
+
 		m_hFont = CreateFontW(
 			0, 0, 0, 0, FW_DONTCARE,
 			FALSE, FALSE, FALSE,
@@ -75,7 +75,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 			WC_BUTTONW, L"Start",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			10, 10, 100, 40,
-			hwnd, NULL, ohms::global::hInst, NULL
+			hwnd, NULL, hInst, NULL
 		);
 		SendMessageW(m_hBtn, WM_SETFONT, (WPARAM)m_hFont, TRUE);
 
@@ -99,9 +99,10 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 			WC_LISTBOXW, L"Log",
 			WS_VISIBLE | WS_CHILD | WS_BORDER | LBS_HASSTRINGS | WS_VSCROLL | WS_HSCROLL,
 			160, 10, 600, 500,
-			hwnd, NULL, ohms::global::hInst, NULL
+			hwnd, NULL, hInst, NULL
 		);
 		SendMessageW(m_hList, WM_SETFONT, (WPARAM)m_hFont, TRUE);
+		m_logger.reg(m_hList);
 
 		break;
 	}
@@ -159,13 +160,12 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 }
 
 void MainWindow::start() {
-	ohms::global::logger->clear();
+	m_logger.clear();
 	HWND dst = FindWindowW(g_findCls, g_findWnd);
 	if (dst == NULL) {
 		printf_s("Cannot find DOAXVV window.\n");
 		return;
 	}
-	ohms::global::doaxvv = dst;
 
 	if (!IsWindow(dst)) {
 		printf_s("Target is not a widnow.\n");
@@ -179,7 +179,7 @@ void MainWindow::start() {
 		printf_s("Target cannot be captured.\n");
 		return;
 	}
-	if (!ohms::global::helper->start()) {
+	if (!r_helper->start(dst, &m_logger)) {
 		std::cout << "Start Failed!" << std::endl;
 		r_capture->stopCapture();
 		return;
@@ -189,26 +189,18 @@ void MainWindow::start() {
 }
 
 void MainWindow::stop() {
-	ohms::global::helper->askForStop();
+	r_helper->askForStop();
 	setBtnEnabled(false);
 	return;
 }
 
 void MainWindow::update() {
-	while (true) {
-		ohms::HelperReturnMessage msg;
-		{
-			std::lock_guard lg(ohms::global::mutexHRM);
-			if (ohms::global::helperReturnMessage.empty()) {
-				break;
-			}
-			msg = ohms::global::helperReturnMessage.front();
-			ohms::global::helperReturnMessage.pop();
-		}
+	ohms::HelperReturnMessage msg;
+	while (r_helper->popMessage(msg)) {
 		switch (msg) {
 		case HelperReturnMessage::Stopped:
 			r_capture->stopCapture();
-			ohms::global::logger->addString(L"已停止");
+			m_logger.addString(L"已停止");
 			break;
 		case HelperReturnMessage::BtnToStop:
 			setBtnText(L"Stop");

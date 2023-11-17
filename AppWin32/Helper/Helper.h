@@ -1,26 +1,38 @@
 ﻿#pragma once
 
-#include "IHelper.h"
+#include <memory>
+#include <queue>
 #include <mutex>
 #include <atomic>
-#include "Clock.h"
 
 #include <opencv2/opencv.hpp>
 #include "../Window/framework.h"
 #include <ohms/WGC.h>
 
+#include "Clock.h"
+#include "IHelper.h"
+
 namespace ohms {
 
 class Helper final :
 	public IHelper {
-public:
+	friend class IHelper;
+protected:
 	Helper();
+public:
 	virtual ~Helper() override;
 
 public:
-	virtual bool start() override;
+	virtual bool start(HWND doaxvv, Logger* logger) override;
 	virtual void askForStop() override;
 	virtual bool isRunning() override;
+	virtual bool popMessage(HelperReturnMessage& hrm) override;
+
+	/**
+	 * @brief 向队列压入消息。
+	 * @param hrm: 消息。
+	*/
+	void pushHRM(ohms::HelperReturnMessage hrm);
 
 protected:
 	/**
@@ -33,7 +45,9 @@ protected:
 	*/
 	void subwork_fight();
 
-public:
+protected:
+	bool copyMatResize(cv::Mat& target);
+
 	bool step_waitFor(
 		bool find,
 		const cv::Mat& matTemplate,
@@ -53,6 +67,7 @@ public:
 		unsigned int threshold = 10
 	);
 	bool step_click(cv::Point pt);
+	bool step_move(cv::Point pt);
 	bool keepClickingUntil(
 		cv::Point pt,
 		cv::Rect rect,
@@ -74,6 +89,12 @@ protected:
 	cv::Mat m_default;
 
 	wgc::ICapture* r_capture;
+
+	std::queue<ohms::HelperReturnMessage> helperReturnMessage;
+	std::mutex mutexHRM;
+
+	HWND m_doaxvv;
+	Logger* r_logger;
 };
 
 }

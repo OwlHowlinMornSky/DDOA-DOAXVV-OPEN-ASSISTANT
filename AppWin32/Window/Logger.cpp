@@ -2,8 +2,12 @@
 
 #include <iostream>
 
-ohms::Logger::Logger(HWND target) :
-	m_tergetList(target) {}
+ohms::Logger::Logger() :
+	m_tergetList(NULL) {}
+
+void ohms::Logger::reg(HWND target) {
+	m_tergetList = target;
+}
 
 void ohms::Logger::addString(const WCHAR* str) {
 #ifdef _DEBUG

@@ -8,9 +8,11 @@ namespace ohms {
 
 class Logger final {
 public:
-	Logger(HWND target);
+	Logger();
 
 public:
+	void reg(HWND target);
+
 	void addString(const WCHAR* str);
 
 	void addString(std::wstring_view str);
