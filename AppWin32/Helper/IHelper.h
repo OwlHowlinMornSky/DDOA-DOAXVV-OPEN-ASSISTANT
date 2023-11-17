@@ -25,10 +25,12 @@ public:
 	static void drop();
 
 public:
+	virtual void regLogger(Logger* logger) = 0;
+
 	/**
 	 * @brief 尝试开始。任务将运行在子线程，如果已经运行则无效。
 	*/
-	virtual bool start(HWND doaxvv, Logger* logger) = 0;
+	virtual bool start() = 0;
 	/**
 	 * @brief 要求停止。
 	*/

@@ -1,6 +1,7 @@
-# DOAXVV-helper
-DOAXVV 助手
-<!-- DDOA means DDOA DOAXVV OPEN ASSISTANT -->
+# DDOA
+DDOA means DDOA DOAXVV OPEN ASSISTANT
+
+Old name: DOAXVV-helper
 
 ## Features
 

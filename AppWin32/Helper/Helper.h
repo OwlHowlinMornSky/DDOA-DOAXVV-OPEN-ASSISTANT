@@ -23,7 +23,9 @@ public:
 	virtual ~Helper() override;
 
 public:
-	virtual bool start(HWND doaxvv, Logger* logger) override;
+	virtual void regLogger(Logger* logger) override;
+
+	virtual bool start() override;
 	virtual void askForStop() override;
 	virtual bool isRunning() override;
 	virtual bool popMessage(HelperReturnMessage& hrm) override;

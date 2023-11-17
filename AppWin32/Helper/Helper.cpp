@@ -1,6 +1,14 @@
 ﻿#include "Helper.h"
 
+#include <iostream>
 #include <thread>
+
+namespace {
+
+const WCHAR g_findCls[] = L"DOAX VenusVacation";
+const WCHAR g_findWnd[] = L"DOAX VenusVacation";
+
+}
 
 namespace ohms {
 
@@ -27,9 +35,17 @@ Helper::Helper() :
 
 Helper::~Helper() {}
 
-bool Helper::start(HWND doaxvv, Logger* logger) {
+void Helper::regLogger(Logger* logger) {
+	r_logger = logger;
+}
+
+bool Helper::start() {
+	if (!r_logger) {
+		std::cout << "Logger not registered!" << std::endl;
+		return false;
+	}
 	if (m_running) {
-		std::cout << "It is now running!" << std::endl;
+		r_logger->addString(L"不能重复运行任务");
 		return false;
 	}
 	r_capture = wgc::getInstance();
@@ -37,8 +53,6 @@ bool Helper::start(HWND doaxvv, Logger* logger) {
 		return false;
 	}
 
-	m_doaxvv = doaxvv;
-	r_logger = logger;
 
 	m_askedForStop = false;
 	std::thread sub(&Helper::work, this);
@@ -78,27 +92,48 @@ void Helper::pushHRM(ohms::HelperReturnMessage hrm) {
 void Helper::work() {
 	m_running = true;
 	pushHRM(HelperReturnMessage::BtnToStop);
+	try {
+		m_doaxvv = FindWindowW(g_findCls, g_findWnd);
+		if (m_doaxvv == NULL) {
+			r_logger->addString(L"Cannot find DOAXVV window.");
+			throw 0;
+		}
+		if (!IsWindow(m_doaxvv) || IsIconic(m_doaxvv) || !r_capture->startCapture(m_doaxvv)) {
+			r_logger->addString(L"Target cannot be captured.");
+			throw 0;
+		}
 
-	/*RECT wndOldPos{0};
-	GetWindowRect(ohms::global::doaxvv, &wndOldPos);
-	SetWindowPos(
-		ohms::global::doaxvv, NULL, 2000, 100, 0, 0,
-		SWP_NOZORDER | SWP_NOREDRAW | SWP_NOSIZE | SWP_NOSENDCHANGING
-	);*/
+		/*RECT wndOldPos{0};
+		GetWindowRect(ohms::global::doaxvv, &wndOldPos);
+		SetWindowPos(
+			ohms::global::doaxvv, NULL, 2000, 100, 0, 0,
+			SWP_NOZORDER | SWP_NOREDRAW | SWP_NOSIZE | SWP_NOSENDCHANGING
+		);*/
 
-	// Run subworks.
-	subwork_fight();
+		// Run subworks.
+		subwork_fight();
 
-	/*SetWindowPos(
-		ohms::global::doaxvv, NULL, wndOldPos.left, wndOldPos.top, 0, 0,
-		SWP_NOZORDER | SWP_NOREDRAW | SWP_NOSIZE | SWP_NOSENDCHANGING
-	);*/
-
-
+		/*SetWindowPos(
+			ohms::global::doaxvv, NULL, wndOldPos.left, wndOldPos.top, 0, 0,
+			SWP_NOZORDER | SWP_NOREDRAW | SWP_NOSIZE | SWP_NOSENDCHANGING
+		);*/
+	}
+	catch (int err) {
+		if (err != 0) {
+			r_logger->addString(L" ");
+			r_logger->addString(L"工作异常");
+			MessageBoxW(NULL, L"工作异常", L"DOAXVV-helper: Task Error", MB_ICONERROR);
+		}
+	}
+	catch (...) {
+		r_logger->addString(L" ");
+		r_logger->addString(L"工作异常");
+		MessageBoxW(NULL, L"工作异常", L"DOAXVV-helper: Task Error", MB_ICONERROR);
+	}
+	r_capture->stopCapture();
 #ifdef OHMS_DDOA_SHOW
 	cv::destroyAllWindows();
 #endif // OHMS_DDOA_SHOW
-
 	m_running = false;
 	pushHRM(HelperReturnMessage::BtnToStart);
 	pushHRM(HelperReturnMessage::Stopped);
@@ -237,8 +272,13 @@ begin_point:
 		goto begin_point;
 	}
 	catch (int err) {
-		err;
-		r_logger->addString(L"停止任务: 挑战赛");
+		if (err == 0)
+			r_logger->addString(L"停止任务: 挑战赛");
+		else {
+			r_logger->addString(L" ");
+			r_logger->addString(L"任务异常: 挑战赛");
+			MessageBoxW(NULL, L"任务异常", L"DOAXVV-helper: Task Error", MB_ICONERROR);
+		}
 	}
 	catch (...) {
 		r_logger->addString(L" ");

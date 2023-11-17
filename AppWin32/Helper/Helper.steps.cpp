@@ -1,5 +1,7 @@
 ﻿#include "Helper.h"
 
+#define SHOW_WHOLE
+
 namespace {
 
 float matDiffrencePixel(const cv::Mat& matSample, const cv::Mat& matTemplate) {
@@ -157,6 +159,25 @@ bool Helper::step_find(
 	}
 
 #ifdef OHMS_DDOA_SHOW
+#ifdef SHOW_WHOLE
+	srcImage = matSample;
+	cv::Rect ttttrect = r;
+	ttttrect.x += oldRect.x;
+	ttttrect.y += oldRect.y;
+	cv::rectangle(
+		srcImage,
+		oldRect,
+		cv::Scalar(255, 0, 0),
+		2, 8, 0
+	);
+	cv::rectangle(
+		srcImage,
+		ttttrect,
+		res ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255),
+		2, 8, 0
+	);
+	cv::imshow("show", srcImage);
+#else
 	cv::rectangle(
 		srcImage,
 		matchLocation,
@@ -165,6 +186,7 @@ bool Helper::step_find(
 		2, 8, 0
 	);
 	cv::imshow("show", srcImage);
+#endif
 #endif // OHMS_DDOA_SHOW
 
 	return res;

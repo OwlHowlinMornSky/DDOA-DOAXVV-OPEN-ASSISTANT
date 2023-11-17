@@ -1,14 +1,9 @@
 ﻿#include "MainWindow.h"
 
-#include <iostream>
-
 namespace {
 
 const WCHAR g_clsName[] = L"OHMS.DOAXVVHELPER.WNDCLS.MAIN";
 const WCHAR g_wndName[] = L"DOAXVV-helper";
-
-const WCHAR g_findCls[] = L"DOAX VenusVacation";
-const WCHAR g_findWnd[] = L"DOAX VenusVacation";
 
 constexpr int g_timer{ 1 };
 
@@ -105,7 +100,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 		);
 		SendMessageW(m_hList, WM_SETFONT, (WPARAM)m_hFont, TRUE);
 		m_logger.reg(m_hList);
-
+		r_helper->regLogger(&m_logger);
 		break;
 	}
 
@@ -163,27 +158,8 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 
 void MainWindow::start() {
 	m_logger.clear();
-	HWND dst = FindWindowW(g_findCls, g_findWnd);
-	if (dst == NULL) {
-		printf_s("Cannot find DOAXVV window.\n");
-		return;
-	}
-
-	if (!IsWindow(dst)) {
-		printf_s("Target is not a widnow.\n");
-		return;
-	}
-	if (IsIconic(dst)) {
-		printf_s("Target is minimized.\n");
-		return;
-	}
-	if (!r_capture->startCapture(dst)) {
-		printf_s("Target cannot be captured.\n");
-		return;
-	}
-	if (!r_helper->start(dst, &m_logger)) {
-		std::cout << "Start Failed!" << std::endl;
-		r_capture->stopCapture();
+	if (!r_helper->start()) {
+		m_logger.addString(L"无法启动任务");
 		return;
 	}
 	setBtnEnabled(false);
@@ -201,7 +177,6 @@ void MainWindow::update() {
 	while (r_helper->popMessage(msg)) {
 		switch (msg) {
 		case HelperReturnMessage::Stopped:
-			r_capture->stopCapture();
 			m_logger.addString(L"已停止");
 			break;
 		case HelperReturnMessage::BtnToStop:
