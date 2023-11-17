@@ -48,9 +48,6 @@
     <ClInclude Include="Window\targetver.h">
       <Filter>Window\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Global.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Helper\Helper.h">
       <Filter>Helper\头文件</Filter>
     </ClInclude>
@@ -79,9 +76,6 @@
     </ClCompile>
     <ClCompile Include="Window\Window.cpp">
       <Filter>Window\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Global.cpp">
-      <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Helper\Helper.cpp">
       <Filter>Helper\源文件</Filter>

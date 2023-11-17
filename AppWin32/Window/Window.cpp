@@ -1,7 +1,5 @@
 ﻿#include "Window.h"
 
-#include <stdio.h>
-
 namespace {
 
 const WCHAR g_clsName[] = L"OHMS.WNDCLS.DEFAULT";

@@ -1,7 +1,5 @@
 ﻿#include "Helper.h"
 
-#include "../Global.h"
-
 #include <thread>
 
 namespace ohms {
@@ -94,10 +92,9 @@ void Helper::work() {
 		SWP_NOZORDER | SWP_NOREDRAW | SWP_NOSIZE | SWP_NOSENDCHANGING
 	);*/
 
-#ifndef _DEBUG
-	if (ohms::global::show)
+#ifdef _DEBUG
+	cv::destroyAllWindows();
 #endif // _DEBUG
-		cv::destroyAllWindows();
 
 
 	m_running = false;

@@ -91,7 +91,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Global.h" />
     <ClInclude Include="Helper\Clock.h" />
     <ClInclude Include="Helper\Helper.h" />
     <ClInclude Include="Helper\IHelper.h" />
@@ -104,7 +103,6 @@
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Global.cpp" />
     <ClCompile Include="Helper\Clock.cpp" />
     <ClCompile Include="Helper\Helper.cpp" />
     <ClCompile Include="Helper\Helper.steps.cpp" />

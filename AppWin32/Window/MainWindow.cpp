@@ -1,11 +1,5 @@
 ﻿#include "MainWindow.h"
 
-#include <vector>
-
-#include <opencv2/opencv.hpp>
-
-#include "../Global.h"
-
 #include <iostream>
 
 namespace {

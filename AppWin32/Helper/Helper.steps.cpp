@@ -1,10 +1,5 @@
 ﻿#include "Helper.h"
 
-#include "../Global.h"
-
-#include <thread>
-#include <iostream>
-
 namespace {
 
 float matDiffrencePixel(const cv::Mat& matSample, const cv::Mat& matTemplate) {
@@ -66,15 +61,14 @@ bool Helper::step_waitFor(
 	bool res = false;
 	Clock clk;
 	while (!m_askedForStop) {
+#ifdef _DEBUG
 		if (MSG msg{ 0 };
-#ifndef _DEBUG
-			ohms::global::show && 
-#endif // !_DEBUG
 			PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
 			TranslateMessage(&msg);
 			DispatchMessageW(&msg);
 		}
 		else
+#endif // !_DEBUG
 		{
 			if (r_capture->isRefreshed()) {
 				cv::Mat mat;
@@ -113,7 +107,6 @@ bool Helper::step_check(
 
 	float diff = matDiffrencePixel(matSample, matTemplate);
 	//float diff = matDiffrenceColor(matSample, matTemplate);
-	//std::cout << "diff: " << diff * 100.0 << "% " << std::endl;
 
 	return ((diff * 100.0f) < threshold);
 }
@@ -161,19 +154,16 @@ bool Helper::step_find(
 		rect = r;
 	}
 
-#ifndef _DEBUG
-	if (ohms::global::show)
+#ifdef _DEBUG
+	cv::rectangle(
+		srcImage,
+		matchLocation,
+		cv::Point(matchLocation.x + matTemplate.cols, matchLocation.y + matTemplate.rows),
+		res ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255),
+		2, 8, 0
+	);
+	cv::imshow("show", srcImage);
 #endif
-	{
-		cv::rectangle(
-			srcImage,
-			matchLocation,
-			cv::Point(matchLocation.x + matTemplate.cols, matchLocation.y + matTemplate.rows),
-			res ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255),
-			2, 8, 0
-		);
-		cv::imshow("show", srcImage);
-	}
 
 	return res;
 }

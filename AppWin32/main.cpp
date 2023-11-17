@@ -1,10 +1,6 @@
-﻿
-#include "UniqueInstance.h"
+﻿#include "UniqueInstance.h"
 
 #include "Window/framework.h"
-#include "shellapi.h"
-#include "Global.h"
-
 #include <ohms/WGC.h>
 #include "Helper/IHelper.h"
 
@@ -19,16 +15,6 @@ int CALLBACK wWinMain(
 	if (!UniqueInstance::setup()) {
 		MessageBoxW(NULL, L"Another instance is running.", L"DOAXVV-helper", MB_ICONERROR);
 		return 1;
-	}
-	{
-		int cmdCnt = 0;
-		LPWSTR* cmds = CommandLineToArgvW(lpCmdLine, &cmdCnt);
-		for (int i = 0; i < cmdCnt; ++i) {
-			if (std::wstring(cmds[i]) == L"-show") {
-				ohms::global::show = true;
-				break;
-			}
-		}
 	}
 	// Init
 	{
