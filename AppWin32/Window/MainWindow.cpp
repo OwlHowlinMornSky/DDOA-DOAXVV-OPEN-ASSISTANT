@@ -1,5 +1,7 @@
 ﻿#include "MainWindow.h"
 
+#include <windowsx.h>
+
 namespace {
 
 const WCHAR g_clsName[] = L"OHMS.DOAXVVHELPER.WNDCLS.MAIN";
@@ -16,6 +18,10 @@ MainWindow::MainWindow() :
 	m_isStart(true),
 	//m_hButtonSave(NULL),
 	//m_hButtonSaveC3(NULL),
+
+	m_hBtnForNew(NULL),
+	m_hBtnForLast(NULL),
+
 	m_hBtn(NULL),
 	m_hList(NULL),
 	m_hFont(NULL),
@@ -80,7 +86,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 			WC_BUTTONW, L"Save BGR",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			10, 370, 100, 40,
-			hwnd, NULL, ohms::global::hInst, NULL
+			hwnd, NULL, hInst, NULL
 		);
 		SendMessageW(m_hButtonSaveC3, WM_SETFONT, (WPARAM)m_hFont, TRUE);
 
@@ -88,9 +94,26 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 			WC_BUTTONW, L"Save BGRA",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			10, 430, 100, 40,
-			hwnd, NULL, ohms::global::hInst, NULL
+			hwnd, NULL, hInst, NULL
 		);
 		SendMessageW(m_hButtonSave, WM_SETFONT, (WPARAM)m_hFont, TRUE);*/
+
+		m_hBtnForLast = CreateWindowW(
+			WC_BUTTONW, L"Last Game",
+			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
+			10, 370, 100, 40,
+			hwnd, NULL, hInst, NULL
+		);
+		SendMessageW(m_hBtnForLast, WM_SETFONT, (WPARAM)m_hFont, TRUE);
+		m_hBtnForNew = CreateWindowW(
+			WC_BUTTONW, L"New Game",
+			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
+			10, 430, 100, 40,
+			hwnd, NULL, hInst, NULL
+		);
+		SendMessageW(m_hBtnForNew, WM_SETFONT, (WPARAM)m_hFont, TRUE);
+
+		Button_SetCheck(m_hBtnForLast, BST_CHECKED);
 
 		m_hList = CreateWindowW(
 			WC_LISTBOXW, L"Log",
@@ -101,6 +124,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 		SendMessageW(m_hList, WM_SETFONT, (WPARAM)m_hFont, TRUE);
 		m_logger.reg(m_hList);
 		r_helper->regLogger(&m_logger);
+
 		break;
 	}
 
@@ -158,6 +182,19 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 
 void MainWindow::start() {
 	m_logger.clear();
+	setSettingBtnEnabled(false);
+
+	if (Button_GetState(m_hBtnForLast) == BST_CHECKED) {
+		r_helper->regForNew(false);
+	}
+	else if (Button_GetState(m_hBtnForNew) == BST_CHECKED) {
+		r_helper->regForNew(true);
+	}
+	else {
+		m_logger.addString(L"请先设置比赛类型");
+		return;
+	}
+
 	if (!r_helper->start()) {
 		m_logger.addString(L"无法启动任务");
 		return;
@@ -178,6 +215,7 @@ void MainWindow::update() {
 		switch (msg) {
 		case HelperReturnMessage::Stopped:
 			m_logger.addString(L"已停止");
+			setSettingBtnEnabled(true);
 			break;
 		case HelperReturnMessage::BtnToStop:
 			setBtnText(L"Stop");
@@ -201,6 +239,12 @@ void MainWindow::setBtnText(const WCHAR* text) {
 
 void MainWindow::setBtnEnabled(bool enabled) {
 	EnableWindow(m_hBtn, enabled ? TRUE : FALSE);
+	return;
+}
+
+void MainWindow::setSettingBtnEnabled(bool enabled) {
+	EnableWindow(m_hBtnForLast, enabled ? TRUE : FALSE);
+	EnableWindow(m_hBtnForNew, enabled ? TRUE : FALSE);
 	return;
 }
 

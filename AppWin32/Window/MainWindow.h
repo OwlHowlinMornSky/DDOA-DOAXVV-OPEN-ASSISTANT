@@ -44,11 +44,15 @@ public:
 	*/
 	void setBtnEnabled(bool enabled);
 
+	void setSettingBtnEnabled(bool enabled);
+
 protected:
 	HFONT m_hFont;
 	HWND m_hBtn;
 	//HWND m_hButtonSave;
 	//HWND m_hButtonSaveC3;
+	HWND m_hBtnForNew;
+	HWND m_hBtnForLast;
 	HWND m_hList;
 
 	bool m_isStart;

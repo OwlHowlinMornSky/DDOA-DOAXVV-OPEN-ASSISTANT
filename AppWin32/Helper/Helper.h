@@ -24,6 +24,7 @@ public:
 
 public:
 	virtual void regLogger(Logger* logger) override;
+	virtual void regForNew(bool forNew) override;
 
 	virtual bool start() override;
 	virtual void askForStop() override;
@@ -71,25 +72,40 @@ protected:
 	bool step_click(cv::Point pt);
 	bool step_move(cv::Point pt);
 	bool keepClickingUntil(
-		cv::Point pt,
-		cv::Rect rect,
+		const cv::Point pt,
+		const cv::Rect rect,
 		const cv::Mat& matTemplate,
 		unsigned int maxTry = 10,
 		Time time = seconds(1.0f),
 		unsigned int threshold = 10
 	);
 
+	void subtask_error(std::wstring_view str);
+
 protected:
 	std::atomic_bool m_running;
 	std::atomic_bool m_askedForStop;
 
+	bool m_task_forNew;
+
 	cv::Mat m_lastFight;
 	cv::Mat m_newFight;
+	cv::Rect m_rect_fight;
+
 	cv::Mat m_start;
+	cv::Rect m_rect_start;
+
 	cv::Mat m_result;
+	cv::Rect m_rect_result;
+
 	cv::Mat m_loading;
+	cv::Rect m_rect_loading;
+
 	cv::Mat m_fp;
+	cv::Rect m_rect_fp;
+
 	cv::Mat m_default;
+	cv::Rect m_rect_default;
 
 	wgc::ICapture* r_capture;
 

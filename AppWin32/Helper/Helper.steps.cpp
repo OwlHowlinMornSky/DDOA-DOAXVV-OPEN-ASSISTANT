@@ -213,8 +213,8 @@ bool Helper::step_move(cv::Point pt) {
 }
 
 bool Helper::keepClickingUntil(
-	cv::Point pt,
-	cv::Rect rect,
+	const cv::Point pt,
+	const cv::Rect rect,
 	const cv::Mat& matTemplate,
 	unsigned int maxTry,
 	Time time,
@@ -236,6 +236,14 @@ bool Helper::keepClickingUntil(
 	if (m_askedForStop)
 		throw 0;
 	return true;
+}
+
+void Helper::subtask_error(std::wstring_view str) {
+	r_logger->addString(L" ");
+	r_logger->addString(std::wstring(L"任务出错: ").append(str));
+	m_askedForStop = true;
+	MessageBoxW(NULL, str.data(), L"DOAXVV-helper: Task Error", MB_ICONERROR);
+	throw 0;
 }
 
 } // namespace ohms

@@ -95,6 +95,9 @@
     <ClCompile Include="Helper\IHelper.cpp">
       <Filter>Helper\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Helper\Helper.subtasks.cpp">
+      <Filter>Helper\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="list.manifest">

@@ -26,6 +26,7 @@ public:
 
 public:
 	virtual void regLogger(Logger* logger) = 0;
+	virtual void regForNew(bool forNew) = 0;
 
 	/**
 	 * @brief 尝试开始。任务将运行在子线程，如果已经运行则无效。
