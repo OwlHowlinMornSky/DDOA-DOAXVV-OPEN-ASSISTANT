@@ -144,7 +144,6 @@ bool Helper::step_waitFor(
 	Time maxTime, float thres
 ) {
 	r_capture->askForRefresh();
-	bool res = false;
 	Clock clk;
 	cv::Mat mat;
 	cv::Rect trect;
@@ -174,7 +173,7 @@ bool Helper::step_waitFor(
 	}
 	if (m_askedForStop) // throw 0 表示停止
 		throw 0;
-	return res;
+	return true;
 }
 
 bool Helper::step_click(cv::Point pt) {
