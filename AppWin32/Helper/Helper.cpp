@@ -120,20 +120,8 @@ void Helper::work() {
 			throw 0;
 		}
 
-		/*RECT wndOldPos{0};
-		GetWindowRect(ohms::global::doaxvv, &wndOldPos);
-		SetWindowPos(
-			ohms::global::doaxvv, NULL, 2000, 100, 0, 0,
-			SWP_NOZORDER | SWP_NOREDRAW | SWP_NOSIZE | SWP_NOSENDCHANGING
-		);*/
-
 		// Run subworks.
 		subwork_fight();
-
-		/*SetWindowPos(
-			ohms::global::doaxvv, NULL, wndOldPos.left, wndOldPos.top, 0, 0,
-			SWP_NOZORDER | SWP_NOREDRAW | SWP_NOSIZE | SWP_NOSENDCHANGING
-		);*/
 	}
 	catch (int err) {
 		if (err != 0) {
