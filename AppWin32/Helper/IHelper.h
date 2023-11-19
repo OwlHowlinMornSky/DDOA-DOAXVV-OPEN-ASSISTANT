@@ -40,7 +40,7 @@ public:
 	*/
 	virtual bool isRunning() = 0;
 
-	virtual bool popMessage(HelperReturnMessage& hrm) = 0;
+	virtual bool msgPop(HelperReturnMessage& hrm) = 0;
 };
 
 } // namespace ohms

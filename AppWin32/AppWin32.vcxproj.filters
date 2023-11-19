@@ -101,7 +101,7 @@
     <ClCompile Include="Helper\IHelper.cpp">
       <Filter>Helper\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Helper\Helper.subtasks.cpp">
+    <ClCompile Include="Helper\Helper.subworks.cpp">
       <Filter>Helper\源文件</Filter>
     </ClCompile>
     <ClCompile Include="AppWin32.cpp">

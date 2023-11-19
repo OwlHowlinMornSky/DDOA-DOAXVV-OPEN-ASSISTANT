@@ -189,7 +189,7 @@ void MainWindow::OnBtnMain_Clicked() {
 
 void MainWindow::OnTimerUpdate() {
 	ohms::HelperReturnMessage msg;
-	while (r_helper->popMessage(msg)) {
+	while (r_helper->msgPop(msg)) {
 		switch (msg) {
 		case HelperReturnMessage::Stopped:
 			m_logger.addString(L"已停止");

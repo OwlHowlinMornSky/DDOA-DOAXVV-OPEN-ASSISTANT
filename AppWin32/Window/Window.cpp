@@ -29,7 +29,7 @@ bool registerClass() noexcept {
 	wcex.style = CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc = WndProc;
 	wcex.hInstance = GetModuleHandleW(NULL);
-	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOWFRAME);
+	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW);
 	wcex.lpszMenuName = NULL;
 	wcex.lpszClassName = g_clsName;
 	auto res = RegisterClassExW(&wcex);

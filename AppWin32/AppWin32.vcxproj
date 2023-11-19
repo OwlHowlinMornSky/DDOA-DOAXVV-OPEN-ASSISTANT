@@ -148,7 +148,7 @@
     <ClCompile Include="Helper\Clock.cpp" />
     <ClCompile Include="Helper\Helper.cpp" />
     <ClCompile Include="Helper\Helper.steps.cpp" />
-    <ClCompile Include="Helper\Helper.subtasks.cpp" />
+    <ClCompile Include="Helper\Helper.subworks.cpp" />
     <ClCompile Include="Helper\IHelper.cpp" />
     <ClCompile Include="Helper\Time.cpp" />
     <ClCompile Include="main.cpp" />

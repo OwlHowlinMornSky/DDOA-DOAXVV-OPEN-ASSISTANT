@@ -1,8 +1,12 @@
 ﻿#include "Helper.h"
 
+#include "Clock.h"
+
 #define SHOW_WHOLE
 
 namespace {
+
+constexpr int g_nMatchMethod = cv::TM_SQDIFF_NORMED;
 
 float matDiffrencePixel(const cv::Mat& matSample, const cv::Mat& matTemplate) {
 	assert(matSample.size() == matTemplate.size());
@@ -27,100 +31,17 @@ float matDiffrenceColor(const cv::Mat& matSample, const cv::Mat& matTemplate) {
 	return (res / 255.0f / matResault.size().area());
 }
 
-int g_nMatchMethod = cv::TM_SQDIFF_NORMED;
-
-}
-
-namespace ohms {
-
-bool ohms::Helper::copyMatResize(cv::Mat& target) {
-	if (r_capture->copyMatTo(target, true)) {
-		if (target.size().width != 960 || target.size().height != 540) {
-			auto sz = target.size();
-			cv::resize(
-				target, target,
-				cv::Size(960, 540),
-				0.0, 0.0, cv::InterpolationFlags::INTER_CUBIC
-			);
-		}
-		return true;
-	}
-	return false;
-}
-
-bool Helper::step_waitFor(
-	bool find,
-	const cv::Mat& matTemplate,
-	cv::Rect& rect,
-	Time maxTime,
-	unsigned int threshold
-) {
-	r_capture->askForRefresh();
-	if (!find) {
-		rect.width = matTemplate.size().width;
-		rect.height = matTemplate.size().height;
-	}
-	bool res = false;
-	Clock clk;
-	while (!m_askedForStop) {
-#ifdef OHMS_DDOA_SHOW
-		if (MSG msg{ 0 };
-			PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
-			TranslateMessage(&msg);
-			DispatchMessageW(&msg);
-		}
-		else
-#endif // OHMS_DDOA_SHOW
-		{
-			if (r_capture->isRefreshed()) {
-				cv::Mat mat;
-				if (copyMatResize(mat)) {
-					cv::Rect trect = rect;
-					if (find) {
-						res = step_find(mat, matTemplate, trect, threshold);
-					}
-					else {
-						res = step_check(mat(trect), matTemplate, threshold);
-					}
-					if (res) {
-						if (find)
-							rect = trect;
-						break;
-					}
-				}
-			}
-			if (maxTime > Time::Zero && clk.getElapsedTime() > maxTime) {
-				break;
-			}
-			r_capture->askForRefresh();
-			Sleep(30);
-		}
-	}
-	if (m_askedForStop)
-		throw 0;
-	return res;
-}
-
-bool Helper::step_check(
-	const cv::Mat& matSample,
-	const cv::Mat& matTemplate,
-	unsigned int threshold
-) {
+inline bool check(const cv::Mat& matSample, const cv::Mat& matTemplate, float thres) {
 	assert(threshold < 100);
 	assert(matSample.size() == matTemplate.size());
 
 	float diff = matDiffrencePixel(matSample, matTemplate);
 	//float diff = matDiffrenceColor(matSample, matTemplate);
 
-	return ((diff * 100.0f) < threshold);
+	return ((diff * 100.0f) < thres);
 }
 
-bool Helper::step_find(
-	const cv::Mat& matSample,
-	const cv::Mat& matTemplate,
-	cv::Rect& rect,
-	unsigned int threshold
-) {
+bool find(const cv::Mat& matSample, const cv::Mat& matTemplate, cv::Rect& rect, float thres) {
 	cv::Rect oldRect;
 	cv::Mat srcImage;
 	if (rect.size().area() > 0) {
@@ -145,13 +66,13 @@ bool Helper::step_find(
 	cv::Point minLocation, maxLocation, matchLocation;
 	cv::minMaxLoc(resultImage, &minValue, &maxValue, &minLocation, &maxLocation);
 
-	if (g_nMatchMethod == cv::TM_SQDIFF || g_nMatchMethod == cv::TM_SQDIFF_NORMED)
+	if constexpr (g_nMatchMethod == cv::TM_SQDIFF || g_nMatchMethod == cv::TM_SQDIFF_NORMED)
 		matchLocation = minLocation;
 	else
 		matchLocation = maxLocation;
 
 	cv::Rect r(matchLocation, matTemplate.size());
-	bool res = step_check(srcImage(r), matTemplate, threshold);
+	bool res = check(srcImage(r), matTemplate, thres);
 	if (res) {
 		r.x += oldRect.x;
 		r.y += oldRect.y;
@@ -160,35 +81,77 @@ bool Helper::step_find(
 
 #ifdef OHMS_DDOA_SHOW
 #ifdef SHOW_WHOLE
-	srcImage = matSample;
-	cv::Rect ttttrect = r;
-	ttttrect.x += oldRect.x;
-	ttttrect.y += oldRect.y;
-	cv::rectangle(
-		srcImage,
-		oldRect,
-		cv::Scalar(255, 0, 0),
-		2, 8, 0
-	);
-	cv::rectangle(
-		srcImage,
-		ttttrect,
-		res ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255),
-		2, 8, 0
-	);
-	cv::imshow("show", srcImage);
+	cv::Rect tttrect(matchLocation + oldRect.tl(), matTemplate.size());
+	cv::rectangle(srcImage, oldRect, cv::Scalar(255, 0, 0), 2, 8, 0);
+	cv::rectangle(srcImage, tttrect, res ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0);
 #else
 	cv::rectangle(
-		srcImage,
-		matchLocation,
-		cv::Point(matchLocation.x + matTemplate.cols, matchLocation.y + matTemplate.rows),
-		res ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255),
-		2, 8, 0
+		srcImage, cv::Rect(matchLocation, matTemplate.size()),
+		res ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0
 	);
-	cv::imshow("show", srcImage);
 #endif
+	cv::resize(srcImage, srcImage, { 480, 270 }, 0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR);
+	cv::imshow("show", srcImage);
 #endif // OHMS_DDOA_SHOW
 
+	return res;
+}
+
+}
+
+namespace ohms {
+
+bool ohms::Helper::step_copyMat(cv::Mat& target) {
+	if (r_capture->copyMatTo(target, true)) {
+		if (target.size().width != 960 || target.size().height != 540) {
+			auto sz = target.size();
+			cv::resize(
+				target, target,
+				cv::Size(960, 540),
+				0.0, 0.0, cv::InterpolationFlags::INTER_CUBIC
+			);
+		}
+		return true;
+	}
+	return false;
+}
+
+bool Helper::step_waitFor(
+	const cv::Mat& matTemplate, const cv::Rect searchRect, cv::Rect& findRect,
+	Time maxTime, float thres
+) {
+	r_capture->askForRefresh();
+	bool res = false;
+	Clock clk;
+	cv::Mat mat;
+	cv::Rect trect;
+	while (!m_askedForStop) {
+#ifdef OHMS_DDOA_SHOW
+		if (MSG msg{ 0 };
+			PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
+			TranslateMessage(&msg);
+			DispatchMessageW(&msg);
+		}
+		else
+#endif // OHMS_DDOA_SHOW
+		{
+			if (r_capture->isRefreshed()) {
+				if (step_copyMat(mat)) {
+					trect = searchRect;
+					if (find(mat, matTemplate, trect, thres)) {
+						findRect = trect;
+						break;
+					}
+				}
+			}
+			if (maxTime > Time::Zero && clk.getElapsedTime() > maxTime)
+				break;
+			r_capture->askForRefresh();
+			Sleep(30);
+		}
+	}
+	if (m_askedForStop)
+		throw 0;
 	return res;
 }
 
@@ -212,33 +175,26 @@ bool Helper::step_move(cv::Point pt) {
 	return true;
 }
 
-bool Helper::keepClickingUntil(
-	const cv::Point pt,
-	const cv::Rect rect,
-	const cv::Mat& matTemplate,
-	unsigned int maxTry,
-	Time time,
-	unsigned int threshold
+bool Helper::step_keepClickingUntil(
+	const cv::Point clkPt, const cv::Mat& matTemplate, const cv::Rect searchRect,
+	Time maxTime, Time clkTime, float thres
 ) {
-	if (time < Time::Zero)
-		time = milliseconds(1000);
+	if (clkTime < Time::Zero)
+		clkTime = milliseconds(1000);
 	unsigned int tried = 0;
-	cv::Rect trect = rect;
+	cv::Rect trect;
+	Clock clock;
 	do {
-		if (m_askedForStop)
-			throw 0;
-		if (maxTry > 0 && tried >= maxTry)
+		if (maxTime > Time::Zero && clock.getElapsedTime() >= maxTime)
 			return false;
-		tried++;
-		step_click(pt);
-		trect = rect;
-	} while (!m_askedForStop && !step_waitFor(true, matTemplate, trect, time, threshold));
+		step_click(clkPt);
+	} while (!m_askedForStop && !step_waitFor(matTemplate, searchRect, trect, clkTime, thres));
 	if (m_askedForStop)
 		throw 0;
 	return true;
 }
 
-void Helper::subtask_error(std::wstring_view str) {
+void Helper::step_subtaskError(std::wstring_view str) {
 	r_logger->addString(L" ");
 	r_logger->addString(std::wstring(L"任务出错: ").append(str));
 	m_askedForStop = true;

@@ -14,32 +14,33 @@ namespace ohms {
 
 Helper::Helper() :
 
-	m_doaxvv(0),
+	m_running(false),
+	m_askedForStop(false),
+
 	r_logger(nullptr),
 
-	m_askedForStop(false),
-	m_running(false),
+	m_doaxvv(0),
 	r_capture(nullptr)
 
 {
-	m_lastFight = cv::imread("assets/lastFight.png");
-	m_newFight = cv::imread("assets/newFight.png");
-	m_rect_fight = { 600, 240, 100, 300 }; // 600 -> 700, 240 -> 540
+	mat_ChaGameLast = cv::imread("assets/lastFight.png");
+	mat_ChaGameNew = cv::imread("assets/newFight.png");
+	rect_ChaGame = { 600, 240, 100, 300 }; // 600 -> 700, 240 -> 540
 
-	m_start = cv::imread("assets/start.png");
-	m_rect_start = { 700, 470, 200, 70 }; // 700 -> 900, 470 -> 540
+	mat_StartGame = cv::imread("assets/start.png");
+	rect_StartGame = { 700, 470, 200, 70 }; // 700 -> 900, 470 -> 540
 
-	m_result = cv::imread("assets/result.png");
-	m_rect_result = { 640, 35, 320, 70 }; // 640 -> 960, 140 ( 35 -> 105 )
+	mat_Result = cv::imread("assets/result.png");
+	rect_Result = { 640, 35, 320, 70 }; // 640 -> 960, 140 ( 35 -> 105 )
 
-	m_loading = cv::imread("assets/loading.png");
-	m_rect_loading = { 0, 0, 300, 180 }; // 300, 180
+	mat_Loading = cv::imread("assets/loading.png");
+	rect_Loading = { 0, 0, 300, 180 }; // 300, 180
 
-	m_fp = cv::imread("assets/fp.png");
-	m_rect_fp = { 256, 60, 400, 210 }; // 256 -> 656, 60 -> 270
+	mat_LowFP = cv::imread("assets/fp.png");
+	rect_LowFP = { 256, 60, 400, 210 }; // 256 -> 656, 60 -> 270
 
-	m_default = cv::imread("assets/default.png");
-	m_rect_default = { 640, 80, 320, 190 }; // 640 -> 960, 80 -> 270
+	mat_ChaTabBar = cv::imread("assets/default.png");
+	rect_ChaTabBar = { 640, 80, 320, 190 }; // 640 -> 960, 80 -> 270
 
 	return;
 }
@@ -51,7 +52,7 @@ void Helper::regLogger(ILogger* logger) {
 }
 
 void Helper::regForNew(bool forNew) {
-	m_task_forNew = forNew;
+	task_ChaGame_ForNew = forNew;
 }
 
 bool Helper::start() {
@@ -69,7 +70,7 @@ bool Helper::start() {
 	}
 
 	m_askedForStop = false;
-	std::thread sub(&Helper::work, this);
+	std::thread sub(&Helper::mainwork, this);
 	sub.detach();
 	return !sub.joinable();
 }
@@ -86,25 +87,19 @@ bool Helper::isRunning() {
 	return m_running;
 }
 
-bool Helper::popMessage(HelperReturnMessage& hrm) {
-	std::lock_guard lg(mutexHRM);
-	if (helperReturnMessage.empty()) {
+bool Helper::msgPop(HelperReturnMessage& hrm) {
+	std::lock_guard lg(m_hrm_mutex);
+	if (m_hrm.empty()) {
 		return false;
 	}
-	hrm = helperReturnMessage.front();
-	helperReturnMessage.pop();
+	hrm = m_hrm.front();
+	m_hrm.pop();
 	return true;
 }
 
-void Helper::pushHRM(ohms::HelperReturnMessage hrm) {
-	std::lock_guard lg(mutexHRM);
-	helperReturnMessage.push(hrm);
-	return;
-}
-
-void Helper::work() {
+void Helper::mainwork() {
 	m_running = true;
-	pushHRM(HelperReturnMessage::BtnToStop);
+	msgPush(HelperReturnMessage::BtnToStop);
 
 	// 禁止关闭屏幕和睡眠
 	SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);
@@ -121,7 +116,7 @@ void Helper::work() {
 		}
 
 		// Run subworks.
-		subwork_fight();
+		subwork_challenge();
 	}
 	catch (int err) {
 		if (err != 0) {
@@ -144,8 +139,14 @@ void Helper::work() {
 	cv::destroyAllWindows();
 #endif // OHMS_DDOA_SHOW
 	m_running = false;
-	pushHRM(HelperReturnMessage::BtnToStart);
-	pushHRM(HelperReturnMessage::Stopped);
+	msgPush(HelperReturnMessage::BtnToStart);
+	msgPush(HelperReturnMessage::Stopped);
+	return;
+}
+
+void Helper::msgPush(ohms::HelperReturnMessage hrm) {
+	std::lock_guard lg(m_hrm_mutex);
+	m_hrm.push(hrm);
 	return;
 }
 
