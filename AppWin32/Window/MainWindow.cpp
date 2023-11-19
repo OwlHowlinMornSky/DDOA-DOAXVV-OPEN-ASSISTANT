@@ -14,35 +14,47 @@ constexpr int g_timer{ 1 };
 namespace ohms {
 
 MainWindow::MainWindow() :
-	//m_saveCount(0),
-	m_isStart(true),
-	//m_hButtonSave(NULL),
-	//m_hButtonSaveC3(NULL),
 
-	m_hBtnForNew(NULL),
-	m_hBtnForLast(NULL),
+	hFont(NULL),
 
-	m_hBtn(NULL),
-	m_hList(NULL),
-	m_hFont(NULL),
-	r_capture(nullptr),
-	r_helper(nullptr) {}
+	hBtnMain(NULL),
+	m_btnMainIsStart(true),
 
-MainWindow::~MainWindow() {}
+	hBtnSettingsLast(NULL),
+	hBtnSettingsNew(NULL),
+
+	hListLog(NULL),
+
+	r_helper(nullptr)
+
+{}
+
+MainWindow::~MainWindow() {
+	destroy();
+}
 
 bool MainWindow::create(int nShowCmd) noexcept {
-	r_capture = wgc::getInstance();
+	if (m_hwnd != NULL)
+		return false;
+
 	r_helper = IHelper::instance();
 
-	Window::create(nShowCmd);
+	if (!Window::create(nShowCmd))
+		return false;
+
 	SetWindowTextW(m_hwnd, g_wndName);
-	SetTimer(m_hwnd, g_timer, 33, NULL);
+	SetTimer(m_hwnd, g_timer, 60, NULL);
 	return true;
 }
 
 void MainWindow::destroy() noexcept {
+	if (m_hwnd == NULL)
+		return;
+
 	KillTimer(m_hwnd, g_timer);
-	r_helper->askForStop();
+
+	m_btnMainIsStart = false;
+	OnBtnMain_Clicked();
 
 	while (r_helper->isRunning()) {
 		MSG msg{ 0 };
@@ -63,7 +75,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 	{
 		HINSTANCE hInst = GetModuleHandleW(NULL);
 
-		m_hFont = CreateFontW(
+		hFont = CreateFontW(
 			0, 0, 0, 0, FW_DONTCARE,
 			FALSE, FALSE, FALSE,
 			GB2312_CHARSET,
@@ -74,55 +86,40 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 			L"Segoe UI"
 		);
 
-		m_hBtn = CreateWindowW(
+		hBtnMain = CreateWindowW(
 			WC_BUTTONW, L"Start",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			10, 10, 100, 40,
 			hwnd, NULL, hInst, NULL
 		);
-		SendMessageW(m_hBtn, WM_SETFONT, (WPARAM)m_hFont, TRUE);
+		SendMessageW(hBtnMain, WM_SETFONT, (WPARAM)hFont, TRUE);
 
-		/*m_hButtonSaveC3 = CreateWindowW(
-			WC_BUTTONW, L"Save BGR",
-			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-			10, 370, 100, 40,
-			hwnd, NULL, hInst, NULL
-		);
-		SendMessageW(m_hButtonSaveC3, WM_SETFONT, (WPARAM)m_hFont, TRUE);
-
-		m_hButtonSave = CreateWindowW(
-			WC_BUTTONW, L"Save BGRA",
-			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-			10, 430, 100, 40,
-			hwnd, NULL, hInst, NULL
-		);
-		SendMessageW(m_hButtonSave, WM_SETFONT, (WPARAM)m_hFont, TRUE);*/
-
-		m_hBtnForLast = CreateWindowW(
+		hBtnSettingsLast = CreateWindowW(
 			WC_BUTTONW, L"Last Game",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
 			10, 370, 100, 40,
 			hwnd, NULL, hInst, NULL
 		);
-		SendMessageW(m_hBtnForLast, WM_SETFONT, (WPARAM)m_hFont, TRUE);
-		m_hBtnForNew = CreateWindowW(
+		SendMessageW(hBtnSettingsLast, WM_SETFONT, (WPARAM)hFont, TRUE);
+
+		hBtnSettingsNew = CreateWindowW(
 			WC_BUTTONW, L"New Game",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
 			10, 430, 100, 40,
 			hwnd, NULL, hInst, NULL
 		);
-		SendMessageW(m_hBtnForNew, WM_SETFONT, (WPARAM)m_hFont, TRUE);
+		SendMessageW(hBtnSettingsNew, WM_SETFONT, (WPARAM)hFont, TRUE);
 
-		Button_SetCheck(m_hBtnForLast, BST_CHECKED);
+		Button_SetCheck(hBtnSettingsLast, BST_CHECKED);
 
-		m_hList = CreateWindowW(
+		hListLog = CreateWindowW(
 			WC_LISTBOXW, L"Log",
 			WS_VISIBLE | WS_CHILD | WS_BORDER | LBS_HASSTRINGS | WS_VSCROLL | WS_HSCROLL,
 			160, 10, 600, 500,
 			hwnd, NULL, hInst, NULL
 		);
-		SendMessageW(m_hList, WM_SETFONT, (WPARAM)m_hFont, TRUE);
-		m_logger.reg(m_hList);
+		SendMessageW(hListLog, WM_SETFONT, (WPARAM)hFont, TRUE);
+		m_logger.reg(hListLog);
 		r_helper->regLogger(&m_logger);
 
 		break;
@@ -130,40 +127,24 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 
 	case WM_DESTROY:
 	{
-		//DestroyWindow(m_hButtonSaveC3);
-		//DestroyWindow(m_hButtonSave);
-		DestroyWindow(m_hBtn);
-		DeleteObject(m_hFont);
+		DestroyWindow(hListLog);
+		DestroyWindow(hBtnSettingsNew);
+		DestroyWindow(hBtnSettingsLast);
+		DestroyWindow(hBtnMain);
+		DeleteObject(hFont);
 		break;
 	}
 
 	case WM_CLOSE:
-		stop();
 		PostQuitMessage(0);
 		break;
 
 	case WM_COMMAND:
 		switch (HIWORD(wp)) {
 		case BN_CLICKED:
-		{
-			if ((HWND)lp == m_hBtn) {
-				if (m_isStart)
-					start();
-				else
-					stop();
-			}
-			/*else if ((HWND)lp == m_hButtonSave) {
-				if (!ohms::global::capture->saveMat(false, m_saveCount++)) {
-					MessageBoxW(hwnd, L"Failed to save.", L"ERROR", MB_ICONERROR);
-				}
-			}
-			else if ((HWND)lp == m_hButtonSaveC3) {
-				if (!ohms::global::capture->saveMat(true, m_saveCount++)) {
-					MessageBoxW(hwnd, L"Failed to save.", L"ERROR", MB_ICONERROR);
-				}
-			}*/
+			if ((HWND)lp == hBtnMain)
+				OnBtnMain_Clicked();
 			break;
-		}
 		default:
 			return DefWindowProcW(hwnd, msg, wp, lp);
 		}
@@ -171,7 +152,7 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 
 	case WM_TIMER:
 		if (wp == g_timer)
-			update();
+			OnTimerUpdate();
 		break;
 
 	default:
@@ -180,71 +161,68 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 	return 0;
 }
 
-void MainWindow::start() {
-	m_logger.clear();
-	setSettingBtnEnabled(false);
+void MainWindow::OnBtnMain_Clicked() {
+	BtnSettings_SetEnabled(false);
+	BtnMain_SetEnabled(false);
+	if (m_btnMainIsStart) {
+		m_logger.clear();
 
-	if (Button_GetState(m_hBtnForLast) == BST_CHECKED) {
-		r_helper->regForNew(false);
-	}
-	else if (Button_GetState(m_hBtnForNew) == BST_CHECKED) {
-		r_helper->regForNew(true);
+		if (Button_GetState(hBtnSettingsLast) == BST_CHECKED)
+			r_helper->regForNew(false);
+		else if (Button_GetState(hBtnSettingsNew) == BST_CHECKED)
+			r_helper->regForNew(true);
+		else {
+			m_logger.addString(L"请先设置比赛类型");
+			return;
+		}
+
+		if (!r_helper->start()) {
+			m_logger.addString(L"无法启动任务");
+			return;
+		}
 	}
 	else {
-		m_logger.addString(L"请先设置比赛类型");
-		return;
+		r_helper->askForStop();
 	}
-
-	if (!r_helper->start()) {
-		m_logger.addString(L"无法启动任务");
-		return;
-	}
-	setBtnEnabled(false);
 	return;
 }
 
-void MainWindow::stop() {
-	r_helper->askForStop();
-	setBtnEnabled(false);
-	return;
-}
-
-void MainWindow::update() {
+void MainWindow::OnTimerUpdate() {
 	ohms::HelperReturnMessage msg;
 	while (r_helper->popMessage(msg)) {
 		switch (msg) {
 		case HelperReturnMessage::Stopped:
 			m_logger.addString(L"已停止");
-			setSettingBtnEnabled(true);
+			BtnSettings_SetEnabled(true);
 			break;
 		case HelperReturnMessage::BtnToStop:
-			setBtnText(L"Stop");
-			setBtnEnabled(true);
-			m_isStart = false;
+			BtnMain_SetText(L"Stop");
+			BtnMain_SetEnabled(true);
+			m_btnMainIsStart = false;
 			break;
 		case HelperReturnMessage::BtnToStart:
-			setBtnText(L"Start");
-			setBtnEnabled(true);
-			m_isStart = true;
+			BtnMain_SetText(L"Start");
+			BtnMain_SetEnabled(true);
+			m_btnMainIsStart = true;
 			break;
 		}
 	}
 	return;
 }
 
-void MainWindow::setBtnText(const WCHAR* text) {
-	SetWindowTextW(m_hBtn, text);
+void MainWindow::BtnMain_SetText(const WCHAR* text) {
+	SetWindowTextW(hBtnMain, text);
 	return;
 }
 
-void MainWindow::setBtnEnabled(bool enabled) {
-	EnableWindow(m_hBtn, enabled ? TRUE : FALSE);
+void MainWindow::BtnMain_SetEnabled(bool enabled) {
+	EnableWindow(hBtnMain, enabled ? TRUE : FALSE);
 	return;
 }
 
-void MainWindow::setSettingBtnEnabled(bool enabled) {
-	EnableWindow(m_hBtnForLast, enabled ? TRUE : FALSE);
-	EnableWindow(m_hBtnForNew, enabled ? TRUE : FALSE);
+void MainWindow::BtnSettings_SetEnabled(bool enabled) {
+	EnableWindow(hBtnSettingsLast, enabled ? TRUE : FALSE);
+	EnableWindow(hBtnSettingsNew, enabled ? TRUE : FALSE);
 	return;
 }
 

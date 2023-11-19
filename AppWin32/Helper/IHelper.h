@@ -1,7 +1,6 @@
 ﻿#pragma once
 
-#include "../Window/framework.h"
-#include "../Window/Logger.h"
+#include "../Window/ILogger.h"
 
 namespace ohms {
 
@@ -25,7 +24,7 @@ public:
 	static void drop();
 
 public:
-	virtual void regLogger(Logger* logger) = 0;
+	virtual void regLogger(ILogger* logger) = 0;
 	virtual void regForNew(bool forNew) = 0;
 
 	/**

@@ -1,23 +1,22 @@
 ﻿#pragma once
 
+#include "ILogger.h"
 #include "framework.h"
-
-#include <string>
 
 namespace ohms {
 
-class Logger final {
+class Logger final :
+	public ILogger {
 public:
 	Logger();
 
 public:
+	virtual void addString(std::wstring_view str) override;
+
+	virtual void clear() override;
+
+public:
 	void reg(HWND target);
-
-	void addString(const WCHAR* str);
-
-	void addString(std::wstring_view str);
-
-	void clear();
 
 protected:
 	HWND m_tergetList;

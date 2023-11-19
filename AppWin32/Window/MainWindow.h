@@ -2,7 +2,6 @@
 
 #include "Window.h"
 
-#include <ohms/WGC.h>
 #include "../Helper/IHelper.h"
 #include "Logger.h"
 
@@ -19,49 +18,24 @@ public:
 	virtual void destroy() noexcept override;
 	virtual LRESULT procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcept override;
 
-public:
-	/**
-	 * @brief 开始任务。
-	*/
-	void start();
-	/**
-	 * @brief 停止任务。
-	*/
-	void stop();
-	/**
-	 * @brief 本窗口更新。
-	*/
-	void update();
+protected:
+	void OnBtnMain_Clicked();
+	void OnTimerUpdate();
 
-	/**
-	 * @brief 修改主按钮的文本。
-	 * @param text: 文本。
-	*/
-	void setBtnText(const WCHAR* text);
-	/**
-	 * @brief 修改主按钮可用性。
-	 * @param enabled: true 为 可用。
-	*/
-	void setBtnEnabled(bool enabled);
-
-	void setSettingBtnEnabled(bool enabled);
+	void BtnMain_SetText(const WCHAR* text);
+	void BtnMain_SetEnabled(bool enabled);
+	void BtnSettings_SetEnabled(bool enabled);
 
 protected:
-	HFONT m_hFont;
-	HWND m_hBtn;
-	//HWND m_hButtonSave;
-	//HWND m_hButtonSaveC3;
-	HWND m_hBtnForNew;
-	HWND m_hBtnForLast;
-	HWND m_hList;
-
-	bool m_isStart;
-	//size_t m_saveCount;
-
-	wgc::ICapture* r_capture;
-	IHelper* r_helper;
-
+	HFONT hFont;
+	HWND hBtnMain;
+	bool m_btnMainIsStart;
+	HWND hBtnSettingsLast;
+	HWND hBtnSettingsNew;
+	HWND hListLog;
 	Logger m_logger;
+
+	IHelper* r_helper;
 };
 
 } // namespace ohms

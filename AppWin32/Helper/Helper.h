@@ -1,16 +1,14 @@
 ﻿#pragma once
 
-#include <memory>
 #include <queue>
 #include <mutex>
 #include <atomic>
 
-#include <opencv2/opencv.hpp>
-#include "../Window/framework.h"
-#include <ohms/WGC.h>
-
 #include "Clock.h"
 #include "IHelper.h"
+
+#include <ohms/WGC.h>
+#include <opencv2/opencv.hpp>
 
 namespace ohms {
 
@@ -23,7 +21,7 @@ public:
 	virtual ~Helper() override;
 
 public:
-	virtual void regLogger(Logger* logger) override;
+	virtual void regLogger(ILogger* logger) override;
 	virtual void regForNew(bool forNew) override;
 
 	virtual bool start() override;
@@ -113,7 +111,7 @@ protected:
 	std::mutex mutexHRM;
 
 	HWND m_doaxvv;
-	Logger* r_logger;
+	ILogger* r_logger;
 };
 
 } // namespace ohms

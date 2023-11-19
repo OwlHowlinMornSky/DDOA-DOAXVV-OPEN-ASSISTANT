@@ -46,7 +46,7 @@ Helper::Helper() :
 
 Helper::~Helper() {}
 
-void Helper::regLogger(Logger* logger) {
+void Helper::regLogger(ILogger* logger) {
 	r_logger = logger;
 }
 
@@ -56,14 +56,14 @@ void Helper::regForNew(bool forNew) {
 
 bool Helper::start() {
 	if (!r_logger) {
-		std::cout << "Logger not registered!" << std::endl;
+		r_logger->addString(L"初始化错误");
 		return false;
 	}
 	if (m_running) {
 		r_logger->addString(L"不能重复运行任务");
 		return false;
 	}
-	r_capture = wgc::getInstance();
+	r_capture = wgc::ICapture::getInstance();
 	if (!r_capture) {
 		return false;
 	}
@@ -76,7 +76,6 @@ bool Helper::start() {
 
 void Helper::askForStop() {
 	if (m_running) {
-		r_logger->addString(L" ");
 		r_logger->addString(L"正在停止...");
 		m_askedForStop = true;
 	}
