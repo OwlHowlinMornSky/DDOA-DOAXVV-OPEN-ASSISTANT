@@ -2,14 +2,14 @@
 
 namespace ohms {
 
-void Helper::subwork_challenge() {
+bool Helper::subwork_challenge() {
 	r_logger->addString(L"任务开始: 挑战赛");
-	const bool forNew = task_ChaGame_ForNew;
+	const bool forNew = task_ChaGame_ForNew; // 保存设置
 
 	cv::Rect rect;
 	cv::Point pt;
 
-	size_t i = 0;
+	size_t i = 0; // 次数
 
 begin_point:
 	try {
@@ -63,21 +63,23 @@ begin_point:
 		goto begin_point;
 	}
 	catch (int err) {
-		if (err == 0)
+		if (err == 0) { // 返回false表示主动停止
 			r_logger->addString(L"任务中止: 挑战赛");
-		else {
+			return false;
+		}
+		else { // 不是0就是真错误
 			r_logger->addString(L" ");
 			r_logger->addString(L"任务异常: 挑战赛");
-			MessageBoxW(NULL, L"任务异常", L"DOAXVV-helper: Task Error", MB_ICONERROR);
+			MessageBoxW(NULL, L"任务异常", L"任务出错", MB_ICONERROR);
 		}
 	}
 	catch (...) {
 		r_logger->addString(L" ");
 		r_logger->addString(L"任务异常: 挑战赛");
-		MessageBoxW(NULL, L"任务异常", L"DOAXVV-helper: Task Error", MB_ICONERROR);
+		MessageBoxW(NULL, L"任务异常", L"任务出错", MB_ICONERROR);
 	}
 	r_logger->addString(L"任务结束: 挑战赛");
-	return;
+	return true;
 }
 
 }

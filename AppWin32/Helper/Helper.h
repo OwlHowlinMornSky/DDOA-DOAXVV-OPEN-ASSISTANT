@@ -21,52 +21,121 @@ public:
 	virtual ~Helper() override;
 
 public:
+	/**
+	 * @brief 注册 logger，必须在 start() 前注册
+	 * @param logger 指针
+	*/
 	virtual void regLogger(ILogger* logger) override;
+	/**
+	 * @brief 设置挑战赛打新比赛
+	 * @param forNew true则打新比赛，否则打上一次比赛
+	*/
 	virtual void regForNew(bool forNew) override;
 
+	/**
+	 * @brief 尝试开始任务。任务将运行在子线程，如果已经运行则无效。
+	 * @return true为成功
+	*/
 	virtual bool start() override;
+	/**
+	 * @brief 请求停止
+	*/
 	virtual void askForStop() override;
+	/**
+	 * @brief 是否正在运行任务
+	 * @return true则正在运行
+	*/
 	virtual bool isRunning() override;
+	/**
+	 * @brief 弹出返回消息
+	 * @param hrm 保存消息的变量
+	 * @return true则获取到，否则没有消息
+	*/
 	virtual bool msgPop(HelperReturnMessage& hrm) override;
 
 protected:
-	void mainwork(); // 运行在子线程的任务。
+	/**
+	 * @brief 运行在子线程的任务。
+	*/
+	void mainwork();
+	/**
+	 * @brief 压入返回消息
+	 * @param hrm 消息
+	*/
 	void msgPush(ohms::HelperReturnMessage hrm);
 
-// 子任务（在 Helper.subworks.cpp 实现）
+// 子任务，返回 false 表示无法继续 （在 Helper.subworks.cpp 实现）
 protected:
-	void subwork_challenge(); // 挑战赛。
+	bool subwork_challenge(); // 挑战赛。
 
 // 单步操作（在 Helper.steps.cpp 实现）
 protected:
+	/**
+	 * @brief 从capture复制mat，同时检查capture是否refresh，顺便resize到统一尺寸（960 540）。
+	 * @param target 保存mat的位置
+	 * @return capture已refresh并复制成功则为true，未refresh返回false，复制失败返回false
+	*/
 	bool step_copyMat(cv::Mat& target);
 
+	/**
+	 * @brief 等待画面出现目标。askedForStop则 throw 0
+	 * @param matTemplate 目标
+	 * @param searchRect 搜索范围
+	 * @param findRect 找到的区域
+	 * @param maxTime 超时时间（小于等于0则为永久）
+	 * @param thres 差异阈值
+	 * @return true则找到目标，findRect保存找到的区域，false则为超时
+	*/
 	bool step_waitFor(
 		const cv::Mat& matTemplate, const cv::Rect searchRect, cv::Rect& findRect,
 		Time maxTime = seconds(10.0f), float thres = 10.0f
 	);
 
+	/**
+	 * @brief 单击。范围是统一尺寸（960 540），自动缩放到当前DOAXVV大小
+	 * @param pt 位置
+	 * @return 未使用
+	*/
 	bool step_click(cv::Point pt);
+	/**
+	 * @brief 移动光标。范围是统一尺寸（960 540），自动缩放到当前DOAXVV大小
+	 * @param pt 位置
+	 * @return 未使用
+	*/
 	bool step_move(cv::Point pt);
 
+	/**
+	 * @brief 持续点击指定位置，直到画面出现目标。askedForStop则 throw 0
+	 * @param clkPt 指定点击位置，范围与 step_click 一致
+	 * @param matTemplate 目标
+	 * @param searchRect 搜索范围
+	 * @param maxTime 超时时间（小于等于0则为永久）
+	 * @param clkTime 点击间隔（不能小于10毫秒）
+	 * @param thres 阈值
+	 * @return true则已找到目标，false则为超时
+	*/
 	bool step_keepClickingUntil(
 		const cv::Point clkPt, const cv::Mat& matTemplate, const cv::Rect searchRect,
 		Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f), float thres = 10.0f
 	);
 
+	/**
+	 * @brief 报错（写入logger并弹窗），并 throw 0
+	 * @param str 报错信息
+	*/
 	void step_subtaskError(std::wstring_view str);
 
 // 成员变量
 protected:
-	std::atomic_bool m_running;
-	std::atomic_bool m_askedForStop;
+	std::atomic_bool m_running; // 正在运行的标记。true为正在运行
+	std::atomic_bool m_askedForStop; // 请求停止的标记。true为需要停止
 
-	std::queue<ohms::HelperReturnMessage> m_hrm;
-	std::mutex m_hrm_mutex;
-	ILogger* r_logger;
+	std::queue<ohms::HelperReturnMessage> m_hrm; // 返回消息的队列
+	std::mutex m_hrm_mutex; // 返回消息的互斥体
+	ILogger* r_logger; // logger索引
 
-	HWND m_doaxvv;
-	wgc::ICapture* r_capture;
+	HWND m_doaxvv; // doaxvv窗口句柄
+	wgc::ICapture* r_capture; // capture索引
 
 	// 上一次比赛 和 新比赛 的图样，以及查找范围。
 	cv::Mat mat_ChaGameLast;
@@ -94,5 +163,12 @@ protected:
 	cv::Mat mat_ChaTabBar;
 	cv::Rect rect_ChaTabBar;
 };
+
+/*
+* note:
+* 
+* throw 0 的原因：subwork通过catch到0判断任务停止。
+* 
+*/
 
 } // namespace ohms

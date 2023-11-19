@@ -3,12 +3,18 @@
 
 namespace {
 
+/**
+ * @brief 获取内核速度
+*/
 LARGE_INTEGER getFrequency() {
 	LARGE_INTEGER frequency;
 	QueryPerformanceFrequency(&frequency);
 	return frequency;
 }
 
+/**
+ * @brief 获取当前时间
+*/
 ohms::Time getCurrentTime() {
 	// Calculate inverse of frequency multiplied by 1000000 to prevent overflow in final calculation
 	// Frequency is constant across the program lifetime
@@ -20,7 +26,7 @@ ohms::Time getCurrentTime() {
 	QueryPerformanceCounter(&time);
 
 	// Return the current time as microseconds
-	return ohms::microseconds(static_cast<int64_t>(static_cast<double>(time.QuadPart) * inverse));
+	return ohms::microseconds(static_cast<long long>(static_cast<double>(time.QuadPart) * inverse));
 }
 
 } // namespace

@@ -11,11 +11,11 @@ float Time::asSeconds() const {
 	return static_cast<float>(static_cast<double>(m_microseconds) / 1000000.0);
 }
 
-int32_t Time::asMilliseconds() const {
-	return static_cast<int32_t>(m_microseconds / 1000);
+long Time::asMilliseconds() const {
+	return static_cast<long>(m_microseconds / 1000);
 }
 
-int64_t Time::asMicroseconds() const {
+long long Time::asMicroseconds() const {
 	return m_microseconds;
 }
 
@@ -31,18 +31,18 @@ Time Time::operator+(const Time& right) const {
 	return Time(m_microseconds + right.m_microseconds);
 }
 
-Time::Time(int64_t microseconds) :
+Time::Time(long long microseconds) :
 	m_microseconds(microseconds) {}
 
 Time seconds(float amount) {
-	return Time(static_cast<int64_t>(amount * 1000000));
+	return Time(static_cast<long long>(amount * 1000000));
 }
 
-Time milliseconds(int32_t amount) {
-	return Time(static_cast<int64_t>(amount) * 1000);
+Time milliseconds(long amount) {
+	return Time(static_cast<long long>(amount) * 1000);
 }
 
-Time microseconds(int64_t amount) {
+Time microseconds(long long amount) {
 	return Time(amount);
 }
 

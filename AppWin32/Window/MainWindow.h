@@ -19,7 +19,13 @@ public:
 	virtual LRESULT procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcept override;
 
 protected:
+	/**
+	 * @brief 主按钮被点击
+	*/
 	void OnBtnMain_Clicked();
+	/**
+	 * @brief 计时器消息
+	*/
 	void OnTimerUpdate();
 
 	void BtnMain_SetText(const WCHAR* text);
@@ -27,15 +33,15 @@ protected:
 	void BtnSettings_SetEnabled(bool enabled);
 
 protected:
-	HFONT hFont;
-	HWND hBtnMain;
-	bool m_btnMainIsStart;
-	HWND hBtnSettingsLast;
-	HWND hBtnSettingsNew;
-	HWND hListLog;
-	Logger m_logger;
+	HFONT hFont; // 字体
+	HWND hBtnMain; // 主按钮
+	bool m_btnMainIsStart; // 主按钮当前状态
+	HWND hBtnSettingsLast; // 设置上一次比赛的单选框
+	HWND hBtnSettingsNew; // 设置新比赛的单选框
+	HWND hListLog; // 显示log的listbox
+	Logger m_logger; // logger
 
-	IHelper* r_helper;
+	IHelper* r_helper; // helper索引
 };
 
 } // namespace ohms

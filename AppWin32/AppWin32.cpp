@@ -5,24 +5,33 @@
 #include <ohms/WGC.h>
 #include "Helper/IHelper.h"
 
+namespace {
+
+const WCHAR g_name[] = L"DDOA";
+
+}
+
+/**
+ * @brief AppWin的唯一实例
+*/
 AppWin32 app;
 
 bool AppWin32::Init() {
 	if (!UniqueInstance::setup()) {
-		MessageBoxW(NULL, L"Another instance is running.", L"DOAXVV-helper", MB_ICONERROR);
+		MessageBoxW(NULL, L"已经有另一实例运行", g_name, MB_ICONERROR);
 		return 1;
 	}
 
 	auto wgc = ohms::wgc::ICapture::getInstance();
 	if (!wgc) {
-		MessageBoxW(NULL, L"Capture initialization failed.", L"DOAXVV-helper", MB_ICONERROR);
+		MessageBoxW(NULL, L"截图模块初始化失败", g_name, MB_ICONERROR);
 		return 1;
 	}
 	wgc->setClipToClientArea(true);
 
 	auto hlp = ohms::IHelper::instance();
 	if (!hlp) {
-		MessageBoxW(NULL, L"Helper initialization failed.", L"DOAXVV-helper", MB_ICONERROR);
+		MessageBoxW(NULL, L"助手模块初始化失败", g_name, MB_ICONERROR);
 		return 1;
 	}
 	return 0;

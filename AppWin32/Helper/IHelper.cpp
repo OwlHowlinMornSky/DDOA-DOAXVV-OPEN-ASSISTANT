@@ -3,17 +3,17 @@
 
 namespace {
 
-ohms::IHelper* g_helper;
+ohms::IHelper* g_helper{ nullptr }; // helper实例
 
 }
 
 namespace ohms {
 
 IHelper* ohms::IHelper::instance() {
-	if (!::g_helper) {
+	if (!::g_helper) { // 首次获取时构造
 		::g_helper = new Helper;
 	}
-    return g_helper;
+	return ::g_helper;
 }
 
 void IHelper::drop() {

@@ -2,25 +2,30 @@
 
 namespace {
 
-const WCHAR g_clsName[] = L"OHMS.WNDCLS.DEFAULT";
+const WCHAR g_clsName[] = L"OHMS.WNDCLS.DEFAULT"; // 默认窗口类名
 
+/**
+ * @brief 全局窗口过程
+*/
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	if (hwnd) {
-		if (msg == WM_CREATE) {
+		if (msg == WM_CREATE) { // 创建窗口时注册相应实例
 			LONG_PTR window = reinterpret_cast<LONG_PTR>(reinterpret_cast<CREATESTRUCT*>(lParam)->lpCreateParams);
 			SetWindowLongPtrW(hwnd, GWLP_USERDATA, window);
-
 		}
-		ohms::Window* window = reinterpret_cast<ohms::Window*>(GetWindowLongPtrW(hwnd, GWLP_USERDATA));
-		if (window) {
+		ohms::Window* window = reinterpret_cast<ohms::Window*>(GetWindowLongPtrW(hwnd, GWLP_USERDATA)); // 获取相应实例
+		if (window) // 获取到实例则调用它的过程函数
 			return window->procedure(hwnd, msg, wParam, lParam);
-		}
 	}
 	return DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
-bool g_clsRegistered{ false };
+bool g_clsRegistered{ false }; // 是否已注册窗口类的标记
 
+/**
+ * @brief 注册窗口类
+ * @return true则已经注册
+*/
 bool registerClass() noexcept {
 	if (g_clsRegistered)
 		return true;
@@ -49,7 +54,6 @@ Window::Window() :
 
 Window::~Window() {
 	destroy();
-	m_hwnd = NULL;
 	return;
 }
 
@@ -59,7 +63,7 @@ bool Window::isOpen() const noexcept {
 
 bool Window::create(int nShowCmd) noexcept {
 	if (m_hwnd != NULL || !::registerClass())
-		return false;
+		return false; // 窗口类没有注册就不能创建窗口
 	m_hwnd = CreateWindowExW(
 		0L, g_clsName, L"",
 		WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX | WS_CLIPCHILDREN | WS_CLIPSIBLINGS,
@@ -67,7 +71,7 @@ bool Window::create(int nShowCmd) noexcept {
 		NULL, NULL, GetModuleHandleW(NULL), this
 	);
 	if (m_hwnd == NULL)
-		return false;
+		return false; // 创建失败
 	ShowWindow(m_hwnd, nShowCmd);
 	UpdateWindow(m_hwnd);
 	return true;

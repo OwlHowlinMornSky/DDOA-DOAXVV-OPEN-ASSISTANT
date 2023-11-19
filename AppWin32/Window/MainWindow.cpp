@@ -4,8 +4,8 @@
 
 namespace {
 
-const WCHAR g_clsName[] = L"OHMS.DOAXVVHELPER.WNDCLS.MAIN";
-const WCHAR g_wndName[] = L"DOAXVV-helper";
+//const WCHAR g_clsName[] = L"OHMS.DOAXVVHELPER.WNDCLS.MAIN";
+const WCHAR g_wndName[] = L"DDOA"; // 默认窗口名
 
 constexpr int g_timer{ 1 };
 
@@ -34,10 +34,10 @@ MainWindow::~MainWindow() {
 }
 
 bool MainWindow::create(int nShowCmd) noexcept {
-	if (m_hwnd != NULL)
+	if (m_hwnd != NULL) // 窗口已经创建
 		return false;
 
-	r_helper = IHelper::instance();
+	r_helper = IHelper::instance(); // 理论上不会是nullptr（因为App初始化时获取过了）
 
 	if (!Window::create(nShowCmd))
 		return false;
@@ -53,9 +53,9 @@ void MainWindow::destroy() noexcept {
 
 	KillTimer(m_hwnd, g_timer);
 
+	// 请求并等待任务停止
 	m_btnMainIsStart = false;
 	OnBtnMain_Clicked();
-
 	while (r_helper->isRunning()) {
 		MSG msg{ 0 };
 		if (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
