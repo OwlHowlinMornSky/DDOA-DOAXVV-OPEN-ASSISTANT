@@ -7,8 +7,9 @@
 namespace {
 
 constexpr int g_nMatchMethod = cv::TM_SQDIFF_NORMED;
+constexpr bool g_useColorDiff = false;
 
-float matDiffrencePixel(const cv::Mat& matSample, const cv::Mat& matTemplate) {
+inline float matDiffrencePixel(const cv::Mat& matSample, const cv::Mat& matTemplate) {
 	assert(matSample.size() == matTemplate.size());
 	cv::Mat matResault;
 	cv::absdiff(matSample, matTemplate, matResault);
@@ -17,7 +18,7 @@ float matDiffrencePixel(const cv::Mat& matSample, const cv::Mat& matTemplate) {
 	return (static_cast<float>(cv::countNonZero(matResault)) / matResault.size().area());
 }
 
-float matDiffrenceColor(const cv::Mat& matSample, const cv::Mat& matTemplate) {
+inline float matDiffrenceColor(const cv::Mat& matSample, const cv::Mat& matTemplate) {
 	assert(matSample.size() == matTemplate.size());
 	cv::Mat matResault;
 	cv::absdiff(matSample, matTemplate, matResault);
@@ -32,16 +33,17 @@ float matDiffrenceColor(const cv::Mat& matSample, const cv::Mat& matTemplate) {
 }
 
 inline bool check(const cv::Mat& matSample, const cv::Mat& matTemplate, float thres) {
-	assert(threshold < 100);
+	assert(thres > 0.0f && thres < 100.0f);
 	assert(matSample.size() == matTemplate.size());
-
-	float diff = matDiffrencePixel(matSample, matTemplate);
-	//float diff = matDiffrenceColor(matSample, matTemplate);
-
+	float diff;
+	if constexpr (g_useColorDiff)
+		diff = matDiffrenceColor(matSample, matTemplate);
+	else
+		diff = matDiffrencePixel(matSample, matTemplate);
 	return ((diff * 100.0f) < thres);
 }
 
-bool find(const cv::Mat& matSample, const cv::Mat& matTemplate, cv::Rect& rect, float thres) {
+inline bool find(const cv::Mat& matSample, const cv::Mat& matTemplate, cv::Rect& rect, float thres) {
 	cv::Rect oldRect;
 	cv::Mat srcImage;
 	if (rect.size().area() > 0) {
