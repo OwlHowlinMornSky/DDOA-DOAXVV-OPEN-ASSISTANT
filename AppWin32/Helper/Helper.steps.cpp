@@ -166,7 +166,7 @@ bool Helper::step_waitFor(
 				}
 			}
 			if (maxTime > Time::Zero && clk.getElapsedTime() > maxTime) // 应用超时
-				break;
+				return false;
 			r_capture->askForRefresh();
 			Sleep(30);
 		}
