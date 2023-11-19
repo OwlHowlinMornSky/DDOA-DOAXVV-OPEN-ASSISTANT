@@ -12,3 +12,7 @@ Old name: DOAXVV-helper
 
 * [WGC-Capture-with-OpenCV](https://github.com/OwlHowlinMornSky/WGC-Capture-with-OpenCV) v1.0
 * OpenCV 4.8.0
+
+## Limitations
+
+* No globalization (only Chinese supported).
