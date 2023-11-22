@@ -147,17 +147,15 @@ bool Helper::step_waitFor(
 	Clock clk;
 	cv::Mat mat;
 	cv::Rect trect;
+	MSG msg{ 0 };
 	while (!m_askedForStop) {
-#ifdef OHMS_DDOA_SHOW
 		// show mat时必须处理该线程的窗口消息，cv的窗口才正常
-		if (MSG msg{ 0 };
-			PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
+		// 没有show mat时也必须处理消息，否则收不到capture到的帧（似乎是分离线程初始化wgc导致的
+		if (PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
 			TranslateMessage(&msg);
 			DispatchMessageW(&msg);
 		}
-		else
-#endif // OHMS_DDOA_SHOW
-		{
+		else {
 			if (step_copyMat(mat)) {
 				trect = searchRect;
 				if (find(mat, matTemplate, trect, thres)) {
