@@ -34,7 +34,7 @@ begin_point:
 			while (!m_askedForStop) {
 				// 点击挑战，直到进入加载画面。
 				pt = { rect.x + 50, rect.y + 20 };
-				if (step_keepClickingUntil(pt, mat_Loading, rect_Loading, seconds(4.0f), seconds(0.5f), 20.0f))
+				if (step_keepClickingUntil(pt, mat_Loading, rect_Loading, seconds(1.0f), seconds(0.3f), 20.0f))
 					break;
 				if (step_waitFor(mat_LowFP, rect_LowFP, rect, seconds(1.0f)))
 					step_subtaskError(L"FP耗尽");
@@ -51,7 +51,7 @@ begin_point:
 		// 点击，直到进入加载画面。
 		r_logger->addString(L"挑战结束");
 		pt = { rect.x + 100, rect.y };
-		if (!step_keepClickingUntil(pt, mat_Loading, rect_Loading, seconds(60.0f), seconds(0.2f), 20.0f))
+		if (!step_keepClickingUntil(pt, mat_Loading, rect_Loading, seconds(60.0f), seconds(0.1f), 20.0f))
 			step_subtaskError(L"无法退出挑战");
 
 		// 等待到挑战赛标签页出现。
