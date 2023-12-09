@@ -182,8 +182,19 @@ bool Helper::step_click(cv::Point pt) {
 	pt.y = static_cast<int>(pt.y / 540.0f * (rect.bottom - rect.top));
 
 	// 发送消息单击
+	POINT p{pt.x, pt.y};
+	ClientToScreen(m_doaxvv, &p);
+
+	PostMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
+	PostMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_MOUSEMOVE));
 	PostMessageW(m_doaxvv, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
+
+	PostMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
+	PostMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_LBUTTONDOWN));
 	PostMessageW(m_doaxvv, WM_LBUTTONDOWN, 0, MAKELPARAM(pt.x, pt.y));
+
+	PostMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
+	PostMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_LBUTTONUP));
 	PostMessageW(m_doaxvv, WM_LBUTTONUP, 0, MAKELPARAM(pt.x, pt.y));
 	return true;
 }
@@ -196,6 +207,11 @@ bool Helper::step_move(cv::Point pt) {
 	pt.y = static_cast<int>(pt.y / 540.0f * (rect.bottom - rect.top));
 
 	// 发送消息移动光标
+	POINT p{ pt.x, pt.y };
+	ClientToScreen(m_doaxvv, &p);
+
+	PostMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
+	PostMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_MOUSEMOVE));
 	PostMessageW(m_doaxvv, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
 	return true;
 }
