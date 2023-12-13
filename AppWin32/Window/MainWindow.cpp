@@ -94,19 +94,27 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 		);
 		SendMessageW(hBtnMain, WM_SETFONT, (WPARAM)hFont, TRUE);
 
+		hBtnSettingsGame = CreateWindowW(
+			WC_BUTTONW, L"Game Settings",
+			WS_TABSTOP | WS_VISIBLE | WS_CHILD | WS_GROUP | BS_GROUPBOX,
+			10, 70, 130, 120,
+			hwnd, NULL, hInst, NULL
+		);
+		SendMessageW(hBtnSettingsGame, WM_SETFONT, (WPARAM)hFont, TRUE);
+
 		hBtnSettingsLast = CreateWindowW(
 			WC_BUTTONW, L"Last Game",
-			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
-			10, 370, 100, 40,
-			hwnd, NULL, hInst, NULL
+			WS_TABSTOP | WS_VISIBLE | WS_CHILD |BS_AUTORADIOBUTTON,
+			5, 30, 100, 30,
+			hBtnSettingsGame, NULL, hInst, NULL
 		);
 		SendMessageW(hBtnSettingsLast, WM_SETFONT, (WPARAM)hFont, TRUE);
 
 		hBtnSettingsNew = CreateWindowW(
 			WC_BUTTONW, L"New Game",
 			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
-			10, 430, 100, 40,
-			hwnd, NULL, hInst, NULL
+			5, 60, 100, 30,
+			hBtnSettingsGame, NULL, hInst, NULL
 		);
 		SendMessageW(hBtnSettingsNew, WM_SETFONT, (WPARAM)hFont, TRUE);
 
@@ -121,6 +129,32 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 		SendMessageW(hListLog, WM_SETFONT, (WPARAM)hFont, TRUE);
 		m_logger.reg(hListLog);
 		r_helper->regLogger(&m_logger);
+
+		hBtnSettingsMouse = CreateWindowW(
+			WC_BUTTONW, L"Control Settings",
+			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
+			10, 210, 130, 120,
+			hwnd, NULL, hInst, NULL
+		);
+		SendMessageW(hBtnSettingsMouse, WM_SETFONT, (WPARAM)hFont, TRUE);
+
+		hBtnSettingsMsg = CreateWindowW(
+			WC_BUTTONW, L"Message",
+			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
+			5, 30, 100, 30,
+			hBtnSettingsMouse, NULL, hInst, NULL
+		);
+		SendMessageW(hBtnSettingsMsg, WM_SETFONT, (WPARAM)hFont, TRUE);
+
+		hBtnSettingsCtrl = CreateWindowW(
+			WC_BUTTONW, L"Cursor",
+			WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
+			5, 60, 100, 30,
+			hBtnSettingsMouse, NULL, hInst, NULL
+		);
+		SendMessageW(hBtnSettingsCtrl, WM_SETFONT, (WPARAM)hFont, TRUE);
+
+		Button_SetCheck(hBtnSettingsMsg, BST_CHECKED);
 
 		break;
 	}
@@ -155,6 +189,14 @@ LRESULT MainWindow::procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) noexcep
 			OnTimerUpdate();
 		break;
 
+	case WM_CTLCOLORSTATIC:
+	{
+		HDC hDC = (HDC)wp;
+		SetTextColor(hDC, RGB(255, 255, 255));
+		SetBkMode(hDC, TRANSPARENT);
+		return (INT_PTR)GetStockObject(HOLLOW_BRUSH);
+	}
+
 	default:
 		return DefWindowProc(hwnd, msg, wp, lp);
 	}
@@ -173,6 +215,15 @@ void MainWindow::OnBtnMain_Clicked() {
 			r_helper->regForNew(true);
 		else {
 			m_logger.addString(L"请先设置比赛类型");
+			return;
+		}
+
+		if (Button_GetState(hBtnSettingsMsg) == BST_CHECKED)
+			r_helper->regForMouse(false);
+		else if (Button_GetState(hBtnSettingsCtrl) == BST_CHECKED)
+			r_helper->regForMouse(true);
+		else {
+			m_logger.addString(L"请先设置操作类型");
 			return;
 		}
 
@@ -223,6 +274,8 @@ void MainWindow::BtnMain_SetEnabled(bool enabled) {
 void MainWindow::BtnSettings_SetEnabled(bool enabled) {
 	EnableWindow(hBtnSettingsLast, enabled ? TRUE : FALSE);
 	EnableWindow(hBtnSettingsNew, enabled ? TRUE : FALSE);
+	EnableWindow(hBtnSettingsMsg, enabled ? TRUE : FALSE);
+	EnableWindow(hBtnSettingsCtrl, enabled ? TRUE : FALSE);
 	return;
 }
 

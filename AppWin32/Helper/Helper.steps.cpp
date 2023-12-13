@@ -181,42 +181,62 @@ bool Helper::step_click(cv::Point pt) {
 	pt.x = static_cast<int>(pt.x / 960.0f * (rect.right - rect.left));
 	pt.y = static_cast<int>(pt.y / 540.0f * (rect.bottom - rect.top));
 
-	// 发送消息单击
-	POINT p{pt.x, pt.y};
-	ClientToScreen(m_doaxvv, &p);
+	if (task_Mouse_ForMouse) {
+		GetWindowRect(m_doaxvv, &rect);
 
-	LRESULT res;
+		//获取可用桌面大小
+		RECT sc{ 0 };
+		SystemParametersInfoW(SPI_GETWORKAREA, 0, &sc, 0);
+		if (rect.right > sc.right)
+			rect.left -= rect.right - sc.right;
+		if (rect.left < sc.left)
+			rect.left = sc.left;
+		if (rect.bottom > sc.bottom)
+			rect.top -= rect.bottom - sc.bottom;
+		if (rect.top < sc.top)
+			rect.top = sc.top;
+		SetWindowPos(m_doaxvv, NULL, rect.left, rect.top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOACTIVATE);
 
-	res = SendMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
-	if (res != HTCLIENT)
-		return false;
-	res = SendMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_MOUSEMOVE));
-	if (res != FALSE)
-		return false;
-	PostMessageW(m_doaxvv, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
+		POINT p{ pt.x, pt.y };
+		ClientToScreen(m_doaxvv, &p);
 
-	Sleep(30);
+		p.x = p.x * 65535ll / 1920;
+		p.y = p.y * 65535ll / 1080;
 
-	res = SendMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
-	if (res != HTCLIENT)
-		return false;
-	res = SendMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_LBUTTONDOWN));
-	if (res != FALSE)
-		return false;
-	PostMessageW(m_doaxvv, WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(pt.x, pt.y));
+		pt.x = static_cast<int>(pt.x / 960.0f * (rect.right - rect.left));
+		pt.y = static_cast<int>(pt.y / 540.0f * (rect.bottom - rect.top));
 
-	Sleep(30);
+		INPUT inputs[3] = {};
+		ZeroMemory(inputs, sizeof(inputs));
 
-	res = SendMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
-	if (res != HTCLIENT)
-		return false;
-	res = SendMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_LBUTTONUP));
-	if (res != FALSE)
-		return false;
-	PostMessageW(m_doaxvv, WM_LBUTTONUP, 0, MAKELPARAM(pt.x, pt.y));
+		inputs[0].type = INPUT_MOUSE;
+		inputs[0].mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+		inputs[0].mi.dx = p.x;
+		inputs[0].mi.dy = p.y;
 
-	Sleep(30);
+		inputs[1].type = INPUT_MOUSE;
+		inputs[1].mi.dwFlags = MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_ABSOLUTE;
+		inputs[1].mi.dx = p.x;
+		inputs[1].mi.dy = p.y;
 
+		inputs[2].type = INPUT_MOUSE;
+		inputs[2].mi.dwFlags = MOUSEEVENTF_LEFTUP | MOUSEEVENTF_ABSOLUTE;
+		inputs[2].mi.dx = p.x;
+		inputs[2].mi.dy = p.y;
+
+		UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+		if (uSent != ARRAYSIZE(inputs)) {
+			;
+			//OutputString(L"SendInput failed: 0x%x\n", HRESULT_FROM_WIN32(GetLastError()));
+		}
+	}
+	else {
+		// 发送消息单击
+		PostMessageW(m_doaxvv, WM_SETFOCUS, 0, 0);
+		PostMessageW(m_doaxvv, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
+		PostMessageW(m_doaxvv, WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(pt.x, pt.y));
+		PostMessageW(m_doaxvv, WM_LBUTTONUP, 0, MAKELPARAM(pt.x, pt.y));
+	}
 	return true;
 }
 
@@ -228,21 +248,8 @@ bool Helper::step_move(cv::Point pt) {
 	pt.y = static_cast<int>(pt.y / 540.0f * (rect.bottom - rect.top));
 
 	// 发送消息移动光标
-	POINT p{ pt.x, pt.y };
-	ClientToScreen(m_doaxvv, &p);
-
-	LRESULT res;
-
-	res = SendMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
-	if (res != HTCLIENT)
-		return false;
-	res = SendMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_MOUSEMOVE));
-	if (res != FALSE)
-		return false;
+	PostMessageW(m_doaxvv, WM_SETFOCUS, 0, 0);
 	PostMessageW(m_doaxvv, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
-
-	Sleep(30);
-
 	return true;
 }
 

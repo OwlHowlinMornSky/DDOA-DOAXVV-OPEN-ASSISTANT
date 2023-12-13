@@ -57,6 +57,10 @@ void Helper::regForNew(bool forNew) {
 	task_ChaGame_ForNew = forNew;
 }
 
+void Helper::regForMouse(bool forMouse) {
+	task_Mouse_ForMouse = forMouse;
+}
+
 bool Helper::start() {
 	if (!r_logger) { // 还没注册logger
 		r_logger->addString(L"初始化错误");

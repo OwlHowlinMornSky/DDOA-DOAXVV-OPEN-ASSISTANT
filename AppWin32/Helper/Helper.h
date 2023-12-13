@@ -32,6 +32,9 @@ public:
 	*/
 	virtual void regForNew(bool forNew) override;
 
+
+	virtual void regForMouse(bool forMouse) override;
+
 	/**
 	 * @brief 尝试开始任务。任务将运行在子线程，如果已经运行则无效。
 	 * @return true为成功
@@ -142,6 +145,7 @@ protected:
 	cv::Mat mat_ChaGameNew;
 	cv::Rect rect_ChaGame;
 	bool task_ChaGame_ForNew; // 选择新比赛。
+	bool task_Mouse_ForMouse; // 选择控制鼠标。
 
 	// 编队页面右下角的 挑战按钮。
 	cv::Mat mat_StartGame;
