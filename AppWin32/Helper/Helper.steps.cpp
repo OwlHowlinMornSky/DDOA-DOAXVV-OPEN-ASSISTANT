@@ -185,17 +185,38 @@ bool Helper::step_click(cv::Point pt) {
 	POINT p{pt.x, pt.y};
 	ClientToScreen(m_doaxvv, &p);
 
-	PostMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
-	PostMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_MOUSEMOVE));
+	LRESULT res;
+
+	res = SendMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
+	if (res != HTCLIENT)
+		return false;
+	res = SendMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_MOUSEMOVE));
+	if (res != FALSE)
+		return false;
 	PostMessageW(m_doaxvv, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
 
-	PostMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
-	PostMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_LBUTTONDOWN));
-	PostMessageW(m_doaxvv, WM_LBUTTONDOWN, 0, MAKELPARAM(pt.x, pt.y));
+	Sleep(30);
 
-	PostMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
-	PostMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_LBUTTONUP));
+	res = SendMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
+	if (res != HTCLIENT)
+		return false;
+	res = SendMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_LBUTTONDOWN));
+	if (res != FALSE)
+		return false;
+	PostMessageW(m_doaxvv, WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(pt.x, pt.y));
+
+	Sleep(30);
+
+	res = SendMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
+	if (res != HTCLIENT)
+		return false;
+	res = SendMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_LBUTTONUP));
+	if (res != FALSE)
+		return false;
 	PostMessageW(m_doaxvv, WM_LBUTTONUP, 0, MAKELPARAM(pt.x, pt.y));
+
+	Sleep(30);
+
 	return true;
 }
 
@@ -210,9 +231,18 @@ bool Helper::step_move(cv::Point pt) {
 	POINT p{ pt.x, pt.y };
 	ClientToScreen(m_doaxvv, &p);
 
-	PostMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
-	PostMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_MOUSEMOVE));
+	LRESULT res;
+
+	res = SendMessageW(m_doaxvv, WM_NCHITTEST, 0, MAKELPARAM(p.x, p.y));
+	if (res != HTCLIENT)
+		return false;
+	res = SendMessageW(m_doaxvv, WM_SETCURSOR, (WPARAM)m_doaxvv, MAKELPARAM(HTCLIENT, WM_MOUSEMOVE));
+	if (res != FALSE)
+		return false;
 	PostMessageW(m_doaxvv, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
+
+	Sleep(30);
+
 	return true;
 }
 
