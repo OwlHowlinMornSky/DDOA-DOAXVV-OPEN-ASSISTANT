@@ -4,11 +4,14 @@ using Wrapper;
 namespace WinFormsGUI {
 	public partial class FormMain : Form {
 		#region ==========Members==========
+
 		private HelperWrapper m_helper = new();
 		private bool m_btnMainIsStart = true;
+
 		#endregion
 
 		#region ==========Common===========
+
 		public FormMain() {
 			InitializeComponent();
 		}
@@ -26,17 +29,18 @@ namespace WinFormsGUI {
 			if (scroll)
 				listBox_Main.TopIndex = listBox_Main.Items.Count - (int)(listBox_Main.Height / listBox_Main.ItemHeight);
 		}
+
 		#endregion
 
 		#region ==========Events===========
+
 		#region ---------MainForm----------
+
 		public void FormMain_Load(object sender, EventArgs e) {
 			button_Tab0_Main.Text = Strings.str.Main_Btn_Start;
 
-			if (Settings.main.Default.Game_ForNew)
-				radioButton_Tab0_Box0_1.Checked = true;
-			if (Settings.main.Default.Ctrl_ForMouse)
-				radioButton_Tab0_Box1_1.Checked = true;
+			radioButton_Tab0_Box0_1.Checked = Settings.main.Default.Game_ForNew;
+			radioButton_Tab0_Box1_1.Checked = Settings.main.Default.Ctrl_ForMouse;
 		}
 
 		private void FormMain_FormClosing(object sender, FormClosingEventArgs e) {
@@ -53,19 +57,22 @@ namespace WinFormsGUI {
 		}
 
 		private void FormMain_FormClosed(object sender, FormClosedEventArgs e) {
-			Settings.main.Default.Save();
 		}
+
 		#endregion
+
 		#region -----------Tab0------------
+
 		private void button_Tab0_Main_Click(object sender, EventArgs e) {
 			groupBox_Tab0_Box0.Enabled = false;
 			groupBox_Tab0_Box1.Enabled = false;
 			button_Tab0_Main.Enabled = false;
+
 			if (m_btnMainIsStart) {
 				listBox_Main.Items.Clear();
 
 				if (!m_helper.start()) {
-					listBox_Main.Items.Add("无法启动任务");
+					Log("无法启动任务");
 					return;
 				}
 				timer1.Enabled = true;
@@ -95,6 +102,7 @@ namespace WinFormsGUI {
 				m_helper.regForMouse(true);
 		}
 		#endregion
+
 		private void timer1_Tick(object sender, EventArgs e) {
 			ReturnMessage m = m_helper.msgPop();
 			switch (m) {
@@ -202,6 +210,7 @@ namespace WinFormsGUI {
 			}
 			return;
 		}
+
 		#endregion
 	}
 }
