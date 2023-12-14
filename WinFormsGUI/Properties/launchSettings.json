@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "WinFormsGUI": {
+      "commandName": "Project",
+      "workingDirectory": "$(ProjectDir)",
+      "environmentVariables": {
+        "PATH": "$(OHMS_LIB_DIR)\\ohms\\wgc\\v1.2\\bin;$(OHMS_LIB_DIR)\\opencv\\4.8.0\\build\\x64\\vc16\\bin;$(PATH)"
+      }
+    }
+  }
+}
