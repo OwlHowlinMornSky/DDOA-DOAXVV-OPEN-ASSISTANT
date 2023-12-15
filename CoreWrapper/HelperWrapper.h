@@ -21,6 +21,8 @@ public:
 	ReturnMessage msgPop();
 	System::UInt32 codePop();
 
+	void drop();
+
 private:
 	ohms::IHelper* m_helper;
 };

@@ -195,6 +195,9 @@
   <data name="Main_Log_ExceptionInWork" xml:space="preserve">
     <value>Main_Log_ExceptionInWork</value>
   </data>
+  <data name="Main_Log_TaskError" xml:space="preserve">
+    <value>Main_Log_TaskError</value>
+  </data>
   <data name="Main_Log_WorkAlreadyRunning" xml:space="preserve">
     <value>Main_Log_WorkAlreadyRunning</value>
   </data>

@@ -8,6 +8,8 @@ constexpr int g_nMatchMethod = cv::TM_SQDIFF_NORMED; // opencv match时用的方
 constexpr bool g_useColorDiff = false; // check函数用的选项。
 
 bool g_showcv = false;
+bool g_showopened = false;
+std::mutex g_showcvMutex;
 
 /**
  * @brief 比较两个mat，按超过阈值的像素数。
@@ -110,13 +112,20 @@ inline bool find(const cv::Mat& matSample, const cv::Mat& matTemplate, cv::Rect&
 	bool res = check(matSample(r), matTemplate, thres);
 	if (res) rect = r; // 保存到rect
 
+	std::lock_guard lg(g_showcvMutex);
 	if (g_showcv) {
 		matSample.copyTo(srcImage); // 复制原始输入
 		cv::rectangle(srcImage, oldRect, cv::Scalar(255, 0, 0), 2, 8, 0); // 蓝线画寻找范围框
 		cv::rectangle(srcImage, r, res ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0); // 画最佳匹配框（满足阈值为绿，否则为红）
 		cv::resize(srcImage, srcImage, srcImage.size() / 2, 0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR); // 缩小到一般
+		g_showopened = true;
 		cv::imshow("show", srcImage); // show
 	}
+#ifndef _DEBUG
+	else if (g_showopened) { // Release 时自动关闭 OpenCV 窗口
+		cv::destroyAllWindows();
+	}
+#endif
 	return res;
 }
 
@@ -125,6 +134,7 @@ inline bool find(const cv::Mat& matSample, const cv::Mat& matTemplate, cv::Rect&
 namespace ohms {
 
 void Helper::regShowCV(bool show) {
+	std::lock_guard lg(g_showcvMutex);
 	g_showcv = show;
 }
 

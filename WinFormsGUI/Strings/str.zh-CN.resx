@@ -195,11 +195,14 @@
   <data name="Main_Log_ExceptionInWork" xml:space="preserve">
     <value>工作异常</value>
   </data>
+  <data name="Main_Log_TaskError" xml:space="preserve">
+    <value>任务出错</value>
+  </data>
   <data name="Main_Log_WorkAlreadyRunning" xml:space="preserve">
     <value>不能重复运行任务</value>
   </data>
   <data name="Main_Log_WorkError" xml:space="preserve">
-    <value>任务出错</value>
+    <value>工作出错</value>
   </data>
   <data name="Main_Log_WorkStopped" xml:space="preserve">
     <value>已停止</value>

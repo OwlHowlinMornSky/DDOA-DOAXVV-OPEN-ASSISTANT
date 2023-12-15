@@ -295,6 +295,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 Main_Log_TaskError 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_TaskError {
+            get {
+                return ResourceManager.GetString("Main_Log_TaskError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Main_Log_WorkAlreadyRunning 的本地化字符串。
         /// </summary>
         internal static string Main_Log_WorkAlreadyRunning {

@@ -58,5 +58,38 @@ namespace WinFormsGUI.Settings {
                 this["ShowCV"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool HideToIcon {
+            get {
+                return ((bool)(this["HideToIcon"]));
+            }
+            set {
+                this["HideToIcon"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseNotify {
+            get {
+                return ((bool)(this["UseNotify"]));
+            }
+            set {
+                this["UseNotify"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5000")]
+        public int NotifyTime {
+            get {
+                return ((int)(this["NotifyTime"]));
+            }
+        }
     }
 }

@@ -37,6 +37,7 @@ enum CORE_API HelperReturnMessage : unsigned long {
 	Log_Task_Stop,
 	Log_Task_Exception,
 
+	// 以下都是 Log_ErrorInTask 指定参数
 	Log_Task_Challenge_NoNew,
 	Log_Task_Challenge_NoLast,
 	Log_Task_Challenge_NoEnter,

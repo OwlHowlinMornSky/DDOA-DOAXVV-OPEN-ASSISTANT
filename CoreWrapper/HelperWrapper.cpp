@@ -50,4 +50,9 @@ System::UInt32 HelperWrapper::codePop() {
 	return res;
 }
 
+void HelperWrapper::drop() {
+	ohms::IHelper::drop();
+	m_helper = nullptr;
+}
+
 }
