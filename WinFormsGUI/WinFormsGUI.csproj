@@ -10,20 +10,14 @@
     <PlatformTarget>x64</PlatformTarget>
     <Platforms>x64</Platforms>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-    <PackageId>$(SolutionName)-$(AssemblyName)</PackageId>
-    <Title>$(SolutionName)-WinGUI</Title>
     <Authors>Tyler Parret True</Authors>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/OwlHowlinMornSky/DDOA-DOAXVV-OPEN-ASSISTANT</RepositoryUrl>
     <PackageProjectUrl>https://github.com/OwlHowlinMornSky/DDOA-DOAXVV-OPEN-ASSISTANT</PackageProjectUrl>
     <Product>$(SolutionName)-$(AssemblyName)</Product>
     <Copyright>© 2023 Tyler Parret True (OHMS) </Copyright>
     <AssemblyVersion>2.1.0</AssemblyVersion>
     <FileVersion>2.1.0</FileVersion>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Description>DDOA</Description>
-    <Version>2.0.0</Version>
     <AssemblyName>$(SolutionName)</AssemblyName>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <StartupObject>WinFormsGUI.Program</StartupObject>
