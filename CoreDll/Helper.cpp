@@ -150,4 +150,11 @@ void Helper::msgPush(unsigned long hrm) {
 	return;
 }
 
+void Helper::msgPush(unsigned long hrm, unsigned long code) {
+	std::lock_guard lg(m_hrm_mutex); // 上锁
+	m_hrm.push(hrm); // 压入
+	m_hrm.push(code); // 压入
+	return;
+}
+
 } // namespace ohms

@@ -63,6 +63,7 @@ protected:
 	 * @param hrm 消息
 	*/
 	void msgPush(unsigned long hrm);
+	void msgPush(unsigned long hrm, unsigned long code);
 
 // 子任务，返回 false 表示无法继续 （在 Helper.subworks.cpp 实现）
 protected:

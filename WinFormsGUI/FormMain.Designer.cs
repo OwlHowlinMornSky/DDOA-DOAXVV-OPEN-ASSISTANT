@@ -184,7 +184,7 @@
 			// timer_main
 			// 
 			timer_main.Interval = 30;
-			timer_main.Tick += timer_main_Tick;
+			timer_main.Tick += Timer_main_Tick;
 			// 
 			// notifyIcon_main
 			// 
