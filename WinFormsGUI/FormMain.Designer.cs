@@ -58,14 +58,12 @@
 			// 
 			// splitContainer_Tab0_Main.Panel1
 			// 
-			resources.ApplyResources(splitContainer_Tab0_Main.Panel1, "splitContainer_Tab0_Main.Panel1");
 			splitContainer_Tab0_Main.Panel1.Controls.Add(button_Tab0_Main);
 			splitContainer_Tab0_Main.Panel1.Controls.Add(groupBox_Tab0_Box1);
 			splitContainer_Tab0_Main.Panel1.Controls.Add(groupBox_Tab0_Box0);
 			// 
 			// splitContainer_Tab0_Main.Panel2
 			// 
-			resources.ApplyResources(splitContainer_Tab0_Main.Panel2, "splitContainer_Tab0_Main.Panel2");
 			splitContainer_Tab0_Main.Panel2.Controls.Add(listBox_Main);
 			// 
 			// button_Tab0_Main
@@ -77,9 +75,9 @@
 			// 
 			// groupBox_Tab0_Box1
 			// 
-			resources.ApplyResources(groupBox_Tab0_Box1, "groupBox_Tab0_Box1");
 			groupBox_Tab0_Box1.Controls.Add(radioButton_Tab0_Box1_1);
 			groupBox_Tab0_Box1.Controls.Add(radioButton_Tab0_Box1_0);
+			resources.ApplyResources(groupBox_Tab0_Box1, "groupBox_Tab0_Box1");
 			groupBox_Tab0_Box1.Name = "groupBox_Tab0_Box1";
 			groupBox_Tab0_Box1.TabStop = false;
 			// 
@@ -101,9 +99,9 @@
 			// 
 			// groupBox_Tab0_Box0
 			// 
-			resources.ApplyResources(groupBox_Tab0_Box0, "groupBox_Tab0_Box0");
 			groupBox_Tab0_Box0.Controls.Add(radioButton_Tab0_Box0_1);
 			groupBox_Tab0_Box0.Controls.Add(radioButton_Tab0_Box0_0);
+			resources.ApplyResources(groupBox_Tab0_Box0, "groupBox_Tab0_Box0");
 			groupBox_Tab0_Box0.Name = "groupBox_Tab0_Box0";
 			groupBox_Tab0_Box0.TabStop = false;
 			// 
@@ -134,23 +132,23 @@
 			// 
 			// tabControl_Main
 			// 
-			resources.ApplyResources(tabControl_Main, "tabControl_Main");
 			tabControl_Main.Controls.Add(tabPage_Main_0);
 			tabControl_Main.Controls.Add(tabPage_Main_1);
+			resources.ApplyResources(tabControl_Main, "tabControl_Main");
 			tabControl_Main.Name = "tabControl_Main";
 			tabControl_Main.SelectedIndex = 0;
 			// 
 			// tabPage_Main_0
 			// 
-			resources.ApplyResources(tabPage_Main_0, "tabPage_Main_0");
 			tabPage_Main_0.Controls.Add(splitContainer_Tab0_Main);
+			resources.ApplyResources(tabPage_Main_0, "tabPage_Main_0");
 			tabPage_Main_0.Name = "tabPage_Main_0";
 			tabPage_Main_0.UseVisualStyleBackColor = true;
 			// 
 			// tabPage_Main_1
 			// 
-			resources.ApplyResources(tabPage_Main_1, "tabPage_Main_1");
 			tabPage_Main_1.Controls.Add(checkBox_Tab1_showCV);
+			resources.ApplyResources(tabPage_Main_1, "tabPage_Main_1");
 			tabPage_Main_1.Name = "tabPage_Main_1";
 			tabPage_Main_1.UseVisualStyleBackColor = true;
 			// 

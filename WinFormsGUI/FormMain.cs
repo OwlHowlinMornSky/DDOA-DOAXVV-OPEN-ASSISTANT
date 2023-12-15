@@ -1,5 +1,4 @@
-﻿using System.Windows.Forms;
-using Wrapper;
+﻿using Wrapper;
 
 namespace WinFormsGUI {
 	public partial class FormMain : Form {
