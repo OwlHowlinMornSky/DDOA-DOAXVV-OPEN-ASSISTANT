@@ -14,8 +14,7 @@ bool Helper::subwork_challenge() {
 begin_point:
 	try {
 		++i;
-		msgPush(HelperReturnMessage::Log_Challenge_BeginNum);
-		msgPush(i);
+		msgPush(HelperReturnMessage::Log_Challenge_BeginNum, i);
 
 		// 查找目标。
 		if (!step_waitFor(forNew ? mat_ChaGameNew : mat_ChaGameLast, rect_ChaGame, rect, seconds(15.0f)))

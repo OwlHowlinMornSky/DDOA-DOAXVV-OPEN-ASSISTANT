@@ -136,9 +136,8 @@ void Helper::mainwork() {
 	// 允许关闭屏幕和睡眠
 	SetThreadExecutionState(ES_CONTINUOUS);
 
-#ifdef OHMS_DDOA_SHOW
-	cv::destroyAllWindows(); // show mat的时候才需要销毁窗口
-#endif // OHMS_DDOA_SHOW
+	cv::destroyAllWindows(); // 销毁show窗口
+
 	m_running = false; // 清除标记
 	msgPush(HelperReturnMessage::BtnToStart); // 让主按钮变成start
 	msgPush(HelperReturnMessage::Stopped); // 通知已完全停止
@@ -148,6 +147,13 @@ void Helper::mainwork() {
 void Helper::msgPush(unsigned long hrm) {
 	std::lock_guard lg(m_hrm_mutex); // 上锁
 	m_hrm.push(hrm); // 压入
+	return;
+}
+
+void Helper::msgPush(unsigned long hrm, unsigned long code) {
+	std::lock_guard lg(m_hrm_mutex); // 上锁
+	m_hrm.push(hrm); // 压入
+	m_hrm.push(code); // 压入
 	return;
 }
 

@@ -13,11 +13,11 @@ namespace WinFormsGUI.Settings {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.8.0.0")]
-    internal sealed partial class main : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class Main : global::System.Configuration.ApplicationSettingsBase {
         
-        private static main defaultInstance = ((main)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new main())));
+        private static Main defaultInstance = ((Main)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Main())));
         
-        public static main Default {
+        public static Main Default {
             get {
                 return defaultInstance;
             }
@@ -44,6 +44,51 @@ namespace WinFormsGUI.Settings {
             }
             set {
                 this["Ctrl_ForMouse"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowCV {
+            get {
+                return ((bool)(this["ShowCV"]));
+            }
+            set {
+                this["ShowCV"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool HideToIcon {
+            get {
+                return ((bool)(this["HideToIcon"]));
+            }
+            set {
+                this["HideToIcon"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseNotify {
+            get {
+                return ((bool)(this["UseNotify"]));
+            }
+            set {
+                this["UseNotify"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5000")]
+        public int NotifyTime {
+            get {
+                return ((int)(this["NotifyTime"]));
             }
         }
     }

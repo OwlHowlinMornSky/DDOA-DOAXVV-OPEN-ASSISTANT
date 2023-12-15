@@ -7,6 +7,10 @@ namespace {
 constexpr int g_nMatchMethod = cv::TM_SQDIFF_NORMED; // opencv match时用的方法。
 constexpr bool g_useColorDiff = false; // check函数用的选项。
 
+bool g_showcv = false;
+bool g_showopened = false;
+std::mutex g_showcvMutex;
+
 /**
  * @brief 比较两个mat，按超过阈值的像素数。
  * @param matSample 输入
@@ -108,13 +112,20 @@ inline bool find(const cv::Mat& matSample, const cv::Mat& matTemplate, cv::Rect&
 	bool res = check(matSample(r), matTemplate, thres);
 	if (res) rect = r; // 保存到rect
 
-#ifdef OHMS_DDOA_SHOW
-	matSample.copyTo(srcImage); // 复制原始输入
-	cv::rectangle(srcImage, oldRect, cv::Scalar(255, 0, 0), 2, 8, 0); // 蓝线画寻找范围框
-	cv::rectangle(srcImage, r, res ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0); // 画最佳匹配框（满足阈值为绿，否则为红）
-	cv::resize(srcImage, srcImage, srcImage.size() / 2, 0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR); // 缩小到一般
-	cv::imshow("show", srcImage); // show
-#endif // OHMS_DDOA_SHOW
+	std::lock_guard lg(g_showcvMutex);
+	if (g_showcv) {
+		matSample.copyTo(srcImage); // 复制原始输入
+		cv::rectangle(srcImage, oldRect, cv::Scalar(255, 0, 0), 2, 8, 0); // 蓝线画寻找范围框
+		cv::rectangle(srcImage, r, res ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0); // 画最佳匹配框（满足阈值为绿，否则为红）
+		cv::resize(srcImage, srcImage, srcImage.size() / 2, 0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR); // 缩小到一般
+		g_showopened = true;
+		cv::imshow("show", srcImage); // show
+	}
+#ifndef _DEBUG
+	else if (g_showopened) { // Release 时自动关闭 OpenCV 窗口
+		cv::destroyAllWindows();
+	}
+#endif
 	return res;
 }
 
@@ -122,7 +133,12 @@ inline bool find(const cv::Mat& matSample, const cv::Mat& matTemplate, cv::Rect&
 
 namespace ohms {
 
-bool ohms::Helper::step_copyMat(cv::Mat& target) {
+void Helper::regShowCV(bool show) {
+	std::lock_guard lg(g_showcvMutex);
+	g_showcv = show;
+}
+
+bool Helper::step_copyMat(cv::Mat& target) {
 	if (r_capture->isRefreshed()) { // refresh过再处理画面才有意义
 		if (r_capture->copyMatTo(target, true)) { // 要求转换为BGR
 			if (target.size().width != 960 || target.size().height != 540) { // 确保大小满足要求
@@ -272,8 +288,7 @@ bool Helper::step_keepClickingUntil(
 }
 
 void Helper::step_subtaskError(unsigned long type) {
-	msgPush(HelperReturnMessage::Log_ErrorInTask);
-	msgPush(type);
+	msgPush(HelperReturnMessage::Log_ErrorInTask, type);
 	throw 0; // 要求停止
 }
 

@@ -2,6 +2,7 @@
 
 #include <IHelper.h>
 #include "ReturnMessages.h"
+#include "SettingsEnum.h"
 
 namespace Wrapper {
 
@@ -11,8 +12,7 @@ public:
 	~HelperWrapper();
 
 public:
-	void regForNew(bool forNew);
-	void regForMouse(bool forMouse);
+	void set(HelprSet type, System::Int32 val);
 
 	bool start();
 	void askForStop();
@@ -20,6 +20,8 @@ public:
 
 	ReturnMessage msgPop();
 	System::UInt32 codePop();
+
+	void drop();
 
 private:
 	ohms::IHelper* m_helper;

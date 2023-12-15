@@ -10,6 +10,17 @@
     <PlatformTarget>x64</PlatformTarget>
     <Platforms>x64</Platforms>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <Authors>Tyler Parret True [github/OwlHowlinMornSky]</Authors>
+    <PackageProjectUrl>https://github.com/OwlHowlinMornSky/DDOA-DOAXVV-OPEN-ASSISTANT</PackageProjectUrl>
+    <Product>$(SolutionName)-$(AssemblyName)</Product>
+    <Copyright>© 2023 Tyler Parret True (OHMS) </Copyright>
+    <AssemblyVersion>2.1.1</AssemblyVersion>
+    <FileVersion>2.1.1</FileVersion>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <Description>DDOA</Description>
+    <AssemblyName>$(SolutionName)</AssemblyName>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <StartupObject>WinFormsGUI.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +32,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CoreWrapper\Wrapper.vcxproj" />
   </ItemGroup>
 
@@ -28,24 +54,28 @@
     <Compile Update="Settings\main.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
-      <DependentUpon>main.settings</DependentUpon>
+      <DependentUpon>Main.settings</DependentUpon>
     </Compile>
-    <Compile Update="Strings\str.Designer.cs">
+    <Compile Update="Strings\Main.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>str.resx</DependentUpon>
+      <DependentUpon>Main.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Strings\str.resx">
+    <EmbeddedResource Update="Strings\Main.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>str.Designer.cs</LastGenOutput>
+      <LastGenOutput>Main.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Settings\main.settings">
+    <None Update="icon.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Settings\Main.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>main.Designer.cs</LastGenOutput>
     </None>

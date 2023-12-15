@@ -14,12 +14,18 @@ HelperWrapper::~HelperWrapper() {
 	m_helper = nullptr;
 }
 
-void HelperWrapper::regForNew(bool forNew) {
-	m_helper->regForNew(forNew);
-}
-
-void HelperWrapper::regForMouse(bool forMouse) {
-	m_helper->regForMouse(forMouse);
+void HelperWrapper::set(HelprSet type, System::Int32 val) {
+	switch (type) {
+	case HelprSet::Cha_New:
+		m_helper->regForNew(val);
+		break;
+	case HelprSet::Ctrl_MouseInput:
+		m_helper->regForMouse(val);
+		break;
+	case HelprSet::ShowCV:
+		m_helper->regShowCV(val);
+		break;
+	}
 }
 
 bool HelperWrapper::start() {
@@ -42,6 +48,11 @@ ReturnMessage HelperWrapper::msgPop() {
 System::UInt32 HelperWrapper::codePop() {
 	System::UInt32 res = m_helper->msgPop();
 	return res;
+}
+
+void HelperWrapper::drop() {
+	ohms::IHelper::drop();
+	m_helper = nullptr;
 }
 
 }
