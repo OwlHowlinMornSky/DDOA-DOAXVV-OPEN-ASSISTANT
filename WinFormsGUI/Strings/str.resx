@@ -117,10 +117,94 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Log_Challenge_Exit" xml:space="preserve">
+    <value>Log_Challenge_Exit</value>
+  </data>
+  <data name="Log_Challenge_Over" xml:space="preserve">
+    <value>Log_Challenge_Over</value>
+  </data>
+  <data name="Log_Task_Challenge_LowFP" xml:space="preserve">
+    <value>Log_Task_Challenge_LowFP</value>
+  </data>
+  <data name="Log_Task_Challenge_NoEnd" xml:space="preserve">
+    <value>Log_Task_Challenge_NoEnd</value>
+  </data>
+  <data name="Log_Task_Challenge_NoEnter" xml:space="preserve">
+    <value>Log_Task_Challenge_NoEnter</value>
+  </data>
+  <data name="Log_Task_Challenge_NoLast" xml:space="preserve">
+    <value>Log_Task_Challenge_NoLast</value>
+  </data>
+  <data name="Log_Task_Challenge_NoNew" xml:space="preserve">
+    <value>Log_Task_Challenge_NoNew</value>
+  </data>
+  <data name="Log_Task_Challenge_NoOver" xml:space="preserve">
+    <value>Log_Task_Challenge_NoOver</value>
+  </data>
+  <data name="Log_Task_Challenge_NoStart" xml:space="preserve">
+    <value>Log_Task_Challenge_NoStart</value>
+  </data>
+  <data name="Log_Task_Challenge_TimeOut" xml:space="preserve">
+    <value>Log_Task_Challenge_TimeOut</value>
+  </data>
+  <data name="Log_Task_Exception" xml:space="preserve">
+    <value>Log_Task_Exception</value>
+  </data>
+  <data name="Log_Task_Stop" xml:space="preserve">
+    <value>Log_Task_Stop</value>
+  </data>
   <data name="Main_Btn_Start" xml:space="preserve">
     <value>Main_Btn_Start</value>
   </data>
   <data name="Main_Btn_Stop" xml:space="preserve">
     <value>Main_Btn_Stop</value>
+  </data>
+  <data name="Main_Log_CanNotCapture" xml:space="preserve">
+    <value>Main_Log_CanNotCapture</value>
+  </data>
+  <data name="Main_Log_CanNotFindWnd" xml:space="preserve">
+    <value>Main_Log_CanNotFindWnd</value>
+  </data>
+  <data name="Main_Log_CanNotStartWork" xml:space="preserve">
+    <value>Main_Log_CanNotStartWork</value>
+  </data>
+  <data name="Main_Log_Challenge_BeginNum" xml:space="preserve">
+    <value>Main_Log_Challenge_BeginNum{0}</value>
+  </data>
+  <data name="Main_Log_Challenge_End" xml:space="preserve">
+    <value>Main_Log_Challenge_End</value>
+  </data>
+  <data name="Main_Log_Challenge_EnterLast" xml:space="preserve">
+    <value>Main_Log_Challenge_EnterLast</value>
+  </data>
+  <data name="Main_Log_Challenge_EnterNew" xml:space="preserve">
+    <value>Main_Log_Challenge_EnterNew</value>
+  </data>
+  <data name="Main_Log_Challenge_Play" xml:space="preserve">
+    <value>Main_Log_Challenge_Play</value>
+  </data>
+  <data name="Main_Log_Challenge_Quiting" xml:space="preserve">
+    <value>Main_Log_Challenge_Quiting</value>
+  </data>
+  <data name="Main_Log_Challenge_Start" xml:space="preserve">
+    <value>Main_Log_Challenge_Start</value>
+  </data>
+  <data name="Main_Log_Challenge_WaitForEnd" xml:space="preserve">
+    <value>Main_Log_Challenge_WaitForEnd</value>
+  </data>
+  <data name="Main_Log_ExceptionInWork" xml:space="preserve">
+    <value>Main_Log_ExceptionInWork</value>
+  </data>
+  <data name="Main_Log_WorkAlreadyRunning" xml:space="preserve">
+    <value>Main_Log_WorkAlreadyRunning</value>
+  </data>
+  <data name="Main_Log_WorkError" xml:space="preserve">
+    <value>Main_Log_WorkError</value>
+  </data>
+  <data name="Main_Log_WorkStopped" xml:space="preserve">
+    <value>Main_Log_WorkStopped</value>
+  </data>
+  <data name="Main_Log_WorkStopping" xml:space="preserve">
+    <value>Main_Log_WorkStopping</value>
   </data>
 </root>

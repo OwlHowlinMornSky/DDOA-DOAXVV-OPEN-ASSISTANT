@@ -27,9 +27,11 @@ public:
 	*/
 	virtual void regForNew(bool forNew) override;
 
-
 	virtual void regForMouse(bool forMouse) override;
 
+	virtual void regShowCV(bool show) override;
+
+public:
 	/**
 	 * @brief 尝试开始任务。任务将运行在子线程，如果已经运行则无效。
 	 * @return true为成功

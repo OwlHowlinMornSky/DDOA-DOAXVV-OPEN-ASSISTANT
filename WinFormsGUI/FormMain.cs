@@ -3,6 +3,7 @@ using Wrapper;
 
 namespace WinFormsGUI {
 	public partial class FormMain : Form {
+
 		#region ==========Members==========
 
 		private HelperWrapper m_helper = new();
@@ -41,6 +42,7 @@ namespace WinFormsGUI {
 
 			radioButton_Tab0_Box0_1.Checked = Settings.main.Default.Game_ForNew;
 			radioButton_Tab0_Box1_1.Checked = Settings.main.Default.Ctrl_ForMouse;
+			checkBox_Tab1_showCV.Checked = Settings.main.Default.ShowCV;
 		}
 
 		private void FormMain_FormClosing(object sender, FormClosingEventArgs e) {
@@ -48,6 +50,7 @@ namespace WinFormsGUI {
 
 			Settings.main.Default.Game_ForNew = radioButton_Tab0_Box0_1.Checked;
 			Settings.main.Default.Ctrl_ForMouse = radioButton_Tab0_Box1_1.Checked;
+			Settings.main.Default.ShowCV = checkBox_Tab1_showCV.Checked;
 
 			Settings.main.Default.Save();
 
@@ -72,7 +75,7 @@ namespace WinFormsGUI {
 				listBox_Main.Items.Clear();
 
 				if (!m_helper.start()) {
-					Log("无法启动任务");
+					Log(Strings.str.Main_Log_CanNotStartWork);
 					return;
 				}
 				timer1.Enabled = true;
@@ -84,30 +87,41 @@ namespace WinFormsGUI {
 
 		private void radioButton_Tab0_Box0_0_CheckedChanged(object sender, EventArgs e) {
 			if (radioButton_Tab0_Box0_0.Checked)
-				m_helper.regForNew(false);
+				m_helper.set(HelprSet.Cha_New, 0);
 		}
 
 		private void radioButton_Tab0_Box0_1_CheckedChanged(object sender, EventArgs e) {
 			if (radioButton_Tab0_Box0_1.Checked)
-				m_helper.regForNew(true);
+				m_helper.set(HelprSet.Cha_New, 1);
 		}
 
 		private void radioButton_Tab0_Box1_0_CheckedChanged(object sender, EventArgs e) {
 			if (radioButton_Tab0_Box1_0.Checked)
-				m_helper.regForMouse(false);
+				m_helper.set(HelprSet.Ctrl_MouseInput, 0);
 		}
 
 		private void radioButton_Tab0_Box1_1_CheckedChanged(object sender, EventArgs e) {
 			if (radioButton_Tab0_Box1_1.Checked)
-				m_helper.regForMouse(true);
+				m_helper.set(HelprSet.Ctrl_MouseInput, 1);
 		}
+		#endregion
+
+		#region -----------Tab1------------
+
+		private void checkBox_Tab1_showCV_CheckedChanged(object sender, EventArgs e) {
+			if (checkBox_Tab1_showCV.Checked)
+				m_helper.set(HelprSet.ShowCV, 1);
+			else
+				m_helper.set(HelprSet.ShowCV, 0);
+		}
+
 		#endregion
 
 		private void timer1_Tick(object sender, EventArgs e) {
 			ReturnMessage m = m_helper.msgPop();
 			switch (m) {
 			case ReturnMessage.Stopped:
-				Log("已停止");
+				Log(Strings.str.Main_Log_WorkStopped);
 				groupBox_Tab0_Box0.Enabled = true;
 				groupBox_Tab0_Box1.Enabled = true;
 				timer1.Enabled = false;
@@ -123,94 +137,107 @@ namespace WinFormsGUI {
 				m_btnMainIsStart = true;
 				break;
 			case ReturnMessage.Log_ErrorIsRunning:
-				Log("不能重复运行任务");
+				Log(Strings.str.Main_Log_WorkAlreadyRunning);
 				break;
 			case ReturnMessage.Log_Stopping:
-				Log("正在停止...");
+				Log(Strings.str.Main_Log_WorkStopping);
 				break;
 			case ReturnMessage.Log_ErrorNotFindWnd:
-				Log("找不到DOAXVV窗口");
+				Log(Strings.str.Main_Log_CanNotFindWnd);
 				break;
 			case ReturnMessage.Log_ErrorCannotCapture:
-				Log("无法截图");
+				Log(Strings.str.Main_Log_CanNotCapture);
 				break;
 			case ReturnMessage.Log_ErrorInWork:
 				Log();
-				Log("工作异常");
-				MessageBox.Show(this, "工作异常", "任务出错", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				Log(Strings.str.Main_Log_ExceptionInWork);
+				MessageBox.Show(
+					this,
+					Strings.str.Main_Log_ExceptionInWork,
+					Strings.str.Main_Log_WorkError,
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+					);
 				break;
 			case ReturnMessage.Log_ErrorInTask:
 				Log();
-				Log("任务出错");
+				Log(Strings.str.Main_Log_WorkError);
 				break;
 
 			case ReturnMessage.Log_Challenge_Start:
-				Log("任务开始: 挑战赛");
+				Log(Strings.str.Main_Log_Challenge_Start);
 				break;
 			case ReturnMessage.Log_Challenge_BeginNum: // 挑战赛开始（下跟次数！）
-				Log("开始第 " + m_helper.codePop() + " 次比赛");
+				Log(string.Format(Strings.str.Main_Log_Challenge_BeginNum, m_helper.codePop()));
 				break;
 			case ReturnMessage.Log_Challenge_EnterLast:
-				Log("进入上一次比赛");
+				Log(Strings.str.Main_Log_Challenge_EnterLast);
 				break;
 			case ReturnMessage.Log_Challenge_EnterNew:
-				Log("进入新比赛");
+				Log(Strings.str.Main_Log_Challenge_EnterNew);
 				break;
 			case ReturnMessage.Log_Challenge_Play:
-				Log("开始挑战");
+				Log(Strings.str.Main_Log_Challenge_Play);
 				break;
 			case ReturnMessage.Log_Challenge_WaitForEnd:
-				Log("等待结算");
+				Log(Strings.str.Main_Log_Challenge_WaitForEnd);
 				break;
 			case ReturnMessage.Log_Challenge_End:
-				Log("挑战结束");
+				Log(Strings.str.Main_Log_Challenge_End);
 				break;
 			case ReturnMessage.Log_Challenge_Quiting:
-				Log("正在退出比赛");
+				Log(Strings.str.Main_Log_Challenge_Quiting);
 				break;
 			case ReturnMessage.Log_Challenge_Over:
-				Log("比赛结束");
+				Log(Strings.str.Log_Challenge_Over);
 				break;
 			case ReturnMessage.Log_Challenge_Exit:
-				Log("任务结束: 挑战赛");
+				Log(Strings.str.Log_Challenge_Exit);
 				break;
 
 			case ReturnMessage.Log_Task_Stop:
-				Log("任务中止");
+				Log(Strings.str.Log_Task_Stop);
 				break;
 			case ReturnMessage.Log_Task_Exception:
-				Log("任务异常");
-				MessageBox.Show(this, "任务异常", "任务出错", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				Log(Strings.str.Log_Task_Exception);
+				MessageBox.Show(
+					this,
+					Strings.str.Log_Task_Exception,
+					Strings.str.Main_Log_WorkError,
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+					);
 				break;
 
 			case ReturnMessage.Log_Task_Challenge_NoNew:
-				Log("找不到新比赛");
+				Log(Strings.str.Log_Task_Challenge_NoNew);
 				break;
 			case ReturnMessage.Log_Task_Challenge_NoLast:
-				Log("找不到上一次比赛");
+				Log(Strings.str.Log_Task_Challenge_NoLast);
 				break;
 			case ReturnMessage.Log_Task_Challenge_NoEnter:
-				Log("无法进入比赛");
+				Log(Strings.str.Log_Task_Challenge_NoEnter);
 				break;
 			case ReturnMessage.Log_Task_Challenge_LowFP:
-				Log("FP耗尽");
+				Log(Strings.str.Log_Task_Challenge_LowFP);
 				break;
 			case ReturnMessage.Log_Task_Challenge_NoStart:
-				Log("无法开始挑战");
+				Log(Strings.str.Log_Task_Challenge_NoStart);
 				break;
 			case ReturnMessage.Log_Task_Challenge_TimeOut:
-				Log("挑战超时");
+				Log(Strings.str.Log_Task_Challenge_TimeOut);
 				break;
 			case ReturnMessage.Log_Task_Challenge_NoEnd:
-				Log("无法退出挑战");
+				Log(Strings.str.Log_Task_Challenge_NoEnd);
 				break;
 			case ReturnMessage.Log_Task_Challenge_NoOver:
-				Log("无法退出比赛");
+				Log(Strings.str.Log_Task_Challenge_NoOver);
 				break;
 			}
 			return;
 		}
 
 		#endregion
+
 	}
 }

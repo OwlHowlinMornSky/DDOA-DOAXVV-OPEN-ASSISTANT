@@ -117,10 +117,94 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Log_Challenge_Exit" xml:space="preserve">
+    <value>任务结束: 挑战赛</value>
+  </data>
+  <data name="Log_Challenge_Over" xml:space="preserve">
+    <value>比赛结束</value>
+  </data>
+  <data name="Log_Task_Challenge_LowFP" xml:space="preserve">
+    <value>FP耗尽</value>
+  </data>
+  <data name="Log_Task_Challenge_NoEnd" xml:space="preserve">
+    <value>无法退出挑战</value>
+  </data>
+  <data name="Log_Task_Challenge_NoEnter" xml:space="preserve">
+    <value>无法进入比赛</value>
+  </data>
+  <data name="Log_Task_Challenge_NoLast" xml:space="preserve">
+    <value>找不到上一次比赛</value>
+  </data>
+  <data name="Log_Task_Challenge_NoNew" xml:space="preserve">
+    <value>找不到新比赛</value>
+  </data>
+  <data name="Log_Task_Challenge_NoOver" xml:space="preserve">
+    <value>无法退出比赛</value>
+  </data>
+  <data name="Log_Task_Challenge_NoStart" xml:space="preserve">
+    <value>无法开始挑战</value>
+  </data>
+  <data name="Log_Task_Challenge_TimeOut" xml:space="preserve">
+    <value>挑战超时</value>
+  </data>
+  <data name="Log_Task_Exception" xml:space="preserve">
+    <value>任务异常</value>
+  </data>
+  <data name="Log_Task_Stop" xml:space="preserve">
+    <value>任务中止</value>
+  </data>
   <data name="Main_Btn_Start" xml:space="preserve">
     <value>Link Start!</value>
   </data>
   <data name="Main_Btn_Stop" xml:space="preserve">
     <value>停止</value>
+  </data>
+  <data name="Main_Log_CanNotCapture" xml:space="preserve">
+    <value>无法截图</value>
+  </data>
+  <data name="Main_Log_CanNotFindWnd" xml:space="preserve">
+    <value>找不到DOAXVV窗口</value>
+  </data>
+  <data name="Main_Log_CanNotStartWork" xml:space="preserve">
+    <value>无法启动任务</value>
+  </data>
+  <data name="Main_Log_Challenge_BeginNum" xml:space="preserve">
+    <value>开始第 {0} 次比赛</value>
+  </data>
+  <data name="Main_Log_Challenge_End" xml:space="preserve">
+    <value>挑战结束</value>
+  </data>
+  <data name="Main_Log_Challenge_EnterLast" xml:space="preserve">
+    <value>进入上一次比赛</value>
+  </data>
+  <data name="Main_Log_Challenge_EnterNew" xml:space="preserve">
+    <value>进入新比赛</value>
+  </data>
+  <data name="Main_Log_Challenge_Play" xml:space="preserve">
+    <value>开始挑战</value>
+  </data>
+  <data name="Main_Log_Challenge_Quiting" xml:space="preserve">
+    <value>正在退出比赛</value>
+  </data>
+  <data name="Main_Log_Challenge_Start" xml:space="preserve">
+    <value>任务开始: 挑战赛</value>
+  </data>
+  <data name="Main_Log_Challenge_WaitForEnd" xml:space="preserve">
+    <value>等待结算</value>
+  </data>
+  <data name="Main_Log_ExceptionInWork" xml:space="preserve">
+    <value>工作异常</value>
+  </data>
+  <data name="Main_Log_WorkAlreadyRunning" xml:space="preserve">
+    <value>不能重复运行任务</value>
+  </data>
+  <data name="Main_Log_WorkError" xml:space="preserve">
+    <value>任务出错</value>
+  </data>
+  <data name="Main_Log_WorkStopped" xml:space="preserve">
+    <value>已停止</value>
+  </data>
+  <data name="Main_Log_WorkStopping" xml:space="preserve">
+    <value>正在停止...</value>
   </data>
 </root>

@@ -37,6 +37,7 @@
 			tabControl_Main = new TabControl();
 			tabPage_Main_0 = new TabPage();
 			tabPage_Main_1 = new TabPage();
+			checkBox_Tab1_showCV = new CheckBox();
 			timer1 = new System.Windows.Forms.Timer(components);
 			((System.ComponentModel.ISupportInitialize)splitContainer_Tab0_Main).BeginInit();
 			splitContainer_Tab0_Main.Panel1.SuspendLayout();
@@ -46,6 +47,7 @@
 			groupBox_Tab0_Box0.SuspendLayout();
 			tabControl_Main.SuspendLayout();
 			tabPage_Main_0.SuspendLayout();
+			tabPage_Main_1.SuspendLayout();
 			SuspendLayout();
 			// 
 			// splitContainer_Tab0_Main
@@ -56,12 +58,14 @@
 			// 
 			// splitContainer_Tab0_Main.Panel1
 			// 
+			resources.ApplyResources(splitContainer_Tab0_Main.Panel1, "splitContainer_Tab0_Main.Panel1");
 			splitContainer_Tab0_Main.Panel1.Controls.Add(button_Tab0_Main);
 			splitContainer_Tab0_Main.Panel1.Controls.Add(groupBox_Tab0_Box1);
 			splitContainer_Tab0_Main.Panel1.Controls.Add(groupBox_Tab0_Box0);
 			// 
 			// splitContainer_Tab0_Main.Panel2
 			// 
+			resources.ApplyResources(splitContainer_Tab0_Main.Panel2, "splitContainer_Tab0_Main.Panel2");
 			splitContainer_Tab0_Main.Panel2.Controls.Add(listBox_Main);
 			// 
 			// button_Tab0_Main
@@ -73,9 +77,9 @@
 			// 
 			// groupBox_Tab0_Box1
 			// 
+			resources.ApplyResources(groupBox_Tab0_Box1, "groupBox_Tab0_Box1");
 			groupBox_Tab0_Box1.Controls.Add(radioButton_Tab0_Box1_1);
 			groupBox_Tab0_Box1.Controls.Add(radioButton_Tab0_Box1_0);
-			resources.ApplyResources(groupBox_Tab0_Box1, "groupBox_Tab0_Box1");
 			groupBox_Tab0_Box1.Name = "groupBox_Tab0_Box1";
 			groupBox_Tab0_Box1.TabStop = false;
 			// 
@@ -97,9 +101,9 @@
 			// 
 			// groupBox_Tab0_Box0
 			// 
+			resources.ApplyResources(groupBox_Tab0_Box0, "groupBox_Tab0_Box0");
 			groupBox_Tab0_Box0.Controls.Add(radioButton_Tab0_Box0_1);
 			groupBox_Tab0_Box0.Controls.Add(radioButton_Tab0_Box0_0);
-			resources.ApplyResources(groupBox_Tab0_Box0, "groupBox_Tab0_Box0");
 			groupBox_Tab0_Box0.Name = "groupBox_Tab0_Box0";
 			groupBox_Tab0_Box0.TabStop = false;
 			// 
@@ -130,24 +134,32 @@
 			// 
 			// tabControl_Main
 			// 
+			resources.ApplyResources(tabControl_Main, "tabControl_Main");
 			tabControl_Main.Controls.Add(tabPage_Main_0);
 			tabControl_Main.Controls.Add(tabPage_Main_1);
-			resources.ApplyResources(tabControl_Main, "tabControl_Main");
 			tabControl_Main.Name = "tabControl_Main";
 			tabControl_Main.SelectedIndex = 0;
 			// 
 			// tabPage_Main_0
 			// 
-			tabPage_Main_0.Controls.Add(splitContainer_Tab0_Main);
 			resources.ApplyResources(tabPage_Main_0, "tabPage_Main_0");
+			tabPage_Main_0.Controls.Add(splitContainer_Tab0_Main);
 			tabPage_Main_0.Name = "tabPage_Main_0";
 			tabPage_Main_0.UseVisualStyleBackColor = true;
 			// 
 			// tabPage_Main_1
 			// 
 			resources.ApplyResources(tabPage_Main_1, "tabPage_Main_1");
+			tabPage_Main_1.Controls.Add(checkBox_Tab1_showCV);
 			tabPage_Main_1.Name = "tabPage_Main_1";
 			tabPage_Main_1.UseVisualStyleBackColor = true;
+			// 
+			// checkBox_Tab1_showCV
+			// 
+			resources.ApplyResources(checkBox_Tab1_showCV, "checkBox_Tab1_showCV");
+			checkBox_Tab1_showCV.Name = "checkBox_Tab1_showCV";
+			checkBox_Tab1_showCV.UseVisualStyleBackColor = true;
+			checkBox_Tab1_showCV.CheckedChanged += checkBox_Tab1_showCV_CheckedChanged;
 			// 
 			// timer1
 			// 
@@ -173,6 +185,8 @@
 			groupBox_Tab0_Box0.PerformLayout();
 			tabControl_Main.ResumeLayout(false);
 			tabPage_Main_0.ResumeLayout(false);
+			tabPage_Main_1.ResumeLayout(false);
+			tabPage_Main_1.PerformLayout();
 			ResumeLayout(false);
 		}
 
@@ -191,5 +205,6 @@
 		private RadioButton radioButton_Tab0_Box0_1;
 		private RadioButton radioButton_Tab0_Box0_0;
 		private System.Windows.Forms.Timer timer1;
+		private CheckBox checkBox_Tab1_showCV;
 	}
 }

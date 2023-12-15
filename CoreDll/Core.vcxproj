@@ -46,9 +46,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)WinFormsGUI\bin\$(Platform)\$(Configuration)\net6.0-windows10.0.22000.0\</OutDir>
+    <TargetName>$(SolutionName)-Core</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)WinFormsGUI\bin\$(Platform)\$(Configuration)\net6.0-windows10.0.22000.0\</OutDir>
+    <TargetName>$(SolutionName)-Core</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

@@ -61,6 +61,114 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 Log_Challenge_Exit 的本地化字符串。
+        /// </summary>
+        internal static string Log_Challenge_Exit {
+            get {
+                return ResourceManager.GetString("Log_Challenge_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Log_Challenge_Over 的本地化字符串。
+        /// </summary>
+        internal static string Log_Challenge_Over {
+            get {
+                return ResourceManager.GetString("Log_Challenge_Over", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Log_Task_Challenge_LowFP 的本地化字符串。
+        /// </summary>
+        internal static string Log_Task_Challenge_LowFP {
+            get {
+                return ResourceManager.GetString("Log_Task_Challenge_LowFP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Log_Task_Challenge_NoEnd 的本地化字符串。
+        /// </summary>
+        internal static string Log_Task_Challenge_NoEnd {
+            get {
+                return ResourceManager.GetString("Log_Task_Challenge_NoEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Log_Task_Challenge_NoEnter 的本地化字符串。
+        /// </summary>
+        internal static string Log_Task_Challenge_NoEnter {
+            get {
+                return ResourceManager.GetString("Log_Task_Challenge_NoEnter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Log_Task_Challenge_NoLast 的本地化字符串。
+        /// </summary>
+        internal static string Log_Task_Challenge_NoLast {
+            get {
+                return ResourceManager.GetString("Log_Task_Challenge_NoLast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Log_Task_Challenge_NoNew 的本地化字符串。
+        /// </summary>
+        internal static string Log_Task_Challenge_NoNew {
+            get {
+                return ResourceManager.GetString("Log_Task_Challenge_NoNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Log_Task_Challenge_NoOver 的本地化字符串。
+        /// </summary>
+        internal static string Log_Task_Challenge_NoOver {
+            get {
+                return ResourceManager.GetString("Log_Task_Challenge_NoOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Log_Task_Challenge_NoStart 的本地化字符串。
+        /// </summary>
+        internal static string Log_Task_Challenge_NoStart {
+            get {
+                return ResourceManager.GetString("Log_Task_Challenge_NoStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Log_Task_Challenge_TimeOut 的本地化字符串。
+        /// </summary>
+        internal static string Log_Task_Challenge_TimeOut {
+            get {
+                return ResourceManager.GetString("Log_Task_Challenge_TimeOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Log_Task_Exception 的本地化字符串。
+        /// </summary>
+        internal static string Log_Task_Exception {
+            get {
+                return ResourceManager.GetString("Log_Task_Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Log_Task_Stop 的本地化字符串。
+        /// </summary>
+        internal static string Log_Task_Stop {
+            get {
+                return ResourceManager.GetString("Log_Task_Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Main_Btn_Start 的本地化字符串。
         /// </summary>
         internal static string Main_Btn_Start {
@@ -75,6 +183,150 @@ namespace WinFormsGUI.Strings {
         internal static string Main_Btn_Stop {
             get {
                 return ResourceManager.GetString("Main_Btn_Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_CanNotCapture 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_CanNotCapture {
+            get {
+                return ResourceManager.GetString("Main_Log_CanNotCapture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_CanNotFindWnd 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_CanNotFindWnd {
+            get {
+                return ResourceManager.GetString("Main_Log_CanNotFindWnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_CanNotStartWork 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_CanNotStartWork {
+            get {
+                return ResourceManager.GetString("Main_Log_CanNotStartWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_Challenge_BeginNum{0} 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_Challenge_BeginNum {
+            get {
+                return ResourceManager.GetString("Main_Log_Challenge_BeginNum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_Challenge_End 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_Challenge_End {
+            get {
+                return ResourceManager.GetString("Main_Log_Challenge_End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_Challenge_EnterLast 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_Challenge_EnterLast {
+            get {
+                return ResourceManager.GetString("Main_Log_Challenge_EnterLast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_Challenge_EnterNew 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_Challenge_EnterNew {
+            get {
+                return ResourceManager.GetString("Main_Log_Challenge_EnterNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_Challenge_Play 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_Challenge_Play {
+            get {
+                return ResourceManager.GetString("Main_Log_Challenge_Play", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_Challenge_Quiting 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_Challenge_Quiting {
+            get {
+                return ResourceManager.GetString("Main_Log_Challenge_Quiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_Challenge_Start 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_Challenge_Start {
+            get {
+                return ResourceManager.GetString("Main_Log_Challenge_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_Challenge_WaitForEnd 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_Challenge_WaitForEnd {
+            get {
+                return ResourceManager.GetString("Main_Log_Challenge_WaitForEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_ExceptionInWork 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_ExceptionInWork {
+            get {
+                return ResourceManager.GetString("Main_Log_ExceptionInWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_WorkAlreadyRunning 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_WorkAlreadyRunning {
+            get {
+                return ResourceManager.GetString("Main_Log_WorkAlreadyRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_WorkError 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_WorkError {
+            get {
+                return ResourceManager.GetString("Main_Log_WorkError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_WorkStopped 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_WorkStopped {
+            get {
+                return ResourceManager.GetString("Main_Log_WorkStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Main_Log_WorkStopping 的本地化字符串。
+        /// </summary>
+        internal static string Main_Log_WorkStopping {
+            get {
+                return ResourceManager.GetString("Main_Log_WorkStopping", resourceCulture);
             }
         }
     }

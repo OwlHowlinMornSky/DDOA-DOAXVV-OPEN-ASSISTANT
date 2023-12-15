@@ -117,410 +117,437 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="splitContainer_Tab0_Main.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="splitContainer_Tab0_Main.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="&gt;&gt;tabPage_Main_0.Parent" xml:space="preserve">
+    <value>tabControl_Main</value>
+  </data>
+  <data name="&gt;&gt;timer1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="radioButton_Tab0_Box0_0.Text" xml:space="preserve">
+    <value>radioButton_Tab0_Box0_0</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="splitContainer_Tab0_Main.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="groupBox_Tab0_Box1.Text" xml:space="preserve">
+    <value>groupBox_Tab0_Box1</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box0_0.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="splitContainer_Tab0_Main.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+  <data name="checkBox_Tab1_showCV.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 21</value>
   </data>
-  <metadata name="button_Tab0_Main.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="button_Tab0_Main.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
+  <data name="&gt;&gt;tabPage_Main_0.Name" xml:space="preserve">
+    <value>tabPage_Main_0</value>
   </data>
-  <data name="button_Tab0_Main.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 312</value>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.Name" xml:space="preserve">
+    <value>splitContainer_Tab0_Main.Panel1</value>
+  </data>
+  <data name="&gt;&gt;checkBox_Tab1_showCV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;listBox_Main.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.Parent" xml:space="preserve">
+    <value>splitContainer_Tab0_Main</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box0_1.Parent" xml:space="preserve">
+    <value>groupBox_Tab0_Box0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.Name" xml:space="preserve">
+    <value>splitContainer_Tab0_Main.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Parent" xml:space="preserve">
+    <value>tabPage_Main_0</value>
   </data>
   <data name="button_Tab0_Main.Size" type="System.Drawing.Size, System.Drawing">
     <value>200, 58</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="button_Tab0_Main.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="&gt;&gt;radioButton_Tab0_Box0_0.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="button_Tab0_Main.Text" xml:space="preserve">
-    <value>button_Tab0_Main</value>
+  <data name="radioButton_Tab0_Box0_1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 49</value>
+  </data>
+  <data name="tabPage_Main_0.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="radioButton_Tab0_Box0_1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="radioButton_Tab0_Box1_0.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Name" xml:space="preserve">
+    <value>splitContainer_Tab0_Main</value>
+  </data>
+  <data name="groupBox_Tab0_Box1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="listBox_Main.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tabControl_Main.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;tabControl_Main.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="radioButton_Tab0_Box1_1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 21</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.Parent" xml:space="preserve">
+    <value>splitContainer_Tab0_Main</value>
   </data>
   <data name="&gt;&gt;button_Tab0_Main.Name" xml:space="preserve">
     <value>button_Tab0_Main</value>
   </data>
-  <data name="&gt;&gt;button_Tab0_Main.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tabPage_Main_1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>616, 381</value>
   </data>
-  <data name="&gt;&gt;button_Tab0_Main.Parent" xml:space="preserve">
-    <value>splitContainer_Tab0_Main.Panel1</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="splitContainer_Tab0_Main.Size" type="System.Drawing.Size, System.Drawing">
+    <value>610, 375</value>
+  </data>
+  <data name="tabControl_Main.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box1_1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="button_Tab0_Main.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 312</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>480, 360</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box0_0.Parent" xml:space="preserve">
+    <value>groupBox_Tab0_Box0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box1_1.Name" xml:space="preserve">
+    <value>radioButton_Tab0_Box1_1</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box1_0.Name" xml:space="preserve">
+    <value>radioButton_Tab0_Box1_0</value>
+  </data>
+  <data name="button_Tab0_Main.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="listBox_Main.ItemHeight" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="tabPage_Main_1.Text" xml:space="preserve">
+    <value>tabPage_Main_1</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box0_0.Name" xml:space="preserve">
+    <value>radioButton_Tab0_Box0_0</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box1_1.Parent" xml:space="preserve">
+    <value>groupBox_Tab0_Box1</value>
+  </data>
+  <data name="tabPage_Main_1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 26</value>
+  </data>
+  <data name="&gt;&gt;timer1.Name" xml:space="preserve">
+    <value>timer1</value>
+  </data>
+  <data name="radioButton_Tab0_Box1_0.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 21</value>
   </data>
   <data name="&gt;&gt;button_Tab0_Main.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tabPage_Main_1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="groupBox_Tab0_Box0.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;groupBox_Tab0_Box0.Name" xml:space="preserve">
+    <value>groupBox_Tab0_Box0</value>
+  </data>
+  <data name="&gt;&gt;listBox_Main.Parent" xml:space="preserve">
+    <value>splitContainer_Tab0_Main.Panel2</value>
+  </data>
+  <data name="listBox_Main.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tabPage_Main_0.Size" type="System.Drawing.Size, System.Drawing">
+    <value>616, 381</value>
+  </data>
+  <data name="tabControl_Main.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;tabPage_Main_0.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="radioButton_Tab0_Box0_1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radioButton_Tab0_Box0_1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 21</value>
+  </data>
+  <data name="&gt;&gt;tabPage_Main_0.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="listBox_Main.Size" type="System.Drawing.Size, System.Drawing">
+    <value>388, 375</value>
+  </data>
+  <data name="splitContainer_Tab0_Main.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="&gt;&gt;checkBox_Tab1_showCV.Name" xml:space="preserve">
+    <value>checkBox_Tab1_showCV</value>
+  </data>
+  <data name="&gt;&gt;tabPage_Main_1.Parent" xml:space="preserve">
+    <value>tabControl_Main</value>
+  </data>
+  <data name="checkBox_Tab1_showCV.Text" xml:space="preserve">
+    <value>checkBox_Tab1_showCV</value>
+  </data>
+  <data name="tabPage_Main_0.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 26</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box0_1.Name" xml:space="preserve">
+    <value>radioButton_Tab0_Box0_1</value>
+  </data>
+  <data name="radioButton_Tab0_Box1_0.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box1_0.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage_Main_1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabControl_Main.Size" type="System.Drawing.Size, System.Drawing">
+    <value>624, 411</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box0_1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox_Tab1_showCV.Parent" xml:space="preserve">
+    <value>tabPage_Main_1</value>
+  </data>
+  <data name="radioButton_Tab0_Box1_0.Text" xml:space="preserve">
+    <value>radioButton_Tab0_Box1_0</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 17</value>
+  </data>
+  <data name="&gt;&gt;listBox_Main.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;button_Tab0_Main.Parent" xml:space="preserve">
+    <value>splitContainer_Tab0_Main.Panel1</value>
+  </data>
+  <data name="&gt;&gt;tabControl_Main.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="radioButton_Tab0_Box1_1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 49</value>
+  </data>
+  <data name="button_Tab0_Main.Text" xml:space="preserve">
+    <value>button_Tab0_Main</value>
+  </data>
+  <data name="radioButton_Tab0_Box0_1.Text" xml:space="preserve">
+    <value>radioButton_Tab0_Box0_1</value>
+  </data>
+  <data name="radioButton_Tab0_Box1_1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="button_Tab0_Main.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box0_1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="groupBox_Tab0_Box0.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 3</value>
+  </data>
+  <data name="checkBox_Tab1_showCV.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radioButton_Tab0_Box1_1.Text" xml:space="preserve">
+    <value>radioButton_Tab0_Box1_1</value>
+  </data>
+  <data name="groupBox_Tab0_Box1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 100</value>
+  </data>
+  <data name="radioButton_Tab0_Box0_0.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>624, 411</value>
+  </data>
+  <data name="&gt;&gt;button_Tab0_Main.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox_Tab0_Box0.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage_Main_1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBox_Tab0_Box0.Text" xml:space="preserve">
+    <value>groupBox_Tab0_Box0</value>
+  </data>
+  <data name="tabPage_Main_0.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="&gt;&gt;tabControl_Main.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box1_0.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tabPage_Main_1.Name" xml:space="preserve">
+    <value>tabPage_Main_1</value>
+  </data>
+  <data name="splitContainer_Tab0_Main.SplitterDistance" type="System.Int32, mscorlib">
+    <value>218</value>
+  </data>
+  <data name="&gt;&gt;groupBox_Tab0_Box1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box1_0.Parent" xml:space="preserve">
+    <value>groupBox_Tab0_Box1</value>
+  </data>
+  <data name="&gt;&gt;tabControl_Main.Name" xml:space="preserve">
+    <value>tabControl_Main</value>
+  </data>
+  <data name="&gt;&gt;groupBox_Tab0_Box0.Parent" xml:space="preserve">
+    <value>splitContainer_Tab0_Main.Panel1</value>
+  </data>
+  <data name="groupBox_Tab0_Box0.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 100</value>
+  </data>
+  <data name="tabPage_Main_1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="splitContainer_Tab0_Main.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;checkBox_Tab1_showCV.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="radioButton_Tab0_Box0_0.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;groupBox_Tab0_Box1.Parent" xml:space="preserve">
+    <value>splitContainer_Tab0_Main.Panel1</value>
+  </data>
+  <data name="radioButton_Tab0_Box0_0.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 21</value>
+  </data>
+  <data name="&gt;&gt;groupBox_Tab0_Box1.Name" xml:space="preserve">
+    <value>groupBox_Tab0_Box1</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormMain</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>DDOA</value>
+  </data>
+  <data name="&gt;&gt;groupBox_Tab0_Box0.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="radioButton_Tab0_Box1_1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBox_Tab1_showCV.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 6</value>
+  </data>
+  <data name="groupBox_Tab0_Box1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 109</value>
+  </data>
+  <data name="&gt;&gt;listBox_Main.Name" xml:space="preserve">
+    <value>listBox_Main</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="radioButton_Tab0_Box1_0.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 22</value>
+  </data>
+  <data name="radioButton_Tab0_Box0_0.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 22</value>
+  </data>
+  <data name="&gt;&gt;radioButton_Tab0_Box1_1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="listBox_Main.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tabPage_Main_0.Text" xml:space="preserve">
+    <value>tabPage_Main_0</value>
+  </data>
+  <data name="&gt;&gt;groupBox_Tab0_Box1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="checkBox_Tab1_showCV.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="splitContainer_Tab0_Main.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="groupBox_Tab0_Box0.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="tabPage_Main_1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="radioButton_Tab0_Box0_1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="tabPage_Main_0.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="groupBox_Tab0_Box1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="listBox_Main.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="button_Tab0_Main.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="radioButton_Tab0_Box1_0.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="radioButton_Tab0_Box0_0.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="radioButton_Tab0_Box1_1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="radioButton_Tab0_Box1_1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="radioButton_Tab0_Box1_1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 49</value>
-  </data>
-  <data name="radioButton_Tab0_Box1_1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 21</value>
-  </data>
-  <data name="radioButton_Tab0_Box1_1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="radioButton_Tab0_Box1_1.Text" xml:space="preserve">
-    <value>radioButton_Tab0_Box1_1</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box1_1.Name" xml:space="preserve">
-    <value>radioButton_Tab0_Box1_1</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box1_1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box1_1.Parent" xml:space="preserve">
-    <value>groupBox_Tab0_Box1</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box1_1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="radioButton_Tab0_Box1_0.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="radioButton_Tab0_Box1_0.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="radioButton_Tab0_Box1_0.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 22</value>
-  </data>
-  <data name="radioButton_Tab0_Box1_0.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 21</value>
-  </data>
-  <data name="radioButton_Tab0_Box1_0.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="radioButton_Tab0_Box1_0.Text" xml:space="preserve">
-    <value>radioButton_Tab0_Box1_0</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box1_0.Name" xml:space="preserve">
-    <value>radioButton_Tab0_Box1_0</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box1_0.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box1_0.Parent" xml:space="preserve">
-    <value>groupBox_Tab0_Box1</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box1_0.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="groupBox_Tab0_Box1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 109</value>
-  </data>
-  <data name="groupBox_Tab0_Box1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 100</value>
-  </data>
-  <data name="groupBox_Tab0_Box1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="groupBox_Tab0_Box1.Text" xml:space="preserve">
-    <value>groupBox_Tab0_Box1</value>
-  </data>
-  <data name="&gt;&gt;groupBox_Tab0_Box1.Name" xml:space="preserve">
-    <value>groupBox_Tab0_Box1</value>
-  </data>
-  <data name="&gt;&gt;groupBox_Tab0_Box1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox_Tab0_Box1.Parent" xml:space="preserve">
-    <value>splitContainer_Tab0_Main.Panel1</value>
-  </data>
-  <data name="&gt;&gt;groupBox_Tab0_Box1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <metadata name="groupBox_Tab0_Box0.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="radioButton_Tab0_Box0_1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="radioButton_Tab0_Box0_1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="radioButton_Tab0_Box0_1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 49</value>
-  </data>
-  <data name="radioButton_Tab0_Box0_1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 21</value>
-  </data>
-  <data name="radioButton_Tab0_Box0_1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="radioButton_Tab0_Box0_1.Text" xml:space="preserve">
-    <value>radioButton_Tab0_Box0_1</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box0_1.Name" xml:space="preserve">
-    <value>radioButton_Tab0_Box0_1</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box0_1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box0_1.Parent" xml:space="preserve">
-    <value>groupBox_Tab0_Box0</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box0_1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="radioButton_Tab0_Box0_0.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="radioButton_Tab0_Box0_0.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="radioButton_Tab0_Box0_0.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 22</value>
-  </data>
-  <data name="radioButton_Tab0_Box0_0.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 21</value>
-  </data>
-  <data name="radioButton_Tab0_Box0_0.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="radioButton_Tab0_Box0_0.Text" xml:space="preserve">
-    <value>radioButton_Tab0_Box0_0</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box0_0.Name" xml:space="preserve">
-    <value>radioButton_Tab0_Box0_0</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box0_0.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box0_0.Parent" xml:space="preserve">
-    <value>groupBox_Tab0_Box0</value>
-  </data>
-  <data name="&gt;&gt;radioButton_Tab0_Box0_0.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="groupBox_Tab0_Box0.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 3</value>
-  </data>
-  <data name="groupBox_Tab0_Box0.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 100</value>
-  </data>
-  <data name="groupBox_Tab0_Box0.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="groupBox_Tab0_Box0.Text" xml:space="preserve">
-    <value>groupBox_Tab0_Box0</value>
-  </data>
-  <data name="&gt;&gt;groupBox_Tab0_Box0.Name" xml:space="preserve">
-    <value>groupBox_Tab0_Box0</value>
-  </data>
-  <data name="&gt;&gt;groupBox_Tab0_Box0.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox_Tab0_Box0.Parent" xml:space="preserve">
-    <value>splitContainer_Tab0_Main.Panel1</value>
-  </data>
-  <data name="&gt;&gt;groupBox_Tab0_Box0.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.Name" xml:space="preserve">
-    <value>splitContainer_Tab0_Main.Panel1</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.Parent" xml:space="preserve">
-    <value>splitContainer_Tab0_Main</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="listBox_Main.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="listBox_Main.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="listBox_Main.ItemHeight" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="listBox_Main.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="listBox_Main.Size" type="System.Drawing.Size, System.Drawing">
-    <value>388, 375</value>
-  </data>
-  <data name="listBox_Main.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;listBox_Main.Name" xml:space="preserve">
-    <value>listBox_Main</value>
-  </data>
-  <data name="&gt;&gt;listBox_Main.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;listBox_Main.Parent" xml:space="preserve">
-    <value>splitContainer_Tab0_Main.Panel2</value>
-  </data>
-  <data name="&gt;&gt;listBox_Main.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.Name" xml:space="preserve">
-    <value>splitContainer_Tab0_Main.Panel2</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.Parent" xml:space="preserve">
-    <value>splitContainer_Tab0_Main</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="splitContainer_Tab0_Main.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 375</value>
-  </data>
-  <data name="splitContainer_Tab0_Main.SplitterDistance" type="System.Int32, mscorlib">
-    <value>218</value>
-  </data>
-  <data name="splitContainer_Tab0_Main.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Name" xml:space="preserve">
-    <value>splitContainer_Tab0_Main</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Parent" xml:space="preserve">
-    <value>tabPage_Main_0</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="tabPage_Main_0.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="tabPage_Main_0.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 26</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="tabPage_Main_0.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabPage_Main_0.Size" type="System.Drawing.Size, System.Drawing">
-    <value>616, 381</value>
-  </data>
-  <data name="tabPage_Main_0.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="tabPage_Main_0.Text" xml:space="preserve">
-    <value>tabPage_Main_0</value>
-  </data>
-  <data name="&gt;&gt;tabPage_Main_0.Name" xml:space="preserve">
-    <value>tabPage_Main_0</value>
-  </data>
-  <data name="&gt;&gt;tabPage_Main_0.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabPage_Main_0.Parent" xml:space="preserve">
-    <value>tabControl_Main</value>
-  </data>
-  <data name="&gt;&gt;tabPage_Main_0.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="tabPage_Main_1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="tabPage_Main_1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 26</value>
-  </data>
-  <data name="tabPage_Main_1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabPage_Main_1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>616, 381</value>
-  </data>
-  <data name="tabPage_Main_1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tabPage_Main_1.Text" xml:space="preserve">
-    <value>tabPage_Main_1</value>
-  </data>
-  <data name="&gt;&gt;tabPage_Main_1.Name" xml:space="preserve">
-    <value>tabPage_Main_1</value>
-  </data>
-  <data name="&gt;&gt;tabPage_Main_1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabPage_Main_1.Parent" xml:space="preserve">
-    <value>tabControl_Main</value>
-  </data>
-  <data name="&gt;&gt;tabPage_Main_1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tabControl_Main.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="tabControl_Main.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="tabControl_Main.Size" type="System.Drawing.Size, System.Drawing">
-    <value>624, 411</value>
-  </data>
-  <data name="tabControl_Main.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;tabControl_Main.Name" xml:space="preserve">
-    <value>tabControl_Main</value>
-  </data>
-  <data name="&gt;&gt;tabControl_Main.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabControl_Main.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tabControl_Main.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 17</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>624, 411</value>
-  </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>480, 360</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>DDOA</value>
-  </data>
-  <data name="&gt;&gt;timer1.Name" xml:space="preserve">
-    <value>timer1</value>
-  </data>
-  <data name="&gt;&gt;timer1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Timer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FormMain</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
 </root>

@@ -46,5 +46,17 @@ namespace WinFormsGUI.Settings {
                 this["Ctrl_ForMouse"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowCV {
+            get {
+                return ((bool)(this["ShowCV"]));
+            }
+            set {
+                this["ShowCV"] = value;
+            }
+        }
     }
 }

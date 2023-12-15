@@ -157,4 +157,10 @@
   <data name="tabPage_Main_1.Text" xml:space="preserve">
     <value>设置</value>
   </data>
+  <data name="checkBox_Tab1_showCV.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 21</value>
+  </data>
+  <data name="checkBox_Tab1_showCV.Text" xml:space="preserve">
+    <value>显示调试性截图内容</value>
+  </data>
 </root>
