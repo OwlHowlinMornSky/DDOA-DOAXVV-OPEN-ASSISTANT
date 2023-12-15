@@ -13,11 +13,11 @@ namespace WinFormsGUI.Settings {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.8.0.0")]
-    internal sealed partial class main : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class Main : global::System.Configuration.ApplicationSettingsBase {
         
-        private static main defaultInstance = ((main)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new main())));
+        private static Main defaultInstance = ((Main)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Main())));
         
-        public static main Default {
+        public static Main Default {
             get {
                 return defaultInstance;
             }

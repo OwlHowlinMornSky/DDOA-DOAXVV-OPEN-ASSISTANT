@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows10.0.22000.0</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.22000.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -60,19 +60,19 @@
     <Compile Update="Settings\main.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
-      <DependentUpon>main.settings</DependentUpon>
+      <DependentUpon>Main.settings</DependentUpon>
     </Compile>
-    <Compile Update="Strings\str.Designer.cs">
+    <Compile Update="Strings\Main.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>str.resx</DependentUpon>
+      <DependentUpon>Main.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Strings\str.resx">
+    <EmbeddedResource Update="Strings\Main.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>str.Designer.cs</LastGenOutput>
+      <LastGenOutput>Main.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
@@ -81,7 +81,7 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Update="Settings\main.settings">
+    <None Update="Settings\Main.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>main.Designer.cs</LastGenOutput>
     </None>

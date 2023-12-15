@@ -596,7 +596,7 @@
     <value>ctxtMenu_notifyR_exit</value>
   </data>
   <data name="ctxtMenu_notifyR.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 26</value>
+    <value>200, 48</value>
   </data>
   <data name="&gt;&gt;ctxtMenu_notifyR.Name" xml:space="preserve">
     <value>ctxtMenu_notifyR</value>
