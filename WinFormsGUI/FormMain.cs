@@ -40,6 +40,7 @@ namespace WinFormsGUI {
 			notifyIcon_main.Text = Text;
 			btn_home_main.Text = Strings.str.Main_Btn_Start;
 
+
 #if DEBUG
 			Settings.main.Default.ShowCV = true;
 #endif

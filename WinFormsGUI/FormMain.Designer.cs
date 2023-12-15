@@ -183,7 +183,7 @@
 			// 
 			// timer_main
 			// 
-			timer_main.Interval = 50;
+			timer_main.Interval = 30;
 			timer_main.Tick += timer_main_Tick;
 			// 
 			// notifyIcon_main
@@ -196,7 +196,6 @@
 			// 
 			ctxtMenu_notifyR.Items.AddRange(new ToolStripItem[] { ctxtMenu_notifyR_exit });
 			ctxtMenu_notifyR.Name = "ctxtMenu_notifyR";
-			ctxtMenu_notifyR.RenderMode = ToolStripRenderMode.System;
 			resources.ApplyResources(ctxtMenu_notifyR, "ctxtMenu_notifyR");
 			// 
 			// ctxtMenu_notifyR_exit
