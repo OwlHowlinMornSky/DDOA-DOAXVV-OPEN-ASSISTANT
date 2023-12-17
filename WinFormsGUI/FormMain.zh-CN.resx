@@ -154,6 +154,21 @@
   <data name="tabPage_main_settings.Text" xml:space="preserve">
     <value>设置</value>
   </data>
+  <data name="checkBox_settings_keepDisplay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>173, 87</value>
+  </data>
+  <data name="checkBox_settings_keepDisplay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>123, 21</value>
+  </data>
+  <data name="checkBox_settings_keepDisplay.Text" xml:space="preserve">
+    <value>同时保持屏幕显示</value>
+  </data>
+  <data name="checkBox_settings_preventFromSleeping.Size" type="System.Drawing.Size, System.Drawing">
+    <value>159, 21</value>
+  </data>
+  <data name="checkBox_settings_preventFromSleeping.Text" xml:space="preserve">
+    <value>执行任务时阻止系统睡眠</value>
+  </data>
   <data name="checkBox_settings_useNotify.Size" type="System.Drawing.Size, System.Drawing">
     <value>99, 21</value>
   </data>

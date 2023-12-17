@@ -37,6 +37,8 @@
 			tabControl_main = new TabControl();
 			tabPage_main_home = new TabPage();
 			tabPage_main_settings = new TabPage();
+			checkBox_settings_keepDisplay = new CheckBox();
+			checkBox_settings_preventFromSleeping = new CheckBox();
 			checkBox_settings_useNotify = new CheckBox();
 			checkBox_settings_hideToIcon = new CheckBox();
 			checkBox_settings_showCV = new CheckBox();
@@ -153,12 +155,28 @@
 			// 
 			// tabPage_main_settings
 			// 
+			tabPage_main_settings.Controls.Add(checkBox_settings_keepDisplay);
+			tabPage_main_settings.Controls.Add(checkBox_settings_preventFromSleeping);
 			tabPage_main_settings.Controls.Add(checkBox_settings_useNotify);
 			tabPage_main_settings.Controls.Add(checkBox_settings_hideToIcon);
 			tabPage_main_settings.Controls.Add(checkBox_settings_showCV);
 			resources.ApplyResources(tabPage_main_settings, "tabPage_main_settings");
 			tabPage_main_settings.Name = "tabPage_main_settings";
 			tabPage_main_settings.UseVisualStyleBackColor = true;
+			// 
+			// checkBox_settings_keepDisplay
+			// 
+			resources.ApplyResources(checkBox_settings_keepDisplay, "checkBox_settings_keepDisplay");
+			checkBox_settings_keepDisplay.Name = "checkBox_settings_keepDisplay";
+			checkBox_settings_keepDisplay.UseVisualStyleBackColor = true;
+			checkBox_settings_keepDisplay.CheckedChanged += checkBox_settings_keepDisplay_CheckedChanged;
+			// 
+			// checkBox_settings_preventFromSleeping
+			// 
+			resources.ApplyResources(checkBox_settings_preventFromSleeping, "checkBox_settings_preventFromSleeping");
+			checkBox_settings_preventFromSleeping.Name = "checkBox_settings_preventFromSleeping";
+			checkBox_settings_preventFromSleeping.UseVisualStyleBackColor = true;
+			checkBox_settings_preventFromSleeping.CheckedChanged += checkBox_settings_preventFromSleeping_CheckedChanged;
 			// 
 			// checkBox_settings_useNotify
 			// 
@@ -252,5 +270,7 @@
 		private CheckBox checkBox_settings_hideToIcon;
 		private CheckBox checkBox_settings_useNotify;
 		private ToolStripMenuItem ctxtMenu_notifyR_exit;
+		private CheckBox checkBox_settings_keepDisplay;
+		private CheckBox checkBox_settings_preventFromSleeping;
 	}
 }

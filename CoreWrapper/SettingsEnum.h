@@ -10,6 +10,9 @@ public enum class HelprSet {
 	Ctrl_MouseInput,
 
 	ShowCV, 
+
+	PreventFromSleep,
+	KeepDisplay
 };
 
 }

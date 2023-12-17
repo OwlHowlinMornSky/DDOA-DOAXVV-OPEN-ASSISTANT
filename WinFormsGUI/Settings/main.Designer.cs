@@ -91,5 +91,29 @@ namespace WinFormsGUI.Settings {
                 return ((int)(this["NotifyTime"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PreventSleep {
+            get {
+                return ((bool)(this["PreventSleep"]));
+            }
+            set {
+                this["PreventSleep"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool KeepDisplay {
+            get {
+                return ((bool)(this["KeepDisplay"]));
+            }
+            set {
+                this["KeepDisplay"] = value;
+            }
+        }
     }
 }

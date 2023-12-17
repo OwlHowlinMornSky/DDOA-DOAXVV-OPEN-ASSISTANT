@@ -12,19 +12,19 @@ public:
 	~HelperWrapper();
 
 public:
-	void set(HelprSet type, System::Int32 val);
+	System::Int32 set(HelprSet type, System::Int32 val);
 
-	bool start();
-	void askForStop();
-	bool isRunning();
+	System::Boolean start();
+	System::Void askForStop();
+	System::Boolean isRunning();
 
 	ReturnMessage msgPop();
 	System::UInt32 codePop();
 
-	void drop();
+	System::Void drop();
 
 private:
-	ohms::IHelper* m_helper;
+	ohms::IHelper* r_helper;
 };
 
 } // namespace Wrapper

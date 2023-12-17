@@ -133,9 +133,10 @@ inline bool find(const cv::Mat& matSample, const cv::Mat& matTemplate, cv::Rect&
 
 namespace ohms {
 
-void Helper::regShowCV(bool show) {
+long Helper::regShowCV(bool show) {
 	std::lock_guard lg(g_showcvMutex);
 	g_showcv = show;
+	return 0l;
 }
 
 bool Helper::step_copyMat(cv::Mat& target) {

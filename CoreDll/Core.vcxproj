@@ -117,6 +117,7 @@
     <ClInclude Include="Helper.h" />
     <ClInclude Include="IHelper.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="ReturnMessages.h" />
     <ClInclude Include="Time.h" />
   </ItemGroup>
   <ItemGroup>

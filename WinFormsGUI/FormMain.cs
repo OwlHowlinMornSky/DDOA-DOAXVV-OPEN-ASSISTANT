@@ -40,7 +40,6 @@ namespace WinFormsGUI {
 			notifyIcon_main.Text = Text;
 			btn_home_main.Text = Strings.Main.Main_Btn_Start;
 
-
 #if DEBUG
 			Settings.Main.Default.ShowCV = true;
 #endif
@@ -51,6 +50,16 @@ namespace WinFormsGUI {
 			checkBox_settings_showCV.Checked = Settings.Main.Default.ShowCV;
 			checkBox_settings_hideToIcon.Checked = Settings.Main.Default.HideToIcon;
 			checkBox_settings_useNotify.Checked = Settings.Main.Default.UseNotify;
+			if (Settings.Main.Default.PreventSleep) {
+				checkBox_settings_preventFromSleeping.Checked = true;
+				checkBox_settings_keepDisplay.Enabled = true;
+				checkBox_settings_keepDisplay.Checked = Settings.Main.Default.KeepDisplay;
+			}
+			else {
+				checkBox_settings_preventFromSleeping.Checked = false;
+				checkBox_settings_keepDisplay.Enabled = false;
+				checkBox_settings_keepDisplay.Checked = false;
+			}
 		}
 
 		private void FormMain_Deactivate(object sender, EventArgs e) {
@@ -113,6 +122,7 @@ namespace WinFormsGUI {
 
 		private void checkBox_settings_showCV_CheckedChanged(object sender, EventArgs e) {
 			m_helper.set(HelprSet.ShowCV, checkBox_settings_showCV.Checked ? 1 : 0);
+			Settings.Main.Default.ShowCV = checkBox_settings_showCV.Checked;
 		}
 
 		private void checkBox_settings_hideToIcon_CheckedChanged(object sender, EventArgs e) {
@@ -121,6 +131,27 @@ namespace WinFormsGUI {
 
 		private void checkBox_settings_useNotify_CheckedChanged(object sender, EventArgs e) {
 			Settings.Main.Default.UseNotify = checkBox_settings_useNotify.Checked;
+		}
+		private void checkBox_settings_preventFromSleeping_CheckedChanged(object sender, EventArgs e) {
+			if (checkBox_settings_preventFromSleeping.Checked) {
+				Settings.Main.Default.PreventSleep = true;
+				checkBox_settings_keepDisplay.Enabled = true;
+				m_helper.set(HelprSet.PreventFromSleep, 1);
+			}
+			else {
+				Settings.Main.Default.PreventSleep = false;
+				checkBox_settings_keepDisplay.Checked = false;
+				checkBox_settings_keepDisplay.Enabled = false;
+				m_helper.set(HelprSet.PreventFromSleep, 0);
+			}
+		}
+
+		private void checkBox_settings_keepDisplay_CheckedChanged(object sender, EventArgs e) {
+			m_helper.set(
+				HelprSet.KeepDisplay,
+				checkBox_settings_keepDisplay.Checked ? 1 : 0
+			);
+			Settings.Main.Default.KeepDisplay = checkBox_settings_keepDisplay.Checked;
 		}
 
 		#endregion

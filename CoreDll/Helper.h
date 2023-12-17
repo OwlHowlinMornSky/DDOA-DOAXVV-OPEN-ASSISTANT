@@ -25,11 +25,14 @@ public:
 	 * @brief 设置挑战赛打新比赛
 	 * @param forNew true则打新比赛，否则打上一次比赛
 	*/
-	virtual void regForNew(bool forNew) override;
+	virtual long regForNew(bool forNew) override;
 
-	virtual void regForMouse(bool forMouse) override;
+	virtual long regForMouse(bool forMouse) override;
 
-	virtual void regShowCV(bool show) override;
+	virtual long regShowCV(bool show) override;
+
+	virtual long regPrevent(bool prevent) override;
+	virtual long regPreventKeepDisplay(bool keep) override;
 
 public:
 	/**
@@ -143,6 +146,8 @@ protected:
 	cv::Rect rect_ChaGame;
 	bool task_ChaGame_ForNew; // 选择新比赛。
 	bool task_Mouse_ForMouse; // 选择控制鼠标。
+	bool task_PreventFromSleep; // 阻止睡眠。
+	bool task_KeepDisplay; // 阻止睡眠时保持显示。
 
 	// 编队页面右下角的 挑战按钮。
 	cv::Mat mat_StartGame;
