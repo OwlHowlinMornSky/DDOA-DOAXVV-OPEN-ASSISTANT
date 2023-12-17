@@ -37,6 +37,8 @@
 			tabControl_main = new TabControl();
 			tabPage_main_home = new TabPage();
 			tabPage_main_settings = new TabPage();
+			checkBox_settings_disableClose = new CheckBox();
+			trackBar_transparant = new TrackBar();
 			checkBox_settings_keepDisplay = new CheckBox();
 			checkBox_settings_preventFromSleeping = new CheckBox();
 			checkBox_settings_useNotify = new CheckBox();
@@ -55,6 +57,7 @@
 			tabControl_main.SuspendLayout();
 			tabPage_main_home.SuspendLayout();
 			tabPage_main_settings.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)trackBar_transparant).BeginInit();
 			ctxtMenu_notifyR.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -155,6 +158,8 @@
 			// 
 			// tabPage_main_settings
 			// 
+			tabPage_main_settings.Controls.Add(checkBox_settings_disableClose);
+			tabPage_main_settings.Controls.Add(trackBar_transparant);
 			tabPage_main_settings.Controls.Add(checkBox_settings_keepDisplay);
 			tabPage_main_settings.Controls.Add(checkBox_settings_preventFromSleeping);
 			tabPage_main_settings.Controls.Add(checkBox_settings_useNotify);
@@ -163,6 +168,18 @@
 			resources.ApplyResources(tabPage_main_settings, "tabPage_main_settings");
 			tabPage_main_settings.Name = "tabPage_main_settings";
 			tabPage_main_settings.UseVisualStyleBackColor = true;
+			// 
+			// checkBox_settings_disableClose
+			// 
+			resources.ApplyResources(checkBox_settings_disableClose, "checkBox_settings_disableClose");
+			checkBox_settings_disableClose.Name = "checkBox_settings_disableClose";
+			checkBox_settings_disableClose.UseVisualStyleBackColor = true;
+			checkBox_settings_disableClose.CheckedChanged += checkBox_settings_disableClose_CheckedChanged;
+			// 
+			// trackBar_transparant
+			// 
+			resources.ApplyResources(trackBar_transparant, "trackBar_transparant");
+			trackBar_transparant.Name = "trackBar_transparant";
 			// 
 			// checkBox_settings_keepDisplay
 			// 
@@ -245,6 +262,7 @@
 			tabPage_main_home.ResumeLayout(false);
 			tabPage_main_settings.ResumeLayout(false);
 			tabPage_main_settings.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)trackBar_transparant).EndInit();
 			ctxtMenu_notifyR.ResumeLayout(false);
 			ResumeLayout(false);
 		}
@@ -272,5 +290,7 @@
 		private ToolStripMenuItem ctxtMenu_notifyR_exit;
 		private CheckBox checkBox_settings_keepDisplay;
 		private CheckBox checkBox_settings_preventFromSleeping;
+		private TrackBar trackBar_transparant;
+		private CheckBox checkBox_settings_disableClose;
 	}
 }

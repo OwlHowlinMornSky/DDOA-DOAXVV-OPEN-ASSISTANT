@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WinFormsGUI.Settings" GeneratedClassName="main">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WinFormsGUI.Settings" GeneratedClassName="Main">
   <Profiles />
   <Settings>
     <Setting Name="Game_ForNew" Type="System.Boolean" Scope="User">
@@ -24,6 +24,9 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="KeepDisplay" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DisableClose" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

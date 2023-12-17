@@ -99,9 +99,11 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ReturnMessages.h" />
     <ClInclude Include="SettingsEnum.h" />
+    <ClInclude Include="SystemThings.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HelperWrapper.cpp" />
+    <ClCompile Include="SystemThings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CoreWrapper.rc" />

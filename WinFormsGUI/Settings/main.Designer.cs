@@ -115,5 +115,17 @@ namespace WinFormsGUI.Settings {
                 this["KeepDisplay"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DisableClose {
+            get {
+                return ((bool)(this["DisableClose"]));
+            }
+            set {
+                this["DisableClose"] = value;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Wrapper;
+﻿using System.Runtime.InteropServices;
+using Wrapper;
 
 namespace WinFormsGUI {
 	public partial class FormMain : Form {
@@ -60,6 +61,9 @@ namespace WinFormsGUI {
 				checkBox_settings_keepDisplay.Enabled = false;
 				checkBox_settings_keepDisplay.Checked = false;
 			}
+
+			checkBox_settings_disableClose.Checked = Settings.Main.Default.DisableClose;
+
 		}
 
 		private void FormMain_Deactivate(object sender, EventArgs e) {
@@ -152,6 +156,11 @@ namespace WinFormsGUI {
 				checkBox_settings_keepDisplay.Checked ? 1 : 0
 			);
 			Settings.Main.Default.KeepDisplay = checkBox_settings_keepDisplay.Checked;
+		}
+
+		private void checkBox_settings_disableClose_CheckedChanged(object sender, EventArgs e) {
+			SystemThings.SetCloseEnabled(Handle, !checkBox_settings_disableClose.Checked);
+			Settings.Main.Default.DisableClose = checkBox_settings_disableClose.Checked;
 		}
 
 		#endregion
