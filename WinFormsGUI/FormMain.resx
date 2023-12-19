@@ -117,257 +117,56 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="splitContainer_Tab0_Main.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="splitContainer_Tab0_Main.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.Name" xml:space="preserve">
+    <value>splitContainer_Tab0_Main.Panel2</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="splitContainer_Tab0_Main.IsSplitterFixed" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tabPage_main_home.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="splitContainer_Tab0_Main.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+  <data name="checkBox_settings_useNotify.Size" type="System.Drawing.Size, System.Drawing">
+    <value>192, 21</value>
   </data>
-  <metadata name="btn_home_main.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="btn_home_main.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="checkBox_settings_preventFromSleeping.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
-  <data name="btn_home_main.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 312</value>
+  <data name="&gt;&gt;tabControl_main.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="btn_home_main.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 58</value>
+  <data name="&gt;&gt;tabPage_main_settings.Parent" xml:space="preserve">
+    <value>tabControl_main</value>
   </data>
-  <data name="btn_home_main.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="btn_home_main.Text" xml:space="preserve">
-    <value>btn_home_main</value>
-  </data>
-  <data name="&gt;&gt;btn_home_main.Name" xml:space="preserve">
-    <value>btn_home_main</value>
+  <data name="&gt;&gt;listBox_home.Parent" xml:space="preserve">
+    <value>splitContainer_Tab0_Main.Panel2</value>
   </data>
   <data name="&gt;&gt;btn_home_main.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btn_home_main.Parent" xml:space="preserve">
-    <value>splitContainer_Tab0_Main.Panel1</value>
+  <data name="&gt;&gt;checkBox_settings_hideToIcon.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btn_home_main.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;checkBox_settings_preventFromSleeping.Name" xml:space="preserve">
+    <value>checkBox_settings_preventFromSleeping</value>
+  </data>
+  <data name="listBox_home.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
-  </data>
-  <metadata name="gpBox_home_ctrlSet.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="radioBtn_home_ctrlInput.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="radioBtn_home_ctrlInput.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="radioBtn_home_ctrlInput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 49</value>
-  </data>
-  <data name="radioBtn_home_ctrlInput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 21</value>
-  </data>
-  <data name="radioBtn_home_ctrlInput.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="radioBtn_home_ctrlInput.Text" xml:space="preserve">
-    <value>radioBtn_home_ctrlInput</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_ctrlInput.Name" xml:space="preserve">
-    <value>radioBtn_home_ctrlInput</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_ctrlInput.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_ctrlInput.Parent" xml:space="preserve">
-    <value>gpBox_home_ctrlSet</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_ctrlInput.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="radioBtn_home_ctrlMsg.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="radioBtn_home_ctrlMsg.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="radioBtn_home_ctrlMsg.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 22</value>
-  </data>
-  <data name="radioBtn_home_ctrlMsg.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 21</value>
-  </data>
-  <data name="radioBtn_home_ctrlMsg.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="radioBtn_home_ctrlMsg.Text" xml:space="preserve">
-    <value>radioBtn_home_ctrlMsg</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_ctrlMsg.Name" xml:space="preserve">
-    <value>radioBtn_home_ctrlMsg</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_ctrlMsg.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_ctrlMsg.Parent" xml:space="preserve">
-    <value>gpBox_home_ctrlSet</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_ctrlMsg.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="gpBox_home_ctrlSet.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 109</value>
-  </data>
-  <data name="gpBox_home_ctrlSet.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 100</value>
   </data>
   <data name="gpBox_home_ctrlSet.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="gpBox_home_ctrlSet.Text" xml:space="preserve">
-    <value>gpBox_home_ctrlSet</value>
-  </data>
-  <data name="&gt;&gt;gpBox_home_ctrlSet.Name" xml:space="preserve">
-    <value>gpBox_home_ctrlSet</value>
-  </data>
-  <data name="&gt;&gt;gpBox_home_ctrlSet.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="radioBtn_home_gameLast.Text" xml:space="preserve">
+    <value>radioBtn_home_gameLast</value>
   </data>
   <data name="&gt;&gt;gpBox_home_ctrlSet.Parent" xml:space="preserve">
     <value>splitContainer_Tab0_Main.Panel1</value>
   </data>
-  <data name="&gt;&gt;gpBox_home_ctrlSet.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <metadata name="gpBox_home_gameSet.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="radioBtn_home_gameNew.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="radioBtn_home_gameNew.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="radioBtn_home_gameNew.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 49</value>
-  </data>
-  <data name="radioBtn_home_gameNew.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 21</value>
-  </data>
-  <data name="radioBtn_home_gameNew.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="radioBtn_home_gameNew.Text" xml:space="preserve">
-    <value>radioBtn_home_gameNew</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_gameNew.Name" xml:space="preserve">
-    <value>radioBtn_home_gameNew</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_gameNew.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_gameNew.Parent" xml:space="preserve">
-    <value>gpBox_home_gameSet</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_gameNew.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="radioBtn_home_gameLast.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="radioBtn_home_gameLast.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="radioBtn_home_gameLast.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 22</value>
-  </data>
-  <data name="radioBtn_home_gameLast.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 21</value>
-  </data>
-  <data name="radioBtn_home_gameLast.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="radioBtn_home_gameLast.Text" xml:space="preserve">
-    <value>radioBtn_home_gameLast</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_gameLast.Name" xml:space="preserve">
-    <value>radioBtn_home_gameLast</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_gameLast.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_gameLast.Parent" xml:space="preserve">
-    <value>gpBox_home_gameSet</value>
-  </data>
-  <data name="&gt;&gt;radioBtn_home_gameLast.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="gpBox_home_gameSet.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 3</value>
+  <data name="&gt;&gt;checkBox_settings_showCV.Parent" xml:space="preserve">
+    <value>tabPage_main_settings</value>
   </data>
   <data name="gpBox_home_gameSet.Size" type="System.Drawing.Size, System.Drawing">
     <value>200, 100</value>
-  </data>
-  <data name="gpBox_home_gameSet.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="gpBox_home_gameSet.Text" xml:space="preserve">
-    <value>gpBox_home_gameSet</value>
-  </data>
-  <data name="&gt;&gt;gpBox_home_gameSet.Name" xml:space="preserve">
-    <value>gpBox_home_gameSet</value>
-  </data>
-  <data name="&gt;&gt;gpBox_home_gameSet.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;gpBox_home_gameSet.Parent" xml:space="preserve">
-    <value>splitContainer_Tab0_Main.Panel1</value>
-  </data>
-  <data name="&gt;&gt;gpBox_home_gameSet.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.Name" xml:space="preserve">
-    <value>splitContainer_Tab0_Main.Panel1</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.Parent" xml:space="preserve">
-    <value>splitContainer_Tab0_Main</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="listBox_home.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="listBox_home.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="listBox_home.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft YaHei UI, 10pt</value>
-  </data>
-  <data name="listBox_home.ItemHeight" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="listBox_home.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="listBox_home.Size" type="System.Drawing.Size, System.Drawing">
-    <value>388, 375</value>
-  </data>
-  <data name="listBox_home.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
   </data>
   <data name="&gt;&gt;listBox_home.Name" xml:space="preserve">
     <value>listBox_home</value>
@@ -375,345 +174,99 @@
   <data name="&gt;&gt;listBox_home.Type" xml:space="preserve">
     <value>System.Windows.Forms.ListBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;listBox_home.Parent" xml:space="preserve">
-    <value>splitContainer_Tab0_Main.Panel2</value>
-  </data>
-  <data name="&gt;&gt;listBox_home.ZOrder" xml:space="preserve">
+  <data name="radioBtn_home_gameLast.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.Name" xml:space="preserve">
-    <value>splitContainer_Tab0_Main.Panel2</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.Parent" xml:space="preserve">
-    <value>splitContainer_Tab0_Main</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;radioBtn_home_gameLast.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="splitContainer_Tab0_Main.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 375</value>
-  </data>
-  <data name="splitContainer_Tab0_Main.SplitterDistance" type="System.Int32, mscorlib">
-    <value>218</value>
-  </data>
-  <data name="splitContainer_Tab0_Main.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Name" xml:space="preserve">
-    <value>splitContainer_Tab0_Main</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.Parent" xml:space="preserve">
-    <value>tabPage_main_home</value>
-  </data>
-  <data name="&gt;&gt;splitContainer_Tab0_Main.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="tabPage_main_home.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <data name="radioBtn_home_gameNew.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </metadata>
-  <data name="tabPage_main_home.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 26</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="tabPage_main_home.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabPage_main_home.Size" type="System.Drawing.Size, System.Drawing">
-    <value>616, 381</value>
-  </data>
-  <data name="tabPage_main_home.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="tabPage_main_home.Text" xml:space="preserve">
-    <value>tabPage_main_home</value>
-  </data>
-  <data name="&gt;&gt;tabPage_main_home.Name" xml:space="preserve">
-    <value>tabPage_main_home</value>
-  </data>
-  <data name="&gt;&gt;tabPage_main_home.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tabPage_main_home.Parent" xml:space="preserve">
     <value>tabControl_main</value>
   </data>
-  <data name="&gt;&gt;tabPage_main_home.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="tabPage_main_settings.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="checkBox_settings_disableClose.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBox_settings_disableClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 114</value>
-  </data>
-  <data name="checkBox_settings_disableClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 21</value>
-  </data>
-  <data name="checkBox_settings_disableClose.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="checkBox_settings_disableClose.Text" xml:space="preserve">
-    <value>checkBox_settings_disableClose</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_disableClose.Name" xml:space="preserve">
-    <value>checkBox_settings_disableClose</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_disableClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_disableClose.Parent" xml:space="preserve">
-    <value>tabPage_main_settings</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_disableClose.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="trackBar_transparant.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="trackBar_transparant.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="trackBar_transparant.Location" type="System.Drawing.Point, System.Drawing">
-    <value>343, 328</value>
-  </data>
-  <data name="trackBar_transparant.Size" type="System.Drawing.Size, System.Drawing">
-    <value>265, 45</value>
-  </data>
-  <data name="trackBar_transparant.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;trackBar_transparant.Name" xml:space="preserve">
-    <value>trackBar_transparant</value>
-  </data>
   <data name="&gt;&gt;trackBar_transparant.Type" xml:space="preserve">
     <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;trackBar_transparant.Parent" xml:space="preserve">
-    <value>tabPage_main_settings</value>
-  </data>
-  <data name="&gt;&gt;trackBar_transparant.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="checkBox_settings_keepDisplay.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBox_settings_keepDisplay.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="checkBox_settings_keepDisplay.Location" type="System.Drawing.Point, System.Drawing">
-    <value>275, 87</value>
-  </data>
-  <data name="checkBox_settings_keepDisplay.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 21</value>
-  </data>
-  <data name="checkBox_settings_keepDisplay.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="checkBox_settings_keepDisplay.Text" xml:space="preserve">
-    <value>checkBox_settings_keepDisplay</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_keepDisplay.Name" xml:space="preserve">
-    <value>checkBox_settings_keepDisplay</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_keepDisplay.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_keepDisplay.Parent" xml:space="preserve">
-    <value>tabPage_main_settings</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_keepDisplay.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="checkBox_settings_preventFromSleeping.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBox_settings_preventFromSleeping.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 87</value>
-  </data>
-  <data name="checkBox_settings_preventFromSleeping.Size" type="System.Drawing.Size, System.Drawing">
-    <value>261, 21</value>
-  </data>
-  <data name="checkBox_settings_preventFromSleeping.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="checkBox_settings_preventFromSleeping.Text" xml:space="preserve">
-    <value>checkBox_settings_preventFromSleeping</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_preventFromSleeping.Name" xml:space="preserve">
-    <value>checkBox_settings_preventFromSleeping</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_preventFromSleeping.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_preventFromSleeping.Parent" xml:space="preserve">
-    <value>tabPage_main_settings</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_preventFromSleeping.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="checkBox_settings_useNotify.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBox_settings_useNotify.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 60</value>
-  </data>
-  <data name="checkBox_settings_useNotify.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 21</value>
-  </data>
-  <data name="checkBox_settings_useNotify.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="checkBox_settings_useNotify.Text" xml:space="preserve">
-    <value>checkBox_settings_useNotify</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_useNotify.Name" xml:space="preserve">
-    <value>checkBox_settings_useNotify</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_useNotify.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_useNotify.Parent" xml:space="preserve">
-    <value>tabPage_main_settings</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_useNotify.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="checkBox_settings_hideToIcon.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBox_settings_hideToIcon.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 33</value>
-  </data>
-  <data name="checkBox_settings_hideToIcon.Size" type="System.Drawing.Size, System.Drawing">
-    <value>202, 21</value>
-  </data>
-  <data name="checkBox_settings_hideToIcon.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="checkBox_settings_hideToIcon.Text" xml:space="preserve">
-    <value>checkBox_settings_hideToIcon</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_hideToIcon.Name" xml:space="preserve">
-    <value>checkBox_settings_hideToIcon</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_hideToIcon.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_hideToIcon.Parent" xml:space="preserve">
-    <value>tabPage_main_settings</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_hideToIcon.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="checkBox_settings_showCV.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBox_settings_showCV.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 6</value>
-  </data>
-  <data name="checkBox_settings_showCV.Size" type="System.Drawing.Size, System.Drawing">
-    <value>183, 21</value>
-  </data>
-  <data name="checkBox_settings_showCV.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="checkBox_settings_showCV.Text" xml:space="preserve">
-    <value>checkBox_settings_showCV</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_showCV.Name" xml:space="preserve">
-    <value>checkBox_settings_showCV</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_showCV.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_showCV.Parent" xml:space="preserve">
-    <value>tabPage_main_settings</value>
-  </data>
-  <data name="&gt;&gt;checkBox_settings_showCV.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="tabPage_main_settings.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 26</value>
-  </data>
-  <data name="tabPage_main_settings.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabPage_main_settings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>616, 381</value>
-  </data>
-  <data name="tabPage_main_settings.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tabPage_main_settings.Text" xml:space="preserve">
-    <value>tabPage_main_settings</value>
   </data>
   <data name="&gt;&gt;tabPage_main_settings.Name" xml:space="preserve">
     <value>tabPage_main_settings</value>
   </data>
-  <data name="&gt;&gt;tabPage_main_settings.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabPage_main_settings.Parent" xml:space="preserve">
-    <value>tabControl_main</value>
-  </data>
-  <data name="&gt;&gt;tabPage_main_settings.ZOrder" xml:space="preserve">
+  <data name="radioBtn_home_ctrlInput.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="tabControl_main.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="trackBar_transparant.Location" type="System.Drawing.Point, System.Drawing">
+    <value>343, 328</value>
+  </data>
+  <data name="&gt;&gt;ctxtMenu_notifyR.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label_transparant.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="btn_home_main.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 58</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="checkBox_settings_showCV.Text" xml:space="preserve">
+    <value>checkBox_settings_showCV</value>
+  </data>
+  <data name="label_transparant.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_preventFromSleeping.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="listBox_home.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="tabControl_main.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="checkBox_settings_keepDisplay.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="tabControl_main.Size" type="System.Drawing.Size, System.Drawing">
-    <value>624, 411</value>
+  <data name="listBox_home.Size" type="System.Drawing.Size, System.Drawing">
+    <value>388, 375</value>
   </data>
-  <data name="tabControl_main.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="&gt;&gt;radioBtn_home_ctrlMsg.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tabControl_main.Name" xml:space="preserve">
-    <value>tabControl_main</value>
+  <data name="&gt;&gt;tabPage_main_home.Name" xml:space="preserve">
+    <value>tabPage_main_home</value>
   </data>
-  <data name="&gt;&gt;tabControl_main.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="checkBox_settings_useNotify.Text" xml:space="preserve">
+    <value>checkBox_settings_useNotify</value>
   </data>
-  <data name="&gt;&gt;tabControl_main.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;checkBox_settings_keepDisplay.Parent" xml:space="preserve">
+    <value>tabPage_main_settings</value>
   </data>
-  <data name="&gt;&gt;tabControl_main.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;checkBox_settings_hideToIcon.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
-  <metadata name="timer_main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="notifyIcon_main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>126, 17</value>
-  </metadata>
-  <metadata name="ctxtMenu_notifyR.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>266, 17</value>
-  </metadata>
-  <data name="ctxtMenu_notifyR_exit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
+  <data name="splitContainer_Tab0_Main.IsSplitterFixed" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;radioBtn_home_gameLast.Name" xml:space="preserve">
+    <value>radioBtn_home_gameLast</value>
+  </data>
+  <data name="&gt;&gt;radioBtn_home_ctrlMsg.Parent" xml:space="preserve">
+    <value>gpBox_home_ctrlSet</value>
+  </data>
+  <data name="&gt;&gt;gpBox_home_gameSet.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="checkBox_settings_keepDisplay.Text" xml:space="preserve">
+    <value>checkBox_settings_keepDisplay</value>
   </data>
   <data name="ctxtMenu_notifyR_exit.Text" xml:space="preserve">
     <value>ctxtMenu_notifyR_exit</value>
   </data>
-  <data name="ctxtMenu_notifyR.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 26</value>
+  <data name="tabPage_main_settings.Text" xml:space="preserve">
+    <value>tabPage_main_settings</value>
   </data>
-  <data name="&gt;&gt;ctxtMenu_notifyR.Name" xml:space="preserve">
-    <value>ctxtMenu_notifyR</value>
-  </data>
-  <data name="&gt;&gt;ctxtMenu_notifyR.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;radioBtn_home_ctrlInput.Parent" xml:space="preserve">
+    <value>gpBox_home_ctrlSet</value>
   </data>
   <data name="notifyIcon_main.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -791,23 +344,167 @@
         AAfwAAAP+AAAH/wAAD/+AAB//4AB///wD/8=
 </value>
   </data>
-  <data name="notifyIcon_main.Text" xml:space="preserve">
-    <value>notifyIcon_main</value>
+  <data name="&gt;&gt;checkBox_settings_showCV.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
-  <data name="notifyIcon_main.Visible" type="System.Boolean, mscorlib">
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormMain</value>
+  </data>
+  <data name="checkBox_settings_preventFromSleeping.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 87</value>
+  </data>
+  <data name="&gt;&gt;gpBox_home_ctrlSet.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="radioBtn_home_gameNew.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="listBox_home.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft YaHei UI, 10pt</value>
+  </data>
+  <data name="&gt;&gt;gpBox_home_gameSet.Parent" xml:space="preserve">
+    <value>splitContainer_Tab0_Main.Panel1</value>
+  </data>
+  <data name="checkBox_settings_showCV.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 6</value>
+  </data>
+  <data name="tabControl_main.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tabPage_main_settings.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label_transparant.Text" xml:space="preserve">
+    <value>label_transparant</value>
+  </data>
+  <data name="&gt;&gt;tabPage_main_home.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpBox_home_ctrlSet.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 100</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>DDOA</value>
+  </data>
+  <data name="tabPage_main_home.Text" xml:space="preserve">
+    <value>tabPage_main_home</value>
+  </data>
+  <data name="checkBox_settings_keepDisplay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>275, 87</value>
+  </data>
+  <data name="checkBox_settings_hideToIcon.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="radioBtn_home_gameNew.Text" xml:space="preserve">
+    <value>radioBtn_home_gameNew</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_preventFromSleeping.Parent" xml:space="preserve">
+    <value>tabPage_main_settings</value>
+  </data>
+  <data name="radioBtn_home_ctrlInput.Text" xml:space="preserve">
+    <value>radioBtn_home_ctrlInput</value>
+  </data>
+  <data name="&gt;&gt;gpBox_home_gameSet.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="checkBox_settings_disableClose.Text" xml:space="preserve">
+    <value>checkBox_settings_disableClose</value>
+  </data>
+  <data name="gpBox_home_gameSet.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 3</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="checkBox_settings_useNotify.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 60</value>
+  </data>
+  <data name="checkBox_settings_keepDisplay.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_keepDisplay.Name" xml:space="preserve">
+    <value>checkBox_settings_keepDisplay</value>
+  </data>
+  <data name="checkBox_settings_disableClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 21</value>
+  </data>
+  <data name="radioBtn_home_ctrlMsg.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 21</value>
+  </data>
+  <data name="radioBtn_home_ctrlMsg.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 22</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_hideToIcon.Parent" xml:space="preserve">
+    <value>tabPage_main_settings</value>
+  </data>
+  <data name="&gt;&gt;ctxtMenu_notifyR_exit.Name" xml:space="preserve">
+    <value>ctxtMenu_notifyR_exit</value>
+  </data>
+  <data name="&gt;&gt;radioBtn_home_gameLast.Parent" xml:space="preserve">
+    <value>gpBox_home_gameSet</value>
+  </data>
+  <data name="radioBtn_home_gameLast.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 17</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+  <data name="tabControl_main.Size" type="System.Drawing.Size, System.Drawing">
     <value>624, 411</value>
+  </data>
+  <data name="radioBtn_home_ctrlMsg.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBox_settings_showCV.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_useNotify.Name" xml:space="preserve">
+    <value>checkBox_settings_useNotify</value>
+  </data>
+  <data name="tabPage_main_home.Size" type="System.Drawing.Size, System.Drawing">
+    <value>616, 381</value>
+  </data>
+  <data name="tabPage_main_home.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="splitContainer_Tab0_Main.Size" type="System.Drawing.Size, System.Drawing">
+    <value>610, 375</value>
+  </data>
+  <data name="trackBar_transparant.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="checkBox_settings_hideToIcon.Text" xml:space="preserve">
+    <value>checkBox_settings_hideToIcon</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_showCV.Name" xml:space="preserve">
+    <value>checkBox_settings_showCV</value>
+  </data>
+  <data name="&gt;&gt;gpBox_home_gameSet.Name" xml:space="preserve">
+    <value>gpBox_home_gameSet</value>
+  </data>
+  <data name="&gt;&gt;radioBtn_home_ctrlMsg.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="checkBox_settings_showCV.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 21</value>
+  </data>
+  <data name="&gt;&gt;tabPage_main_settings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="checkBox_settings_preventFromSleeping.Text" xml:space="preserve">
+    <value>checkBox_settings_preventFromSleeping</value>
+  </data>
+  <data name="splitContainer_Tab0_Main.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="checkBox_settings_hideToIcon.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 21</value>
+  </data>
+  <data name="&gt;&gt;label_transparant.Name" xml:space="preserve">
+    <value>label_transparant</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_useNotify.Parent" xml:space="preserve">
+    <value>tabPage_main_settings</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Parent" xml:space="preserve">
+    <value>tabPage_main_home</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -885,34 +582,370 @@
         AAfwAAAP+AAAH/wAAD/+AAB//4AB///wD/8=
 </value>
   </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>480, 360</value>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>DDOA</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>624, 411</value>
   </data>
-  <data name="&gt;&gt;timer_main.Name" xml:space="preserve">
-    <value>timer_main</value>
+  <data name="&gt;&gt;checkBox_settings_disableClose.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_keepDisplay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;timer_main.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;notifyIcon_main.Name" xml:space="preserve">
-    <value>notifyIcon_main</value>
+  <data name="&gt;&gt;btn_home_main.Parent" xml:space="preserve">
+    <value>splitContainer_Tab0_Main.Panel1</value>
+  </data>
+  <data name="tabPage_main_home.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 26</value>
+  </data>
+  <data name="radioBtn_home_ctrlInput.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel2.Parent" xml:space="preserve">
+    <value>splitContainer_Tab0_Main</value>
+  </data>
+  <data name="checkBox_settings_showCV.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;listBox_home.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="checkBox_settings_keepDisplay.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_preventFromSleeping.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 17</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_disableClose.Name" xml:space="preserve">
+    <value>checkBox_settings_disableClose</value>
+  </data>
+  <data name="&gt;&gt;radioBtn_home_gameNew.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;trackBar_transparant.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;trackBar_transparant.Name" xml:space="preserve">
+    <value>trackBar_transparant</value>
   </data>
   <data name="&gt;&gt;notifyIcon_main.Type" xml:space="preserve">
     <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ctxtMenu_notifyR_exit.Name" xml:space="preserve">
-    <value>ctxtMenu_notifyR_exit</value>
+  <data name="label_transparant.Location" type="System.Drawing.Point, System.Drawing">
+    <value>229, 328</value>
   </data>
-  <data name="&gt;&gt;ctxtMenu_notifyR_exit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;tabControl_main.Name" xml:space="preserve">
+    <value>tabControl_main</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FormMain</value>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.Name" xml:space="preserve">
+    <value>splitContainer_Tab0_Main.Panel1</value>
+  </data>
+  <data name="trackBar_transparant.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;radioBtn_home_gameNew.Parent" xml:space="preserve">
+    <value>gpBox_home_gameSet</value>
+  </data>
+  <data name="checkBox_settings_hideToIcon.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radioBtn_home_gameLast.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 21</value>
+  </data>
+  <data name="tabPage_main_settings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>616, 381</value>
+  </data>
+  <data name="tabPage_main_settings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 26</value>
+  </data>
+  <data name="radioBtn_home_gameNew.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 49</value>
+  </data>
+  <data name="&gt;&gt;radioBtn_home_gameLast.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="listBox_home.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="listBox_home.ItemHeight" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="radioBtn_home_ctrlMsg.Text" xml:space="preserve">
+    <value>radioBtn_home_ctrlMsg</value>
+  </data>
+  <data name="gpBox_home_ctrlSet.Text" xml:space="preserve">
+    <value>gpBox_home_ctrlSet</value>
+  </data>
+  <data name="ctxtMenu_notifyR.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 26</value>
+  </data>
+  <data name="&gt;&gt;btn_home_main.Name" xml:space="preserve">
+    <value>btn_home_main</value>
+  </data>
+  <data name="checkBox_settings_disableClose.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_useNotify.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_disableClose.Parent" xml:space="preserve">
+    <value>tabPage_main_settings</value>
+  </data>
+  <data name="splitContainer_Tab0_Main.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;radioBtn_home_gameNew.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;trackBar_transparant.Parent" xml:space="preserve">
+    <value>tabPage_main_settings</value>
+  </data>
+  <data name="&gt;&gt;radioBtn_home_ctrlMsg.Name" xml:space="preserve">
+    <value>radioBtn_home_ctrlMsg</value>
+  </data>
+  <data name="radioBtn_home_ctrlMsg.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label_transparant.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btn_home_main.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="&gt;&gt;ctxtMenu_notifyR.Name" xml:space="preserve">
+    <value>ctxtMenu_notifyR</value>
+  </data>
+  <data name="tabControl_main.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="checkBox_settings_useNotify.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="trackBar_transparant.Size" type="System.Drawing.Size, System.Drawing">
+    <value>265, 45</value>
+  </data>
+  <data name="&gt;&gt;label_transparant.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="radioBtn_home_ctrlInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 21</value>
+  </data>
+  <data name="&gt;&gt;tabControl_main.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="checkBox_settings_hideToIcon.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 33</value>
+  </data>
+  <data name="splitContainer_Tab0_Main.SplitterDistance" type="System.Int32, mscorlib">
+    <value>218</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radioBtn_home_ctrlInput.Name" xml:space="preserve">
+    <value>radioBtn_home_ctrlInput</value>
+  </data>
+  <data name="checkBox_settings_preventFromSleeping.Size" type="System.Drawing.Size, System.Drawing">
+    <value>261, 21</value>
+  </data>
+  <data name="&gt;&gt;btn_home_main.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="checkBox_settings_disableClose.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;label_transparant.Parent" xml:space="preserve">
+    <value>tabPage_main_settings</value>
+  </data>
+  <data name="&gt;&gt;gpBox_home_ctrlSet.Name" xml:space="preserve">
+    <value>gpBox_home_ctrlSet</value>
+  </data>
+  <data name="radioBtn_home_gameNew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 21</value>
+  </data>
+  <data name="radioBtn_home_ctrlInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 49</value>
+  </data>
+  <data name="gpBox_home_gameSet.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="radioBtn_home_gameLast.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 22</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Name" xml:space="preserve">
+    <value>splitContainer_Tab0_Main</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>480, 360</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_disableClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_hideToIcon.Name" xml:space="preserve">
+    <value>checkBox_settings_hideToIcon</value>
+  </data>
+  <data name="&gt;&gt;notifyIcon_main.Name" xml:space="preserve">
+    <value>notifyIcon_main</value>
+  </data>
+  <data name="&gt;&gt;radioBtn_home_ctrlInput.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="checkBox_settings_disableClose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 114</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_keepDisplay.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;tabControl_main.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="gpBox_home_gameSet.Text" xml:space="preserve">
+    <value>gpBox_home_gameSet</value>
+  </data>
+  <data name="tabPage_main_settings.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="btn_home_main.Text" xml:space="preserve">
+    <value>btn_home_main</value>
+  </data>
+  <data name="label_transparant.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="splitContainer_Tab0_Main.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="&gt;&gt;tabPage_main_home.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_useNotify.ZOrder" xml:space="preserve">
+    <value>5</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="checkBox_settings_keepDisplay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 21</value>
+  </data>
+  <data name="ctxtMenu_notifyR_exit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>199, 22</value>
+  </data>
+  <data name="&gt;&gt;radioBtn_home_ctrlInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gpBox_home_ctrlSet.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage_main_settings.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;timer_main.Name" xml:space="preserve">
+    <value>timer_main</value>
+  </data>
+  <data name="notifyIcon_main.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;radioBtn_home_gameNew.Name" xml:space="preserve">
+    <value>radioBtn_home_gameNew</value>
+  </data>
+  <data name="btn_home_main.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 312</value>
+  </data>
+  <data name="tabControl_main.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="notifyIcon_main.Text" xml:space="preserve">
+    <value>notifyIcon_main</value>
+  </data>
+  <data name="checkBox_settings_useNotify.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_showCV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label_transparant.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 17</value>
+  </data>
+  <data name="&gt;&gt;splitContainer_Tab0_Main.Panel1.Parent" xml:space="preserve">
+    <value>splitContainer_Tab0_Main</value>
+  </data>
+  <data name="checkBox_settings_preventFromSleeping.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;ctxtMenu_notifyR_exit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpBox_home_ctrlSet.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 109</value>
+  </data>
+  <data name="btn_home_main.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+    <value>zh-CN</value>
+  </metadata>
+  <metadata name="tabPage_main_settings.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="listBox_home.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ctxtMenu_notifyR.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>266, 17</value>
+  </metadata>
+  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="gpBox_home_gameSet.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="trackBar_transparant.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="btn_home_main.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="notifyIcon_main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>126, 17</value>
+  </metadata>
+  <metadata name="radioBtn_home_ctrlInput.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="radioBtn_home_ctrlMsg.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="gpBox_home_ctrlSet.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="splitContainer_Tab0_Main.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="timer_main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="radioBtn_home_gameLast.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="tabPage_main_home.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="radioBtn_home_gameNew.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

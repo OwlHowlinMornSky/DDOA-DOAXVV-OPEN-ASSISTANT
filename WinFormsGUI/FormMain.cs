@@ -64,6 +64,8 @@ namespace WinFormsGUI {
 
 			checkBox_settings_disableClose.Checked = Settings.Main.Default.DisableClose;
 
+			trackBar_transparant.Value = Settings.Main.Default.Transparant;
+
 		}
 
 		private void FormMain_Deactivate(object sender, EventArgs e) {
@@ -315,5 +317,9 @@ namespace WinFormsGUI {
 
 		#endregion
 
+		private void trackBar_transparant_ValueChanged(object sender, EventArgs e) {
+			Opacity = 1.0 - trackBar_transparant.Value / 100.0;
+			Settings.Main.Default.Transparant = trackBar_transparant.Value;
+		}
 	}
 }
