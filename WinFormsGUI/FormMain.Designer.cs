@@ -37,6 +37,12 @@
 			tabControl_main = new TabControl();
 			tabPage_main_home = new TabPage();
 			tabPage_main_settings = new TabPage();
+			label_transp_value = new Label();
+			label_transparant = new Label();
+			checkBox_settings_disableClose = new CheckBox();
+			trackBar_transparant = new TrackBar();
+			checkBox_settings_keepDisplay = new CheckBox();
+			checkBox_settings_preventFromSleeping = new CheckBox();
 			checkBox_settings_useNotify = new CheckBox();
 			checkBox_settings_hideToIcon = new CheckBox();
 			checkBox_settings_showCV = new CheckBox();
@@ -53,6 +59,7 @@
 			tabControl_main.SuspendLayout();
 			tabPage_main_home.SuspendLayout();
 			tabPage_main_settings.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)trackBar_transparant).BeginInit();
 			ctxtMenu_notifyR.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -153,12 +160,59 @@
 			// 
 			// tabPage_main_settings
 			// 
+			tabPage_main_settings.Controls.Add(label_transp_value);
+			tabPage_main_settings.Controls.Add(label_transparant);
+			tabPage_main_settings.Controls.Add(checkBox_settings_disableClose);
+			tabPage_main_settings.Controls.Add(trackBar_transparant);
+			tabPage_main_settings.Controls.Add(checkBox_settings_keepDisplay);
+			tabPage_main_settings.Controls.Add(checkBox_settings_preventFromSleeping);
 			tabPage_main_settings.Controls.Add(checkBox_settings_useNotify);
 			tabPage_main_settings.Controls.Add(checkBox_settings_hideToIcon);
 			tabPage_main_settings.Controls.Add(checkBox_settings_showCV);
 			resources.ApplyResources(tabPage_main_settings, "tabPage_main_settings");
 			tabPage_main_settings.Name = "tabPage_main_settings";
 			tabPage_main_settings.UseVisualStyleBackColor = true;
+			// 
+			// label_transp_value
+			// 
+			resources.ApplyResources(label_transp_value, "label_transp_value");
+			label_transp_value.Name = "label_transp_value";
+			label_transp_value.SizeChanged += label_transp_value_SizeChanged;
+			// 
+			// label_transparant
+			// 
+			resources.ApplyResources(label_transparant, "label_transparant");
+			label_transparant.Name = "label_transparant";
+			// 
+			// checkBox_settings_disableClose
+			// 
+			resources.ApplyResources(checkBox_settings_disableClose, "checkBox_settings_disableClose");
+			checkBox_settings_disableClose.Name = "checkBox_settings_disableClose";
+			checkBox_settings_disableClose.UseVisualStyleBackColor = true;
+			checkBox_settings_disableClose.CheckedChanged += checkBox_settings_disableClose_CheckedChanged;
+			// 
+			// trackBar_transparant
+			// 
+			resources.ApplyResources(trackBar_transparant, "trackBar_transparant");
+			trackBar_transparant.LargeChange = 10;
+			trackBar_transparant.Maximum = 90;
+			trackBar_transparant.Name = "trackBar_transparant";
+			trackBar_transparant.TickFrequency = 10;
+			trackBar_transparant.ValueChanged += trackBar_transparant_ValueChanged;
+			// 
+			// checkBox_settings_keepDisplay
+			// 
+			resources.ApplyResources(checkBox_settings_keepDisplay, "checkBox_settings_keepDisplay");
+			checkBox_settings_keepDisplay.Name = "checkBox_settings_keepDisplay";
+			checkBox_settings_keepDisplay.UseVisualStyleBackColor = true;
+			checkBox_settings_keepDisplay.CheckedChanged += checkBox_settings_keepDisplay_CheckedChanged;
+			// 
+			// checkBox_settings_preventFromSleeping
+			// 
+			resources.ApplyResources(checkBox_settings_preventFromSleeping, "checkBox_settings_preventFromSleeping");
+			checkBox_settings_preventFromSleeping.Name = "checkBox_settings_preventFromSleeping";
+			checkBox_settings_preventFromSleeping.UseVisualStyleBackColor = true;
+			checkBox_settings_preventFromSleeping.CheckedChanged += checkBox_settings_preventFromSleeping_CheckedChanged;
 			// 
 			// checkBox_settings_useNotify
 			// 
@@ -227,6 +281,7 @@
 			tabPage_main_home.ResumeLayout(false);
 			tabPage_main_settings.ResumeLayout(false);
 			tabPage_main_settings.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)trackBar_transparant).EndInit();
 			ctxtMenu_notifyR.ResumeLayout(false);
 			ResumeLayout(false);
 		}
@@ -252,5 +307,11 @@
 		private CheckBox checkBox_settings_hideToIcon;
 		private CheckBox checkBox_settings_useNotify;
 		private ToolStripMenuItem ctxtMenu_notifyR_exit;
+		private CheckBox checkBox_settings_keepDisplay;
+		private CheckBox checkBox_settings_preventFromSleeping;
+		private TrackBar trackBar_transparant;
+		private CheckBox checkBox_settings_disableClose;
+		private Label label_transparant;
+		private Label label_transp_value;
 	}
 }

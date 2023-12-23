@@ -1,4 +1,24 @@
-﻿#include "Helper.h"
+﻿/*
+*    DDOA-DOAXVV-OPEN-ASSISTANT
+*
+*     Copyright 2023-2024  Tyler Parret True
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* @Authors
+*    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
+*/
+#include "Helper.h"
 
 #include <iostream>
 #include <thread>
@@ -21,7 +41,10 @@ Helper::Helper() :
 	r_capture(nullptr), // 初始无索引
 
 	task_ChaGame_ForNew(false), // 默认上一次比赛
-	task_Mouse_ForMouse(false) // 默认发窗口消息
+	task_Mouse_ForMouse(false), // 默认发窗口消息
+
+	task_PreventFromSleep(true), // 默认阻止睡眠
+	task_KeepDisplay(false) // 默认不保持显示
 
 {
 	if (!wgc::ICapture::setup(true)) {
@@ -53,12 +76,32 @@ Helper::Helper() :
 
 Helper::~Helper() {}
 
-void Helper::regForNew(bool forNew) {
+long Helper::regForNew(bool forNew) {
+	if (m_running)
+		return 1l;
 	task_ChaGame_ForNew = forNew;
+	return 0l;
 }
 
-void Helper::regForMouse(bool forMouse) {
+long Helper::regForMouse(bool forMouse) {
+	if (m_running)
+		return 1l;
 	task_Mouse_ForMouse = forMouse;
+	return 0l;
+}
+
+long Helper::regPrevent(bool prevent) {
+	if (m_running)
+		return 1l;
+	task_PreventFromSleep = prevent;
+	return 0l;
+}
+
+long Helper::regPreventKeepDisplay(bool keep) {
+	if (m_running)
+		return 1l;
+	task_KeepDisplay = keep;
+	return 0l;
 }
 
 bool Helper::start() {
@@ -105,8 +148,13 @@ void Helper::mainwork() {
 	m_running = true; // 设置标记（return前要清除）
 	msgPush(HelperReturnMessage::BtnToStop); // 让主按钮变为stop
 
-	// 防止关闭屏幕和睡眠
-	SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);
+	// 按设置防止关闭屏幕和睡眠
+	if (task_PreventFromSleep) {
+		SetThreadExecutionState(
+			ES_CONTINUOUS | ES_SYSTEM_REQUIRED |
+			(task_KeepDisplay ? ES_DISPLAY_REQUIRED : 0)
+		);
+	}
 
 	try {
 		m_doaxvv = FindWindowW(g_findCls, g_findWnd); // 查找doaxvv窗口

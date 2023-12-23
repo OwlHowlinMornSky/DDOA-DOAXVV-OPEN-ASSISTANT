@@ -1,12 +1,33 @@
-﻿using Wrapper;
+﻿/*
+*    DDOA-DOAXVV-OPEN-ASSISTANT
+* 
+*     Copyright 2023-2024  Tyler Parret True
+* 
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+* 
+*        http://www.apache.org/licenses/LICENSE-2.0
+* 
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+* 
+* @Authors
+*    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
+*/
+using Wrapper;
 
 namespace WinFormsGUI {
 	public partial class FormMain : Form {
 
 		#region ==========Members==========
 
-		private HelperWrapper m_helper = new();
+		private readonly HelperWrapper m_helper = new();
 		private bool m_btnMainIsStart = true;
+		private Size m_label_transp_value_size = new();
 
 		#endregion
 
@@ -40,7 +61,6 @@ namespace WinFormsGUI {
 			notifyIcon_main.Text = Text;
 			btn_home_main.Text = Strings.Main.Main_Btn_Start;
 
-
 #if DEBUG
 			Settings.Main.Default.ShowCV = true;
 #endif
@@ -51,6 +71,22 @@ namespace WinFormsGUI {
 			checkBox_settings_showCV.Checked = Settings.Main.Default.ShowCV;
 			checkBox_settings_hideToIcon.Checked = Settings.Main.Default.HideToIcon;
 			checkBox_settings_useNotify.Checked = Settings.Main.Default.UseNotify;
+			if (Settings.Main.Default.PreventSleep) {
+				checkBox_settings_preventFromSleeping.Checked = true;
+				checkBox_settings_keepDisplay.Enabled = true;
+				checkBox_settings_keepDisplay.Checked = Settings.Main.Default.KeepDisplay;
+			}
+			else {
+				checkBox_settings_preventFromSleeping.Checked = false;
+				checkBox_settings_keepDisplay.Enabled = false;
+				checkBox_settings_keepDisplay.Checked = false;
+			}
+
+			checkBox_settings_disableClose.Checked = Settings.Main.Default.DisableClose;
+
+			trackBar_transparant.Value = Settings.Main.Default.Transparant;
+			m_label_transp_value_size = label_transp_value.Size;
+			label_transp_value.Text = trackBar_transparant.Value.ToString() + "%";
 		}
 
 		private void FormMain_Deactivate(object sender, EventArgs e) {
@@ -113,6 +149,7 @@ namespace WinFormsGUI {
 
 		private void checkBox_settings_showCV_CheckedChanged(object sender, EventArgs e) {
 			m_helper.set(HelprSet.ShowCV, checkBox_settings_showCV.Checked ? 1 : 0);
+			Settings.Main.Default.ShowCV = checkBox_settings_showCV.Checked;
 		}
 
 		private void checkBox_settings_hideToIcon_CheckedChanged(object sender, EventArgs e) {
@@ -122,8 +159,49 @@ namespace WinFormsGUI {
 		private void checkBox_settings_useNotify_CheckedChanged(object sender, EventArgs e) {
 			Settings.Main.Default.UseNotify = checkBox_settings_useNotify.Checked;
 		}
+		private void checkBox_settings_preventFromSleeping_CheckedChanged(object sender, EventArgs e) {
+			if (checkBox_settings_preventFromSleeping.Checked) {
+				Settings.Main.Default.PreventSleep = true;
+				checkBox_settings_keepDisplay.Enabled = true;
+				m_helper.set(HelprSet.PreventFromSleep, 1);
+			}
+			else {
+				Settings.Main.Default.PreventSleep = false;
+				checkBox_settings_keepDisplay.Checked = false;
+				checkBox_settings_keepDisplay.Enabled = false;
+				m_helper.set(HelprSet.PreventFromSleep, 0);
+			}
+		}
+
+		private void checkBox_settings_keepDisplay_CheckedChanged(object sender, EventArgs e) {
+			m_helper.set(
+				HelprSet.KeepDisplay,
+				checkBox_settings_keepDisplay.Checked ? 1 : 0
+			);
+			Settings.Main.Default.KeepDisplay = checkBox_settings_keepDisplay.Checked;
+		}
+
+		private void checkBox_settings_disableClose_CheckedChanged(object sender, EventArgs e) {
+			SystemThings.SetCloseEnabled(Handle, !checkBox_settings_disableClose.Checked);
+			Settings.Main.Default.DisableClose = checkBox_settings_disableClose.Checked;
+		}
+
+		private void trackBar_transparant_ValueChanged(object sender, EventArgs e) {
+			Opacity = 1.0 - trackBar_transparant.Value / 100.0;
+			Settings.Main.Default.Transparant = trackBar_transparant.Value;
+			label_transp_value.Text = trackBar_transparant.Value.ToString() + "%";
+		}
+		private void label_transp_value_SizeChanged(object sender, EventArgs e) {
+			var newSize = label_transp_value.Size;
+			var loc = label_transp_value.Location;
+			loc.X += m_label_transp_value_size.Width - newSize.Width;
+			label_transp_value.Location = loc;
+			m_label_transp_value_size = newSize;
+		}
 
 		#endregion
+
+		#region -----------Others----------
 
 		private void notifyIcon_main_MouseClick(object sender, MouseEventArgs e) {
 			switch (e.Button) {
@@ -272,6 +350,8 @@ namespace WinFormsGUI {
 				}
 			return;
 		}
+
+		#endregion
 
 		#endregion
 

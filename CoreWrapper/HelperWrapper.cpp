@@ -1,58 +1,80 @@
-﻿#include "HelperWrapper.h"
+﻿/*
+*    DDOA-DOAXVV-OPEN-ASSISTANT
+*
+*     Copyright 2023-2024  Tyler Parret True
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* @Authors
+*    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
+*/
+#include "HelperWrapper.h"
 
 namespace Wrapper {
 
 HelperWrapper::HelperWrapper() {
-	m_helper = ohms::IHelper::instance();
-	if (!m_helper) {
+	r_helper = ohms::IHelper::instance();
+	if (!r_helper) {
 		throw gcnew System::NotImplementedException();
 	}
 }
 
 HelperWrapper::~HelperWrapper() {
 	ohms::IHelper::drop();
-	m_helper = nullptr;
+	r_helper = nullptr;
 }
 
-void HelperWrapper::set(HelprSet type, System::Int32 val) {
+System::Int32 HelperWrapper::set(HelprSet type, System::Int32 val) {
 	switch (type) {
 	case HelprSet::Cha_New:
-		m_helper->regForNew(val);
-		break;
+		return r_helper->regForNew(val);
 	case HelprSet::Ctrl_MouseInput:
-		m_helper->regForMouse(val);
-		break;
+		return r_helper->regForMouse(val);
 	case HelprSet::ShowCV:
-		m_helper->regShowCV(val);
-		break;
+		return r_helper->regShowCV(val);
+	case HelprSet::PreventFromSleep:
+		return r_helper->regPrevent(val);
+	case HelprSet::KeepDisplay:
+		return r_helper->regPreventKeepDisplay(val);
 	}
+	return 1l;
 }
 
-bool HelperWrapper::start() {
-	return m_helper->start();
+System::Boolean HelperWrapper::start() {
+	return r_helper->start();
 }
 
-void HelperWrapper::askForStop() {
-	m_helper->askForStop();
+System::Void HelperWrapper::askForStop() {
+	r_helper->askForStop();
 }
 
-bool HelperWrapper::isRunning() {
-	return m_helper->isRunning();
+System::Boolean HelperWrapper::isRunning() {
+	return r_helper->isRunning();
 }
 
 ReturnMessage HelperWrapper::msgPop() {
-	System::UInt32 res = m_helper->msgPop();
+	System::UInt32 res = r_helper->msgPop();
 	return ReturnMessage(res);
 }
 
 System::UInt32 HelperWrapper::codePop() {
-	System::UInt32 res = m_helper->msgPop();
+	System::UInt32 res = r_helper->msgPop();
 	return res;
 }
 
-void HelperWrapper::drop() {
+System::Void HelperWrapper::drop() {
 	ohms::IHelper::drop();
-	m_helper = nullptr;
+	r_helper = nullptr;
 }
 
 }

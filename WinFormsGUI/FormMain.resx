@@ -448,6 +448,180 @@
   <metadata name="tabPage_main_settings.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <metadata name="label_transp_value.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="label_transp_value.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="label_transp_value.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label_transp_value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>224, 345</value>
+  </data>
+  <data name="label_transp_value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 17</value>
+  </data>
+  <data name="label_transp_value.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="label_transp_value.Text" xml:space="preserve">
+    <value>label_transp_value</value>
+  </data>
+  <data name="&gt;&gt;label_transp_value.Name" xml:space="preserve">
+    <value>label_transp_value</value>
+  </data>
+  <data name="&gt;&gt;label_transp_value.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label_transp_value.Parent" xml:space="preserve">
+    <value>tabPage_main_settings</value>
+  </data>
+  <data name="&gt;&gt;label_transp_value.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label_transparant.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="label_transparant.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label_transparant.Location" type="System.Drawing.Point, System.Drawing">
+    <value>229, 328</value>
+  </data>
+  <data name="label_transparant.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 17</value>
+  </data>
+  <data name="label_transparant.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="label_transparant.Text" xml:space="preserve">
+    <value>label_transparant</value>
+  </data>
+  <data name="&gt;&gt;label_transparant.Name" xml:space="preserve">
+    <value>label_transparant</value>
+  </data>
+  <data name="&gt;&gt;label_transparant.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label_transparant.Parent" xml:space="preserve">
+    <value>tabPage_main_settings</value>
+  </data>
+  <data name="&gt;&gt;label_transparant.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="checkBox_settings_disableClose.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBox_settings_disableClose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 114</value>
+  </data>
+  <data name="checkBox_settings_disableClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 21</value>
+  </data>
+  <data name="checkBox_settings_disableClose.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="checkBox_settings_disableClose.Text" xml:space="preserve">
+    <value>checkBox_settings_disableClose</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_disableClose.Name" xml:space="preserve">
+    <value>checkBox_settings_disableClose</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_disableClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_disableClose.Parent" xml:space="preserve">
+    <value>tabPage_main_settings</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_disableClose.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <metadata name="trackBar_transparant.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="trackBar_transparant.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="trackBar_transparant.Location" type="System.Drawing.Point, System.Drawing">
+    <value>343, 328</value>
+  </data>
+  <data name="trackBar_transparant.Size" type="System.Drawing.Size, System.Drawing">
+    <value>265, 45</value>
+  </data>
+  <data name="trackBar_transparant.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;trackBar_transparant.Name" xml:space="preserve">
+    <value>trackBar_transparant</value>
+  </data>
+  <data name="&gt;&gt;trackBar_transparant.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;trackBar_transparant.Parent" xml:space="preserve">
+    <value>tabPage_main_settings</value>
+  </data>
+  <data name="&gt;&gt;trackBar_transparant.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="checkBox_settings_keepDisplay.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBox_settings_keepDisplay.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="checkBox_settings_keepDisplay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>275, 87</value>
+  </data>
+  <data name="checkBox_settings_keepDisplay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 21</value>
+  </data>
+  <data name="checkBox_settings_keepDisplay.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="checkBox_settings_keepDisplay.Text" xml:space="preserve">
+    <value>checkBox_settings_keepDisplay</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_keepDisplay.Name" xml:space="preserve">
+    <value>checkBox_settings_keepDisplay</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_keepDisplay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_keepDisplay.Parent" xml:space="preserve">
+    <value>tabPage_main_settings</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_keepDisplay.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="checkBox_settings_preventFromSleeping.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBox_settings_preventFromSleeping.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 87</value>
+  </data>
+  <data name="checkBox_settings_preventFromSleeping.Size" type="System.Drawing.Size, System.Drawing">
+    <value>261, 21</value>
+  </data>
+  <data name="checkBox_settings_preventFromSleeping.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="checkBox_settings_preventFromSleeping.Text" xml:space="preserve">
+    <value>checkBox_settings_preventFromSleeping</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_preventFromSleeping.Name" xml:space="preserve">
+    <value>checkBox_settings_preventFromSleeping</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_preventFromSleeping.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_preventFromSleeping.Parent" xml:space="preserve">
+    <value>tabPage_main_settings</value>
+  </data>
+  <data name="&gt;&gt;checkBox_settings_preventFromSleeping.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
   <data name="checkBox_settings_useNotify.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -473,7 +647,7 @@
     <value>tabPage_main_settings</value>
   </data>
   <data name="&gt;&gt;checkBox_settings_useNotify.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>6</value>
   </data>
   <data name="checkBox_settings_hideToIcon.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -500,7 +674,7 @@
     <value>tabPage_main_settings</value>
   </data>
   <data name="&gt;&gt;checkBox_settings_hideToIcon.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>7</value>
   </data>
   <data name="checkBox_settings_showCV.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -527,7 +701,7 @@
     <value>tabPage_main_settings</value>
   </data>
   <data name="&gt;&gt;checkBox_settings_showCV.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>8</value>
   </data>
   <data name="tabPage_main_settings.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 26</value>
@@ -596,7 +770,7 @@
     <value>ctxtMenu_notifyR_exit</value>
   </data>
   <data name="ctxtMenu_notifyR.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 48</value>
+    <value>200, 26</value>
   </data>
   <data name="&gt;&gt;ctxtMenu_notifyR.Name" xml:space="preserve">
     <value>ctxtMenu_notifyR</value>
@@ -687,6 +861,9 @@
     <value>True</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
