@@ -25,8 +25,9 @@ namespace WinFormsGUI {
 
 		#region ==========Members==========
 
-		private HelperWrapper m_helper = new();
+		private readonly HelperWrapper m_helper = new();
 		private bool m_btnMainIsStart = true;
+		private Size m_label_transp_value_size = new();
 
 		#endregion
 
@@ -84,7 +85,8 @@ namespace WinFormsGUI {
 			checkBox_settings_disableClose.Checked = Settings.Main.Default.DisableClose;
 
 			trackBar_transparant.Value = Settings.Main.Default.Transparant;
-
+			m_label_transp_value_size = label_transp_value.Size;
+			label_transp_value.Text = trackBar_transparant.Value.ToString() + "%";
 		}
 
 		private void FormMain_Deactivate(object sender, EventArgs e) {
@@ -184,7 +186,22 @@ namespace WinFormsGUI {
 			Settings.Main.Default.DisableClose = checkBox_settings_disableClose.Checked;
 		}
 
+		private void trackBar_transparant_ValueChanged(object sender, EventArgs e) {
+			Opacity = 1.0 - trackBar_transparant.Value / 100.0;
+			Settings.Main.Default.Transparant = trackBar_transparant.Value;
+			label_transp_value.Text = trackBar_transparant.Value.ToString() + "%";
+		}
+		private void label_transp_value_SizeChanged(object sender, EventArgs e) {
+			var newSize = label_transp_value.Size;
+			var loc = label_transp_value.Location;
+			loc.X += m_label_transp_value_size.Width - newSize.Width;
+			label_transp_value.Location = loc;
+			m_label_transp_value_size = newSize;
+		}
+
 		#endregion
+
+		#region -----------Others----------
 
 		private void notifyIcon_main_MouseClick(object sender, MouseEventArgs e) {
 			switch (e.Button) {
@@ -336,9 +353,7 @@ namespace WinFormsGUI {
 
 		#endregion
 
-		private void trackBar_transparant_ValueChanged(object sender, EventArgs e) {
-			Opacity = 1.0 - trackBar_transparant.Value / 100.0;
-			Settings.Main.Default.Transparant = trackBar_transparant.Value;
-		}
+		#endregion
+
 	}
 }

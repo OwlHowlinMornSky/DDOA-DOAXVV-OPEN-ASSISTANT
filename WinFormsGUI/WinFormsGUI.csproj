@@ -13,8 +13,8 @@
     <PackageProjectUrl>https://github.com/OwlHowlinMornSky/DDOA-DOAXVV-OPEN-ASSISTANT</PackageProjectUrl>
     <Product>$(SolutionName)-$(AssemblyName)</Product>
     <Copyright>Copyright © 2023-2024 Tyler Parret True (OHMS) </Copyright>
-    <AssemblyVersion>2.1.2</AssemblyVersion>
-    <FileVersion>2.1.2</FileVersion>
+    <AssemblyVersion>2.2.0</AssemblyVersion>
+    <FileVersion>2.2.0</FileVersion>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <Description>DDOA</Description>
     <AssemblyName>$(SolutionName)</AssemblyName>
@@ -22,7 +22,7 @@
     <StartupObject>WinFormsGUI.Program</StartupObject>
     <Company>OHMS</Company>
     <Title>$(AssemblyName)</Title>
-    <Version>2.1.2</Version>
+    <Version>2.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
