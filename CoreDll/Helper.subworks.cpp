@@ -57,9 +57,9 @@ begin_point:
 			while (!m_askedForStop) {
 				// 点击挑战，直到进入加载画面。
 				pt = { rect.x + 50, rect.y + 20 };
-				if (step_keepClickingUntil(pt, mat_Loading, rect_Loading, seconds(1.0f), seconds(0.3f), 20.0f))
+				if (step_keepClickingUntil(pt, mat_Loading, rect_Loading, seconds(1.5f), seconds(0.3f), 20.0f))
 					break;
-				if (step_waitFor(mat_LowFP, rect_LowFP, rect, seconds(1.0f)))
+				if (step_waitFor(mat_LowFP, rect_LowFP, rect, seconds(0.2f)))
 					step_subtaskError(HelperReturnMessage::Log_Task_Challenge_LowFP);
 				if (++tc > 10)
 					step_subtaskError(HelperReturnMessage::Log_Task_Challenge_NoStart);

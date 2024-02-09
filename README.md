@@ -3,8 +3,6 @@ DDOA means DDOA DOAXVV OPEN ASSISTANT
 
 Old name: DOAXVV-helper
 
-（作者已退坑游戏，故存档）
-
 ## Features
 
 * Infinite play challenge
