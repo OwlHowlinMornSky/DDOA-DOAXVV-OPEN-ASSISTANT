@@ -224,35 +224,36 @@ namespace WinFormsGUI {
 			ReturnMessage m;
 			while ((m = m_helper.GetMessage()) != ReturnMessage.None)
 				switch (m) {
-				case ReturnMessage.Cmd_Stopped:
+				case ReturnMessage.CMD_Stopped:
 					Log(Strings.Main.Main_Log_WorkStopped);
 					gpBox_home_gameSet.Enabled = true;
 					gpBox_home_ctrlSet.Enabled = true;
 					timer_main.Enabled = false;
 					break;
-				case ReturnMessage.Cmd_BtnToStop:
+				case ReturnMessage.CMD_BtnToStop:
 					btn_home_main.Text = Strings.Main.Main_Btn_Stop;
 					btn_home_main.Enabled = true;
 					m_btnMainIsStart = false;
 					break;
-				case ReturnMessage.Cmd_BtnToStart:
+				case ReturnMessage.CMD_BtnToStart:
 					btn_home_main.Text = Strings.Main.Main_Btn_Start;
 					btn_home_main.Enabled = true;
 					m_btnMainIsStart = true;
 					break;
-				case ReturnMessage.Log_ErrorIsRunning:
+
+				case ReturnMessage.LOG_StartError_Running:
 					Log(Strings.Main.Main_Log_WorkAlreadyRunning);
 					break;
-				case ReturnMessage.Log_Stopping:
+				case ReturnMessage.LOG_Stopping:
 					Log(Strings.Main.Main_Log_WorkStopping);
 					break;
-				case ReturnMessage.Log_ErrorNotFindWnd:
+				case ReturnMessage.LOG_WorkError_NoWnd:
 					Log(Strings.Main.Main_Log_CanNotFindWnd);
 					break;
-				case ReturnMessage.Log_ErrorCannotCapture:
+				case ReturnMessage.LOG_WorkError_FailedCapture:
 					Log(Strings.Main.Main_Log_CanNotCapture);
 					break;
-				case ReturnMessage.Log_ErrorInWork:
+				case ReturnMessage.LOG_WorkError_Exception:
 					Log();
 					Log(Strings.Main.Main_Log_ExceptionInWork);
 					if (Settings.Main.Default.UseNotify)
@@ -263,33 +264,47 @@ namespace WinFormsGUI {
 							ToolTipIcon.Error
 						);
 					break;
-				case ReturnMessage.Log_ErrorInTask:
+
+				case ReturnMessage.LOG_TaskStop:
+					Log(Strings.Main.Log_Task_Stop);
+					break;
+				case ReturnMessage.LOG_TaskError_Exception:
+					Log(Strings.Main.Log_Task_Exception);
+					if (Settings.Main.Default.UseNotify)
+						notifyIcon_main.ShowBalloonTip(
+							Settings.Main.Default.NotifyTime,
+							Strings.Main.Main_Log_WorkError,
+							Strings.Main.Log_Task_Exception,
+							ToolTipIcon.Error
+						);
+					break;
+				case ReturnMessage.LOG_TaskError:
 					Log();
 					m = m_helper.GetMessage();
 					string text = "null";
 					switch (m) {
-					case ReturnMessage.Str_Task_Challenge_NoNew:
+					case ReturnMessage.STR_Task_Challenge_NoNew:
 						text = Strings.Main.Log_Task_Challenge_NoNew;
 						break;
-					case ReturnMessage.Str_Task_Challenge_NoLast:
+					case ReturnMessage.STR_Task_Challenge_NoLast:
 						text = Strings.Main.Log_Task_Challenge_NoLast;
 						break;
-					case ReturnMessage.Str_Task_Challenge_NoEnter:
+					case ReturnMessage.STR_Task_Challenge_NoEnter:
 						text = Strings.Main.Log_Task_Challenge_NoEnter;
 						break;
-					case ReturnMessage.Str_Task_Challenge_LowFP:
+					case ReturnMessage.STR_Task_Challenge_LowFP:
 						text = Strings.Main.Log_Task_Challenge_LowFP;
 						break;
-					case ReturnMessage.Str_Task_Challenge_NoStart:
+					case ReturnMessage.STR_Task_Challenge_NoStart:
 						text = Strings.Main.Log_Task_Challenge_NoStart;
 						break;
-					case ReturnMessage.Str_Task_Challenge_TimeOut:
+					case ReturnMessage.STR_Task_Challenge_TimeOut:
 						text = Strings.Main.Log_Task_Challenge_TimeOut;
 						break;
-					case ReturnMessage.Str_Task_Challenge_NoEnd:
+					case ReturnMessage.STR_Task_Challenge_NoEnd:
 						text = Strings.Main.Log_Task_Challenge_NoEnd;
 						break;
-					case ReturnMessage.Str_Task_Challenge_NoOver:
+					case ReturnMessage.STR_Task_Challenge_NoOver:
 						text = Strings.Main.Log_Task_Challenge_NoOver;
 						break;
 					}
@@ -303,50 +318,37 @@ namespace WinFormsGUI {
 						);
 					break;
 
-				case ReturnMessage.Log_Challenge_Start:
+				case ReturnMessage.LOG_Challenge_Start:
 					Log(Strings.Main.Main_Log_Challenge_Start);
 					break;
-				case ReturnMessage.Log_Challenge_BeginNum: // 挑战赛开始（下跟次数！）
+				case ReturnMessage.LOG_Challenge_BeginNum: // 挑战赛开始（下跟次数！）
 					Log(string.Format(Strings.Main.Main_Log_Challenge_BeginNum, m_helper.GetCode()));
 					break;
-				case ReturnMessage.Log_Challenge_EnterLast:
+				case ReturnMessage.LOG_Challenge_EnterLast:
 					Log(Strings.Main.Main_Log_Challenge_EnterLast);
 					break;
-				case ReturnMessage.Log_Challenge_EnterNew:
+				case ReturnMessage.LOG_Challenge_EnterNew:
 					Log(Strings.Main.Main_Log_Challenge_EnterNew);
 					break;
-				case ReturnMessage.Log_Challenge_Play:
+				case ReturnMessage.LOG_Challenge_Play:
 					Log(Strings.Main.Main_Log_Challenge_Play);
 					break;
-				case ReturnMessage.Log_Challenge_WaitForEnd:
+				case ReturnMessage.LOG_Challenge_WaitForEnd:
 					Log(Strings.Main.Main_Log_Challenge_WaitForEnd);
 					break;
-				case ReturnMessage.Log_Challenge_End:
+				case ReturnMessage.LOG_Challenge_End:
 					Log(Strings.Main.Main_Log_Challenge_End);
 					break;
-				case ReturnMessage.Log_Challenge_Quiting:
+				case ReturnMessage.LOG_Challenge_Quiting:
 					Log(Strings.Main.Main_Log_Challenge_Quiting);
 					break;
-				case ReturnMessage.Log_Challenge_Over:
+				case ReturnMessage.LOG_Challenge_Over:
 					Log(Strings.Main.Log_Challenge_Over);
 					break;
-				case ReturnMessage.Log_Challenge_Exit:
+				case ReturnMessage.LOG_Challenge_Exit:
 					Log(Strings.Main.Log_Challenge_Exit);
 					break;
 
-				case ReturnMessage.Log_Task_Stop:
-					Log(Strings.Main.Log_Task_Stop);
-					break;
-				case ReturnMessage.Log_Task_Exception:
-					Log(Strings.Main.Log_Task_Exception);
-					if (Settings.Main.Default.UseNotify)
-						notifyIcon_main.ShowBalloonTip(
-							Settings.Main.Default.NotifyTime,
-							Strings.Main.Main_Log_WorkError,
-							Strings.Main.Log_Task_Exception,
-							ToolTipIcon.Error
-						);
-					break;
 				}
 			return;
 		}

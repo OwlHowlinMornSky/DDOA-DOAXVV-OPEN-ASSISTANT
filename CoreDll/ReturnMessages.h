@@ -25,25 +25,29 @@
 namespace ohms::HelperReturnMessage {
 
 /**
- * @brief Helper 通知 MainWindow 的消息。
+ * @brief Helper 向 GUI 的回执。
 */
 enum CORE_API HelperReturnMessage : unsigned long {
 	None = 0,   // 空。
 
 
 	_CMD_START = 0x00000000ul,
-	CMD_Stopped,    // 任务已停止，需要进行如停止截图之类的处理。
+	CMD_Stopped,    // 任务已停止。
 	CMD_BtnToStop,  // 按钮切换为 “停止”。
 	CMD_BtnToStart, // 按钮切换为 “开始”。
 
 
 	_LOG_START = 0x000000fful,
-	LOG_ErrorIsRunning,
+	LOG_StartError_Running,
 	LOG_Stopping,
-	LOG_ErrorNotFindWnd,
-	LOG_ErrorCannotCapture,
-	LOG_ErrorInWork,
-	LOG_ErrorInTask, // 下跟参数
+
+	LOG_WorkError_NoWnd,
+	LOG_WorkError_FailedCapture,
+	LOG_WorkError_Exception,
+
+	LOG_TaskStop,
+	LOG_TaskError_Exception,
+	LOG_TaskError, // 下跟参数
 
 	LOG_Challenge_Start,
 	LOG_Challenge_BeginNum, // 挑战赛开始（下跟次数！）
@@ -56,12 +60,9 @@ enum CORE_API HelperReturnMessage : unsigned long {
 	LOG_Challenge_Over,
 	LOG_Challenge_Exit,
 
-	LOG_Task_Stop,
-	LOG_Task_Exception,
-
 
 	_STR_START = 0x0000fffful,
-	// 以下都是 Log_ErrorInTask 指定参数
+	// 以下都是 LOG_TaskError 指定参数
 	STR_Task_Challenge_NoNew,
 	STR_Task_Challenge_NoLast,
 	STR_Task_Challenge_NoEnter,

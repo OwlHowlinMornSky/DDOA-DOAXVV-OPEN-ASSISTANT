@@ -87,15 +87,15 @@ begin_point:
 	}
 	catch (int err) {
 		if (err == 0) { // 返回false表示主动停止
-			PushMsg(HelperReturnMessage::LOG_Task_Stop);
+			PushMsg(HelperReturnMessage::LOG_TaskStop);
 			return false;
 		}
 		else { // 不是0就是真错误
-			PushMsg(HelperReturnMessage::LOG_Task_Exception);
+			PushMsg(HelperReturnMessage::LOG_TaskError_Exception);
 		}
 	}
 	catch (...) {
-		PushMsg(HelperReturnMessage::LOG_Task_Exception);
+		PushMsg(HelperReturnMessage::LOG_TaskError_Exception);
 	}
 	PushMsg(HelperReturnMessage::LOG_Challenge_Exit);
 	return true;

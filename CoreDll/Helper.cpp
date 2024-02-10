@@ -106,7 +106,7 @@ long Helper::regPreventKeepDisplay(bool keep) {
 
 bool Helper::start() {
 	if (m_running) { // 已经有任务运行（或者有bug没清除运行标记）
-		PushMsg(HelperReturnMessage::LOG_ErrorIsRunning);
+		PushMsg(HelperReturnMessage::LOG_StartError_Running);
 		return false;
 	}
 	r_capture = wgc::ICapture::getInstance(); // 获取capture索引
@@ -159,11 +159,11 @@ void Helper::Work() {
 	try {
 		m_doaxvv = FindWindowW(g_findCls, g_findWnd); // 查找doaxvv窗口
 		if (m_doaxvv == NULL) {
-			PushMsg(HelperReturnMessage::LOG_ErrorNotFindWnd);
+			PushMsg(HelperReturnMessage::LOG_WorkError_NoWnd);
 			throw 0;
 		}
 		if (!IsWindow(m_doaxvv) || IsIconic(m_doaxvv) || !r_capture->startCapture(m_doaxvv)) { // 这些是能截图的必要条件
-			PushMsg(HelperReturnMessage::LOG_ErrorCannotCapture);
+			PushMsg(HelperReturnMessage::LOG_WorkError_FailedCapture);
 			throw 0;
 		}
 
@@ -173,11 +173,11 @@ void Helper::Work() {
 	catch (int err) {
 		// catch 到 0 是 主动停止，不是 0 则是错误
 		if (err != 0) {
-			PushMsg(HelperReturnMessage::LOG_ErrorInWork);
+			PushMsg(HelperReturnMessage::LOG_WorkError_Exception);
 		}
 	}
 	catch (...) {
-		PushMsg(HelperReturnMessage::LOG_ErrorInWork);
+		PushMsg(HelperReturnMessage::LOG_WorkError_Exception);
 	}
 	r_capture->stopCapture(); // 停止截图
 

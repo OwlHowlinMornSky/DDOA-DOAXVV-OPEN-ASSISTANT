@@ -27,42 +27,47 @@ namespace Wrapper {
 public enum class ReturnMessage {
 	None = ohms::HelperReturnMessage::None,
 
+
 	_CMD_START = ohms::HelperReturnMessage::_CMD_START,
-	Cmd_Stopped,
-	Cmd_BtnToStop,
-	Cmd_BtnToStart,
+	CMD_Stopped,    // 任务已停止。
+	CMD_BtnToStop,  // 按钮切换为 “停止”。
+	CMD_BtnToStart, // 按钮切换为 “开始”。
+
 
 	_LOG_START = ohms::HelperReturnMessage::_LOG_START,
-	Log_ErrorIsRunning,
-	Log_Stopping,
-	Log_ErrorNotFindWnd,
-	Log_ErrorCannotCapture,
-	Log_ErrorInWork,
-	Log_ErrorInTask,
+	LOG_StartError_Running,
+	LOG_Stopping,
 
-	Log_Challenge_Start,
-	Log_Challenge_BeginNum, // 挑战赛开始（下跟次数！）
-	Log_Challenge_EnterLast,
-	Log_Challenge_EnterNew,
-	Log_Challenge_Play,
-	Log_Challenge_WaitForEnd,
-	Log_Challenge_End,
-	Log_Challenge_Quiting,
-	Log_Challenge_Over,
-	Log_Challenge_Exit,
+	LOG_WorkError_NoWnd,
+	LOG_WorkError_FailedCapture,
+	LOG_WorkError_Exception,
 
-	Log_Task_Stop,
-	Log_Task_Exception,
+	LOG_TaskStop,
+	LOG_TaskError_Exception,
+	LOG_TaskError, // 下跟参数
+
+	LOG_Challenge_Start,
+	LOG_Challenge_BeginNum, // 挑战赛开始（下跟次数！）
+	LOG_Challenge_EnterLast,
+	LOG_Challenge_EnterNew,
+	LOG_Challenge_Play,
+	LOG_Challenge_WaitForEnd,
+	LOG_Challenge_End,
+	LOG_Challenge_Quiting,
+	LOG_Challenge_Over,
+	LOG_Challenge_Exit,
+
 
 	_STR_START = ohms::HelperReturnMessage::_STR_START,
-	Str_Task_Challenge_NoNew,
-	Str_Task_Challenge_NoLast,
-	Str_Task_Challenge_NoEnter,
-	Str_Task_Challenge_LowFP,
-	Str_Task_Challenge_NoStart,
-	Str_Task_Challenge_TimeOut,
-	Str_Task_Challenge_NoEnd,
-	Str_Task_Challenge_NoOver
+	// 以下都是 LOG_TaskError 指定参数
+	STR_Task_Challenge_NoNew,
+	STR_Task_Challenge_NoLast,
+	STR_Task_Challenge_NoEnter,
+	STR_Task_Challenge_LowFP,
+	STR_Task_Challenge_NoStart,
+	STR_Task_Challenge_TimeOut,
+	STR_Task_Challenge_NoEnd,
+	STR_Task_Challenge_NoOver
 };
 
 }
