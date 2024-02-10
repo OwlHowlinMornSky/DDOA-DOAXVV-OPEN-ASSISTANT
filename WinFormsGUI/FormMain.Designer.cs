@@ -26,6 +26,10 @@
 			components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
 			splitContainer_Tab0_Main = new SplitContainer();
+			gpBox_home_addSet = new GroupBox();
+			radioBtn_home_addIgnore = new RadioButton();
+			radioBtn_home_addPlay = new RadioButton();
+			radioBtn_home_addNo = new RadioButton();
 			btn_home_main = new Button();
 			gpBox_home_ctrlSet = new GroupBox();
 			radioBtn_home_ctrlInput = new RadioButton();
@@ -54,6 +58,7 @@
 			splitContainer_Tab0_Main.Panel1.SuspendLayout();
 			splitContainer_Tab0_Main.Panel2.SuspendLayout();
 			splitContainer_Tab0_Main.SuspendLayout();
+			gpBox_home_addSet.SuspendLayout();
 			gpBox_home_ctrlSet.SuspendLayout();
 			gpBox_home_gameSet.SuspendLayout();
 			tabControl_main.SuspendLayout();
@@ -71,13 +76,48 @@
 			// 
 			// splitContainer_Tab0_Main.Panel1
 			// 
+			resources.ApplyResources(splitContainer_Tab0_Main.Panel1, "splitContainer_Tab0_Main.Panel1");
+			splitContainer_Tab0_Main.Panel1.Controls.Add(gpBox_home_addSet);
 			splitContainer_Tab0_Main.Panel1.Controls.Add(btn_home_main);
 			splitContainer_Tab0_Main.Panel1.Controls.Add(gpBox_home_ctrlSet);
 			splitContainer_Tab0_Main.Panel1.Controls.Add(gpBox_home_gameSet);
 			// 
 			// splitContainer_Tab0_Main.Panel2
 			// 
+			resources.ApplyResources(splitContainer_Tab0_Main.Panel2, "splitContainer_Tab0_Main.Panel2");
 			splitContainer_Tab0_Main.Panel2.Controls.Add(listBox_home);
+			// 
+			// gpBox_home_addSet
+			// 
+			resources.ApplyResources(gpBox_home_addSet, "gpBox_home_addSet");
+			gpBox_home_addSet.Controls.Add(radioBtn_home_addIgnore);
+			gpBox_home_addSet.Controls.Add(radioBtn_home_addPlay);
+			gpBox_home_addSet.Controls.Add(radioBtn_home_addNo);
+			gpBox_home_addSet.Name = "gpBox_home_addSet";
+			gpBox_home_addSet.TabStop = false;
+			// 
+			// radioBtn_home_addIgnore
+			// 
+			resources.ApplyResources(radioBtn_home_addIgnore, "radioBtn_home_addIgnore");
+			radioBtn_home_addIgnore.Name = "radioBtn_home_addIgnore";
+			radioBtn_home_addIgnore.UseVisualStyleBackColor = true;
+			radioBtn_home_addIgnore.CheckedChanged += radioBtn_home_add_CheckedChanged;
+			// 
+			// radioBtn_home_addPlay
+			// 
+			resources.ApplyResources(radioBtn_home_addPlay, "radioBtn_home_addPlay");
+			radioBtn_home_addPlay.Name = "radioBtn_home_addPlay";
+			radioBtn_home_addPlay.UseVisualStyleBackColor = true;
+			radioBtn_home_addPlay.CheckedChanged += radioBtn_home_add_CheckedChanged;
+			// 
+			// radioBtn_home_addNo
+			// 
+			resources.ApplyResources(radioBtn_home_addNo, "radioBtn_home_addNo");
+			radioBtn_home_addNo.Checked = true;
+			radioBtn_home_addNo.Name = "radioBtn_home_addNo";
+			radioBtn_home_addNo.TabStop = true;
+			radioBtn_home_addNo.UseVisualStyleBackColor = true;
+			radioBtn_home_addNo.CheckedChanged += radioBtn_home_add_CheckedChanged;
 			// 
 			// btn_home_main
 			// 
@@ -88,9 +128,9 @@
 			// 
 			// gpBox_home_ctrlSet
 			// 
+			resources.ApplyResources(gpBox_home_ctrlSet, "gpBox_home_ctrlSet");
 			gpBox_home_ctrlSet.Controls.Add(radioBtn_home_ctrlInput);
 			gpBox_home_ctrlSet.Controls.Add(radioBtn_home_ctrlMsg);
-			resources.ApplyResources(gpBox_home_ctrlSet, "gpBox_home_ctrlSet");
 			gpBox_home_ctrlSet.Name = "gpBox_home_ctrlSet";
 			gpBox_home_ctrlSet.TabStop = false;
 			// 
@@ -112,9 +152,9 @@
 			// 
 			// gpBox_home_gameSet
 			// 
+			resources.ApplyResources(gpBox_home_gameSet, "gpBox_home_gameSet");
 			gpBox_home_gameSet.Controls.Add(radioBtn_home_gameNew);
 			gpBox_home_gameSet.Controls.Add(radioBtn_home_gameLast);
-			resources.ApplyResources(gpBox_home_gameSet, "gpBox_home_gameSet");
 			gpBox_home_gameSet.Name = "gpBox_home_gameSet";
 			gpBox_home_gameSet.TabStop = false;
 			// 
@@ -145,21 +185,22 @@
 			// 
 			// tabControl_main
 			// 
+			resources.ApplyResources(tabControl_main, "tabControl_main");
 			tabControl_main.Controls.Add(tabPage_main_home);
 			tabControl_main.Controls.Add(tabPage_main_settings);
-			resources.ApplyResources(tabControl_main, "tabControl_main");
 			tabControl_main.Name = "tabControl_main";
 			tabControl_main.SelectedIndex = 0;
 			// 
 			// tabPage_main_home
 			// 
-			tabPage_main_home.Controls.Add(splitContainer_Tab0_Main);
 			resources.ApplyResources(tabPage_main_home, "tabPage_main_home");
+			tabPage_main_home.Controls.Add(splitContainer_Tab0_Main);
 			tabPage_main_home.Name = "tabPage_main_home";
 			tabPage_main_home.UseVisualStyleBackColor = true;
 			// 
 			// tabPage_main_settings
 			// 
+			resources.ApplyResources(tabPage_main_settings, "tabPage_main_settings");
 			tabPage_main_settings.Controls.Add(label_transp_value);
 			tabPage_main_settings.Controls.Add(label_transparant);
 			tabPage_main_settings.Controls.Add(checkBox_settings_disableClose);
@@ -169,7 +210,6 @@
 			tabPage_main_settings.Controls.Add(checkBox_settings_useNotify);
 			tabPage_main_settings.Controls.Add(checkBox_settings_hideToIcon);
 			tabPage_main_settings.Controls.Add(checkBox_settings_showCV);
-			resources.ApplyResources(tabPage_main_settings, "tabPage_main_settings");
 			tabPage_main_settings.Name = "tabPage_main_settings";
 			tabPage_main_settings.UseVisualStyleBackColor = true;
 			// 
@@ -242,21 +282,21 @@
 			// 
 			// notifyIcon_main
 			// 
-			notifyIcon_main.ContextMenuStrip = ctxtMenu_notifyR;
 			resources.ApplyResources(notifyIcon_main, "notifyIcon_main");
+			notifyIcon_main.ContextMenuStrip = ctxtMenu_notifyR;
 			notifyIcon_main.MouseClick += notifyIcon_main_MouseClick;
 			// 
 			// ctxtMenu_notifyR
 			// 
+			resources.ApplyResources(ctxtMenu_notifyR, "ctxtMenu_notifyR");
 			ctxtMenu_notifyR.Items.AddRange(new ToolStripItem[] { ctxtMenu_notifyR_exit });
 			ctxtMenu_notifyR.Name = "ctxtMenu_notifyR";
 			ctxtMenu_notifyR.RenderMode = ToolStripRenderMode.System;
-			resources.ApplyResources(ctxtMenu_notifyR, "ctxtMenu_notifyR");
 			// 
 			// ctxtMenu_notifyR_exit
 			// 
-			ctxtMenu_notifyR_exit.Name = "ctxtMenu_notifyR_exit";
 			resources.ApplyResources(ctxtMenu_notifyR_exit, "ctxtMenu_notifyR_exit");
+			ctxtMenu_notifyR_exit.Name = "ctxtMenu_notifyR_exit";
 			ctxtMenu_notifyR_exit.Click += ctxtMenu_notifyR_exit_Click;
 			// 
 			// FormMain
@@ -273,6 +313,8 @@
 			splitContainer_Tab0_Main.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)splitContainer_Tab0_Main).EndInit();
 			splitContainer_Tab0_Main.ResumeLayout(false);
+			gpBox_home_addSet.ResumeLayout(false);
+			gpBox_home_addSet.PerformLayout();
 			gpBox_home_ctrlSet.ResumeLayout(false);
 			gpBox_home_ctrlSet.PerformLayout();
 			gpBox_home_gameSet.ResumeLayout(false);
@@ -313,5 +355,9 @@
 		private CheckBox checkBox_settings_disableClose;
 		private Label label_transparant;
 		private Label label_transp_value;
+		private GroupBox gpBox_home_addSet;
+		private RadioButton radioBtn_home_addIgnore;
+		private RadioButton radioBtn_home_addPlay;
+		private RadioButton radioBtn_home_addNo;
 	}
 }

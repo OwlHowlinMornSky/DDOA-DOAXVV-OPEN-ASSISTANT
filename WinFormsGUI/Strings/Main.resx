@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="LOG_Challenge_EnterAdd" xml:space="preserve">
+    <value>LOG_Challenge_EnterAdd</value>
+  </data>
   <data name="Log_Challenge_Exit" xml:space="preserve">
     <value>Log_Challenge_Exit</value>
+  </data>
+  <data name="LOG_Challenge_FindAdd" xml:space="preserve">
+    <value>LOG_Challenge_FindAdd</value>
+  </data>
+  <data name="LOG_Challenge_IgnoredAdd" xml:space="preserve">
+    <value>LOG_Challenge_IgnoredAdd</value>
+  </data>
+  <data name="LOG_Challenge_NotFindAdd" xml:space="preserve">
+    <value>LOG_Challenge_NotFindAdd</value>
+  </data>
+  <data name="LOG_Challenge_OpenedAdd" xml:space="preserve">
+    <value>LOG_Challenge_OpenedAdd</value>
   </data>
   <data name="Log_Challenge_Over" xml:space="preserve">
     <value>Log_Challenge_Over</value>
@@ -152,6 +167,9 @@
   </data>
   <data name="Log_Task_Stop" xml:space="preserve">
     <value>Log_Task_Stop</value>
+  </data>
+  <data name="Log_UNKNOWN" xml:space="preserve">
+    <value>Log_UNKNOWN: {0}</value>
   </data>
   <data name="Main_Btn_Start" xml:space="preserve">
     <value>Main_Btn_Start</value>
@@ -209,5 +227,17 @@
   </data>
   <data name="Main_Log_WorkStopping" xml:space="preserve">
     <value>Main_Log_WorkStopping</value>
+  </data>
+  <data name="STR_Task_Challenge_AddNotSup" xml:space="preserve">
+    <value>STR_Task_Challenge_AddNotSup</value>
+  </data>
+  <data name="STR_Task_Challenge_IgnoreAddFailed" xml:space="preserve">
+    <value>STR_Task_Challenge_IgnoreAddFailed</value>
+  </data>
+  <data name="STR_Task_Challenge_OpenAddFailed" xml:space="preserve">
+    <value>STR_Task_Challenge_OpenAddFailed</value>
+  </data>
+  <data name="STR_UNKNOWN" xml:space="preserve">
+    <value>STR_UNKNOWN: {0}</value>
   </data>
 </root>

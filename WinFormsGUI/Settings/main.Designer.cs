@@ -139,5 +139,17 @@ namespace WinFormsGUI.Settings {
                 this["Transparant"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Cha_Add {
+            get {
+                return ((int)(this["Cha_Add"]));
+            }
+            set {
+                this["Cha_Add"] = value;
+            }
+        }
     }
 }

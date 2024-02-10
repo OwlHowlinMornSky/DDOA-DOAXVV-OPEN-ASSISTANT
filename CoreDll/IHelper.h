@@ -69,23 +69,27 @@ public:
 	*/
 	virtual long setUseMouseInput(bool forMouse) = 0;
 	/**
-	 * @brief 
-	 * @param show 
+	 * @brief 设置显示调试性截图。
+	 * @param show 为 true 则显示截图。
 	 * @return 0 if success.
 	*/
 	virtual long setShowCapture(bool show) = 0;
 	/**
-	 * @brief 
-	 * @param prevent 
+	 * @brief 设置阻止睡眠。
+	 * @param prevent 为 true 则阻止睡眠。
 	 * @return 0 if success.
 	*/
 	virtual long setPreventSleep(bool prevent) = 0;
 	/**
-	 * @brief 
-	 * @param keep 
+	 * @brief 设置阻止关闭屏幕。
+	 * @param keep 为 true 则阻止。
 	 * @return 0 if success.
 	*/
 	virtual long setPreventCloseDisplay(bool keep) = 0;
+
+	virtual long setCheckChaAdd(bool check) = 0;
+
+	virtual long setPlayChaAdd(bool play) = 0;
 
 };
 

@@ -87,6 +87,18 @@ namespace WinFormsGUI {
 			trackBar_transparant.Value = Settings.Main.Default.Transparant;
 			m_label_transp_value_size = label_transp_value.Size;
 			label_transp_value.Text = trackBar_transparant.Value.ToString() + "%";
+
+			switch (Settings.Main.Default.Cha_Add) {
+			case 1:
+				radioBtn_home_addPlay.Checked = true;
+				break;
+			case 2:
+				radioBtn_home_addIgnore.Checked = true;
+				break;
+			default:
+				radioBtn_home_addNo.Checked = true;
+				break;
+			}
 		}
 
 		private void FormMain_Deactivate(object sender, EventArgs e) {
@@ -117,6 +129,7 @@ namespace WinFormsGUI {
 		private void btn_home_main_Click(object sender, EventArgs e) {
 			gpBox_home_gameSet.Enabled = false;
 			gpBox_home_ctrlSet.Enabled = false;
+			gpBox_home_addSet.Enabled = false;
 			btn_home_main.Enabled = false;
 
 			if (m_btnMainIsStart) {
@@ -136,11 +149,33 @@ namespace WinFormsGUI {
 		private void radioBtn_home_game_CheckedChanged(object sender, EventArgs e) {
 			m_helper.SetSetting(HelperSet.Cha_PlayNew, radioBtn_home_gameNew.Checked ? 1 : 0);
 			Settings.Main.Default.Game_ForNew = radioBtn_home_gameNew.Checked;
+			/*if (radioBtn_home_gameNew.Checked) {
+				radioBtn_home_addPlay.Enabled = true;
+			}
+			else {
+				if (radioBtn_home_addPlay.Checked)
+					radioBtn_home_addIgnore.Checked = true;
+				radioBtn_home_addPlay.Enabled = false;
+			}*/
 		}
 
 		private void radioBtn_home_ctrl_CheckedChanged(object sender, EventArgs e) {
 			m_helper.SetSetting(HelperSet.Ctrl_MouseInput, radioBtn_home_ctrlInput.Checked ? 1 : 0);
 			Settings.Main.Default.Ctrl_ForMouse = radioBtn_home_ctrlInput.Checked;
+		}
+
+		private void radioBtn_home_add_CheckedChanged(object sender, EventArgs e) {
+			m_helper.SetSetting(HelperSet.Cha_CheckAdd, radioBtn_home_addNo.Checked ? 0 : 1);
+			m_helper.SetSetting(HelperSet.Cha_PlayAdd, radioBtn_home_addPlay.Checked ? 1 : 0);
+			if (radioBtn_home_addNo.Checked) {
+				Settings.Main.Default.Cha_Add = 0;
+			}
+			else if (radioBtn_home_addPlay.Checked) {
+				Settings.Main.Default.Cha_Add = 1;
+			}
+			else {
+				Settings.Main.Default.Cha_Add = 2;
+			}
 		}
 
 		#endregion
@@ -228,6 +263,7 @@ namespace WinFormsGUI {
 					Log(Strings.Main.Main_Log_WorkStopped);
 					gpBox_home_gameSet.Enabled = true;
 					gpBox_home_ctrlSet.Enabled = true;
+					gpBox_home_addSet.Enabled = true;
 					timer_main.Enabled = false;
 					break;
 				case ReturnMessage.CMD_BtnToStop:
@@ -307,6 +343,18 @@ namespace WinFormsGUI {
 					case ReturnMessage.STR_Task_Challenge_NoOver:
 						text = Strings.Main.Log_Task_Challenge_NoOver;
 						break;
+					case ReturnMessage.STR_Task_Challenge_AddNotSup:
+						text = Strings.Main.STR_Task_Challenge_AddNotSup;
+						break;
+					case ReturnMessage.STR_Task_Challenge_IgnoreAddFailed:
+						text = Strings.Main.STR_Task_Challenge_IgnoreAddFailed;
+						break;
+					case ReturnMessage.STR_Task_Challenge_OpenAddFailed:
+						text = Strings.Main.STR_Task_Challenge_OpenAddFailed;
+						break;
+					default:
+						text = string.Format(Strings.Main.STR_UNKNOWN, m.ToString());
+						break;
 					}
 					Log(Strings.Main.Main_Log_TaskError + ": " + text);
 					if (Settings.Main.Default.UseNotify)
@@ -347,6 +395,24 @@ namespace WinFormsGUI {
 					break;
 				case ReturnMessage.LOG_Challenge_Exit:
 					Log(Strings.Main.Log_Challenge_Exit);
+					break;
+				case ReturnMessage.LOG_Challenge_EnterAdd:
+					Log(Strings.Main.LOG_Challenge_EnterAdd);
+					break;
+				case ReturnMessage.LOG_Challenge_IgnoredAdd:
+					Log(Strings.Main.LOG_Challenge_IgnoredAdd);
+					break;
+				case ReturnMessage.LOG_Challenge_NotFindAdd:
+					Log(Strings.Main.LOG_Challenge_NotFindAdd);
+					break;
+				case ReturnMessage.LOG_Challenge_FindAdd:
+					Log(Strings.Main.LOG_Challenge_FindAdd);
+					break;
+				case ReturnMessage.LOG_Challenge_OpenedAdd:
+					Log(Strings.Main.LOG_Challenge_OpenedAdd);
+					break;
+				default:
+					Log(string.Format(Strings.Main.Log_UNKNOWN, m.ToString()));
 					break;
 
 				}

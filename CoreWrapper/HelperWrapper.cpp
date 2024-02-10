@@ -47,6 +47,11 @@ System::Int32 HelperWrapper::SetSetting(HelperSet type, System::Int32 val) {
 
 	case HelperSet::Cha_PlayNew:
 		return r_helper->setPlayChallengeForNew(val);
+
+	case HelperSet::Cha_CheckAdd:
+		return r_helper->setCheckChaAdd(val);
+	case HelperSet::Cha_PlayAdd:
+		return r_helper->setPlayChaAdd(val);
 	}
 	return 1l;
 }

@@ -101,6 +101,20 @@ long Helper::setPreventCloseDisplay(bool keep) {
 	return 0l;
 }
 
+long Helper::setCheckChaAdd(bool check) {
+	if (m_running)
+		return 1l;
+	m_set.ChaGame_CheckAddition = check;
+	return 0;
+}
+
+long Helper::setPlayChaAdd(bool play) {
+	if (m_running)
+		return 1l;
+	m_set.ChaGame_EnterAddition = play;
+	return 0;
+}
+
 bool Helper::start() {
 	if (m_running) { // 已经有任务运行（或者有bug没清除运行标记）
 		PushMsg(HelperReturnMessage::LOG_StartError_Running);

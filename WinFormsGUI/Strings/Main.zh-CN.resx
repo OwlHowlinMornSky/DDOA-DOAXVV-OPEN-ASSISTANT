@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="LOG_Challenge_EnterAdd" xml:space="preserve">
+    <value>进入奖励挑战赛</value>
+  </data>
   <data name="Log_Challenge_Exit" xml:space="preserve">
     <value>任务结束: 挑战赛</value>
+  </data>
+  <data name="LOG_Challenge_FindAdd" xml:space="preserve">
+    <value>出现奖励挑战赛</value>
+  </data>
+  <data name="LOG_Challenge_IgnoredAdd" xml:space="preserve">
+    <value>已忽略奖励挑战赛</value>
+  </data>
+  <data name="LOG_Challenge_NotFindAdd" xml:space="preserve">
+    <value>没有奖励挑战赛</value>
+  </data>
+  <data name="LOG_Challenge_OpenedAdd" xml:space="preserve">
+    <value>已打开奖励挑战赛</value>
   </data>
   <data name="Log_Challenge_Over" xml:space="preserve">
     <value>比赛结束</value>
@@ -152,6 +167,9 @@
   </data>
   <data name="Log_Task_Stop" xml:space="preserve">
     <value>任务中止</value>
+  </data>
+  <data name="Log_UNKNOWN" xml:space="preserve">
+    <value>未描述的事件：{0}</value>
   </data>
   <data name="Main_Btn_Start" xml:space="preserve">
     <value>Link Start!</value>
@@ -209,5 +227,17 @@
   </data>
   <data name="Main_Log_WorkStopping" xml:space="preserve">
     <value>正在停止...</value>
+  </data>
+  <data name="STR_Task_Challenge_AddNotSup" xml:space="preserve">
+    <value>“上一次比赛”不支持进入“奖励挑战赛”</value>
+  </data>
+  <data name="STR_Task_Challenge_IgnoreAddFailed" xml:space="preserve">
+    <value>忽略奖励挑战赛出错</value>
+  </data>
+  <data name="STR_Task_Challenge_OpenAddFailed" xml:space="preserve">
+    <value>打开奖励挑战赛出错</value>
+  </data>
+  <data name="STR_UNKNOWN" xml:space="preserve">
+    <value>未描述的错误：{0}</value>
   </data>
 </root>

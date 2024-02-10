@@ -61,11 +61,56 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 LOG_Challenge_EnterAdd 的本地化字符串。
+        /// </summary>
+        internal static string LOG_Challenge_EnterAdd {
+            get {
+                return ResourceManager.GetString("LOG_Challenge_EnterAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Log_Challenge_Exit 的本地化字符串。
         /// </summary>
         internal static string Log_Challenge_Exit {
             get {
                 return ResourceManager.GetString("Log_Challenge_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 LOG_Challenge_FindAdd 的本地化字符串。
+        /// </summary>
+        internal static string LOG_Challenge_FindAdd {
+            get {
+                return ResourceManager.GetString("LOG_Challenge_FindAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 LOG_Challenge_IgnoredAdd 的本地化字符串。
+        /// </summary>
+        internal static string LOG_Challenge_IgnoredAdd {
+            get {
+                return ResourceManager.GetString("LOG_Challenge_IgnoredAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 LOG_Challenge_NotFindAdd 的本地化字符串。
+        /// </summary>
+        internal static string LOG_Challenge_NotFindAdd {
+            get {
+                return ResourceManager.GetString("LOG_Challenge_NotFindAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 LOG_Challenge_OpenedAdd 的本地化字符串。
+        /// </summary>
+        internal static string LOG_Challenge_OpenedAdd {
+            get {
+                return ResourceManager.GetString("LOG_Challenge_OpenedAdd", resourceCulture);
             }
         }
         
@@ -165,6 +210,15 @@ namespace WinFormsGUI.Strings {
         internal static string Log_Task_Stop {
             get {
                 return ResourceManager.GetString("Log_Task_Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Log_UNKNOWN: {0} 的本地化字符串。
+        /// </summary>
+        internal static string Log_UNKNOWN {
+            get {
+                return ResourceManager.GetString("Log_UNKNOWN", resourceCulture);
             }
         }
         
@@ -336,6 +390,42 @@ namespace WinFormsGUI.Strings {
         internal static string Main_Log_WorkStopping {
             get {
                 return ResourceManager.GetString("Main_Log_WorkStopping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 STR_Task_Challenge_AddNotSup 的本地化字符串。
+        /// </summary>
+        internal static string STR_Task_Challenge_AddNotSup {
+            get {
+                return ResourceManager.GetString("STR_Task_Challenge_AddNotSup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 STR_Task_Challenge_IgnoreAddFailed 的本地化字符串。
+        /// </summary>
+        internal static string STR_Task_Challenge_IgnoreAddFailed {
+            get {
+                return ResourceManager.GetString("STR_Task_Challenge_IgnoreAddFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 STR_Task_Challenge_OpenAddFailed 的本地化字符串。
+        /// </summary>
+        internal static string STR_Task_Challenge_OpenAddFailed {
+            get {
+                return ResourceManager.GetString("STR_Task_Challenge_OpenAddFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 STR_UNKNOWN: {0} 的本地化字符串。
+        /// </summary>
+        internal static string STR_UNKNOWN {
+            get {
+                return ResourceManager.GetString("STR_UNKNOWN", resourceCulture);
             }
         }
     }

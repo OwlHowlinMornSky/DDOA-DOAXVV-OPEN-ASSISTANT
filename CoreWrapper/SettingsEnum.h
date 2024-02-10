@@ -30,7 +30,9 @@ public enum class HelperSet {
 	Ctrl_PreventFromSleep,
 	Ctrl_KeepDisplay,
 
-	Cha_PlayNew
+	Cha_PlayNew,
+	Cha_CheckAdd,
+	Cha_PlayAdd
 };
 
 }

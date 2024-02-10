@@ -54,6 +54,8 @@ public:
 	virtual long setShowCapture(bool show) override;
 	virtual long setPreventSleep(bool prevent) override;
 	virtual long setPreventCloseDisplay(bool keep) override;
+	virtual long setCheckChaAdd(bool check) override;
+	virtual long setPlayChaAdd(bool play) override;
 
 // 内部的，具体实现。
 protected:

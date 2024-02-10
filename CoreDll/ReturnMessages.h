@@ -60,7 +60,10 @@ enum CORE_API HelperReturnMessage : unsigned long {
 	LOG_Challenge_Over,
 	LOG_Challenge_Exit,
 	LOG_Challenge_EnterAdd,
-	LOG_Challenge_IgnoreAdd,
+	LOG_Challenge_IgnoredAdd,
+	LOG_Challenge_NotFindAdd,
+	LOG_Challenge_FindAdd,
+	LOG_Challenge_OpenedAdd,
 
 
 	_STR_START = 0x0000fffful,
@@ -72,7 +75,10 @@ enum CORE_API HelperReturnMessage : unsigned long {
 	STR_Task_Challenge_NoStart,
 	STR_Task_Challenge_TimeOut,
 	STR_Task_Challenge_NoEnd,
-	STR_Task_Challenge_NoOver
+	STR_Task_Challenge_NoOver,
+	STR_Task_Challenge_AddNotSup,
+	STR_Task_Challenge_IgnoreAddFailed,
+	STR_Task_Challenge_OpenAddFailed,
 };
 
 }
