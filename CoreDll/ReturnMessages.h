@@ -59,6 +59,8 @@ enum CORE_API HelperReturnMessage : unsigned long {
 	LOG_Challenge_Quiting,
 	LOG_Challenge_Over,
 	LOG_Challenge_Exit,
+	LOG_Challenge_EnterAdd,
+	LOG_Challenge_IgnoreAdd,
 
 
 	_STR_START = 0x0000fffful,

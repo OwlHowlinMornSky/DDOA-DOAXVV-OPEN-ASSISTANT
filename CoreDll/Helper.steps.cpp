@@ -308,6 +308,24 @@ bool Helper::Step_KeepClickingUntil(
 	return true;
 }
 
+bool Helper::Step_KeepClickingUntilNo(
+	const cv::Point clkPt, const cv::Mat& matTemplate, const cv::Rect searchRect,
+	Time maxTime, Time clkTime, float thres
+) {
+	if (clkTime < milliseconds(10)) // 点击时间不能小于10毫秒（规定的）
+		clkTime = milliseconds(10);
+	cv::Rect rect;
+	Clock clock;
+	do {
+		if (maxTime > Time::Zero && clock.getElapsedTime() >= maxTime) // 应用超时
+			return false;
+		Step_Click(clkPt); // 点击
+	} while (!m_askedForStop && Step_WaitFor(matTemplate, searchRect, rect, clkTime, thres));
+	if (m_askedForStop)
+		throw 0;
+	return true;
+}
+
 void Helper::Step_TaskError(unsigned long type) {
 	PushMsgCode(HelperReturnMessage::LOG_TaskError, type);
 	throw 0; // 要求停止

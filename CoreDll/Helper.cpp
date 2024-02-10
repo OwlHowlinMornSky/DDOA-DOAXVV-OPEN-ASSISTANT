@@ -65,6 +65,9 @@ Helper::Helper() :
 
 	mat_ChaTabBar = cv::imread("assets/default.png");
 	rect_ChaTabBar = { 640, 80, 320, 190 }; // 640 -> 960, 80 -> 270
+
+	mat_ChaAddBtn = cv::imread("assets/add.png");
+	rect_ChaAddBtn = { 860, 120, 100, 240 }; // 860 -> 960, 120 -> 360
 	return;
 }
 

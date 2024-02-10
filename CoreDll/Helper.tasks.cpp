@@ -26,41 +26,36 @@ bool Helper::Task_Challenge() {
 	PushMsg(HelperReturnMessage::LOG_Challenge_Start);
 	const bool forNew = m_set.ChaGame_ForNew; // 保存设置
 
+	int addGameCnt = 0;
+
 	cv::Rect rect;
 	cv::Point pt;
 
 	unsigned long i = 0; // 次数
 
-begin_point:
 	try {
+	begin_point:
+
 		++i;
 		PushMsgCode(HelperReturnMessage::LOG_Challenge_BeginNum, i);
 
-		{
-			size_t tc = 0;
-			while (!m_askedForStop) {
-				// 查找目标比赛按钮。
-				if (!Step_WaitFor(forNew ? mat_ChaGameNew : mat_ChaGameLast, rect_ChaGame, rect, seconds(15.0f)))
-					break;
-				// 瞟一眼是否是奖励挑战赛。
-				if (Step_WaitFor(mat_LowFP, rect_LowFP, rect, seconds(0.2f))) {
-					// 进入奖励挑战赛。
-				}
-				// 尝试次数超限则报错。
-				if (++tc > 10)
-					Step_TaskError(
-						forNew ?
-						HelperReturnMessage::STR_Task_Challenge_NoNew :
-						HelperReturnMessage::STR_Task_Challenge_NoLast
-					);
-			}
-		}
+		// 查找目标比赛按钮。
+		if (!Step_WaitFor(forNew ? mat_ChaGameNew : mat_ChaGameLast, rect_ChaGame, rect, seconds(10.0f)))
+			Step_TaskError(
+				forNew ?
+				HelperReturnMessage::STR_Task_Challenge_NoNew :
+				HelperReturnMessage::STR_Task_Challenge_NoLast
+			);
 
 
 		// 点击比赛，直到进入编队画面（找到挑战按钮）。
-		PushMsg(forNew ? HelperReturnMessage::LOG_Challenge_EnterNew : HelperReturnMessage::LOG_Challenge_EnterLast);
+		PushMsg(addGameCnt ? HelperReturnMessage::LOG_Challenge_EnterAdd :
+				(forNew ? HelperReturnMessage::LOG_Challenge_EnterNew : HelperReturnMessage::LOG_Challenge_EnterLast));
 		if (!Step_KeepClickingUntil({ 900, rect.y }, mat_StartGame, rect_StartGame))
 			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoEnter);
+
+		if (addGameCnt)
+			addGameCnt--;
 
 		// 查找“挑战”按钮。
 		Step_WaitFor(mat_StartGame, rect_StartGame, rect);
@@ -97,6 +92,25 @@ begin_point:
 		if (!Step_WaitFor(mat_ChaTabBar, rect_ChaTabBar, rect, seconds(60.0f)))
 			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoOver);
 		PushMsg(HelperReturnMessage::LOG_Challenge_Over);
+
+		// 检查是否有奖励挑战赛。
+		if (m_set.ChaGame_CheckAddition && Step_WaitFor(mat_ChaAddBtn, rect_ChaAddBtn, rect, seconds(2.0f))) {
+			if (forNew && m_set.ChaGame_EnterAddition) { // 进入奖励挑战赛。
+				pt.x = rect.x;
+				pt.y = rect.y + 10;
+				Step_KeepClickingUntil(pt, mat_ChaGameNew, rect_ChaGame, seconds(10.0f), seconds(2.0f));
+				//Step_Click(pt);
+				addGameCnt = 3;
+			}
+			else { // 回到“推荐”栏。
+				if (Step_WaitFor(mat_ChaTabBar, rect_ChaTabBar, rect, seconds(5.0f))) {
+					pt.x = rect.x + 40;
+					pt.y = rect.y + 12;
+					Step_KeepClickingUntilNo(pt, mat_ChaAddBtn, rect_ChaAddBtn, seconds(10.0f), seconds(0.2f));
+					//Step_Click(pt);
+				}
+			}
+		}
 
 		goto begin_point;
 	}

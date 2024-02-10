@@ -131,6 +131,11 @@ protected:
 		Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f), float thres = 10.0f
 	);
 
+	bool Step_KeepClickingUntilNo(
+		const cv::Point clkPt, const cv::Mat& matTemplate, const cv::Rect searchRect,
+		Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f), float thres = 10.0f
+	);
+
 	/**
 	 * @brief 报错（写入logger并弹窗），并 throw 0
 	 * @param str 报错信息
@@ -175,6 +180,10 @@ protected:
 	// 挑战赛页面的 标签页栏 (推荐、主要、每日、活动)。
 	cv::Mat mat_ChaTabBar;
 	cv::Rect rect_ChaTabBar;
+
+	// 挑战赛页面的奖励挑战赛按钮右端。
+	cv::Mat mat_ChaAddBtn;
+	cv::Rect rect_ChaAddBtn;
 };
 
 /*

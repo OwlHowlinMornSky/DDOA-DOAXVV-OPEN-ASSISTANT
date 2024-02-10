@@ -23,11 +23,13 @@
 namespace ohms {
 
 Settings::Settings() :
-	ChaGame_ForNew(false), // 默认上一次比赛
 	Mouse_ForMouse(false), // 默认发窗口消息
-
 	PreventFromSleep(true), // 默认阻止睡眠
-	KeepDisplay(false) // 默认不保持显示
+	KeepDisplay(false), // 默认不保持显示
+
+	ChaGame_ForNew(false), // 默认上一次比赛
+	ChaGame_EnterAddition(true), // 默认进入奖励挑战赛
+	ChaGame_CheckAddition(false) // 默认不检查奖励挑战赛
 {}
 
 }
