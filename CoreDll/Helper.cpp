@@ -106,7 +106,7 @@ long Helper::regPreventKeepDisplay(bool keep) {
 
 bool Helper::start() {
 	if (m_running) { // 已经有任务运行（或者有bug没清除运行标记）
-		msgPush(HelperReturnMessage::LOG_ErrorIsRunning);
+		PushMsg(HelperReturnMessage::LOG_ErrorIsRunning);
 		return false;
 	}
 	r_capture = wgc::ICapture::getInstance(); // 获取capture索引
@@ -116,14 +116,14 @@ bool Helper::start() {
 	r_capture->setClipToClientArea(true);
 
 	m_askedForStop = false; // 清除运行标志（绝对不能移动到上面去）
-	std::thread sub(&Helper::mainwork, this);
+	std::thread sub(&Helper::Work, this);
 	sub.detach(); // 在子线程运行工作
 	return !sub.joinable();
 }
 
 void Helper::askForStop() {
 	if (m_running) { // 运行的时候才有意义
-		msgPush(HelperReturnMessage::LOG_Stopping);
+		PushMsg(HelperReturnMessage::LOG_Stopping);
 		m_askedForStop = true;
 	}
 	return;
@@ -144,9 +144,9 @@ unsigned long Helper::msgPop() {
 	return res;
 }
 
-void Helper::mainwork() {
+void Helper::Work() {
 	m_running = true; // 设置标记（return前要清除）
-	msgPush(HelperReturnMessage::CMD_BtnToStop); // 让主按钮变为stop
+	PushMsg(HelperReturnMessage::CMD_BtnToStop); // 让主按钮变为stop
 
 	// 按设置防止关闭屏幕和睡眠
 	if (task_PreventFromSleep) {
@@ -159,25 +159,25 @@ void Helper::mainwork() {
 	try {
 		m_doaxvv = FindWindowW(g_findCls, g_findWnd); // 查找doaxvv窗口
 		if (m_doaxvv == NULL) {
-			msgPush(HelperReturnMessage::LOG_ErrorNotFindWnd);
+			PushMsg(HelperReturnMessage::LOG_ErrorNotFindWnd);
 			throw 0;
 		}
 		if (!IsWindow(m_doaxvv) || IsIconic(m_doaxvv) || !r_capture->startCapture(m_doaxvv)) { // 这些是能截图的必要条件
-			msgPush(HelperReturnMessage::LOG_ErrorCannotCapture);
+			PushMsg(HelperReturnMessage::LOG_ErrorCannotCapture);
 			throw 0;
 		}
 
 		// Run subworks.
-		subwork_challenge();
+		Task_Challenge();
 	}
 	catch (int err) {
 		// catch 到 0 是 主动停止，不是 0 则是错误
 		if (err != 0) {
-			msgPush(HelperReturnMessage::LOG_ErrorInWork);
+			PushMsg(HelperReturnMessage::LOG_ErrorInWork);
 		}
 	}
 	catch (...) {
-		msgPush(HelperReturnMessage::LOG_ErrorInWork);
+		PushMsg(HelperReturnMessage::LOG_ErrorInWork);
 	}
 	r_capture->stopCapture(); // 停止截图
 
@@ -187,18 +187,18 @@ void Helper::mainwork() {
 	cv::destroyAllWindows(); // 销毁show窗口
 
 	m_running = false; // 清除标记
-	msgPush(HelperReturnMessage::CMD_BtnToStart); // 让主按钮变成start
-	msgPush(HelperReturnMessage::CMD_Stopped); // 通知已完全停止
+	PushMsg(HelperReturnMessage::CMD_BtnToStart); // 让主按钮变成start
+	PushMsg(HelperReturnMessage::CMD_Stopped); // 通知已完全停止
 	return;
 }
 
-void Helper::msgPush(unsigned long hrm) {
+void Helper::PushMsg(unsigned long hrm) {
 	std::lock_guard lg(m_hrm_mutex); // 上锁
 	m_hrm.push(hrm); // 压入
 	return;
 }
 
-void Helper::msgPush(unsigned long hrm, unsigned long code) {
+void Helper::PushMsgCode(unsigned long hrm, unsigned long code) {
 	std::lock_guard lg(m_hrm_mutex); // 上锁
 	m_hrm.push(hrm); // 压入
 	m_hrm.push(code); // 压入

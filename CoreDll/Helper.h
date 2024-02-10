@@ -40,6 +40,7 @@ protected:
 public:
 	virtual ~Helper() override;
 
+// 继承的，接口。
 public:
 	/**
 	 * @brief 设置挑战赛打新比赛
@@ -76,30 +77,39 @@ public:
 	*/
 	virtual unsigned long msgPop() override;
 
+// 内部的，具体实现。
 protected:
 	/**
-	 * @brief 运行在子线程的任务。
+	 * @brief 运行在子线程的工作。
 	*/
-	void mainwork();
+	void Work();
 	/**
-	 * @brief 压入返回消息
-	 * @param hrm 消息
+	 * @brief 压入回执消息
+	 * @param hrm 回执消息
 	*/
-	void msgPush(unsigned long hrm);
-	void msgPush(unsigned long hrm, unsigned long code);
+	void PushMsg(unsigned long hrm);
+	/**
+	 * @brief 压入回执消息（附带指示代码）
+	 * @param hrm 回执消息
+	 * @param code 指示代码
+	*/
+	void PushMsgCode(unsigned long hrm, unsigned long code);
 
-// 子任务，返回 false 表示无法继续 （在 Helper.subworks.cpp 实现）
+// 任务
+// 返回 false 表示无法继续
+// (在 Helper.tasks.cpp 实现)
 protected:
-	bool subwork_challenge(); // 挑战赛。
+	bool Task_Challenge(); // 挑战赛。
 
-// 单步操作（在 Helper.steps.cpp 实现）
+// 单步操作
+// (在 Helper.steps.cpp 实现)
 protected:
 	/**
 	 * @brief 从capture复制mat，同时检查capture是否refresh，顺便resize到统一尺寸（960 540）。
 	 * @param target 保存mat的位置
 	 * @return capture已refresh并复制成功则为true，未refresh返回false，复制失败返回false
 	*/
-	bool step_copyMat(cv::Mat& target);
+	bool Step_CopyMat(cv::Mat& target);
 
 	/**
 	 * @brief 等待画面出现目标。askedForStop则 throw 0
@@ -110,7 +120,7 @@ protected:
 	 * @param thres 差异阈值
 	 * @return true则找到目标，findRect保存找到的区域，false则为超时
 	*/
-	bool step_waitFor(
+	bool Step_WaitFor(
 		const cv::Mat& matTemplate, const cv::Rect searchRect, cv::Rect& findRect,
 		Time maxTime = seconds(10.0f), float thres = 10.0f
 	);
@@ -120,13 +130,13 @@ protected:
 	 * @param pt 位置
 	 * @return 未使用
 	*/
-	bool step_click(cv::Point pt);
+	bool Step_Click(cv::Point pt);
 	/**
 	 * @brief 移动光标。范围是统一尺寸（960 540），自动缩放到当前DOAXVV大小
 	 * @param pt 位置
 	 * @return 未使用
 	*/
-	bool step_move(cv::Point pt);
+	bool Step_Move(cv::Point pt);
 
 	/**
 	 * @brief 持续点击指定位置，直到画面出现目标。askedForStop则 throw 0
@@ -138,7 +148,7 @@ protected:
 	 * @param thres 阈值
 	 * @return true则已找到目标，false则为超时
 	*/
-	bool step_keepClickingUntil(
+	bool Step_KeepClickingUntil(
 		const cv::Point clkPt, const cv::Mat& matTemplate, const cv::Rect searchRect,
 		Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f), float thres = 10.0f
 	);
@@ -147,7 +157,7 @@ protected:
 	 * @brief 报错（写入logger并弹窗），并 throw 0
 	 * @param str 报错信息
 	*/
-	void step_subtaskError(unsigned long type);
+	void Step_TaskError(unsigned long type);
 
 // 成员变量
 protected:

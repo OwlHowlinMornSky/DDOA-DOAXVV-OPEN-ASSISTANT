@@ -106,7 +106,7 @@
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Helper.steps.cpp" />
-    <ClCompile Include="Helper.subworks.cpp" />
+    <ClCompile Include="Helper.tasks.cpp" />
     <ClCompile Include="IHelper.cpp" />
     <ClCompile Include="Time.cpp" />
   </ItemGroup>

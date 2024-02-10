@@ -159,7 +159,7 @@ long Helper::regShowCV(bool show) {
 	return 0l;
 }
 
-bool Helper::step_copyMat(cv::Mat& target) {
+bool Helper::Step_CopyMat(cv::Mat& target) {
 	if (r_capture->isRefreshed()) { // refresh过再处理画面才有意义
 		if (r_capture->copyMatTo(target, true)) { // 要求转换为BGR
 			if (target.size().width != 960 || target.size().height != 540) { // 确保大小满足要求
@@ -176,7 +176,7 @@ bool Helper::step_copyMat(cv::Mat& target) {
 	return false;
 }
 
-bool Helper::step_waitFor(
+bool Helper::Step_WaitFor(
 	const cv::Mat& matTemplate, const cv::Rect searchRect, cv::Rect& findRect,
 	Time maxTime, float thres
 ) {
@@ -193,7 +193,7 @@ bool Helper::step_waitFor(
 			DispatchMessageW(&msg);
 		}
 		else {
-			if (step_copyMat(mat)) {
+			if (Step_CopyMat(mat)) {
 				trect = searchRect;
 				if (find(mat, matTemplate, trect, thres)) {
 					findRect = trect;
@@ -211,7 +211,7 @@ bool Helper::step_waitFor(
 	return true;
 }
 
-bool Helper::step_click(cv::Point pt) {
+bool Helper::Step_Click(cv::Point pt) {
 	// 缩放到当前客户区大小
 	RECT rect{ 0 };
 	GetClientRect(m_doaxvv, &rect);
@@ -277,7 +277,7 @@ bool Helper::step_click(cv::Point pt) {
 	return true;
 }
 
-bool Helper::step_move(cv::Point pt) {
+bool Helper::Step_Move(cv::Point pt) {
 	// 缩放到当前客户区大小
 	RECT rect{ 0 };
 	GetClientRect(m_doaxvv, &rect);
@@ -290,7 +290,7 @@ bool Helper::step_move(cv::Point pt) {
 	return true;
 }
 
-bool Helper::step_keepClickingUntil(
+bool Helper::Step_KeepClickingUntil(
 	const cv::Point clkPt, const cv::Mat& matTemplate, const cv::Rect searchRect,
 	Time maxTime, Time clkTime, float thres
 ) {
@@ -301,15 +301,15 @@ bool Helper::step_keepClickingUntil(
 	do {
 		if (maxTime > Time::Zero && clock.getElapsedTime() >= maxTime) // 应用超时
 			return false;
-		step_click(clkPt); // 点击
-	} while (!m_askedForStop && !step_waitFor(matTemplate, searchRect, rect, clkTime, thres));
+		Step_Click(clkPt); // 点击
+	} while (!m_askedForStop && !Step_WaitFor(matTemplate, searchRect, rect, clkTime, thres));
 	if (m_askedForStop)
 		throw 0;
 	return true;
 }
 
-void Helper::step_subtaskError(unsigned long type) {
-	msgPush(HelperReturnMessage::LOG_ErrorInTask, type);
+void Helper::Step_TaskError(unsigned long type) {
+	PushMsgCode(HelperReturnMessage::LOG_ErrorInTask, type);
 	throw 0; // 要求停止
 }
 
