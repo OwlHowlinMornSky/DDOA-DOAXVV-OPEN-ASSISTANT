@@ -38,9 +38,6 @@
     <ClInclude Include="Clock.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="framework.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Helper.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -50,14 +47,17 @@
     <ClInclude Include="Time.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="API.h">
+    <ClInclude Include="ReturnMessages.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>头文件</Filter>
+      <Filter>资源文件</Filter>
     </ClInclude>
-    <ClInclude Include="ReturnMessages.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="API.h">
+      <Filter>资源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>资源文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
