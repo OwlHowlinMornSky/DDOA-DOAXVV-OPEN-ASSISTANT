@@ -34,7 +34,7 @@ HelperWrapper::~HelperWrapper() {
 	r_helper = nullptr;
 }
 
-System::Int32 HelperWrapper::set(HelprSet type, System::Int32 val) {
+System::Int32 HelperWrapper::SetSetting(HelprSet type, System::Int32 val) {
 	switch (type) {
 	case HelprSet::Cha_New:
 		return r_helper->regForNew(val);
@@ -50,29 +50,29 @@ System::Int32 HelperWrapper::set(HelprSet type, System::Int32 val) {
 	return 1l;
 }
 
-System::Boolean HelperWrapper::start() {
+System::Boolean HelperWrapper::Start() {
 	return r_helper->start();
 }
 
-System::Void HelperWrapper::askForStop() {
+System::Void HelperWrapper::AskForStop() {
 	r_helper->askForStop();
 }
 
-System::Boolean HelperWrapper::isRunning() {
+System::Boolean HelperWrapper::IsRunning() {
 	return r_helper->isRunning();
 }
 
-ReturnMessage HelperWrapper::msgPop() {
+ReturnMessage HelperWrapper::GetMessage() {
 	System::UInt32 res = r_helper->msgPop();
 	return ReturnMessage(res);
 }
 
-System::UInt32 HelperWrapper::codePop() {
+System::UInt32 HelperWrapper::GetCode() {
 	System::UInt32 res = r_helper->msgPop();
 	return res;
 }
 
-System::Void HelperWrapper::drop() {
+System::Void HelperWrapper::Drop() {
 	ohms::IHelper::drop();
 	r_helper = nullptr;
 }

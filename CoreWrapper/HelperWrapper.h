@@ -32,16 +32,16 @@ public:
 	~HelperWrapper();
 
 public:
-	System::Int32 set(HelprSet type, System::Int32 val);
+	System::Int32 SetSetting(HelprSet type, System::Int32 val);
 
-	System::Boolean start();
-	System::Void askForStop();
-	System::Boolean isRunning();
+	System::Boolean Start();
+	System::Void AskForStop();
+	System::Boolean IsRunning();
 
-	ReturnMessage msgPop();
-	System::UInt32 codePop();
+	ReturnMessage GetMessage();
+	System::UInt32 GetCode();
 
-	System::Void drop();
+	System::Void Drop();
 
 private:
 	ohms::IHelper* r_helper;

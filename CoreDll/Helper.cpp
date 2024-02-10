@@ -106,7 +106,7 @@ long Helper::regPreventKeepDisplay(bool keep) {
 
 bool Helper::start() {
 	if (m_running) { // 已经有任务运行（或者有bug没清除运行标记）
-		msgPush(HelperReturnMessage::Log_ErrorIsRunning);
+		msgPush(HelperReturnMessage::LOG_ErrorIsRunning);
 		return false;
 	}
 	r_capture = wgc::ICapture::getInstance(); // 获取capture索引
@@ -123,7 +123,7 @@ bool Helper::start() {
 
 void Helper::askForStop() {
 	if (m_running) { // 运行的时候才有意义
-		msgPush(HelperReturnMessage::Log_Stopping);
+		msgPush(HelperReturnMessage::LOG_Stopping);
 		m_askedForStop = true;
 	}
 	return;
@@ -146,7 +146,7 @@ unsigned long Helper::msgPop() {
 
 void Helper::mainwork() {
 	m_running = true; // 设置标记（return前要清除）
-	msgPush(HelperReturnMessage::BtnToStop); // 让主按钮变为stop
+	msgPush(HelperReturnMessage::CMD_BtnToStop); // 让主按钮变为stop
 
 	// 按设置防止关闭屏幕和睡眠
 	if (task_PreventFromSleep) {
@@ -159,11 +159,11 @@ void Helper::mainwork() {
 	try {
 		m_doaxvv = FindWindowW(g_findCls, g_findWnd); // 查找doaxvv窗口
 		if (m_doaxvv == NULL) {
-			msgPush(HelperReturnMessage::Log_ErrorNotFindWnd);
+			msgPush(HelperReturnMessage::LOG_ErrorNotFindWnd);
 			throw 0;
 		}
 		if (!IsWindow(m_doaxvv) || IsIconic(m_doaxvv) || !r_capture->startCapture(m_doaxvv)) { // 这些是能截图的必要条件
-			msgPush(HelperReturnMessage::Log_ErrorCannotCapture);
+			msgPush(HelperReturnMessage::LOG_ErrorCannotCapture);
 			throw 0;
 		}
 
@@ -173,11 +173,11 @@ void Helper::mainwork() {
 	catch (int err) {
 		// catch 到 0 是 主动停止，不是 0 则是错误
 		if (err != 0) {
-			msgPush(HelperReturnMessage::Log_ErrorInWork);
+			msgPush(HelperReturnMessage::LOG_ErrorInWork);
 		}
 	}
 	catch (...) {
-		msgPush(HelperReturnMessage::Log_ErrorInWork);
+		msgPush(HelperReturnMessage::LOG_ErrorInWork);
 	}
 	r_capture->stopCapture(); // 停止截图
 
@@ -187,8 +187,8 @@ void Helper::mainwork() {
 	cv::destroyAllWindows(); // 销毁show窗口
 
 	m_running = false; // 清除标记
-	msgPush(HelperReturnMessage::BtnToStart); // 让主按钮变成start
-	msgPush(HelperReturnMessage::Stopped); // 通知已完全停止
+	msgPush(HelperReturnMessage::CMD_BtnToStart); // 让主按钮变成start
+	msgPush(HelperReturnMessage::CMD_Stopped); // 通知已完全停止
 	return;
 }
 

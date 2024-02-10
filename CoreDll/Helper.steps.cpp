@@ -309,7 +309,7 @@ bool Helper::step_keepClickingUntil(
 }
 
 void Helper::step_subtaskError(unsigned long type) {
-	msgPush(HelperReturnMessage::Log_ErrorInTask, type);
+	msgPush(HelperReturnMessage::LOG_ErrorInTask, type);
 	throw 0; // 要求停止
 }
 

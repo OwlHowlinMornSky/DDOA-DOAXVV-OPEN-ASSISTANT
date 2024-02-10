@@ -97,17 +97,17 @@ namespace WinFormsGUI {
 		}
 
 		private void FormMain_FormClosing(object sender, FormClosingEventArgs e) {
-			m_helper.askForStop();
+			m_helper.AskForStop();
 
 			Settings.Main.Default.Save();
 
-			while (m_helper.isRunning()) {
+			while (m_helper.IsRunning()) {
 				Thread.Sleep(30);
 			}
 		}
 
 		private void FormMain_FormClosed(object sender, FormClosedEventArgs e) {
-			m_helper.drop();
+			m_helper.Drop();
 		}
 
 		#endregion
@@ -122,24 +122,24 @@ namespace WinFormsGUI {
 			if (m_btnMainIsStart) {
 				listBox_home.Items.Clear();
 
-				if (!m_helper.start()) {
+				if (!m_helper.Start()) {
 					Log(Strings.Main.Main_Log_CanNotStartWork);
 					return;
 				}
 				timer_main.Enabled = true;
 			}
 			else {
-				m_helper.askForStop();
+				m_helper.AskForStop();
 			}
 		}
 
 		private void radioBtn_home_game_CheckedChanged(object sender, EventArgs e) {
-			m_helper.set(HelprSet.Cha_New, radioBtn_home_gameNew.Checked ? 1 : 0);
+			m_helper.SetSetting(HelprSet.Cha_New, radioBtn_home_gameNew.Checked ? 1 : 0);
 			Settings.Main.Default.Game_ForNew = radioBtn_home_gameNew.Checked;
 		}
 
 		private void radioBtn_home_ctrl_CheckedChanged(object sender, EventArgs e) {
-			m_helper.set(HelprSet.Ctrl_MouseInput, radioBtn_home_ctrlInput.Checked ? 1 : 0);
+			m_helper.SetSetting(HelprSet.Ctrl_MouseInput, radioBtn_home_ctrlInput.Checked ? 1 : 0);
 			Settings.Main.Default.Ctrl_ForMouse = radioBtn_home_ctrlInput.Checked;
 		}
 
@@ -148,7 +148,7 @@ namespace WinFormsGUI {
 		#region -----------Tab1------------
 
 		private void checkBox_settings_showCV_CheckedChanged(object sender, EventArgs e) {
-			m_helper.set(HelprSet.ShowCV, checkBox_settings_showCV.Checked ? 1 : 0);
+			m_helper.SetSetting(HelprSet.ShowCV, checkBox_settings_showCV.Checked ? 1 : 0);
 			Settings.Main.Default.ShowCV = checkBox_settings_showCV.Checked;
 		}
 
@@ -163,18 +163,18 @@ namespace WinFormsGUI {
 			if (checkBox_settings_preventFromSleeping.Checked) {
 				Settings.Main.Default.PreventSleep = true;
 				checkBox_settings_keepDisplay.Enabled = true;
-				m_helper.set(HelprSet.PreventFromSleep, 1);
+				m_helper.SetSetting(HelprSet.PreventFromSleep, 1);
 			}
 			else {
 				Settings.Main.Default.PreventSleep = false;
 				checkBox_settings_keepDisplay.Checked = false;
 				checkBox_settings_keepDisplay.Enabled = false;
-				m_helper.set(HelprSet.PreventFromSleep, 0);
+				m_helper.SetSetting(HelprSet.PreventFromSleep, 0);
 			}
 		}
 
 		private void checkBox_settings_keepDisplay_CheckedChanged(object sender, EventArgs e) {
-			m_helper.set(
+			m_helper.SetSetting(
 				HelprSet.KeepDisplay,
 				checkBox_settings_keepDisplay.Checked ? 1 : 0
 			);
@@ -222,20 +222,20 @@ namespace WinFormsGUI {
 
 		private void Timer_main_Tick(object sender, EventArgs e) {
 			ReturnMessage m;
-			while ((m = m_helper.msgPop()) != ReturnMessage.None)
+			while ((m = m_helper.GetMessage()) != ReturnMessage.None)
 				switch (m) {
-				case ReturnMessage.Stopped:
+				case ReturnMessage.Cmd_Stopped:
 					Log(Strings.Main.Main_Log_WorkStopped);
 					gpBox_home_gameSet.Enabled = true;
 					gpBox_home_ctrlSet.Enabled = true;
 					timer_main.Enabled = false;
 					break;
-				case ReturnMessage.BtnToStop:
+				case ReturnMessage.Cmd_BtnToStop:
 					btn_home_main.Text = Strings.Main.Main_Btn_Stop;
 					btn_home_main.Enabled = true;
 					m_btnMainIsStart = false;
 					break;
-				case ReturnMessage.BtnToStart:
+				case ReturnMessage.Cmd_BtnToStart:
 					btn_home_main.Text = Strings.Main.Main_Btn_Start;
 					btn_home_main.Enabled = true;
 					m_btnMainIsStart = true;
@@ -265,31 +265,31 @@ namespace WinFormsGUI {
 					break;
 				case ReturnMessage.Log_ErrorInTask:
 					Log();
-					m = m_helper.msgPop();
+					m = m_helper.GetMessage();
 					string text = "null";
 					switch (m) {
-					case ReturnMessage.Log_Task_Challenge_NoNew:
+					case ReturnMessage.Str_Task_Challenge_NoNew:
 						text = Strings.Main.Log_Task_Challenge_NoNew;
 						break;
-					case ReturnMessage.Log_Task_Challenge_NoLast:
+					case ReturnMessage.Str_Task_Challenge_NoLast:
 						text = Strings.Main.Log_Task_Challenge_NoLast;
 						break;
-					case ReturnMessage.Log_Task_Challenge_NoEnter:
+					case ReturnMessage.Str_Task_Challenge_NoEnter:
 						text = Strings.Main.Log_Task_Challenge_NoEnter;
 						break;
-					case ReturnMessage.Log_Task_Challenge_LowFP:
+					case ReturnMessage.Str_Task_Challenge_LowFP:
 						text = Strings.Main.Log_Task_Challenge_LowFP;
 						break;
-					case ReturnMessage.Log_Task_Challenge_NoStart:
+					case ReturnMessage.Str_Task_Challenge_NoStart:
 						text = Strings.Main.Log_Task_Challenge_NoStart;
 						break;
-					case ReturnMessage.Log_Task_Challenge_TimeOut:
+					case ReturnMessage.Str_Task_Challenge_TimeOut:
 						text = Strings.Main.Log_Task_Challenge_TimeOut;
 						break;
-					case ReturnMessage.Log_Task_Challenge_NoEnd:
+					case ReturnMessage.Str_Task_Challenge_NoEnd:
 						text = Strings.Main.Log_Task_Challenge_NoEnd;
 						break;
-					case ReturnMessage.Log_Task_Challenge_NoOver:
+					case ReturnMessage.Str_Task_Challenge_NoOver:
 						text = Strings.Main.Log_Task_Challenge_NoOver;
 						break;
 					}
@@ -307,7 +307,7 @@ namespace WinFormsGUI {
 					Log(Strings.Main.Main_Log_Challenge_Start);
 					break;
 				case ReturnMessage.Log_Challenge_BeginNum: // 挑战赛开始（下跟次数！）
-					Log(string.Format(Strings.Main.Main_Log_Challenge_BeginNum, m_helper.codePop()));
+					Log(string.Format(Strings.Main.Main_Log_Challenge_BeginNum, m_helper.GetCode()));
 					break;
 				case ReturnMessage.Log_Challenge_EnterLast:
 					Log(Strings.Main.Main_Log_Challenge_EnterLast);
