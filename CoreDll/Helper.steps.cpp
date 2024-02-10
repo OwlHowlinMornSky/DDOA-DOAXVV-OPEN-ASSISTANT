@@ -153,7 +153,7 @@ inline bool find(const cv::Mat& matSample, const cv::Mat& matTemplate, cv::Rect&
 
 namespace ohms {
 
-long Helper::regShowCV(bool show) {
+long Helper::setShowCapture(bool show) {
 	std::lock_guard lg(g_showcvMutex);
 	g_showcv = show;
 	return 0l;
@@ -218,7 +218,7 @@ bool Helper::Step_Click(cv::Point pt) {
 	pt.x = static_cast<int>(pt.x / 960.0f * (rect.right - rect.left));
 	pt.y = static_cast<int>(pt.y / 540.0f * (rect.bottom - rect.top));
 
-	if (task_Mouse_ForMouse) {
+	if (m_set.Mouse_ForMouse) {
 		GetWindowRect(m_doaxvv, &rect);
 
 		//获取可用桌面大小

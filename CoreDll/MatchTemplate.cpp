@@ -18,19 +18,11 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "MatchTemplate.h"
 
-namespace Wrapper {
+namespace ohms {
 
-public enum class HelperSet {
-	None = 0,
-
-	Ctrl_MouseInput,
-	Ctrl_ShowCapture,
-	Ctrl_PreventFromSleep,
-	Ctrl_KeepDisplay,
-
-	Cha_PlayNew
-};
+MatchTemplate::MatchTemplate() :
+	type(MatchType::None) {}
 
 }

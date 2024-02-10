@@ -34,18 +34,19 @@ HelperWrapper::~HelperWrapper() {
 	r_helper = nullptr;
 }
 
-System::Int32 HelperWrapper::SetSetting(HelprSet type, System::Int32 val) {
+System::Int32 HelperWrapper::SetSetting(HelperSet type, System::Int32 val) {
 	switch (type) {
-	case HelprSet::Cha_New:
-		return r_helper->regForNew(val);
-	case HelprSet::Ctrl_MouseInput:
-		return r_helper->regForMouse(val);
-	case HelprSet::ShowCV:
-		return r_helper->regShowCV(val);
-	case HelprSet::PreventFromSleep:
-		return r_helper->regPrevent(val);
-	case HelprSet::KeepDisplay:
-		return r_helper->regPreventKeepDisplay(val);
+	case HelperSet::Ctrl_MouseInput:
+		return r_helper->setUseMouseInput(val);
+	case HelperSet::Ctrl_ShowCapture:
+		return r_helper->setShowCapture(val);
+	case HelperSet::Ctrl_PreventFromSleep:
+		return r_helper->setPreventSleep(val);
+	case HelperSet::Ctrl_KeepDisplay:
+		return r_helper->setPreventCloseDisplay(val);
+
+	case HelperSet::Cha_PlayNew:
+		return r_helper->setPlayChallengeForNew(val);
 	}
 	return 1l;
 }

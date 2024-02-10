@@ -18,19 +18,16 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "Settings.h"
 
-namespace Wrapper {
+namespace ohms {
 
-public enum class HelperSet {
-	None = 0,
+Settings::Settings() :
+	ChaGame_ForNew(false), // 默认上一次比赛
+	Mouse_ForMouse(false), // 默认发窗口消息
 
-	Ctrl_MouseInput,
-	Ctrl_ShowCapture,
-	Ctrl_PreventFromSleep,
-	Ctrl_KeepDisplay,
-
-	Cha_PlayNew
-};
+	PreventFromSleep(true), // 默认阻止睡眠
+	KeepDisplay(false) // 默认不保持显示
+{}
 
 }

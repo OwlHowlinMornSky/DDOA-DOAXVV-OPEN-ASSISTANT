@@ -108,6 +108,8 @@
     <ClCompile Include="Helper.steps.cpp" />
     <ClCompile Include="Helper.tasks.cpp" />
     <ClCompile Include="IHelper.cpp" />
+    <ClCompile Include="MatchTemplate.cpp" />
+    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -116,8 +118,10 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="IHelper.h" />
+    <ClInclude Include="MatchTemplate.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ReturnMessages.h" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="Time.h" />
   </ItemGroup>
   <ItemGroup>

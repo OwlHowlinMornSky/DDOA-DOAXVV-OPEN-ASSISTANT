@@ -26,6 +26,7 @@
 
 #include "Time.h"
 #include "IHelper.h"
+#include "Settings.h"
 
 #include <ohms/WGC.h>
 #include <opencv2/opencv.hpp>
@@ -42,40 +43,17 @@ public:
 
 // 继承的，接口。
 public:
-	/**
-	 * @brief 设置挑战赛打新比赛
-	 * @param forNew true则打新比赛，否则打上一次比赛
-	*/
-	virtual long regForNew(bool forNew) override;
-
-	virtual long regForMouse(bool forMouse) override;
-
-	virtual long regShowCV(bool show) override;
-
-	virtual long regPrevent(bool prevent) override;
-	virtual long regPreventKeepDisplay(bool keep) override;
+	virtual bool start() override;
+	virtual void askForStop() override;
+	virtual bool isRunning() override;
+	virtual unsigned long msgPop() override;
 
 public:
-	/**
-	 * @brief 尝试开始任务。任务将运行在子线程，如果已经运行则无效。
-	 * @return true为成功
-	*/
-	virtual bool start() override;
-	/**
-	 * @brief 请求停止
-	*/
-	virtual void askForStop() override;
-	/**
-	 * @brief 是否正在运行任务
-	 * @return true则正在运行
-	*/
-	virtual bool isRunning() override;
-	/**
-	 * @brief 弹出返回消息
-	 * @param hrm 保存消息的变量
-	 * @return true则获取到，否则没有消息
-	*/
-	virtual unsigned long msgPop() override;
+	virtual long setPlayChallengeForNew(bool forNew) override;
+	virtual long setUseMouseInput(bool forMouse) override;
+	virtual long setShowCapture(bool show) override;
+	virtual long setPreventSleep(bool prevent) override;
+	virtual long setPreventCloseDisplay(bool keep) override;
 
 // 内部的，具体实现。
 protected:
@@ -170,14 +148,13 @@ protected:
 	HWND m_doaxvv; // doaxvv窗口句柄
 	wgc::ICapture* r_capture; // capture索引
 
+	Settings m_set;
+
+
 	// 上一次比赛 和 新比赛 的图样，以及查找范围。
 	cv::Mat mat_ChaGameLast;
 	cv::Mat mat_ChaGameNew;
 	cv::Rect rect_ChaGame;
-	bool task_ChaGame_ForNew; // 选择新比赛。
-	bool task_Mouse_ForMouse; // 选择控制鼠标。
-	bool task_PreventFromSleep; // 阻止睡眠。
-	bool task_KeepDisplay; // 阻止睡眠时保持显示。
 
 	// 编队页面右下角的 挑战按钮。
 	cv::Mat mat_StartGame;

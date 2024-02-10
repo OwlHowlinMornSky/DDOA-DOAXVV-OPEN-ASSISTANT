@@ -38,13 +38,7 @@ Helper::Helper() :
 	m_askedForStop(false), // 没有要求停止
 
 	m_doaxvv(0), // 初始未查找
-	r_capture(nullptr), // 初始无索引
-
-	task_ChaGame_ForNew(false), // 默认上一次比赛
-	task_Mouse_ForMouse(false), // 默认发窗口消息
-
-	task_PreventFromSleep(true), // 默认阻止睡眠
-	task_KeepDisplay(false) // 默认不保持显示
+	r_capture(nullptr) // 初始无索引
 
 {
 	if (!wgc::ICapture::setup(true)) {
@@ -76,31 +70,31 @@ Helper::Helper() :
 
 Helper::~Helper() {}
 
-long Helper::regForNew(bool forNew) {
+long Helper::setPlayChallengeForNew(bool forNew) {
 	if (m_running)
 		return 1l;
-	task_ChaGame_ForNew = forNew;
+	m_set.ChaGame_ForNew = forNew;
 	return 0l;
 }
 
-long Helper::regForMouse(bool forMouse) {
+long Helper::setUseMouseInput(bool forMouse) {
 	if (m_running)
 		return 1l;
-	task_Mouse_ForMouse = forMouse;
+	m_set.Mouse_ForMouse = forMouse;
 	return 0l;
 }
 
-long Helper::regPrevent(bool prevent) {
+long Helper::setPreventSleep(bool prevent) {
 	if (m_running)
 		return 1l;
-	task_PreventFromSleep = prevent;
+	m_set.PreventFromSleep = prevent;
 	return 0l;
 }
 
-long Helper::regPreventKeepDisplay(bool keep) {
+long Helper::setPreventCloseDisplay(bool keep) {
 	if (m_running)
 		return 1l;
-	task_KeepDisplay = keep;
+	m_set.KeepDisplay = keep;
 	return 0l;
 }
 
@@ -149,10 +143,10 @@ void Helper::Work() {
 	PushMsg(HelperReturnMessage::CMD_BtnToStop); // 让主按钮变为stop
 
 	// 按设置防止关闭屏幕和睡眠
-	if (task_PreventFromSleep) {
+	if (m_set.PreventFromSleep) {
 		SetThreadExecutionState(
 			ES_CONTINUOUS | ES_SYSTEM_REQUIRED |
-			(task_KeepDisplay ? ES_DISPLAY_REQUIRED : 0)
+			(m_set.KeepDisplay ? ES_DISPLAY_REQUIRED : 0)
 		);
 	}
 

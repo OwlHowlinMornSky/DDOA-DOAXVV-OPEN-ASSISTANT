@@ -32,7 +32,7 @@ public:
 	~HelperWrapper();
 
 public:
-	System::Int32 SetSetting(HelprSet type, System::Int32 val);
+	System::Int32 SetSetting(HelperSet type, System::Int32 val);
 
 	System::Boolean Start();
 	System::Void AskForStop();

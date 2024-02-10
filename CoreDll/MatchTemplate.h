@@ -20,17 +20,23 @@
 */
 #pragma once
 
-namespace Wrapper {
+#include <opencv2/core/types.hpp>
+#include <opencv2/core/mat.hpp>
 
-public enum class HelperSet {
+namespace ohms {
+
+enum class MatchType {
 	None = 0,
+	Fixed,
+	Search
+};
 
-	Ctrl_MouseInput,
-	Ctrl_ShowCapture,
-	Ctrl_PreventFromSleep,
-	Ctrl_KeepDisplay,
+struct MatchTemplate {
+	MatchType type;
+	cv::Rect rect;
+	cv::Mat mat;
 
-	Cha_PlayNew
+	MatchTemplate();
 };
 
 }

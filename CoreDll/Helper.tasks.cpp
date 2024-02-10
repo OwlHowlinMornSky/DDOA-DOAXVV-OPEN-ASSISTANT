@@ -24,7 +24,7 @@ namespace ohms {
 
 bool Helper::Task_Challenge() {
 	PushMsg(HelperReturnMessage::LOG_Challenge_Start);
-	const bool forNew = task_ChaGame_ForNew; // 保存设置
+	const bool forNew = m_set.ChaGame_ForNew; // 保存设置
 
 	cv::Rect rect;
 	cv::Point pt;
@@ -36,13 +36,26 @@ begin_point:
 		++i;
 		PushMsgCode(HelperReturnMessage::LOG_Challenge_BeginNum, i);
 
-		// 查找目标。
-		if (!Step_WaitFor(forNew ? mat_ChaGameNew : mat_ChaGameLast, rect_ChaGame, rect, seconds(15.0f)))
-			Step_TaskError(
-				forNew ?
-				HelperReturnMessage::STR_Task_Challenge_NoNew :
-				HelperReturnMessage::STR_Task_Challenge_NoLast
-			);
+		{
+			size_t tc = 0;
+			while (!m_askedForStop) {
+				// 查找目标比赛按钮。
+				if (!Step_WaitFor(forNew ? mat_ChaGameNew : mat_ChaGameLast, rect_ChaGame, rect, seconds(15.0f)))
+					break;
+				// 瞟一眼是否是奖励挑战赛。
+				if (Step_WaitFor(mat_LowFP, rect_LowFP, rect, seconds(0.2f))) {
+					// 进入奖励挑战赛。
+				}
+				// 尝试次数超限则报错。
+				if (++tc > 10)
+					Step_TaskError(
+						forNew ?
+						HelperReturnMessage::STR_Task_Challenge_NoNew :
+						HelperReturnMessage::STR_Task_Challenge_NoLast
+					);
+			}
+		}
+
 
 		// 点击比赛，直到进入编队画面（找到挑战按钮）。
 		PushMsg(forNew ? HelperReturnMessage::LOG_Challenge_EnterNew : HelperReturnMessage::LOG_Challenge_EnterLast);
@@ -59,9 +72,11 @@ begin_point:
 				pt = { rect.x + 50, rect.y + 20 };
 				if (Step_KeepClickingUntil(pt, mat_Loading, rect_Loading, seconds(1.5f), seconds(0.3f), 20.0f))
 					break;
+				// 瞟一眼是否是fp不足。
 				if (Step_WaitFor(mat_LowFP, rect_LowFP, rect, seconds(0.2f)))
 					Step_TaskError(HelperReturnMessage::STR_Task_Challenge_LowFP);
-				if (++tc > 10)
+				// 尝试次数超限则报错。
+				if (++tc > 12)
 					Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoStart);
 			}
 		}

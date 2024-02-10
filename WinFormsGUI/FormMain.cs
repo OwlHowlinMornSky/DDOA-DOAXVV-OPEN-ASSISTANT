@@ -134,12 +134,12 @@ namespace WinFormsGUI {
 		}
 
 		private void radioBtn_home_game_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetSetting(HelprSet.Cha_New, radioBtn_home_gameNew.Checked ? 1 : 0);
+			m_helper.SetSetting(HelperSet.Cha_PlayNew, radioBtn_home_gameNew.Checked ? 1 : 0);
 			Settings.Main.Default.Game_ForNew = radioBtn_home_gameNew.Checked;
 		}
 
 		private void radioBtn_home_ctrl_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetSetting(HelprSet.Ctrl_MouseInput, radioBtn_home_ctrlInput.Checked ? 1 : 0);
+			m_helper.SetSetting(HelperSet.Ctrl_MouseInput, radioBtn_home_ctrlInput.Checked ? 1 : 0);
 			Settings.Main.Default.Ctrl_ForMouse = radioBtn_home_ctrlInput.Checked;
 		}
 
@@ -148,7 +148,7 @@ namespace WinFormsGUI {
 		#region -----------Tab1------------
 
 		private void checkBox_settings_showCV_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetSetting(HelprSet.ShowCV, checkBox_settings_showCV.Checked ? 1 : 0);
+			m_helper.SetSetting(HelperSet.Ctrl_ShowCapture, checkBox_settings_showCV.Checked ? 1 : 0);
 			Settings.Main.Default.ShowCV = checkBox_settings_showCV.Checked;
 		}
 
@@ -163,19 +163,19 @@ namespace WinFormsGUI {
 			if (checkBox_settings_preventFromSleeping.Checked) {
 				Settings.Main.Default.PreventSleep = true;
 				checkBox_settings_keepDisplay.Enabled = true;
-				m_helper.SetSetting(HelprSet.PreventFromSleep, 1);
+				m_helper.SetSetting(HelperSet.Ctrl_PreventFromSleep, 1);
 			}
 			else {
 				Settings.Main.Default.PreventSleep = false;
 				checkBox_settings_keepDisplay.Checked = false;
 				checkBox_settings_keepDisplay.Enabled = false;
-				m_helper.SetSetting(HelprSet.PreventFromSleep, 0);
+				m_helper.SetSetting(HelperSet.Ctrl_PreventFromSleep, 0);
 			}
 		}
 
 		private void checkBox_settings_keepDisplay_CheckedChanged(object sender, EventArgs e) {
 			m_helper.SetSetting(
-				HelprSet.KeepDisplay,
+				HelperSet.Ctrl_KeepDisplay,
 				checkBox_settings_keepDisplay.Checked ? 1 : 0
 			);
 			Settings.Main.Default.KeepDisplay = checkBox_settings_keepDisplay.Checked;

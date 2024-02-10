@@ -36,21 +36,6 @@ public:
 
 public:
 	/**
-	 * @brief 设置挑战赛打新比赛
-	 * @param forNew true则打新比赛，否则打上一次比赛
-	 * @return 0 if success.
-	*/
-	virtual long regForNew(bool forNew) = 0;
-
-	virtual long regForMouse(bool forMouse) = 0;
-
-	virtual long regShowCV(bool show) = 0;
-
-	virtual long regPrevent(bool prevent) = 0;
-	virtual long regPreventKeepDisplay(bool keep) = 0;
-
-public:
-	/**
 	 * @brief 尝试开始任务。任务将运行在子线程，如果已经运行则无效。
 	 * @return true为成功
 	*/
@@ -69,6 +54,39 @@ public:
 	 * @brief 弹出返回消息
 	*/
 	virtual unsigned long msgPop() = 0;
+
+public:
+	/**
+	 * @brief 设置挑战赛打新比赛
+	 * @param forNew 为 true 则打新比赛，否则打上一次比赛
+	 * @return 0 if success.
+	*/
+	virtual long setPlayChallengeForNew(bool forNew) = 0;
+	/**
+	 * @brief 设置使用鼠标输入。
+	 * @param forMouse 为 true 则使用鼠标输入，否则发送窗口消息。
+	 * @return 0 if success.
+	*/
+	virtual long setUseMouseInput(bool forMouse) = 0;
+	/**
+	 * @brief 
+	 * @param show 
+	 * @return 0 if success.
+	*/
+	virtual long setShowCapture(bool show) = 0;
+	/**
+	 * @brief 
+	 * @param prevent 
+	 * @return 0 if success.
+	*/
+	virtual long setPreventSleep(bool prevent) = 0;
+	/**
+	 * @brief 
+	 * @param keep 
+	 * @return 0 if success.
+	*/
+	virtual long setPreventCloseDisplay(bool keep) = 0;
+
 };
 
 } // namespace ohms

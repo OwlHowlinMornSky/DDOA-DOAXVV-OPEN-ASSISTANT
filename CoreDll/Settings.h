@@ -20,17 +20,15 @@
 */
 #pragma once
 
-namespace Wrapper {
+namespace ohms {
 
-public enum class HelperSet {
-	None = 0,
+struct Settings {
+	bool ChaGame_ForNew; // 选择新比赛。
+	bool Mouse_ForMouse; // 选择控制鼠标。
+	bool PreventFromSleep; // 阻止睡眠。
+	bool KeepDisplay; // 阻止睡眠同时保持显示。
 
-	Ctrl_MouseInput,
-	Ctrl_ShowCapture,
-	Ctrl_PreventFromSleep,
-	Ctrl_KeepDisplay,
-
-	Cha_PlayNew
+	Settings();
 };
 
 }
