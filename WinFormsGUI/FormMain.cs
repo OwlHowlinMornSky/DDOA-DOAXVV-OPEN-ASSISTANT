@@ -259,6 +259,9 @@ namespace WinFormsGUI {
 			ReturnMessage m;
 			while ((m = m_helper.GetMessage()) != ReturnMessage.None)
 				switch (m) {
+				case ReturnMessage.None:
+					Log();
+					break;
 				case ReturnMessage.CMD_Stopped:
 					Log(Strings.Main.Main_Log_WorkStopped);
 					gpBox_home_gameSet.Enabled = true;
