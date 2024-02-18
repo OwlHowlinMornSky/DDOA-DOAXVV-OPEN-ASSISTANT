@@ -29,6 +29,7 @@ public enum class ReturnMessage {
 
 
 	_CMD_START = ohms::HelperReturnMessage::_CMD_START,
+	CMD_EmptyLine,  // 添加一个空行。
 	CMD_Stopped,    // 任务已停止。
 	CMD_BtnToStop,  // 按钮切换为 “停止”。
 	CMD_BtnToStart, // 按钮切换为 “开始”。

@@ -259,7 +259,7 @@ namespace WinFormsGUI {
 			ReturnMessage m;
 			while ((m = m_helper.GetMessage()) != ReturnMessage.None)
 				switch (m) {
-				case ReturnMessage.None:
+				case ReturnMessage.CMD_EmptyLine:
 					Log();
 					break;
 				case ReturnMessage.CMD_Stopped:

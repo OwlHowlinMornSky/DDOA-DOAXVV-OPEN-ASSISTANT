@@ -32,6 +32,7 @@ enum CORE_API HelperReturnMessage : unsigned long {
 
 
 	_CMD_START = 0x00000000ul,
+	CMD_EmptyLine,  // 添加一个空行。
 	CMD_Stopped,    // 任务已停止。
 	CMD_BtnToStop,  // 按钮切换为 “停止”。
 	CMD_BtnToStart, // 按钮切换为 “开始”。

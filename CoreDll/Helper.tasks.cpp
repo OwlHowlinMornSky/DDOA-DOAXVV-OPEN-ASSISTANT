@@ -38,7 +38,7 @@ bool Helper::Task_Challenge() {
 
 		++i;
 		if (i > 1)
-			PushMsg(HelperReturnMessage::None);
+			PushMsg(HelperReturnMessage::CMD_EmptyLine);
 		PushMsgCode(HelperReturnMessage::LOG_Challenge_BeginNum, i);
 
 		// 查找目标比赛按钮。
