@@ -149,14 +149,13 @@ protected:
 	std::atomic_bool m_running; // 正在运行的标记。true为正在运行
 	std::atomic_bool m_askedForStop; // 请求停止的标记。true为需要停止
 
-	std::queue<unsigned long> m_hrm; // 返回消息的队列
-	std::mutex m_hrm_mutex; // 返回消息的互斥体
+	Settings m_set;
 
 	HWND m_doaxvv; // doaxvv窗口句柄
 	wgc::ICapture* r_capture; // capture索引
 
-	Settings m_set;
-
+	std::queue<unsigned long> m_hrm; // 返回消息的队列
+	std::mutex m_hrm_mutex; // 返回消息的互斥体
 
 	// 上一次比赛 和 新比赛 的图样，以及查找范围。
 	cv::Mat mat_ChaGameLast;
