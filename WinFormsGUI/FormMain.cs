@@ -39,7 +39,7 @@ namespace WinFormsGUI {
 
 		public void Log(string msg) {
 			bool scroll = listBox_home.TopIndex == listBox_home.Items.Count - (int)(listBox_home.Height / listBox_home.ItemHeight);
-			listBox_home.Items.Add(msg);
+			listBox_home.Items.Add(DateTime.Now.ToString("MM-dd HH:mm:ss") + '　' + msg);
 			if (scroll)
 				listBox_home.TopIndex = listBox_home.Items.Count - (int)(listBox_home.Height / listBox_home.ItemHeight);
 		}

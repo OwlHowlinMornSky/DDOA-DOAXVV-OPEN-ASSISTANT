@@ -468,6 +468,9 @@
   <data name="listBox_home.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft YaHei UI, 10pt</value>
   </data>
+  <data name="listBox_home.HorizontalScrollbar" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="listBox_home.ItemHeight" type="System.Int32, mscorlib">
     <value>19</value>
   </data>
