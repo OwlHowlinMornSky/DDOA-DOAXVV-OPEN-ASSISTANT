@@ -14,7 +14,7 @@
     <Product>$(SolutionName)-$(AssemblyName)</Product>
     <Copyright>Copyright © 2023-2024 Tyler Parret True (OHMS) </Copyright>
     <AssemblyVersion>2.3.0</AssemblyVersion>
-    <FileVersion>2.3.0.1</FileVersion>
+    <FileVersion>2.3.0.6</FileVersion>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <Description>DDOA</Description>
     <AssemblyName>$(SolutionName)</AssemblyName>

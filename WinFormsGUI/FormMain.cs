@@ -99,6 +99,11 @@ namespace WinFormsGUI {
 				radioBtn_home_addNo.Checked = true;
 				break;
 			}
+
+			if (Settings.Main.Default.LastPosition.X != -1 && Settings.Main.Default.LastPosition.Y != -1)
+				Location = Settings.Main.Default.LastPosition;
+			if (Settings.Main.Default.LastClientSize.Width != 0 && Settings.Main.Default.LastClientSize.Height != 0)
+				ClientSize = Settings.Main.Default.LastClientSize;
 		}
 
 		private void FormMain_Deactivate(object sender, EventArgs e) {
@@ -110,6 +115,9 @@ namespace WinFormsGUI {
 
 		private void FormMain_FormClosing(object sender, FormClosingEventArgs e) {
 			m_helper.AskForStop();
+
+			Settings.Main.Default.LastPosition = Location;
+			//Settings.Main.Default.LastClientSize = ClientSize;
 
 			Settings.Main.Default.Save();
 

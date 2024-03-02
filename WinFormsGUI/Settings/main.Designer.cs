@@ -12,7 +12,7 @@ namespace WinFormsGUI.Settings {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.8.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.9.0.0")]
     internal sealed partial class Main : global::System.Configuration.ApplicationSettingsBase {
         
         private static Main defaultInstance = ((Main)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Main())));
@@ -149,6 +149,30 @@ namespace WinFormsGUI.Settings {
             }
             set {
                 this["Cha_Add"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1, -1")]
+        public global::System.Drawing.Point LastPosition {
+            get {
+                return ((global::System.Drawing.Point)(this["LastPosition"]));
+            }
+            set {
+                this["LastPosition"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Size LastClientSize {
+            get {
+                return ((global::System.Drawing.Size)(this["LastClientSize"]));
+            }
+            set {
+                this["LastClientSize"] = value;
             }
         }
     }
