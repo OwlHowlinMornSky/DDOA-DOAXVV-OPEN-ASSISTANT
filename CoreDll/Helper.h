@@ -79,6 +79,8 @@ protected:
 // 返回 false 表示无法继续
 // (在 Helper.tasks.cpp 实现)
 protected:
+	bool Task_StartUp(); // 启动游戏。
+
 	bool Task_Challenge(); // 挑战赛。
 
 // 单步操作

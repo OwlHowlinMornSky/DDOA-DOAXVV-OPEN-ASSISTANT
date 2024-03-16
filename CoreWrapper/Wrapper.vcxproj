@@ -16,7 +16,7 @@
     <ProjectGuid>{F5EA4876-3557-449B-A371-ED560953A615}</ProjectGuid>
     <Keyword>NetCoreCProj</Keyword>
     <RootNamespace>Wrapper</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <TargetFramework>net6.0</TargetFramework>
     <WindowsTargetPlatformMinVersion>10.0.22000.0</WindowsTargetPlatformMinVersion>
     <ProjectName>CoreWrapper</ProjectName>

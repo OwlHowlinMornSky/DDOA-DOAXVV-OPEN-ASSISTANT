@@ -178,7 +178,7 @@ void Helper::Work() {
 			throw 0;
 		}
 
-		// Run subworks.
+		// Run task.
 		Task_Challenge();
 	}
 	catch (int err) {

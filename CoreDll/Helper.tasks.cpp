@@ -22,6 +22,12 @@
 
 namespace ohms {
 
+bool Helper::Task_StartUp() {
+	system("start steam://rungameid/958260");
+
+	return true;
+}
+
 bool Helper::Task_Challenge() {
 	PushMsg(HelperReturnMessage::LOG_Challenge_Start);
 	const bool forNew = m_set.ChaGame_ForNew; // 保存设置

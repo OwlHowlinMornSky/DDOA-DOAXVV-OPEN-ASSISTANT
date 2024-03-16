@@ -169,6 +169,105 @@
   <data name="radioBtn_home_gameLast.Text" xml:space="preserve">
     <value>上一次比赛</value>
   </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>122, 38</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 77</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 80</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>关卡选择</value>
+  </data>
+  <data name="radioButton1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 21</value>
+  </data>
+  <data name="radioButton1.Text" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="radioButton2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 21</value>
+  </data>
+  <data name="radioButton2.Text" xml:space="preserve">
+    <value>上一次比赛</value>
+  </data>
+  <data name="panel_set_startup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 50</value>
+  </data>
+  <data name="groupBox_set_start_wait.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 100</value>
+  </data>
+  <data name="groupBox_set_start_wait.Text" xml:space="preserve">
+    <value>等待时间限制</value>
+  </data>
+  <data name="groupBox_set_startup_plat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 62</value>
+  </data>
+  <data name="groupBox_set_startup_plat.Text" xml:space="preserve">
+    <value>平台</value>
+  </data>
+  <data name="checkBox8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 21</value>
+  </data>
+  <data name="checkBox8.Text" xml:space="preserve">
+    <value>领取奖励</value>
+  </data>
+  <data name="checkBox7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 21</value>
+  </data>
+  <data name="checkBox7.Text" xml:space="preserve">
+    <value>刷体力</value>
+  </data>
+  <data name="checkBox6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 21</value>
+  </data>
+  <data name="checkBox6.Text" xml:space="preserve">
+    <value>抽卡</value>
+  </data>
+  <data name="checkBox5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 21</value>
+  </data>
+  <data name="checkBox5.Text" xml:space="preserve">
+    <value>温泉</value>
+  </data>
+  <data name="checkBox4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 21</value>
+  </data>
+  <data name="checkBox4.Text" xml:space="preserve">
+    <value>岛主房间</value>
+  </data>
+  <data name="checkBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 21</value>
+  </data>
+  <data name="checkBox3.Text" xml:space="preserve">
+    <value>拍摄</value>
+  </data>
+  <data name="checkBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 21</value>
+  </data>
+  <data name="checkBox2.Text" xml:space="preserve">
+    <value>签到</value>
+  </data>
+  <data name="checkBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 21</value>
+  </data>
+  <data name="checkBox1.Text" xml:space="preserve">
+    <value>启动游戏</value>
+  </data>
+  <data name="button_task_none.Location" type="System.Drawing.Point, System.Drawing">
+    <value>120, 333</value>
+  </data>
+  <data name="button_task_none.Text" xml:space="preserve">
+    <value>清空</value>
+  </data>
+  <data name="button_task_all.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 333</value>
+  </data>
+  <data name="button_task_all.Text" xml:space="preserve">
+    <value>全选</value>
+  </data>
   <data name="tabPage_main_home.Text" xml:space="preserve">
     <value>主页</value>
   </data>
