@@ -225,62 +225,75 @@ bool Helper::Step_Click(cv::Point pt) {
 #ifdef _TEST_NEW_MOUSE
 	if (m_set.Mouse_ForMouse) {
 		GetWindowRect(m_doaxvv, &rect);
+		int ScreenW = 1;
+		int ScreenH = 1;
+		{ // 把目标窗口移动到屏幕范围内
+			//获取可用桌面大小
+			RECT sc{ 0 };
+			SystemParametersInfoW(SPI_GETWORKAREA, 0, &sc, 0);
+			if (rect.right > sc.right)
+				rect.left -= rect.right - sc.right;
+			if (rect.left < sc.left)
+				rect.left = sc.left;
+			if (rect.bottom > sc.bottom)
+				rect.top -= rect.bottom - sc.bottom;
+			if (rect.top < sc.top)
+				rect.top = sc.top;
+			SetWindowPos(m_doaxvv, NULL, rect.left, rect.top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOACTIVATE);
+			ScreenW = sc.right - sc.left;
+			ScreenH = sc.bottom - sc.top;
+		}
+		// 移动光标
+		if (!(pt.x == g_last_mouse_point.x && pt.y == g_last_mouse_point.y)) {
+			int vecx = pt.x - g_last_mouse_point.x;
+			int vecy = pt.y - g_last_mouse_point.y;
+			float deltaLength = std::sqrtf(1.0f * vecx * vecx + vecy * vecy);
+			int stepCnt = static_cast<int>(std::roundf(std::sqrtf(deltaLength) / 2.0f));
+			stepCnt++;
+			vecx /= stepCnt;
+			vecy /= stepCnt;
+			POINT tmp;
+			for (int i = 1; i < stepCnt; ++i) {
+				tmp = g_last_mouse_point;
+				tmp.x += vecx * i;
+				tmp.y += vecy * i;
 
-		//获取可用桌面大小
-		RECT sc{ 0 };
-		SystemParametersInfoW(SPI_GETWORKAREA, 0, &sc, 0);
-		if (rect.right > sc.right)
-			rect.left -= rect.right - sc.right;
-		if (rect.left < sc.left)
-			rect.left = sc.left;
-		if (rect.bottom > sc.bottom)
-			rect.top -= rect.bottom - sc.bottom;
-		if (rect.top < sc.top)
-			rect.top = sc.top;
-		SetWindowPos(m_doaxvv, NULL, rect.left, rect.top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOACTIVATE);
+				ClientToScreen(m_doaxvv, &tmp);
+				tmp.x = tmp.x * 65535ll / ScreenW;
+				tmp.y = tmp.y * 65535ll / ScreenH;
 
+				INPUT inputs = {};
+				inputs.type = INPUT_MOUSE;
+				inputs.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+				inputs.mi.dx = tmp.x;
+				inputs.mi.dy = tmp.y;
+				SendInput(1, &inputs, sizeof(INPUT));
+				Sleep(9);
+			}
+			tmp.x = pt.x;
+			tmp.y = pt.y;
+
+			ClientToScreen(m_doaxvv, &tmp);
+			tmp.x = tmp.x * 65535ll / ScreenW;
+			tmp.y = tmp.y * 65535ll / ScreenH;
+
+			INPUT inputs = {};
+			inputs.type = INPUT_MOUSE;
+			inputs.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+			inputs.mi.dx = tmp.x;
+			inputs.mi.dy = tmp.y;
+			SendInput(1, &inputs, sizeof(INPUT));
+			Sleep(9);
+			g_last_mouse_point = { pt.x, pt.y };
+		}
 		POINT p{ pt.x, pt.y };
 		ClientToScreen(m_doaxvv, &p);
 
-		p.x = p.x * 65535ll / 1920;
-		p.y = p.y * 65535ll / 1080;
-
-		pt.x = static_cast<int>(pt.x / 960.0f * (rect.right - rect.left));
-		pt.y = static_cast<int>(pt.y / 540.0f * (rect.bottom - rect.top));
+		p.x = p.x * 65535ll / ScreenW;
+		p.y = p.y * 65535ll / ScreenH;
 
 		INPUT inputs[1] = {};
-
-		POINT tmp = g_last_mouse_point;
-		float vecx, vecy;
-		vecx = p.x - tmp.x;
-		vecy = p.y - tmp.y;
-		{
-			//float length = std::sqrtf(vecx * vecx + vecy * vecy);
-			//vecx *= 99.0f / length;
-			//vecy *= 99.0f / length;
-		}
-		vecx /= 21.0f;
-		vecy /= 21.0f;
 		UINT uSent;
-		for (int i = 0; i < 20; ++i) {
-			tmp = g_last_mouse_point;
-			tmp.x = tmp.x + vecx * i;
-			tmp.y = tmp.y + vecy * i;
-			ZeroMemory(inputs, sizeof(inputs));
-			inputs[0].type = INPUT_MOUSE;
-			inputs[0].mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-			inputs[0].mi.dx = tmp.x;
-			inputs[0].mi.dy = tmp.y;
-			uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
-			Sleep(9);
-		}
-		inputs[0].type = INPUT_MOUSE;
-		inputs[0].mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-		inputs[0].mi.dx = p.x;
-		inputs[0].mi.dy = p.y;
-		uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
-		Sleep(9);
-
 
 		ZeroMemory(inputs, sizeof(inputs));
 		inputs[0].type = INPUT_MOUSE;
@@ -297,31 +310,35 @@ bool Helper::Step_Click(cv::Point pt) {
 		inputs[0].mi.dx = p.x;
 		inputs[0].mi.dy = p.y;
 		uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
-
-		g_last_mouse_point = p;
 	}
 	else {
 		PostMessageW(m_doaxvv, WM_SETFOCUS, 0, 0);
-		POINT tmp = g_last_mouse_point;
-		float vecx, vecy;
-		vecx = pt.x - tmp.x;
-		vecy = pt.y - tmp.y;
-		vecx /= 21.0f;
-		vecy /= 21.0f;
-		for (int i = 0; i < 20; ++i) {
-			tmp = g_last_mouse_point;
-			tmp.x = tmp.x + vecx * i;
-			tmp.y = tmp.y + vecy * i;
+		// 移动光标
+		if (!(pt.x == g_last_mouse_point.x && pt.y == g_last_mouse_point.y)) {
+			int vecx = pt.x - g_last_mouse_point.x;
+			int vecy = pt.y - g_last_mouse_point.y;
+			float deltaLength = std::sqrtf(1.0f * vecx * vecx + vecy * vecy);
+			int stepCnt = static_cast<int>(std::roundf(std::sqrtf(deltaLength) / 2.0f));
+			stepCnt++;
+			vecx /= stepCnt;
+			vecy /= stepCnt;
+			POINT tmp;
+			for (int i = 1; i < stepCnt; ++i) {
+				tmp = g_last_mouse_point;
+				tmp.x += vecx * i;
+				tmp.y += vecy * i;
+				PostMessageW(m_doaxvv, WM_MOUSEMOVE, 0, MAKELPARAM(tmp.x, tmp.y));
+				Sleep(9);
+			}
+			tmp.x = pt.x;
+			tmp.y = pt.y;
 			PostMessageW(m_doaxvv, WM_MOUSEMOVE, 0, MAKELPARAM(tmp.x, tmp.y));
 			Sleep(9);
+			g_last_mouse_point = { pt.x, pt.y };
 		}
-		PostMessageW(m_doaxvv, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
-		Sleep(9);
 		PostMessageW(m_doaxvv, WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(pt.x, pt.y));
 		Sleep(40);
 		PostMessageW(m_doaxvv, WM_LBUTTONUP, 0, MAKELPARAM(pt.x, pt.y));
-
-		g_last_mouse_point = { pt.x, pt.y };
 	}
 #else
 	if (m_set.Mouse_ForMouse) {
@@ -346,8 +363,6 @@ bool Helper::Step_Click(cv::Point pt) {
 		p.x = p.x * 65535ll / 1920;
 		p.y = p.y * 65535ll / 1080;
 
-		pt.x = static_cast<int>(pt.x / 960.0f * (rect.right - rect.left));
-		pt.y = static_cast<int>(pt.y / 540.0f * (rect.bottom - rect.top));
 		INPUT inputs[3] = {};
 		ZeroMemory(inputs, sizeof(inputs));
 
