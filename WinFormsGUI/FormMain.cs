@@ -104,8 +104,6 @@ namespace WinFormsGUI {
 				Location = Settings.Main.Default.LastPosition;
 			//if (Settings.Main.Default.LastClientSize.Width != 0 && Settings.Main.Default.LastClientSize.Height != 0)
 			//	ClientSize = Settings.Main.Default.LastClientSize;
-
-			TabPage_main_main_init();
 		}
 
 		private void FormMain_Deactivate(object sender, EventArgs e) {
@@ -433,111 +431,6 @@ namespace WinFormsGUI {
 		}
 
 		#endregion
-
-		#endregion
-
-		#region New_Test
-
-		private void TabPage_main_main_init() {
-			button1.Text = Strings.UI_Main.TaskSet;
-			button2.Text = Strings.UI_Main.TaskSet;
-			button3.Text = Strings.UI_Main.TaskSet;
-			button4.Text = Strings.UI_Main.TaskSet;
-			button5.Text = Strings.UI_Main.TaskSet;
-			button6.Text = Strings.UI_Main.TaskSet;
-			button7.Text = Strings.UI_Main.TaskSet;
-			button8.Text = Strings.UI_Main.TaskSet;
-
-			button_main_main.Text = Strings.Main.Main_Btn_Start;
-
-			Clear_Setting_Panels();
-		}
-
-		private void button_task_all_Click(object sender, EventArgs e) {
-			checkBox1.Checked = checkBox1.Enabled;
-			checkBox2.Checked = checkBox2.Enabled;
-			checkBox3.Checked = checkBox3.Enabled;
-			checkBox4.Checked = checkBox4.Enabled;
-			checkBox5.Checked = checkBox5.Enabled;
-			checkBox6.Checked = checkBox6.Enabled;
-			checkBox7.Checked = checkBox7.Enabled;
-			checkBox8.Checked = checkBox8.Enabled;
-		}
-
-		private void button_task_none_Click(object sender, EventArgs e) {
-			checkBox1.Checked = false;
-			checkBox2.Checked = false;
-			checkBox3.Checked = false;
-			checkBox4.Checked = false;
-			checkBox5.Checked = false;
-			checkBox6.Checked = false;
-			checkBox7.Checked = false;
-			checkBox8.Checked = false;
-		}
-
-		private void tabPage_main_main_SizeChanged(object sender, EventArgs e) {
-			var loc = panel_main_set.Location;
-			loc.X = (loc.X - panel_main_main.Size.Width) / 2;
-			panel_main_main.Location = loc;
-
-			loc = panel_main_log.Location;
-			var delta = loc.X - (panel_main_set.Location.X + panel_main_set.Size.Width) - 2;
-			var siz = panel_main_log.Size;
-			loc.X -= delta;
-			siz.Width += delta;
-			panel_main_log.Location = loc;
-			panel_main_log.Size = siz;
-		}
-
-		private void button_main_main_Click(object sender, EventArgs e) {
-
-		}
-
-		#endregion
-
-
-		#region Button_Info
-
-		private void Clear_Setting_Panels() {
-			panel_set_startup.Visible = false;
-			panel1.Visible = false;
-		}
-
-		private void button1_Click(object sender, EventArgs e) {
-			Clear_Setting_Panels();
-			panel_set_startup.Dock = DockStyle.Fill;
-			panel_set_startup.Visible = true;
-		}
-
-		private void button2_Click(object sender, EventArgs e) {
-			Clear_Setting_Panels();
-		}
-
-		private void button3_Click(object sender, EventArgs e) {
-			Clear_Setting_Panels();
-		}
-
-		private void button4_Click(object sender, EventArgs e) {
-			Clear_Setting_Panels();
-		}
-
-		private void button5_Click(object sender, EventArgs e) {
-			Clear_Setting_Panels();
-		}
-
-		private void button6_Click(object sender, EventArgs e) {
-			Clear_Setting_Panels();
-		}
-
-		private void button7_Click(object sender, EventArgs e) {
-			Clear_Setting_Panels();
-			panel1.Dock = DockStyle.Fill;
-			panel1.Visible = true;
-		}
-
-		private void button8_Click(object sender, EventArgs e) {
-			Clear_Setting_Panels();
-		}
 
 		#endregion
 
