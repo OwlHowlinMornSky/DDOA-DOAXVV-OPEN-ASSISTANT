@@ -48,14 +48,7 @@ public:
 	virtual bool isRunning() override;
 	virtual unsigned long msgPop() override;
 
-public:
-	virtual long setPlayChallengeForNew(bool forNew) override;
-	virtual long setUseMouseInput(bool forMouse) override;
-	virtual long setShowCapture(bool show) override;
-	virtual long setPreventSleep(bool prevent) override;
-	virtual long setPreventCloseDisplay(bool keep) override;
-	virtual long setCheckChaAdd(bool check) override;
-	virtual long setPlayChaAdd(bool play) override;
+	virtual long SetShowCaptureOrNot(bool show) override;
 
 // 内部的，具体实现。
 protected:

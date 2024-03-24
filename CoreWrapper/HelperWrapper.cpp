@@ -20,6 +20,8 @@
 */
 #include "HelperWrapper.h"
 
+#include <Settings.h>
+
 namespace Wrapper {
 
 HelperWrapper::HelperWrapper() {
@@ -32,28 +34,6 @@ HelperWrapper::HelperWrapper() {
 HelperWrapper::~HelperWrapper() {
 	ohms::IHelper::drop();
 	r_helper = nullptr;
-}
-
-System::Int32 HelperWrapper::SetSetting(HelperSet type, System::Int32 val) {
-	switch (type) {
-	case HelperSet::Ctrl_MouseInput:
-		return r_helper->setUseMouseInput(val);
-	case HelperSet::Ctrl_ShowCapture:
-		return r_helper->setShowCapture(val);
-	case HelperSet::Ctrl_PreventFromSleep:
-		return r_helper->setPreventSleep(val);
-	case HelperSet::Ctrl_KeepDisplay:
-		return r_helper->setPreventCloseDisplay(val);
-
-	case HelperSet::Cha_PlayNew:
-		return r_helper->setPlayChallengeForNew(val);
-
-	case HelperSet::Cha_CheckAdd:
-		return r_helper->setCheckChaAdd(val);
-	case HelperSet::Cha_PlayAdd:
-		return r_helper->setPlayChaAdd(val);
-	}
-	return 1l;
 }
 
 System::Boolean HelperWrapper::Start() {
@@ -81,6 +61,40 @@ System::UInt32 HelperWrapper::GetCode() {
 System::Void HelperWrapper::Drop() {
 	ohms::IHelper::drop();
 	r_helper = nullptr;
+}
+
+System::Int32 HelperWrapper::SetChallengeForNewOrLast(bool forNew) {
+	ohms::Settings::mainSettings.ChaGame_ForNew = forNew;
+	return System::Int32(0);
+}
+
+System::Int32 HelperWrapper::SetMouseSendInputOrSendMessage(bool sendInput) {
+	ohms::Settings::mainSettings.Mouse_ForMouse = sendInput;
+	return System::Int32(0);
+}
+
+System::Int32 HelperWrapper::SetShowCaptureOrNot(bool show) {
+	return r_helper->SetShowCaptureOrNot(show);
+}
+
+System::Int32 HelperWrapper::SetKeepAwakeOrNot(bool keep) {
+	ohms::Settings::mainSettings.PreventFromSleep = keep;
+	return System::Int32(0);
+}
+
+System::Int32 HelperWrapper::SetKeepScreenOnOrNot(bool keep) {
+	ohms::Settings::mainSettings.KeepDisplay = keep;
+	return System::Int32(0);
+}
+
+System::Int32 HelperWrapper::SetChallengeCheckAwardOrNot(bool check) {
+	ohms::Settings::mainSettings.ChaGame_CheckAddition = check;
+	return System::Int32(0);
+}
+
+System::Int32 HelperWrapper::SetChallengePlayAwardOrNot(bool play) {
+	ohms::Settings::mainSettings.ChaGame_EnterAddition = play;
+	return System::Int32(0);
 }
 
 }

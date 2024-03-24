@@ -21,9 +21,6 @@
     <ClInclude Include="ReturnMessages.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SettingsEnum.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="SystemThings.h">
       <Filter>头文件</Filter>
     </ClInclude>

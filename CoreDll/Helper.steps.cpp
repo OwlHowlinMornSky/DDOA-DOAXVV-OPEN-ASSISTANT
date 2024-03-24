@@ -157,7 +157,7 @@ POINT g_last_mouse_point;
 
 namespace ohms {
 
-long Helper::setShowCapture(bool show) {
+long Helper::SetShowCaptureOrNot(bool show) {
 	std::lock_guard lg(g_showcvMutex);
 	g_showcv = show;
 	return 0l;

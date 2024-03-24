@@ -20,9 +20,11 @@
 */
 #pragma once
 
+#include "API.h"
+
 namespace ohms {
 
-struct Settings {
+struct CORE_API Settings {
 	bool Mouse_ForMouse; // 选择控制鼠标。
 	bool PreventFromSleep; // 阻止睡眠。
 	bool KeepDisplay; // 阻止睡眠同时保持显示。
@@ -32,6 +34,8 @@ struct Settings {
 	bool ChaGame_CheckAddition; // 是否检查奖励挑战赛。
 
 	Settings();
+
+	static Settings mainSettings;
 };
 
 }

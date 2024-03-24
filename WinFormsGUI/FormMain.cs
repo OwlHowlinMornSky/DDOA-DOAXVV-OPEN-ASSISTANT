@@ -169,18 +169,18 @@ namespace WinFormsGUI {
 		}
 
 		private void RadioBtn_Game_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetSetting(HelperSet.Cha_PlayNew, radioBtn_GameNew.Checked ? 1 : 0);
+			m_helper.SetChallengeForNewOrLast(radioBtn_GameNew.Checked);
 			Settings.Core.Default.Game_ForNew = radioBtn_GameNew.Checked;
 		}
 
 		private void RadioBtn_Ctrl_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetSetting(HelperSet.Ctrl_MouseInput, radioBtn_CtrlInput.Checked ? 1 : 0);
+			m_helper.SetMouseSendInputOrSendMessage(radioBtn_CtrlInput.Checked);
 			Settings.Core.Default.Ctrl_ForMouse = radioBtn_CtrlInput.Checked;
 		}
 
 		private void RadioBtn_Award_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetSetting(HelperSet.Cha_CheckAdd, radioBtn_AwardNo.Checked ? 0 : 1);
-			m_helper.SetSetting(HelperSet.Cha_PlayAdd, radioBtn_AwardPlay.Checked ? 1 : 0);
+			m_helper.SetChallengeCheckAwardOrNot(!radioBtn_AwardNo.Checked);
+			m_helper.SetChallengePlayAwardOrNot(radioBtn_AwardPlay.Checked);
 			if (radioBtn_AwardNo.Checked) {
 				Settings.Core.Default.Cha_Add = 0;
 			}
@@ -197,7 +197,7 @@ namespace WinFormsGUI {
 		#region ----------Settings----------
 
 		private void ChkBox_SetShow_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetSetting(HelperSet.Ctrl_ShowCapture, chkBox_SetShow.Checked ? 1 : 0);
+			m_helper.SetShowCaptureOrNot(chkBox_SetShow.Checked);
 			Settings.Core.Default.ShowCV = chkBox_SetShow.Checked;
 		}
 
@@ -213,21 +213,18 @@ namespace WinFormsGUI {
 			if (chkBox_SetAwake.Checked) {
 				Settings.Core.Default.PreventSleep = true;
 				chkBox_SetScreenOn.Enabled = true;
-				m_helper.SetSetting(HelperSet.Ctrl_PreventFromSleep, 1);
+				m_helper.SetKeepAwakeOrNot(true);
 			}
 			else {
 				Settings.Core.Default.PreventSleep = false;
 				chkBox_SetScreenOn.Checked = false;
 				chkBox_SetScreenOn.Enabled = false;
-				m_helper.SetSetting(HelperSet.Ctrl_PreventFromSleep, 0);
+				m_helper.SetKeepAwakeOrNot(false);
 			}
 		}
 
 		private void ChkBox_SetScreenOn_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetSetting(
-				HelperSet.Ctrl_KeepDisplay,
-				chkBox_SetScreenOn.Checked ? 1 : 0
-			);
+			m_helper.SetKeepScreenOnOrNot(chkBox_SetScreenOn.Checked);
 			Settings.Core.Default.KeepDisplay = chkBox_SetScreenOn.Checked;
 		}
 

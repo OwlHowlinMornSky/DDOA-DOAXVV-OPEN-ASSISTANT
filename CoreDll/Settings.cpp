@@ -22,6 +22,8 @@
 
 namespace ohms {
 
+Settings Settings::mainSettings;
+
 Settings::Settings() :
 	Mouse_ForMouse(false), // 默认发窗口消息
 	PreventFromSleep(true), // 默认阻止睡眠

@@ -73,48 +73,6 @@ Helper::Helper() :
 
 Helper::~Helper() {}
 
-long Helper::setPlayChallengeForNew(bool forNew) {
-	if (m_running)
-		return 1l;
-	m_set.ChaGame_ForNew = forNew;
-	return 0l;
-}
-
-long Helper::setUseMouseInput(bool forMouse) {
-	if (m_running)
-		return 1l;
-	m_set.Mouse_ForMouse = forMouse;
-	return 0l;
-}
-
-long Helper::setPreventSleep(bool prevent) {
-	if (m_running)
-		return 1l;
-	m_set.PreventFromSleep = prevent;
-	return 0l;
-}
-
-long Helper::setPreventCloseDisplay(bool keep) {
-	if (m_running)
-		return 1l;
-	m_set.KeepDisplay = keep;
-	return 0l;
-}
-
-long Helper::setCheckChaAdd(bool check) {
-	if (m_running)
-		return 1l;
-	m_set.ChaGame_CheckAddition = check;
-	return 0;
-}
-
-long Helper::setPlayChaAdd(bool play) {
-	if (m_running)
-		return 1l;
-	m_set.ChaGame_EnterAddition = play;
-	return 0;
-}
-
 bool Helper::start() {
 	if (m_running) { // 已经有任务运行（或者有bug没清除运行标记）
 		PushMsg(HelperReturnMessage::LOG_StartError_Running);
@@ -127,6 +85,7 @@ bool Helper::start() {
 	r_capture->setClipToClientArea(true);
 
 	m_askedForStop = false; // 清除运行标志（绝对不能移动到上面去）
+	m_set = ohms::Settings::mainSettings;
 	std::thread sub(&Helper::Work, this);
 	sub.detach(); // 在子线程运行工作
 	return !sub.joinable();

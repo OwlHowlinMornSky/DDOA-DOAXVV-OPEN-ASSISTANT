@@ -22,7 +22,6 @@
 
 #include <IHelper.h>
 #include "ReturnMessages.h"
-#include "SettingsEnum.h"
 
 namespace Wrapper {
 
@@ -32,8 +31,6 @@ public:
 	~HelperWrapper();
 
 public:
-	System::Int32 SetSetting(HelperSet type, System::Int32 val);
-
 	System::Boolean Start();
 	System::Void AskForStop();
 	System::Boolean IsRunning();
@@ -42,6 +39,50 @@ public:
 	System::UInt32 GetCode();
 
 	System::Void Drop();
+
+public:
+	/**
+	 * @brief 设置是否显示调试性截图。
+	 * @param show 为 true 则显示截图。
+	 * @return 0 if success.
+	*/
+	System::Int32 SetShowCaptureOrNot(bool show);
+	/**
+	 * @brief 设置挑战赛打新比赛或上一次比赛。
+	 * @param forNew 为 true 则打新比赛，否则打上一次比赛
+	 * @return 0 if success.
+	*/
+	System::Int32 SetChallengeForNewOrLast(bool forNew);
+	/**
+	 * @brief 设置鼠标操作 发送输入 还是 窗口消息。
+	 * @param sendInput 为 true 则使用鼠标输入，否则发送窗口消息。
+	 * @return 0 if success.
+	*/
+	System::Int32 SetMouseSendInputOrSendMessage(bool sendInput);
+	/**
+	 * @brief 设置是否阻止睡眠。
+	 * @param keep 为 true 则阻止睡眠。
+	 * @return 0 if success.
+	*/
+	System::Int32 SetKeepAwakeOrNot(bool keep);
+	/**
+	 * @brief 设置阻止关闭屏幕。
+	 * @param keep 为 true 则阻止。
+	 * @return 0 if success.
+	*/
+	System::Int32 SetKeepScreenOnOrNot(bool keep);
+	/**
+	 * @brief 设置挑战赛运行时是否检测奖励挑战赛。
+	 * @param check 为 true 则检测。
+	 * @return 0 if success.
+	*/
+	System::Int32 SetChallengeCheckAwardOrNot(bool check);
+	/**
+	 * @brief 设置是否进入奖励挑战赛。
+	 * @param play 为 true 则进入。
+	 * @return 0 if success.
+	*/
+	System::Int32 SetChallengePlayAwardOrNot(bool play);
 
 private:
 	ohms::IHelper* r_helper;
