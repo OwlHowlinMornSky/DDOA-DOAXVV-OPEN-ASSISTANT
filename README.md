@@ -1,18 +1,19 @@
 # DDOA
-DDOA means DDOA DOAXVV OPEN ASSISTANT
 
-Old name: DOAXVV-helper
+### DDOA means DDOA DOAXVV OPEN ASSISTANT
 
-## Features
+曾用名 (Old name): DOAXVV-helper
+
+## 功能 Features
 
 * Infinite play challenge
 * ~~Save capture~~
 
-## Used Libraries
+## 使用的库 Used Libraries
 
 * [WGC-Capture-with-OpenCV](https://github.com/OwlHowlinMornSky/WGC-Capture-with-OpenCV) v1.2.1
 * OpenCV 4.8.0
 
-## Limitations
+## 缺陷 Defects
 
 * No globalization (only Chinese supported).
