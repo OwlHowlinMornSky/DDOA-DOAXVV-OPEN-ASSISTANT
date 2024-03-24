@@ -13,11 +13,11 @@ namespace WinFormsGUI.Settings {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.9.0.0")]
-    internal sealed partial class Main : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class Core : global::System.Configuration.ApplicationSettingsBase {
         
-        private static Main defaultInstance = ((Main)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Main())));
+        private static Core defaultInstance = ((Core)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Core())));
         
-        public static Main Default {
+        public static Core Default {
             get {
                 return defaultInstance;
             }
@@ -61,39 +61,6 @@ namespace WinFormsGUI.Settings {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool HideToIcon {
-            get {
-                return ((bool)(this["HideToIcon"]));
-            }
-            set {
-                this["HideToIcon"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool UseNotify {
-            get {
-                return ((bool)(this["UseNotify"]));
-            }
-            set {
-                this["UseNotify"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5000")]
-        public int NotifyTime {
-            get {
-                return ((int)(this["NotifyTime"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool PreventSleep {
             get {
@@ -118,30 +85,6 @@ namespace WinFormsGUI.Settings {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool DisableClose {
-            get {
-                return ((bool)(this["DisableClose"]));
-            }
-            set {
-                this["DisableClose"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int Transparant {
-            get {
-                return ((int)(this["Transparant"]));
-            }
-            set {
-                this["Transparant"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int Cha_Add {
             get {
@@ -149,30 +92,6 @@ namespace WinFormsGUI.Settings {
             }
             set {
                 this["Cha_Add"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-1, -1")]
-        public global::System.Drawing.Point LastPosition {
-            get {
-                return ((global::System.Drawing.Point)(this["LastPosition"]));
-            }
-            set {
-                this["LastPosition"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
-        public global::System.Drawing.Size LastClientSize {
-            get {
-                return ((global::System.Drawing.Size)(this["LastClientSize"]));
-            }
-            set {
-                this["LastClientSize"] = value;
             }
         }
     }

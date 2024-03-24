@@ -117,26 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="timer_main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="timer_Main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="notifyIcon_main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="notifyIcon_Main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>126, 17</value>
   </metadata>
-  <metadata name="ctxtMenu_notifyR.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="ctxtMenu_NotifyR.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>266, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="ctxtMenu_notifyR.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 26</value>
+  <data name="ctxtMenu_NotifyRExit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>199, 22</value>
   </data>
-  <data name="&gt;&gt;ctxtMenu_notifyR.Name" xml:space="preserve">
-    <value>ctxtMenu_notifyR</value>
+  <data name="ctxtMenu_NotifyRExit.Text" xml:space="preserve">
+    <value>ctxtMenu_notifyR_exit</value>
   </data>
-  <data name="&gt;&gt;ctxtMenu_notifyR.Type" xml:space="preserve">
+  <data name="ctxtMenu_NotifyR.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 48</value>
+  </data>
+  <data name="&gt;&gt;ctxtMenu_NotifyR.Name" xml:space="preserve">
+    <value>ctxtMenu_NotifyR</value>
+  </data>
+  <data name="&gt;&gt;ctxtMenu_NotifyR.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="notifyIcon_main.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="notifyIcon_Main.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAICAAAAEAIACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAgBAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQBpjCUAZotLFl99exxZ
@@ -212,22 +218,179 @@
         AAfwAAAP+AAAH/wAAD/+AAB//4AB///wD/8=
 </value>
   </data>
-  <data name="notifyIcon_main.Text" xml:space="preserve">
+  <data name="notifyIcon_Main.Text" xml:space="preserve">
     <value>notifyIcon_main</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="notifyIcon_main.Visible" type="System.Boolean, mscorlib">
+  <data name="notifyIcon_Main.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <data name="ctxtMenu_notifyR_exit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
-  </data>
-  <data name="ctxtMenu_notifyR_exit.Text" xml:space="preserve">
-    <value>ctxtMenu_notifyR_exit</value>
   </data>
   <metadata name="tabPage_Set.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <metadata name="label_TransValue.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="label_TransTitle.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="chkBox_SetDisableClose.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="tkBar_Trans.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="chkBox_SetScreenOn.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="chkBox_SetAwake.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="chkBox_SetNotify.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="chkBox_SetHideToTray.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="chkBox_SetShow.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="&gt;&gt;label_TransValue.Name" xml:space="preserve">
+    <value>label_TransValue</value>
+  </data>
+  <data name="&gt;&gt;label_TransValue.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label_TransValue.Parent" xml:space="preserve">
+    <value>tabPage_Set</value>
+  </data>
+  <data name="&gt;&gt;label_TransValue.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label_TransTitle.Name" xml:space="preserve">
+    <value>label_TransTitle</value>
+  </data>
+  <data name="&gt;&gt;label_TransTitle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label_TransTitle.Parent" xml:space="preserve">
+    <value>tabPage_Set</value>
+  </data>
+  <data name="&gt;&gt;label_TransTitle.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetDisableClose.Name" xml:space="preserve">
+    <value>chkBox_SetDisableClose</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetDisableClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetDisableClose.Parent" xml:space="preserve">
+    <value>tabPage_Set</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetDisableClose.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tkBar_Trans.Name" xml:space="preserve">
+    <value>tkBar_Trans</value>
+  </data>
+  <data name="&gt;&gt;tkBar_Trans.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tkBar_Trans.Parent" xml:space="preserve">
+    <value>tabPage_Set</value>
+  </data>
+  <data name="&gt;&gt;tkBar_Trans.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetScreenOn.Name" xml:space="preserve">
+    <value>chkBox_SetScreenOn</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetScreenOn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetScreenOn.Parent" xml:space="preserve">
+    <value>tabPage_Set</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetScreenOn.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetAwake.Name" xml:space="preserve">
+    <value>chkBox_SetAwake</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetAwake.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetAwake.Parent" xml:space="preserve">
+    <value>tabPage_Set</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetAwake.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetNotify.Name" xml:space="preserve">
+    <value>chkBox_SetNotify</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetNotify.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetNotify.Parent" xml:space="preserve">
+    <value>tabPage_Set</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetNotify.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetHideToTray.Name" xml:space="preserve">
+    <value>chkBox_SetHideToTray</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetHideToTray.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetHideToTray.Parent" xml:space="preserve">
+    <value>tabPage_Set</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetHideToTray.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetShow.Name" xml:space="preserve">
+    <value>chkBox_SetShow</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetShow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetShow.Parent" xml:space="preserve">
+    <value>tabPage_Set</value>
+  </data>
+  <data name="&gt;&gt;chkBox_SetShow.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="tabPage_Set.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 26</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tabPage_Set.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabPage_Set.Size" type="System.Drawing.Size, System.Drawing">
+    <value>576, 371</value>
+  </data>
+  <data name="tabPage_Set.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tabPage_Set.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="&gt;&gt;tabPage_Set.Name" xml:space="preserve">
+    <value>tabPage_Set</value>
+  </data>
+  <data name="&gt;&gt;tabPage_Set.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage_Set.Parent" xml:space="preserve">
+    <value>tabControl0</value>
+  </data>
+  <data name="&gt;&gt;tabPage_Set.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <metadata name="label_TransValue.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -531,34 +694,6 @@
   </data>
   <data name="&gt;&gt;chkBox_SetShow.ZOrder" xml:space="preserve">
     <value>8</value>
-  </data>
-  <data name="tabPage_Set.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 26</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="tabPage_Set.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabPage_Set.Size" type="System.Drawing.Size, System.Drawing">
-    <value>576, 371</value>
-  </data>
-  <data name="tabPage_Set.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tabPage_Set.Text" xml:space="preserve">
-    <value>设置</value>
-  </data>
-  <data name="&gt;&gt;tabPage_Set.Name" xml:space="preserve">
-    <value>tabPage_Set</value>
-  </data>
-  <data name="&gt;&gt;tabPage_Set.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabPage_Set.Parent" xml:space="preserve">
-    <value>tabControl0</value>
-  </data>
-  <data name="&gt;&gt;tabPage_Set.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <metadata name="tabPage_Home.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1269,22 +1404,22 @@
   <data name="$this.Text" xml:space="preserve">
     <value>DDOA</value>
   </data>
-  <data name="&gt;&gt;timer_main.Name" xml:space="preserve">
-    <value>timer_main</value>
+  <data name="&gt;&gt;timer_Main.Name" xml:space="preserve">
+    <value>timer_Main</value>
   </data>
-  <data name="&gt;&gt;timer_main.Type" xml:space="preserve">
+  <data name="&gt;&gt;timer_Main.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;notifyIcon_main.Name" xml:space="preserve">
-    <value>notifyIcon_main</value>
+  <data name="&gt;&gt;notifyIcon_Main.Name" xml:space="preserve">
+    <value>notifyIcon_Main</value>
   </data>
-  <data name="&gt;&gt;notifyIcon_main.Type" xml:space="preserve">
+  <data name="&gt;&gt;notifyIcon_Main.Type" xml:space="preserve">
     <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ctxtMenu_notifyR_exit.Name" xml:space="preserve">
-    <value>ctxtMenu_notifyR_exit</value>
+  <data name="&gt;&gt;ctxtMenu_NotifyRExit.Name" xml:space="preserve">
+    <value>ctxtMenu_NotifyRExit</value>
   </data>
-  <data name="&gt;&gt;ctxtMenu_notifyR_exit.Type" xml:space="preserve">
+  <data name="&gt;&gt;ctxtMenu_NotifyRExit.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

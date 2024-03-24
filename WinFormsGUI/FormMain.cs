@@ -31,11 +31,11 @@ namespace WinFormsGUI {
 
 		#endregion
 
-		#region ==========Common===========
-
 		public FormMain() {
 			InitializeComponent();
 		}
+
+		#region ==========Common===========
 
 		public void Log(string msg) {
 			bool scroll = listBox_Log.TopIndex == listBox_Log.Items.Count - (int)(listBox_Log.Height / listBox_Log.ItemHeight);
@@ -51,46 +51,11 @@ namespace WinFormsGUI {
 				listBox_Log.TopIndex = listBox_Log.Items.Count - (int)(listBox_Log.Height / listBox_Log.ItemHeight);
 		}
 
-		#endregion
+		private void InitLoadSettings_Home() {
+			radioBtn_GameNew.Checked = Settings.Core.Default.Game_ForNew;
+			radioBtn_CtrlInput.Checked = Settings.Core.Default.Ctrl_ForMouse;
 
-		#region ==========Events===========
-
-		#region ---------MainForm----------
-
-		public void FormMain_Load(object sender, EventArgs e) {
-			notifyIcon_main.Text = Text;
-			btn_Main.Text = Strings.Main.Main_Btn_Start;
-
-			
-
-#if DEBUG
-			Settings.Main.Default.ShowCV = true;
-#endif
-
-			radioBtn_GameNew.Checked = Settings.Main.Default.Game_ForNew;
-			radioBtn_CtrlInput.Checked = Settings.Main.Default.Ctrl_ForMouse;
-
-			chkBox_SetShow.Checked = Settings.Main.Default.ShowCV;
-			chkBox_SetHideToTray.Checked = Settings.Main.Default.HideToIcon;
-			chkBox_SetNotify.Checked = Settings.Main.Default.UseNotify;
-			if (Settings.Main.Default.PreventSleep) {
-				chkBox_SetAwake.Checked = true;
-				chkBox_SetScreenOn.Enabled = true;
-				chkBox_SetScreenOn.Checked = Settings.Main.Default.KeepDisplay;
-			}
-			else {
-				chkBox_SetAwake.Checked = false;
-				chkBox_SetScreenOn.Enabled = false;
-				chkBox_SetScreenOn.Checked = false;
-			}
-
-			chkBox_SetDisableClose.Checked = Settings.Main.Default.DisableClose;
-
-			tkBar_Trans.Value = Settings.Main.Default.Transparant;
-			m_label_transp_value_size = label_TransValue.Size;
-			label_TransValue.Text = tkBar_Trans.Value.ToString() + "%";
-
-			switch (Settings.Main.Default.Cha_Add) {
+			switch (Settings.Core.Default.Cha_Add) {
 			case 1:
 				radioBtn_AwardPlay.Checked = true;
 				break;
@@ -101,28 +66,78 @@ namespace WinFormsGUI {
 				radioBtn_AwardNo.Checked = true;
 				break;
 			}
+		}
 
-			if (Settings.Main.Default.LastPosition.X != -1 && Settings.Main.Default.LastPosition.Y != -1)
-				Location = Settings.Main.Default.LastPosition;
-			//if (Settings.Main.Default.LastClientSize.Width != 0 && Settings.Main.Default.LastClientSize.Height != 0)
-			//	ClientSize = Settings.Main.Default.LastClientSize;
+		private void InitLoadSettings_Settings() {
+#if DEBUG
+			Settings.Core.Default.ShowCV = true;
+#endif
+			chkBox_SetShow.Checked = Settings.Core.Default.ShowCV;
+			chkBox_SetHideToTray.Checked = Settings.GUI.Default.HideToTray;
+			chkBox_SetNotify.Checked = Settings.GUI.Default.UseNotify;
+
+			if (Settings.Core.Default.PreventSleep) {
+				chkBox_SetAwake.Checked = true;
+				chkBox_SetScreenOn.Enabled = true;
+				chkBox_SetScreenOn.Checked = Settings.Core.Default.KeepDisplay;
+			}
+			else {
+				chkBox_SetAwake.Checked = false;
+				chkBox_SetScreenOn.Enabled = false;
+				chkBox_SetScreenOn.Checked = false;
+			}
+			chkBox_SetDisableClose.Checked = Settings.GUI.Default.DisableClose;
+
+			tkBar_Trans.Value = Settings.GUI.Default.Transparent;
+			m_label_transp_value_size = label_TransValue.Size;
+			label_TransValue.Text = tkBar_Trans.Value.ToString() + "%";
+		}
+
+		private void InitLoadSettings() {
+			InitLoadSettings_Home();
+			InitLoadSettings_Settings();
+			if (Settings.GUI.Default.LastPosition.X != -1 && Settings.GUI.Default.LastPosition.Y != -1)
+				Location = Settings.GUI.Default.LastPosition;
+		}
+
+		private void DropSaveSettings() {
+			Settings.GUI.Default.LastPosition = Location;
+			Settings.GUI.Default.Save();
+			Settings.Core.Default.Save();
+		}
+
+		private void WorkLock() {
+			gpBox_GameSet.Enabled = false;
+			gpBox_CtrlSet.Enabled = false;
+			gpBox_AwardSet.Enabled = false;
+		}
+
+		private void WorkUnlock() {
+			gpBox_GameSet.Enabled = true;
+			gpBox_CtrlSet.Enabled = true;
+			gpBox_AwardSet.Enabled = true;
+			btn_Main.Text = Strings.Main.Btn_Main_Start;
+		}
+
+		#endregion
+
+		#region ---------MainForm----------
+
+		public void FormMain_Load(object sender, EventArgs e) {
+			notifyIcon_Main.Text = Text;
+			WorkUnlock();
+			InitLoadSettings();
 		}
 
 		private void FormMain_Deactivate(object sender, EventArgs e) {
-			if (WindowState == FormWindowState.Minimized &&
-				Settings.Main.Default.HideToIcon) {
+			if (WindowState == FormWindowState.Minimized && Settings.GUI.Default.HideToTray) {
 				Hide();
 			}
 		}
 
 		private void FormMain_FormClosing(object sender, FormClosingEventArgs e) {
 			m_helper.AskForStop();
-
-			Settings.Main.Default.LastPosition = Location;
-			//Settings.Main.Default.LastClientSize = ClientSize;
-
-			Settings.Main.Default.Save();
-
+			DropSaveSettings();
 			while (m_helper.IsRunning()) {
 				Thread.Sleep(30);
 			}
@@ -134,109 +149,100 @@ namespace WinFormsGUI {
 
 		#endregion
 
-		#region -----------Tab0------------
+		#region ------------Home------------
 
-		private void btn_home_main_Click(object sender, EventArgs e) {
-			gpBox_GameSet.Enabled = false;
-			gpBox_CtrlSet.Enabled = false;
-			gpBox_AwardSet.Enabled = false;
+		private void Btn_Main_Click(object sender, EventArgs e) {
 			btn_Main.Enabled = false;
-
-			if (m_btnMainIsStart) {
+			if (m_btnMainIsStart) { 
+				WorkLock();
 				listBox_Log.Items.Clear();
-
 				if (!m_helper.Start()) {
-					Log(Strings.Main.Main_Log_CanNotStartWork);
+					Log(Strings.LogEvent.Work_CanNotStartWork);
+					WorkUnlock();
 					return;
 				}
-				timer_main.Enabled = true;
+				timer_Main.Enabled = true;
 			}
 			else {
 				m_helper.AskForStop();
 			}
 		}
 
-		private void radioBtn_home_game_CheckedChanged(object sender, EventArgs e) {
+		private void RadioBtn_Game_CheckedChanged(object sender, EventArgs e) {
 			m_helper.SetSetting(HelperSet.Cha_PlayNew, radioBtn_GameNew.Checked ? 1 : 0);
-			Settings.Main.Default.Game_ForNew = radioBtn_GameNew.Checked;
-			/*if (radioBtn_home_gameNew.Checked) {
-				radioBtn_home_addPlay.Enabled = true;
-			}
-			else {
-				if (radioBtn_home_addPlay.Checked)
-					radioBtn_home_addIgnore.Checked = true;
-				radioBtn_home_addPlay.Enabled = false;
-			}*/
+			Settings.Core.Default.Game_ForNew = radioBtn_GameNew.Checked;
 		}
 
-		private void radioBtn_home_ctrl_CheckedChanged(object sender, EventArgs e) {
+		private void RadioBtn_Ctrl_CheckedChanged(object sender, EventArgs e) {
 			m_helper.SetSetting(HelperSet.Ctrl_MouseInput, radioBtn_CtrlInput.Checked ? 1 : 0);
-			Settings.Main.Default.Ctrl_ForMouse = radioBtn_CtrlInput.Checked;
+			Settings.Core.Default.Ctrl_ForMouse = radioBtn_CtrlInput.Checked;
 		}
 
-		private void radioBtn_home_add_CheckedChanged(object sender, EventArgs e) {
+		private void RadioBtn_Award_CheckedChanged(object sender, EventArgs e) {
 			m_helper.SetSetting(HelperSet.Cha_CheckAdd, radioBtn_AwardNo.Checked ? 0 : 1);
 			m_helper.SetSetting(HelperSet.Cha_PlayAdd, radioBtn_AwardPlay.Checked ? 1 : 0);
 			if (radioBtn_AwardNo.Checked) {
-				Settings.Main.Default.Cha_Add = 0;
+				Settings.Core.Default.Cha_Add = 0;
 			}
 			else if (radioBtn_AwardPlay.Checked) {
-				Settings.Main.Default.Cha_Add = 1;
+				Settings.Core.Default.Cha_Add = 1;
 			}
 			else {
-				Settings.Main.Default.Cha_Add = 2;
+				Settings.Core.Default.Cha_Add = 2;
 			}
 		}
 
 		#endregion
 
-		#region -----------Tab1------------
+		#region ----------Settings----------
 
-		private void checkBox_settings_showCV_CheckedChanged(object sender, EventArgs e) {
+		private void ChkBox_SetShow_CheckedChanged(object sender, EventArgs e) {
 			m_helper.SetSetting(HelperSet.Ctrl_ShowCapture, chkBox_SetShow.Checked ? 1 : 0);
-			Settings.Main.Default.ShowCV = chkBox_SetShow.Checked;
+			Settings.Core.Default.ShowCV = chkBox_SetShow.Checked;
 		}
 
-		private void checkBox_settings_hideToIcon_CheckedChanged(object sender, EventArgs e) {
-			Settings.Main.Default.HideToIcon = chkBox_SetHideToTray.Checked;
+		private void ChkBox_SetHideToTray_CheckedChanged(object sender, EventArgs e) {
+			Settings.GUI.Default.HideToTray = chkBox_SetHideToTray.Checked;
 		}
 
-		private void checkBox_settings_useNotify_CheckedChanged(object sender, EventArgs e) {
-			Settings.Main.Default.UseNotify = chkBox_SetNotify.Checked;
+		private void ChkBox_SetNotify_CheckedChanged(object sender, EventArgs e) {
+			Settings.GUI.Default.UseNotify = chkBox_SetNotify.Checked;
 		}
-		private void checkBox_settings_preventFromSleeping_CheckedChanged(object sender, EventArgs e) {
+
+		private void ChkBox_SetAwake_CheckedChanged(object sender, EventArgs e) {
 			if (chkBox_SetAwake.Checked) {
-				Settings.Main.Default.PreventSleep = true;
+				Settings.Core.Default.PreventSleep = true;
 				chkBox_SetScreenOn.Enabled = true;
 				m_helper.SetSetting(HelperSet.Ctrl_PreventFromSleep, 1);
 			}
 			else {
-				Settings.Main.Default.PreventSleep = false;
+				Settings.Core.Default.PreventSleep = false;
 				chkBox_SetScreenOn.Checked = false;
 				chkBox_SetScreenOn.Enabled = false;
 				m_helper.SetSetting(HelperSet.Ctrl_PreventFromSleep, 0);
 			}
 		}
 
-		private void checkBox_settings_keepDisplay_CheckedChanged(object sender, EventArgs e) {
+		private void ChkBox_SetScreenOn_CheckedChanged(object sender, EventArgs e) {
 			m_helper.SetSetting(
 				HelperSet.Ctrl_KeepDisplay,
 				chkBox_SetScreenOn.Checked ? 1 : 0
 			);
-			Settings.Main.Default.KeepDisplay = chkBox_SetScreenOn.Checked;
+			Settings.Core.Default.KeepDisplay = chkBox_SetScreenOn.Checked;
 		}
 
-		private void checkBox_settings_disableClose_CheckedChanged(object sender, EventArgs e) {
+		private void ChkBox_SetDisableClose_CheckedChanged(object sender, EventArgs e) {
 			SystemThings.SetCloseEnabled(Handle, !chkBox_SetDisableClose.Checked);
-			Settings.Main.Default.DisableClose = chkBox_SetDisableClose.Checked;
+			Settings.GUI.Default.DisableClose = chkBox_SetDisableClose.Checked;
 		}
 
-		private void trackBar_transparant_ValueChanged(object sender, EventArgs e) {
+		private void TkBar_Trans_ValueChanged(object sender, EventArgs e) {
 			Opacity = 1.0 - tkBar_Trans.Value / 100.0;
-			Settings.Main.Default.Transparant = tkBar_Trans.Value;
+			Settings.GUI.Default.Transparent = tkBar_Trans.Value;
 			label_TransValue.Text = tkBar_Trans.Value.ToString() + "%";
 		}
-		private void label_transp_value_SizeChanged(object sender, EventArgs e) {
+
+		private void Label_TransValue_SizeChanged(object sender, EventArgs e) {
 			var newSize = label_TransValue.Size;
 			var loc = label_TransValue.Location;
 			loc.X += m_label_transp_value_size.Width - newSize.Width;
@@ -246,9 +252,9 @@ namespace WinFormsGUI {
 
 		#endregion
 
-		#region -----------Others----------
+		#region -----------Others-----------
 
-		private void notifyIcon_main_MouseClick(object sender, MouseEventArgs e) {
+		private void NotifyIcon_Main_MouseClick(object sender, MouseEventArgs e) {
 			switch (e.Button) {
 			case MouseButtons.Left:
 				Show();
@@ -256,16 +262,16 @@ namespace WinFormsGUI {
 				Activate();
 				break;
 			case MouseButtons.Right:
-				notifyIcon_main.ContextMenuStrip?.Show();
+				notifyIcon_Main.ContextMenuStrip?.Show();
 				break;
 			}
 		}
 
-		private void ctxtMenu_notifyR_exit_Click(object sender, EventArgs e) {
+		private void CtxtMenu_NotifyRExit_Click(object sender, EventArgs e) {
 			Close();
 		}
 
-		private void Timer_main_Tick(object sender, EventArgs e) {
+		private void Timer_Main_Tick(object sender, EventArgs e) {
 			ReturnMessage m;
 			while ((m = m_helper.GetMessage()) != ReturnMessage.None)
 				switch (m) {
@@ -273,57 +279,55 @@ namespace WinFormsGUI {
 					Log();
 					break;
 				case ReturnMessage.CMD_Stopped:
-					Log(Strings.Main.Main_Log_WorkStopped);
-					gpBox_GameSet.Enabled = true;
-					gpBox_CtrlSet.Enabled = true;
-					gpBox_AwardSet.Enabled = true;
-					timer_main.Enabled = false;
+					Log(Strings.LogEvent.Work_Stopped);
+					WorkUnlock();
+					timer_Main.Enabled = false;
 					break;
 				case ReturnMessage.CMD_BtnToStop:
-					btn_Main.Text = Strings.Main.Main_Btn_Stop;
+					btn_Main.Text = Strings.Main.Btn_Main_Stop;
 					btn_Main.Enabled = true;
 					m_btnMainIsStart = false;
 					break;
 				case ReturnMessage.CMD_BtnToStart:
-					btn_Main.Text = Strings.Main.Main_Btn_Start;
+					btn_Main.Text = Strings.Main.Btn_Main_Start;
 					btn_Main.Enabled = true;
 					m_btnMainIsStart = true;
 					break;
 
 				case ReturnMessage.LOG_StartError_Running:
-					Log(Strings.Main.Main_Log_WorkAlreadyRunning);
+					Log(Strings.LogEvent.Work_AlreadyRunning);
 					break;
 				case ReturnMessage.LOG_Stopping:
-					Log(Strings.Main.Main_Log_WorkStopping);
+					Log(Strings.LogEvent.Work_Stopping);
 					break;
 				case ReturnMessage.LOG_WorkError_NoWnd:
-					Log(Strings.Main.Main_Log_CanNotFindWnd);
+					Log(Strings.LogEvent.Work_CanNotFindWnd);
 					break;
 				case ReturnMessage.LOG_WorkError_FailedCapture:
-					Log(Strings.Main.Main_Log_CanNotCapture);
+					Log(Strings.LogEvent.Work_CanNotCapture);
 					break;
 				case ReturnMessage.LOG_WorkError_Exception:
 					Log();
-					Log(Strings.Main.Main_Log_ExceptionInWork);
-					if (Settings.Main.Default.UseNotify)
-						notifyIcon_main.ShowBalloonTip(
-							Settings.Main.Default.NotifyTime,
-							Strings.Main.Main_Log_WorkError,
-							Strings.Main.Main_Log_ExceptionInWork,
+					Log(Strings.LogEvent.Work_Exception);
+					if (Settings.GUI.Default.UseNotify)
+						notifyIcon_Main.ShowBalloonTip(
+							Settings.Param.Default.NotifyTime,
+							Strings.LogEvent.Work_Error,
+							Strings.LogEvent.Work_Exception,
 							ToolTipIcon.Error
 						);
 					break;
 
 				case ReturnMessage.LOG_TaskStop:
-					Log(Strings.Main.Log_Task_Stop);
+					Log(Strings.LogEvent.Task_Stop);
 					break;
 				case ReturnMessage.LOG_TaskError_Exception:
-					Log(Strings.Main.Log_Task_Exception);
-					if (Settings.Main.Default.UseNotify)
-						notifyIcon_main.ShowBalloonTip(
-							Settings.Main.Default.NotifyTime,
-							Strings.Main.Main_Log_WorkError,
-							Strings.Main.Log_Task_Exception,
+					Log(Strings.LogEvent.Task_Exception);
+					if (Settings.GUI.Default.UseNotify)
+						notifyIcon_Main.ShowBalloonTip(
+							Settings.Param.Default.NotifyTime,
+							Strings.LogEvent.Work_Error,
+							Strings.LogEvent.Task_Exception,
 							ToolTipIcon.Error
 						);
 					break;
@@ -333,99 +337,99 @@ namespace WinFormsGUI {
 					string text = "null";
 					switch (m) {
 					case ReturnMessage.STR_Task_Challenge_NoNew:
-						text = Strings.Main.Log_Task_Challenge_NoNew;
+						text = Strings.LogStr.Task_Challenge_NoNew;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoLast:
-						text = Strings.Main.Log_Task_Challenge_NoLast;
+						text = Strings.LogStr.Task_Challenge_NoLast;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoEnter:
-						text = Strings.Main.Log_Task_Challenge_NoEnter;
+						text = Strings.LogStr.Task_Challenge_NoEnter;
 						break;
 					case ReturnMessage.STR_Task_Challenge_LowFP:
-						text = Strings.Main.Log_Task_Challenge_LowFP;
+						text = Strings.LogStr.Task_Challenge_LowFP;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoStart:
-						text = Strings.Main.Log_Task_Challenge_NoStart;
+						text = Strings.LogStr.Task_Challenge_NoStart;
 						break;
 					case ReturnMessage.STR_Task_Challenge_TimeOut:
-						text = Strings.Main.Log_Task_Challenge_TimeOut;
+						text = Strings.LogStr.Task_Challenge_TimeOut;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoEnd:
-						text = Strings.Main.Log_Task_Challenge_NoEnd;
+						text = Strings.LogStr.Task_Challenge_NoEnd;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoOver:
-						text = Strings.Main.Log_Task_Challenge_NoOver;
+						text = Strings.LogStr.Task_Challenge_NoOver;
 						break;
 					case ReturnMessage.STR_Task_Challenge_AddNotSup:
-						text = Strings.Main.STR_Task_Challenge_AddNotSup;
+						text = Strings.LogStr.Task_Challenge_AddNotSup;
 						break;
 					case ReturnMessage.STR_Task_Challenge_IgnoreAddFailed:
-						text = Strings.Main.STR_Task_Challenge_IgnoreAddFailed;
+						text = Strings.LogStr.Task_Challenge_IgnoreAddFailed;
 						break;
 					case ReturnMessage.STR_Task_Challenge_OpenAddFailed:
-						text = Strings.Main.STR_Task_Challenge_OpenAddFailed;
+						text = Strings.LogStr.Task_Challenge_OpenAddFailed;
 						break;
 					default:
-						text = string.Format(Strings.Main.STR_UNKNOWN, m.ToString());
+						text = string.Format(Strings.LogStr.UNKNOWN, m.ToString());
 						break;
 					}
-					Log(Strings.Main.Main_Log_TaskError + ": " + text);
-					if (Settings.Main.Default.UseNotify)
-						notifyIcon_main.ShowBalloonTip(
-							Settings.Main.Default.NotifyTime,
-							Strings.Main.Main_Log_TaskError,
+					Log(Strings.LogEvent.Task_Error + ": " + text);
+					if (Settings.GUI.Default.UseNotify)
+						notifyIcon_Main.ShowBalloonTip(
+							Settings.Param.Default.NotifyTime,
+							Strings.LogEvent.Task_Error,
 							text,
 							ToolTipIcon.Info
 						);
 					break;
 
 				case ReturnMessage.LOG_Challenge_Start:
-					Log(Strings.Main.Main_Log_Challenge_Start);
+					Log(Strings.LogEvent.Challenge_Start);
 					break;
 				case ReturnMessage.LOG_Challenge_BeginNum: // 挑战赛开始（下跟次数！）
-					Log(string.Format(Strings.Main.Main_Log_Challenge_BeginNum, m_helper.GetCode()));
+					Log(string.Format(Strings.LogEvent.Challenge_BeginNum, m_helper.GetCode()));
 					break;
 				case ReturnMessage.LOG_Challenge_EnterLast:
-					Log(Strings.Main.Main_Log_Challenge_EnterLast);
+					Log(Strings.LogEvent.Challenge_EnterLast);
 					break;
 				case ReturnMessage.LOG_Challenge_EnterNew:
-					Log(Strings.Main.Main_Log_Challenge_EnterNew);
+					Log(Strings.LogEvent.Challenge_EnterNew);
 					break;
 				case ReturnMessage.LOG_Challenge_Play:
-					Log(Strings.Main.Main_Log_Challenge_Play);
+					Log(Strings.LogEvent.Challenge_Play);
 					break;
 				case ReturnMessage.LOG_Challenge_WaitForEnd:
-					Log(Strings.Main.Main_Log_Challenge_WaitForEnd);
+					Log(Strings.LogEvent.Challenge_WaitForEnd);
 					break;
 				case ReturnMessage.LOG_Challenge_End:
-					Log(Strings.Main.Main_Log_Challenge_End);
+					Log(Strings.LogEvent.Challenge_End);
 					break;
 				case ReturnMessage.LOG_Challenge_Quiting:
-					Log(Strings.Main.Main_Log_Challenge_Quiting);
+					Log(Strings.LogEvent.Challenge_Quiting);
 					break;
 				case ReturnMessage.LOG_Challenge_Over:
-					Log(Strings.Main.Log_Challenge_Over);
+					Log(Strings.LogEvent.Challenge_Over);
 					break;
 				case ReturnMessage.LOG_Challenge_Exit:
-					Log(Strings.Main.Log_Challenge_Exit);
+					Log(Strings.LogEvent.Challenge_Exit);
 					break;
 				case ReturnMessage.LOG_Challenge_EnterAdd:
-					Log(Strings.Main.LOG_Challenge_EnterAdd);
+					Log(Strings.LogEvent.Challenge_EnterAdd);
 					break;
 				case ReturnMessage.LOG_Challenge_IgnoredAdd:
-					Log(Strings.Main.LOG_Challenge_IgnoredAdd);
+					Log(Strings.LogEvent.Challenge_IgnoredAdd);
 					break;
 				case ReturnMessage.LOG_Challenge_NotFindAdd:
-					Log(Strings.Main.LOG_Challenge_NotFindAdd);
+					Log(Strings.LogEvent.Challenge_NotFindAdd);
 					break;
 				case ReturnMessage.LOG_Challenge_FindAdd:
-					Log(Strings.Main.LOG_Challenge_FindAdd);
+					Log(Strings.LogEvent.Challenge_FindAdd);
 					break;
 				case ReturnMessage.LOG_Challenge_OpenedAdd:
-					Log(Strings.Main.LOG_Challenge_OpenedAdd);
+					Log(Strings.LogEvent.Challenge_OpenedAdd);
 					break;
 				default:
-					Log(string.Format(Strings.Main.Log_UNKNOWN, m.ToString()));
+					Log(string.Format(Strings.LogEvent.UNKNOWN, m.ToString()));
 					break;
 
 				}
@@ -434,7 +438,6 @@ namespace WinFormsGUI {
 
 		#endregion
 
-		#endregion
 
 	}
 }

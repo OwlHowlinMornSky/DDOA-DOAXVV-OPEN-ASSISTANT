@@ -117,10 +117,85 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Btn_Main_Start" xml:space="preserve">
-    <value>Link Start!</value>
+  <data name="Challenge_BeginNum" xml:space="preserve">
+    <value>开始第 {0} 次比赛</value>
   </data>
-  <data name="Btn_Main_Stop" xml:space="preserve">
-    <value>停止</value>
+  <data name="Challenge_End" xml:space="preserve">
+    <value>挑战结束</value>
+  </data>
+  <data name="Challenge_EnterAdd" xml:space="preserve">
+    <value>进入奖励挑战赛</value>
+  </data>
+  <data name="Challenge_EnterLast" xml:space="preserve">
+    <value>进入上一次比赛</value>
+  </data>
+  <data name="Challenge_EnterNew" xml:space="preserve">
+    <value>进入新比赛</value>
+  </data>
+  <data name="Challenge_Exit" xml:space="preserve">
+    <value>任务结束: 挑战赛</value>
+  </data>
+  <data name="Challenge_FindAdd" xml:space="preserve">
+    <value>出现奖励挑战赛</value>
+  </data>
+  <data name="Challenge_IgnoredAdd" xml:space="preserve">
+    <value>已忽略奖励挑战赛</value>
+  </data>
+  <data name="Challenge_NotFindAdd" xml:space="preserve">
+    <value>没有奖励挑战赛</value>
+  </data>
+  <data name="Challenge_OpenedAdd" xml:space="preserve">
+    <value>已打开奖励挑战赛</value>
+  </data>
+  <data name="Challenge_Over" xml:space="preserve">
+    <value>比赛结束</value>
+  </data>
+  <data name="Challenge_Play" xml:space="preserve">
+    <value>开始挑战</value>
+  </data>
+  <data name="Challenge_Quiting" xml:space="preserve">
+    <value>正在退出比赛</value>
+  </data>
+  <data name="Challenge_Start" xml:space="preserve">
+    <value>任务开始: 挑战赛</value>
+  </data>
+  <data name="Challenge_WaitForEnd" xml:space="preserve">
+    <value>等待结算</value>
+  </data>
+  <data name="Task_Error" xml:space="preserve">
+    <value>任务出错</value>
+  </data>
+  <data name="Task_Exception" xml:space="preserve">
+    <value>任务异常</value>
+  </data>
+  <data name="Task_Stop" xml:space="preserve">
+    <value>任务中止</value>
+  </data>
+  <data name="UNKNOWN" xml:space="preserve">
+    <value>未描述的事件：{0}</value>
+  </data>
+  <data name="Work_AlreadyRunning" xml:space="preserve">
+    <value>不能重复运行任务</value>
+  </data>
+  <data name="Work_CanNotCapture" xml:space="preserve">
+    <value>无法截图</value>
+  </data>
+  <data name="Work_CanNotFindWnd" xml:space="preserve">
+    <value>找不到DOAXVV窗口</value>
+  </data>
+  <data name="Work_CanNotStartWork" xml:space="preserve">
+    <value>无法启动任务</value>
+  </data>
+  <data name="Work_Error" xml:space="preserve">
+    <value>工作出错</value>
+  </data>
+  <data name="Work_Exception" xml:space="preserve">
+    <value>工作异常</value>
+  </data>
+  <data name="Work_Stopped" xml:space="preserve">
+    <value>已停止</value>
+  </data>
+  <data name="Work_Stopping" xml:space="preserve">
+    <value>正在停止...</value>
   </data>
 </root>

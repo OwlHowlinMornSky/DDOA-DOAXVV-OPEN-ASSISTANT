@@ -25,10 +25,10 @@
 		private void InitializeComponent() {
 			components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-			timer_main = new System.Windows.Forms.Timer(components);
-			notifyIcon_main = new NotifyIcon(components);
-			ctxtMenu_notifyR = new ContextMenuStrip(components);
-			ctxtMenu_notifyR_exit = new ToolStripMenuItem();
+			timer_Main = new System.Windows.Forms.Timer(components);
+			notifyIcon_Main = new NotifyIcon(components);
+			ctxtMenu_NotifyR = new ContextMenuStrip(components);
+			ctxtMenu_NotifyRExit = new ToolStripMenuItem();
 			tabPage_Set = new TabPage();
 			label_TransValue = new Label();
 			label_TransTitle = new Label();
@@ -54,7 +54,7 @@
 			radioBtn_GameLast = new RadioButton();
 			listBox_Log = new ListBox();
 			tabControl0 = new TabControl();
-			ctxtMenu_notifyR.SuspendLayout();
+			ctxtMenu_NotifyR.SuspendLayout();
 			tabPage_Set.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)tkBar_Trans).BeginInit();
 			tabPage_Home.SuspendLayout();
@@ -68,29 +68,29 @@
 			tabControl0.SuspendLayout();
 			SuspendLayout();
 			// 
-			// timer_main
+			// timer_Main
 			// 
-			timer_main.Interval = 30;
-			timer_main.Tick += Timer_main_Tick;
+			timer_Main.Interval = 30;
+			timer_Main.Tick += Timer_Main_Tick;
 			// 
-			// notifyIcon_main
+			// notifyIcon_Main
 			// 
-			notifyIcon_main.ContextMenuStrip = ctxtMenu_notifyR;
-			resources.ApplyResources(notifyIcon_main, "notifyIcon_main");
-			notifyIcon_main.MouseClick += notifyIcon_main_MouseClick;
+			notifyIcon_Main.ContextMenuStrip = ctxtMenu_NotifyR;
+			resources.ApplyResources(notifyIcon_Main, "notifyIcon_Main");
+			notifyIcon_Main.MouseClick += NotifyIcon_Main_MouseClick;
 			// 
-			// ctxtMenu_notifyR
+			// ctxtMenu_NotifyR
 			// 
-			ctxtMenu_notifyR.Items.AddRange(new ToolStripItem[] { ctxtMenu_notifyR_exit });
-			ctxtMenu_notifyR.Name = "ctxtMenu_notifyR";
-			ctxtMenu_notifyR.RenderMode = ToolStripRenderMode.System;
-			resources.ApplyResources(ctxtMenu_notifyR, "ctxtMenu_notifyR");
+			ctxtMenu_NotifyR.Items.AddRange(new ToolStripItem[] { ctxtMenu_NotifyRExit });
+			ctxtMenu_NotifyR.Name = "ctxtMenu_notifyR";
+			ctxtMenu_NotifyR.RenderMode = ToolStripRenderMode.System;
+			resources.ApplyResources(ctxtMenu_NotifyR, "ctxtMenu_NotifyR");
 			// 
-			// ctxtMenu_notifyR_exit
+			// ctxtMenu_NotifyRExit
 			// 
-			ctxtMenu_notifyR_exit.Name = "ctxtMenu_notifyR_exit";
-			resources.ApplyResources(ctxtMenu_notifyR_exit, "ctxtMenu_notifyR_exit");
-			ctxtMenu_notifyR_exit.Click += ctxtMenu_notifyR_exit_Click;
+			ctxtMenu_NotifyRExit.Name = "ctxtMenu_NotifyRExit";
+			resources.ApplyResources(ctxtMenu_NotifyRExit, "ctxtMenu_NotifyRExit");
+			ctxtMenu_NotifyRExit.Click += CtxtMenu_NotifyRExit_Click;
 			// 
 			// tabPage_Set
 			// 
@@ -111,7 +111,7 @@
 			// 
 			resources.ApplyResources(label_TransValue, "label_TransValue");
 			label_TransValue.Name = "label_TransValue";
-			label_TransValue.SizeChanged += label_transp_value_SizeChanged;
+			label_TransValue.SizeChanged += Label_TransValue_SizeChanged;
 			// 
 			// label_TransTitle
 			// 
@@ -123,7 +123,7 @@
 			resources.ApplyResources(chkBox_SetDisableClose, "chkBox_SetDisableClose");
 			chkBox_SetDisableClose.Name = "chkBox_SetDisableClose";
 			chkBox_SetDisableClose.UseVisualStyleBackColor = true;
-			chkBox_SetDisableClose.CheckedChanged += checkBox_settings_disableClose_CheckedChanged;
+			chkBox_SetDisableClose.CheckedChanged += ChkBox_SetDisableClose_CheckedChanged;
 			// 
 			// tkBar_Trans
 			// 
@@ -132,42 +132,42 @@
 			tkBar_Trans.Maximum = 90;
 			tkBar_Trans.Name = "tkBar_Trans";
 			tkBar_Trans.TickFrequency = 10;
-			tkBar_Trans.ValueChanged += trackBar_transparant_ValueChanged;
+			tkBar_Trans.ValueChanged += TkBar_Trans_ValueChanged;
 			// 
 			// chkBox_SetScreenOn
 			// 
 			resources.ApplyResources(chkBox_SetScreenOn, "chkBox_SetScreenOn");
 			chkBox_SetScreenOn.Name = "chkBox_SetScreenOn";
 			chkBox_SetScreenOn.UseVisualStyleBackColor = true;
-			chkBox_SetScreenOn.CheckedChanged += checkBox_settings_keepDisplay_CheckedChanged;
+			chkBox_SetScreenOn.CheckedChanged += ChkBox_SetScreenOn_CheckedChanged;
 			// 
 			// chkBox_SetAwake
 			// 
 			resources.ApplyResources(chkBox_SetAwake, "chkBox_SetAwake");
 			chkBox_SetAwake.Name = "chkBox_SetAwake";
 			chkBox_SetAwake.UseVisualStyleBackColor = true;
-			chkBox_SetAwake.CheckedChanged += checkBox_settings_preventFromSleeping_CheckedChanged;
+			chkBox_SetAwake.CheckedChanged += ChkBox_SetAwake_CheckedChanged;
 			// 
 			// chkBox_SetNotify
 			// 
 			resources.ApplyResources(chkBox_SetNotify, "chkBox_SetNotify");
 			chkBox_SetNotify.Name = "chkBox_SetNotify";
 			chkBox_SetNotify.UseVisualStyleBackColor = true;
-			chkBox_SetNotify.CheckedChanged += checkBox_settings_useNotify_CheckedChanged;
+			chkBox_SetNotify.CheckedChanged += ChkBox_SetNotify_CheckedChanged;
 			// 
 			// chkBox_SetHideToTray
 			// 
 			resources.ApplyResources(chkBox_SetHideToTray, "chkBox_SetHideToTray");
 			chkBox_SetHideToTray.Name = "chkBox_SetHideToTray";
 			chkBox_SetHideToTray.UseVisualStyleBackColor = true;
-			chkBox_SetHideToTray.CheckedChanged += checkBox_settings_hideToIcon_CheckedChanged;
+			chkBox_SetHideToTray.CheckedChanged += ChkBox_SetHideToTray_CheckedChanged;
 			// 
 			// chkBox_SetShow
 			// 
 			resources.ApplyResources(chkBox_SetShow, "chkBox_SetShow");
 			chkBox_SetShow.Name = "chkBox_SetShow";
 			chkBox_SetShow.UseVisualStyleBackColor = true;
-			chkBox_SetShow.CheckedChanged += checkBox_settings_showCV_CheckedChanged;
+			chkBox_SetShow.CheckedChanged += ChkBox_SetShow_CheckedChanged;
 			// 
 			// tabPage_Home
 			// 
@@ -207,14 +207,14 @@
 			resources.ApplyResources(radioBtn_AwardIgnore, "radioBtn_AwardIgnore");
 			radioBtn_AwardIgnore.Name = "radioBtn_AwardIgnore";
 			radioBtn_AwardIgnore.UseVisualStyleBackColor = true;
-			radioBtn_AwardIgnore.CheckedChanged += radioBtn_home_add_CheckedChanged;
+			radioBtn_AwardIgnore.CheckedChanged += RadioBtn_Award_CheckedChanged;
 			// 
 			// radioBtn_AwardPlay
 			// 
 			resources.ApplyResources(radioBtn_AwardPlay, "radioBtn_AwardPlay");
 			radioBtn_AwardPlay.Name = "radioBtn_AwardPlay";
 			radioBtn_AwardPlay.UseVisualStyleBackColor = true;
-			radioBtn_AwardPlay.CheckedChanged += radioBtn_home_add_CheckedChanged;
+			radioBtn_AwardPlay.CheckedChanged += RadioBtn_Award_CheckedChanged;
 			// 
 			// radioBtn_AwardNo
 			// 
@@ -223,14 +223,14 @@
 			radioBtn_AwardNo.Name = "radioBtn_AwardNo";
 			radioBtn_AwardNo.TabStop = true;
 			radioBtn_AwardNo.UseVisualStyleBackColor = true;
-			radioBtn_AwardNo.CheckedChanged += radioBtn_home_add_CheckedChanged;
+			radioBtn_AwardNo.CheckedChanged += RadioBtn_Award_CheckedChanged;
 			// 
 			// btn_Main
 			// 
 			resources.ApplyResources(btn_Main, "btn_Main");
 			btn_Main.Name = "btn_Main";
 			btn_Main.UseVisualStyleBackColor = true;
-			btn_Main.Click += btn_home_main_Click;
+			btn_Main.Click += Btn_Main_Click;
 			// 
 			// gpBox_CtrlSet
 			// 
@@ -245,7 +245,7 @@
 			resources.ApplyResources(radioBtn_CtrlInput, "radioBtn_CtrlInput");
 			radioBtn_CtrlInput.Name = "radioBtn_CtrlInput";
 			radioBtn_CtrlInput.UseVisualStyleBackColor = true;
-			radioBtn_CtrlInput.CheckedChanged += radioBtn_home_ctrl_CheckedChanged;
+			radioBtn_CtrlInput.CheckedChanged += RadioBtn_Ctrl_CheckedChanged;
 			// 
 			// radioBtn_CtrlMsg
 			// 
@@ -254,7 +254,7 @@
 			radioBtn_CtrlMsg.Name = "radioBtn_CtrlMsg";
 			radioBtn_CtrlMsg.TabStop = true;
 			radioBtn_CtrlMsg.UseVisualStyleBackColor = true;
-			radioBtn_CtrlMsg.CheckedChanged += radioBtn_home_ctrl_CheckedChanged;
+			radioBtn_CtrlMsg.CheckedChanged += RadioBtn_Ctrl_CheckedChanged;
 			// 
 			// gpBox_GameSet
 			// 
@@ -269,7 +269,7 @@
 			resources.ApplyResources(radioBtn_GameNew, "radioBtn_GameNew");
 			radioBtn_GameNew.Name = "radioBtn_GameNew";
 			radioBtn_GameNew.UseVisualStyleBackColor = true;
-			radioBtn_GameNew.CheckedChanged += radioBtn_home_game_CheckedChanged;
+			radioBtn_GameNew.CheckedChanged += RadioBtn_Game_CheckedChanged;
 			// 
 			// radioBtn_GameLast
 			// 
@@ -278,7 +278,7 @@
 			radioBtn_GameLast.Name = "radioBtn_GameLast";
 			radioBtn_GameLast.TabStop = true;
 			radioBtn_GameLast.UseVisualStyleBackColor = true;
-			radioBtn_GameLast.CheckedChanged += radioBtn_home_game_CheckedChanged;
+			radioBtn_GameLast.CheckedChanged += RadioBtn_Game_CheckedChanged;
 			// 
 			// listBox_Log
 			// 
@@ -307,7 +307,7 @@
 			FormClosing += FormMain_FormClosing;
 			FormClosed += FormMain_FormClosed;
 			Load += FormMain_Load;
-			ctxtMenu_notifyR.ResumeLayout(false);
+			ctxtMenu_NotifyR.ResumeLayout(false);
 			tabPage_Set.ResumeLayout(false);
 			tabPage_Set.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)tkBar_Trans).EndInit();
@@ -327,10 +327,10 @@
 		}
 
 		#endregion
-		private System.Windows.Forms.Timer timer_main;
-		private NotifyIcon notifyIcon_main;
-		private ContextMenuStrip ctxtMenu_notifyR;
-		private ToolStripMenuItem ctxtMenu_notifyR_exit;
+		private System.Windows.Forms.Timer timer_Main;
+		private NotifyIcon notifyIcon_Main;
+		private ContextMenuStrip ctxtMenu_NotifyR;
+		private ToolStripMenuItem ctxtMenu_NotifyRExit;
 		private TabPage tabPage_Set;
 		private Label label_TransValue;
 		private Label label_TransTitle;

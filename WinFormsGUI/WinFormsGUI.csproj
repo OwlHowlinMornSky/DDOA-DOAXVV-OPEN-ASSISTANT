@@ -53,15 +53,35 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Settings\GUI.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GUI.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Settings\Param.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Param.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Strings\LogEvent.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LogEvent.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Strings\LogStr.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LogStr.resx</DependentUpon>
+    </Compile>
     <Compile Update="Strings\Main.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Main.resx</DependentUpon>
     </Compile>
-    <Compile Update="Settings\Main.Designer.cs">
+    <Compile Update="Settings\Core.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Main.settings</DependentUpon>
+      <DependentUpon>Core.settings</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -70,13 +90,29 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Update="Settings\Main.settings">
+    <None Update="Settings\GUI.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Main.Designer.cs</LastGenOutput>
+      <LastGenOutput>GUI.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Settings\Core.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Core.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Settings\Param.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Param.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Strings\LogEvent.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LogEvent.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Strings\LogStr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LogStr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Strings\Main.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Main.Designer.cs</LastGenOutput>
