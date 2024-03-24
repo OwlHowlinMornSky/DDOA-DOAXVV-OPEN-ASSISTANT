@@ -61,7 +61,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 LOG_Challenge_EnterAdd 的本地化字符串。
+        ///   查找类似 进入奖励挑战赛 的本地化字符串。
         /// </summary>
         internal static string LOG_Challenge_EnterAdd {
             get {
@@ -70,7 +70,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Log_Challenge_Exit 的本地化字符串。
+        ///   查找类似 任务结束: 挑战赛 的本地化字符串。
         /// </summary>
         internal static string Log_Challenge_Exit {
             get {
@@ -79,7 +79,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 LOG_Challenge_FindAdd 的本地化字符串。
+        ///   查找类似 出现奖励挑战赛 的本地化字符串。
         /// </summary>
         internal static string LOG_Challenge_FindAdd {
             get {
@@ -88,7 +88,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 LOG_Challenge_IgnoredAdd 的本地化字符串。
+        ///   查找类似 已忽略奖励挑战赛 的本地化字符串。
         /// </summary>
         internal static string LOG_Challenge_IgnoredAdd {
             get {
@@ -97,7 +97,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 LOG_Challenge_NotFindAdd 的本地化字符串。
+        ///   查找类似 没有奖励挑战赛 的本地化字符串。
         /// </summary>
         internal static string LOG_Challenge_NotFindAdd {
             get {
@@ -106,7 +106,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 LOG_Challenge_OpenedAdd 的本地化字符串。
+        ///   查找类似 已打开奖励挑战赛 的本地化字符串。
         /// </summary>
         internal static string LOG_Challenge_OpenedAdd {
             get {
@@ -115,7 +115,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Log_Challenge_Over 的本地化字符串。
+        ///   查找类似 比赛结束 的本地化字符串。
         /// </summary>
         internal static string Log_Challenge_Over {
             get {
@@ -124,7 +124,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Log_Task_Challenge_LowFP 的本地化字符串。
+        ///   查找类似 FP耗尽 的本地化字符串。
         /// </summary>
         internal static string Log_Task_Challenge_LowFP {
             get {
@@ -133,7 +133,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Log_Task_Challenge_NoEnd 的本地化字符串。
+        ///   查找类似 无法退出挑战 的本地化字符串。
         /// </summary>
         internal static string Log_Task_Challenge_NoEnd {
             get {
@@ -142,7 +142,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Log_Task_Challenge_NoEnter 的本地化字符串。
+        ///   查找类似 无法进入比赛 的本地化字符串。
         /// </summary>
         internal static string Log_Task_Challenge_NoEnter {
             get {
@@ -151,7 +151,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Log_Task_Challenge_NoLast 的本地化字符串。
+        ///   查找类似 找不到上一次比赛 的本地化字符串。
         /// </summary>
         internal static string Log_Task_Challenge_NoLast {
             get {
@@ -160,7 +160,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Log_Task_Challenge_NoNew 的本地化字符串。
+        ///   查找类似 找不到新比赛 的本地化字符串。
         /// </summary>
         internal static string Log_Task_Challenge_NoNew {
             get {
@@ -169,7 +169,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Log_Task_Challenge_NoOver 的本地化字符串。
+        ///   查找类似 无法退出比赛 的本地化字符串。
         /// </summary>
         internal static string Log_Task_Challenge_NoOver {
             get {
@@ -178,7 +178,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Log_Task_Challenge_NoStart 的本地化字符串。
+        ///   查找类似 无法开始挑战 的本地化字符串。
         /// </summary>
         internal static string Log_Task_Challenge_NoStart {
             get {
@@ -187,7 +187,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Log_Task_Challenge_TimeOut 的本地化字符串。
+        ///   查找类似 挑战超时 的本地化字符串。
         /// </summary>
         internal static string Log_Task_Challenge_TimeOut {
             get {
@@ -196,7 +196,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Log_Task_Exception 的本地化字符串。
+        ///   查找类似 任务异常 的本地化字符串。
         /// </summary>
         internal static string Log_Task_Exception {
             get {
@@ -205,7 +205,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Log_Task_Stop 的本地化字符串。
+        ///   查找类似 任务中止 的本地化字符串。
         /// </summary>
         internal static string Log_Task_Stop {
             get {
@@ -214,7 +214,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Log_UNKNOWN: {0} 的本地化字符串。
+        ///   查找类似 未描述的事件：{0} 的本地化字符串。
         /// </summary>
         internal static string Log_UNKNOWN {
             get {
@@ -223,7 +223,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Btn_Start 的本地化字符串。
+        ///   查找类似 Link Start! 的本地化字符串。
         /// </summary>
         internal static string Main_Btn_Start {
             get {
@@ -232,7 +232,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Btn_Stop 的本地化字符串。
+        ///   查找类似 停止 的本地化字符串。
         /// </summary>
         internal static string Main_Btn_Stop {
             get {
@@ -241,7 +241,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_CanNotCapture 的本地化字符串。
+        ///   查找类似 无法截图 的本地化字符串。
         /// </summary>
         internal static string Main_Log_CanNotCapture {
             get {
@@ -250,7 +250,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_CanNotFindWnd 的本地化字符串。
+        ///   查找类似 找不到DOAXVV窗口 的本地化字符串。
         /// </summary>
         internal static string Main_Log_CanNotFindWnd {
             get {
@@ -259,7 +259,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_CanNotStartWork 的本地化字符串。
+        ///   查找类似 无法启动任务 的本地化字符串。
         /// </summary>
         internal static string Main_Log_CanNotStartWork {
             get {
@@ -268,7 +268,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_Challenge_BeginNum{0} 的本地化字符串。
+        ///   查找类似 开始第 {0} 次比赛 的本地化字符串。
         /// </summary>
         internal static string Main_Log_Challenge_BeginNum {
             get {
@@ -277,7 +277,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_Challenge_End 的本地化字符串。
+        ///   查找类似 挑战结束 的本地化字符串。
         /// </summary>
         internal static string Main_Log_Challenge_End {
             get {
@@ -286,7 +286,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_Challenge_EnterLast 的本地化字符串。
+        ///   查找类似 进入上一次比赛 的本地化字符串。
         /// </summary>
         internal static string Main_Log_Challenge_EnterLast {
             get {
@@ -295,7 +295,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_Challenge_EnterNew 的本地化字符串。
+        ///   查找类似 进入新比赛 的本地化字符串。
         /// </summary>
         internal static string Main_Log_Challenge_EnterNew {
             get {
@@ -304,7 +304,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_Challenge_Play 的本地化字符串。
+        ///   查找类似 开始挑战 的本地化字符串。
         /// </summary>
         internal static string Main_Log_Challenge_Play {
             get {
@@ -313,7 +313,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_Challenge_Quiting 的本地化字符串。
+        ///   查找类似 正在退出比赛 的本地化字符串。
         /// </summary>
         internal static string Main_Log_Challenge_Quiting {
             get {
@@ -322,7 +322,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_Challenge_Start 的本地化字符串。
+        ///   查找类似 任务开始: 挑战赛 的本地化字符串。
         /// </summary>
         internal static string Main_Log_Challenge_Start {
             get {
@@ -331,7 +331,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_Challenge_WaitForEnd 的本地化字符串。
+        ///   查找类似 等待结算 的本地化字符串。
         /// </summary>
         internal static string Main_Log_Challenge_WaitForEnd {
             get {
@@ -340,7 +340,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_ExceptionInWork 的本地化字符串。
+        ///   查找类似 工作异常 的本地化字符串。
         /// </summary>
         internal static string Main_Log_ExceptionInWork {
             get {
@@ -349,7 +349,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_TaskError 的本地化字符串。
+        ///   查找类似 任务出错 的本地化字符串。
         /// </summary>
         internal static string Main_Log_TaskError {
             get {
@@ -358,7 +358,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_WorkAlreadyRunning 的本地化字符串。
+        ///   查找类似 不能重复运行任务 的本地化字符串。
         /// </summary>
         internal static string Main_Log_WorkAlreadyRunning {
             get {
@@ -367,7 +367,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_WorkError 的本地化字符串。
+        ///   查找类似 工作出错 的本地化字符串。
         /// </summary>
         internal static string Main_Log_WorkError {
             get {
@@ -376,7 +376,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_WorkStopped 的本地化字符串。
+        ///   查找类似 已停止 的本地化字符串。
         /// </summary>
         internal static string Main_Log_WorkStopped {
             get {
@@ -385,7 +385,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Main_Log_WorkStopping 的本地化字符串。
+        ///   查找类似 正在停止... 的本地化字符串。
         /// </summary>
         internal static string Main_Log_WorkStopping {
             get {
@@ -394,7 +394,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 STR_Task_Challenge_AddNotSup 的本地化字符串。
+        ///   查找类似 “上一次比赛”不支持进入“奖励挑战赛” 的本地化字符串。
         /// </summary>
         internal static string STR_Task_Challenge_AddNotSup {
             get {
@@ -403,7 +403,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 STR_Task_Challenge_IgnoreAddFailed 的本地化字符串。
+        ///   查找类似 忽略奖励挑战赛出错 的本地化字符串。
         /// </summary>
         internal static string STR_Task_Challenge_IgnoreAddFailed {
             get {
@@ -412,7 +412,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 STR_Task_Challenge_OpenAddFailed 的本地化字符串。
+        ///   查找类似 打开奖励挑战赛出错 的本地化字符串。
         /// </summary>
         internal static string STR_Task_Challenge_OpenAddFailed {
             get {
@@ -421,7 +421,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 STR_UNKNOWN: {0} 的本地化字符串。
+        ///   查找类似 未描述的错误：{0} 的本地化字符串。
         /// </summary>
         internal static string STR_UNKNOWN {
             get {

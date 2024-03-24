@@ -38,17 +38,17 @@ namespace WinFormsGUI {
 		}
 
 		public void Log(string msg) {
-			bool scroll = listBox_home.TopIndex == listBox_home.Items.Count - (int)(listBox_home.Height / listBox_home.ItemHeight);
-			listBox_home.Items.Add(DateTime.Now.ToString("MM-dd HH:mm:ss") + '　' + msg);
+			bool scroll = listBox_Log.TopIndex == listBox_Log.Items.Count - (int)(listBox_Log.Height / listBox_Log.ItemHeight);
+			listBox_Log.Items.Add(DateTime.Now.ToString("MM-dd HH:mm:ss") + '　' + msg);
 			if (scroll)
-				listBox_home.TopIndex = listBox_home.Items.Count - (int)(listBox_home.Height / listBox_home.ItemHeight);
+				listBox_Log.TopIndex = listBox_Log.Items.Count - (int)(listBox_Log.Height / listBox_Log.ItemHeight);
 		}
 
 		public void Log() {
-			bool scroll = listBox_home.TopIndex == listBox_home.Items.Count - (int)(listBox_home.Height / listBox_home.ItemHeight);
-			listBox_home.Items.Add("");
+			bool scroll = listBox_Log.TopIndex == listBox_Log.Items.Count - (int)(listBox_Log.Height / listBox_Log.ItemHeight);
+			listBox_Log.Items.Add("");
 			if (scroll)
-				listBox_home.TopIndex = listBox_home.Items.Count - (int)(listBox_home.Height / listBox_home.ItemHeight);
+				listBox_Log.TopIndex = listBox_Log.Items.Count - (int)(listBox_Log.Height / listBox_Log.ItemHeight);
 		}
 
 		#endregion
@@ -59,44 +59,46 @@ namespace WinFormsGUI {
 
 		public void FormMain_Load(object sender, EventArgs e) {
 			notifyIcon_main.Text = Text;
-			btn_home_main.Text = Strings.Main.Main_Btn_Start;
+			btn_Main.Text = Strings.Main.Main_Btn_Start;
+
+			
 
 #if DEBUG
 			Settings.Main.Default.ShowCV = true;
 #endif
 
-			radioBtn_home_gameNew.Checked = Settings.Main.Default.Game_ForNew;
-			radioBtn_home_ctrlInput.Checked = Settings.Main.Default.Ctrl_ForMouse;
+			radioBtn_GameNew.Checked = Settings.Main.Default.Game_ForNew;
+			radioBtn_CtrlInput.Checked = Settings.Main.Default.Ctrl_ForMouse;
 
-			checkBox_settings_showCV.Checked = Settings.Main.Default.ShowCV;
-			checkBox_settings_hideToIcon.Checked = Settings.Main.Default.HideToIcon;
-			checkBox_settings_useNotify.Checked = Settings.Main.Default.UseNotify;
+			chkBox_SetShow.Checked = Settings.Main.Default.ShowCV;
+			chkBox_SetHideToTray.Checked = Settings.Main.Default.HideToIcon;
+			chkBox_SetNotify.Checked = Settings.Main.Default.UseNotify;
 			if (Settings.Main.Default.PreventSleep) {
-				checkBox_settings_preventFromSleeping.Checked = true;
-				checkBox_settings_keepDisplay.Enabled = true;
-				checkBox_settings_keepDisplay.Checked = Settings.Main.Default.KeepDisplay;
+				chkBox_SetAwake.Checked = true;
+				chkBox_SetScreenOn.Enabled = true;
+				chkBox_SetScreenOn.Checked = Settings.Main.Default.KeepDisplay;
 			}
 			else {
-				checkBox_settings_preventFromSleeping.Checked = false;
-				checkBox_settings_keepDisplay.Enabled = false;
-				checkBox_settings_keepDisplay.Checked = false;
+				chkBox_SetAwake.Checked = false;
+				chkBox_SetScreenOn.Enabled = false;
+				chkBox_SetScreenOn.Checked = false;
 			}
 
-			checkBox_settings_disableClose.Checked = Settings.Main.Default.DisableClose;
+			chkBox_SetDisableClose.Checked = Settings.Main.Default.DisableClose;
 
-			trackBar_transparant.Value = Settings.Main.Default.Transparant;
-			m_label_transp_value_size = label_transp_value.Size;
-			label_transp_value.Text = trackBar_transparant.Value.ToString() + "%";
+			tkBar_Trans.Value = Settings.Main.Default.Transparant;
+			m_label_transp_value_size = label_TransValue.Size;
+			label_TransValue.Text = tkBar_Trans.Value.ToString() + "%";
 
 			switch (Settings.Main.Default.Cha_Add) {
 			case 1:
-				radioBtn_home_addPlay.Checked = true;
+				radioBtn_AwardPlay.Checked = true;
 				break;
 			case 2:
-				radioBtn_home_addIgnore.Checked = true;
+				radioBtn_AwardIgnore.Checked = true;
 				break;
 			default:
-				radioBtn_home_addNo.Checked = true;
+				radioBtn_AwardNo.Checked = true;
 				break;
 			}
 
@@ -135,13 +137,13 @@ namespace WinFormsGUI {
 		#region -----------Tab0------------
 
 		private void btn_home_main_Click(object sender, EventArgs e) {
-			gpBox_home_gameSet.Enabled = false;
-			gpBox_home_ctrlSet.Enabled = false;
-			gpBox_home_addSet.Enabled = false;
-			btn_home_main.Enabled = false;
+			gpBox_GameSet.Enabled = false;
+			gpBox_CtrlSet.Enabled = false;
+			gpBox_AwardSet.Enabled = false;
+			btn_Main.Enabled = false;
 
 			if (m_btnMainIsStart) {
-				listBox_home.Items.Clear();
+				listBox_Log.Items.Clear();
 
 				if (!m_helper.Start()) {
 					Log(Strings.Main.Main_Log_CanNotStartWork);
@@ -155,8 +157,8 @@ namespace WinFormsGUI {
 		}
 
 		private void radioBtn_home_game_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetSetting(HelperSet.Cha_PlayNew, radioBtn_home_gameNew.Checked ? 1 : 0);
-			Settings.Main.Default.Game_ForNew = radioBtn_home_gameNew.Checked;
+			m_helper.SetSetting(HelperSet.Cha_PlayNew, radioBtn_GameNew.Checked ? 1 : 0);
+			Settings.Main.Default.Game_ForNew = radioBtn_GameNew.Checked;
 			/*if (radioBtn_home_gameNew.Checked) {
 				radioBtn_home_addPlay.Enabled = true;
 			}
@@ -168,17 +170,17 @@ namespace WinFormsGUI {
 		}
 
 		private void radioBtn_home_ctrl_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetSetting(HelperSet.Ctrl_MouseInput, radioBtn_home_ctrlInput.Checked ? 1 : 0);
-			Settings.Main.Default.Ctrl_ForMouse = radioBtn_home_ctrlInput.Checked;
+			m_helper.SetSetting(HelperSet.Ctrl_MouseInput, radioBtn_CtrlInput.Checked ? 1 : 0);
+			Settings.Main.Default.Ctrl_ForMouse = radioBtn_CtrlInput.Checked;
 		}
 
 		private void radioBtn_home_add_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetSetting(HelperSet.Cha_CheckAdd, radioBtn_home_addNo.Checked ? 0 : 1);
-			m_helper.SetSetting(HelperSet.Cha_PlayAdd, radioBtn_home_addPlay.Checked ? 1 : 0);
-			if (radioBtn_home_addNo.Checked) {
+			m_helper.SetSetting(HelperSet.Cha_CheckAdd, radioBtn_AwardNo.Checked ? 0 : 1);
+			m_helper.SetSetting(HelperSet.Cha_PlayAdd, radioBtn_AwardPlay.Checked ? 1 : 0);
+			if (radioBtn_AwardNo.Checked) {
 				Settings.Main.Default.Cha_Add = 0;
 			}
-			else if (radioBtn_home_addPlay.Checked) {
+			else if (radioBtn_AwardPlay.Checked) {
 				Settings.Main.Default.Cha_Add = 1;
 			}
 			else {
@@ -191,27 +193,27 @@ namespace WinFormsGUI {
 		#region -----------Tab1------------
 
 		private void checkBox_settings_showCV_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetSetting(HelperSet.Ctrl_ShowCapture, checkBox_settings_showCV.Checked ? 1 : 0);
-			Settings.Main.Default.ShowCV = checkBox_settings_showCV.Checked;
+			m_helper.SetSetting(HelperSet.Ctrl_ShowCapture, chkBox_SetShow.Checked ? 1 : 0);
+			Settings.Main.Default.ShowCV = chkBox_SetShow.Checked;
 		}
 
 		private void checkBox_settings_hideToIcon_CheckedChanged(object sender, EventArgs e) {
-			Settings.Main.Default.HideToIcon = checkBox_settings_hideToIcon.Checked;
+			Settings.Main.Default.HideToIcon = chkBox_SetHideToTray.Checked;
 		}
 
 		private void checkBox_settings_useNotify_CheckedChanged(object sender, EventArgs e) {
-			Settings.Main.Default.UseNotify = checkBox_settings_useNotify.Checked;
+			Settings.Main.Default.UseNotify = chkBox_SetNotify.Checked;
 		}
 		private void checkBox_settings_preventFromSleeping_CheckedChanged(object sender, EventArgs e) {
-			if (checkBox_settings_preventFromSleeping.Checked) {
+			if (chkBox_SetAwake.Checked) {
 				Settings.Main.Default.PreventSleep = true;
-				checkBox_settings_keepDisplay.Enabled = true;
+				chkBox_SetScreenOn.Enabled = true;
 				m_helper.SetSetting(HelperSet.Ctrl_PreventFromSleep, 1);
 			}
 			else {
 				Settings.Main.Default.PreventSleep = false;
-				checkBox_settings_keepDisplay.Checked = false;
-				checkBox_settings_keepDisplay.Enabled = false;
+				chkBox_SetScreenOn.Checked = false;
+				chkBox_SetScreenOn.Enabled = false;
 				m_helper.SetSetting(HelperSet.Ctrl_PreventFromSleep, 0);
 			}
 		}
@@ -219,26 +221,26 @@ namespace WinFormsGUI {
 		private void checkBox_settings_keepDisplay_CheckedChanged(object sender, EventArgs e) {
 			m_helper.SetSetting(
 				HelperSet.Ctrl_KeepDisplay,
-				checkBox_settings_keepDisplay.Checked ? 1 : 0
+				chkBox_SetScreenOn.Checked ? 1 : 0
 			);
-			Settings.Main.Default.KeepDisplay = checkBox_settings_keepDisplay.Checked;
+			Settings.Main.Default.KeepDisplay = chkBox_SetScreenOn.Checked;
 		}
 
 		private void checkBox_settings_disableClose_CheckedChanged(object sender, EventArgs e) {
-			SystemThings.SetCloseEnabled(Handle, !checkBox_settings_disableClose.Checked);
-			Settings.Main.Default.DisableClose = checkBox_settings_disableClose.Checked;
+			SystemThings.SetCloseEnabled(Handle, !chkBox_SetDisableClose.Checked);
+			Settings.Main.Default.DisableClose = chkBox_SetDisableClose.Checked;
 		}
 
 		private void trackBar_transparant_ValueChanged(object sender, EventArgs e) {
-			Opacity = 1.0 - trackBar_transparant.Value / 100.0;
-			Settings.Main.Default.Transparant = trackBar_transparant.Value;
-			label_transp_value.Text = trackBar_transparant.Value.ToString() + "%";
+			Opacity = 1.0 - tkBar_Trans.Value / 100.0;
+			Settings.Main.Default.Transparant = tkBar_Trans.Value;
+			label_TransValue.Text = tkBar_Trans.Value.ToString() + "%";
 		}
 		private void label_transp_value_SizeChanged(object sender, EventArgs e) {
-			var newSize = label_transp_value.Size;
-			var loc = label_transp_value.Location;
+			var newSize = label_TransValue.Size;
+			var loc = label_TransValue.Location;
 			loc.X += m_label_transp_value_size.Width - newSize.Width;
-			label_transp_value.Location = loc;
+			label_TransValue.Location = loc;
 			m_label_transp_value_size = newSize;
 		}
 
@@ -272,19 +274,19 @@ namespace WinFormsGUI {
 					break;
 				case ReturnMessage.CMD_Stopped:
 					Log(Strings.Main.Main_Log_WorkStopped);
-					gpBox_home_gameSet.Enabled = true;
-					gpBox_home_ctrlSet.Enabled = true;
-					gpBox_home_addSet.Enabled = true;
+					gpBox_GameSet.Enabled = true;
+					gpBox_CtrlSet.Enabled = true;
+					gpBox_AwardSet.Enabled = true;
 					timer_main.Enabled = false;
 					break;
 				case ReturnMessage.CMD_BtnToStop:
-					btn_home_main.Text = Strings.Main.Main_Btn_Stop;
-					btn_home_main.Enabled = true;
+					btn_Main.Text = Strings.Main.Main_Btn_Stop;
+					btn_Main.Enabled = true;
 					m_btnMainIsStart = false;
 					break;
 				case ReturnMessage.CMD_BtnToStart:
-					btn_home_main.Text = Strings.Main.Main_Btn_Start;
-					btn_home_main.Enabled = true;
+					btn_Main.Text = Strings.Main.Main_Btn_Start;
+					btn_Main.Enabled = true;
 					m_btnMainIsStart = true;
 					break;
 

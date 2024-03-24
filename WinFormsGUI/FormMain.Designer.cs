@@ -29,43 +29,43 @@
 			notifyIcon_main = new NotifyIcon(components);
 			ctxtMenu_notifyR = new ContextMenuStrip(components);
 			ctxtMenu_notifyR_exit = new ToolStripMenuItem();
-			tabPage_main_settings = new TabPage();
-			label_transp_value = new Label();
-			label_transparant = new Label();
-			checkBox_settings_disableClose = new CheckBox();
-			trackBar_transparant = new TrackBar();
-			checkBox_settings_keepDisplay = new CheckBox();
-			checkBox_settings_preventFromSleeping = new CheckBox();
-			checkBox_settings_useNotify = new CheckBox();
-			checkBox_settings_hideToIcon = new CheckBox();
-			checkBox_settings_showCV = new CheckBox();
-			tabPage_main_home = new TabPage();
-			splitContainer_Tab0_Main = new SplitContainer();
-			gpBox_home_addSet = new GroupBox();
-			radioBtn_home_addIgnore = new RadioButton();
-			radioBtn_home_addPlay = new RadioButton();
-			radioBtn_home_addNo = new RadioButton();
-			btn_home_main = new Button();
-			gpBox_home_ctrlSet = new GroupBox();
-			radioBtn_home_ctrlInput = new RadioButton();
-			radioBtn_home_ctrlMsg = new RadioButton();
-			gpBox_home_gameSet = new GroupBox();
-			radioBtn_home_gameNew = new RadioButton();
-			radioBtn_home_gameLast = new RadioButton();
-			listBox_home = new ListBox();
-			tabControl_main = new TabControl();
+			tabPage_Set = new TabPage();
+			label_TransValue = new Label();
+			label_TransTitle = new Label();
+			chkBox_SetDisableClose = new CheckBox();
+			tkBar_Trans = new TrackBar();
+			chkBox_SetScreenOn = new CheckBox();
+			chkBox_SetAwake = new CheckBox();
+			chkBox_SetNotify = new CheckBox();
+			chkBox_SetHideToTray = new CheckBox();
+			chkBox_SetShow = new CheckBox();
+			tabPage_Home = new TabPage();
+			splitContainer0 = new SplitContainer();
+			gpBox_AwardSet = new GroupBox();
+			radioBtn_AwardIgnore = new RadioButton();
+			radioBtn_AwardPlay = new RadioButton();
+			radioBtn_AwardNo = new RadioButton();
+			btn_Main = new Button();
+			gpBox_CtrlSet = new GroupBox();
+			radioBtn_CtrlInput = new RadioButton();
+			radioBtn_CtrlMsg = new RadioButton();
+			gpBox_GameSet = new GroupBox();
+			radioBtn_GameNew = new RadioButton();
+			radioBtn_GameLast = new RadioButton();
+			listBox_Log = new ListBox();
+			tabControl0 = new TabControl();
 			ctxtMenu_notifyR.SuspendLayout();
-			tabPage_main_settings.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)trackBar_transparant).BeginInit();
-			tabPage_main_home.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)splitContainer_Tab0_Main).BeginInit();
-			splitContainer_Tab0_Main.Panel1.SuspendLayout();
-			splitContainer_Tab0_Main.Panel2.SuspendLayout();
-			splitContainer_Tab0_Main.SuspendLayout();
-			gpBox_home_addSet.SuspendLayout();
-			gpBox_home_ctrlSet.SuspendLayout();
-			gpBox_home_gameSet.SuspendLayout();
-			tabControl_main.SuspendLayout();
+			tabPage_Set.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)tkBar_Trans).BeginInit();
+			tabPage_Home.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)splitContainer0).BeginInit();
+			splitContainer0.Panel1.SuspendLayout();
+			splitContainer0.Panel2.SuspendLayout();
+			splitContainer0.SuspendLayout();
+			gpBox_AwardSet.SuspendLayout();
+			gpBox_CtrlSet.SuspendLayout();
+			gpBox_GameSet.SuspendLayout();
+			tabControl0.SuspendLayout();
 			SuspendLayout();
 			// 
 			// timer_main
@@ -92,237 +92,237 @@
 			resources.ApplyResources(ctxtMenu_notifyR_exit, "ctxtMenu_notifyR_exit");
 			ctxtMenu_notifyR_exit.Click += ctxtMenu_notifyR_exit_Click;
 			// 
-			// tabPage_main_settings
+			// tabPage_Set
 			// 
-			tabPage_main_settings.Controls.Add(label_transp_value);
-			tabPage_main_settings.Controls.Add(label_transparant);
-			tabPage_main_settings.Controls.Add(checkBox_settings_disableClose);
-			tabPage_main_settings.Controls.Add(trackBar_transparant);
-			tabPage_main_settings.Controls.Add(checkBox_settings_keepDisplay);
-			tabPage_main_settings.Controls.Add(checkBox_settings_preventFromSleeping);
-			tabPage_main_settings.Controls.Add(checkBox_settings_useNotify);
-			tabPage_main_settings.Controls.Add(checkBox_settings_hideToIcon);
-			tabPage_main_settings.Controls.Add(checkBox_settings_showCV);
-			resources.ApplyResources(tabPage_main_settings, "tabPage_main_settings");
-			tabPage_main_settings.Name = "tabPage_main_settings";
-			tabPage_main_settings.UseVisualStyleBackColor = true;
+			tabPage_Set.Controls.Add(label_TransValue);
+			tabPage_Set.Controls.Add(label_TransTitle);
+			tabPage_Set.Controls.Add(chkBox_SetDisableClose);
+			tabPage_Set.Controls.Add(tkBar_Trans);
+			tabPage_Set.Controls.Add(chkBox_SetScreenOn);
+			tabPage_Set.Controls.Add(chkBox_SetAwake);
+			tabPage_Set.Controls.Add(chkBox_SetNotify);
+			tabPage_Set.Controls.Add(chkBox_SetHideToTray);
+			tabPage_Set.Controls.Add(chkBox_SetShow);
+			resources.ApplyResources(tabPage_Set, "tabPage_Set");
+			tabPage_Set.Name = "tabPage_Set";
+			tabPage_Set.UseVisualStyleBackColor = true;
 			// 
-			// label_transp_value
+			// label_TransValue
 			// 
-			resources.ApplyResources(label_transp_value, "label_transp_value");
-			label_transp_value.Name = "label_transp_value";
-			label_transp_value.SizeChanged += label_transp_value_SizeChanged;
+			resources.ApplyResources(label_TransValue, "label_TransValue");
+			label_TransValue.Name = "label_TransValue";
+			label_TransValue.SizeChanged += label_transp_value_SizeChanged;
 			// 
-			// label_transparant
+			// label_TransTitle
 			// 
-			resources.ApplyResources(label_transparant, "label_transparant");
-			label_transparant.Name = "label_transparant";
+			resources.ApplyResources(label_TransTitle, "label_TransTitle");
+			label_TransTitle.Name = "label_TransTitle";
 			// 
-			// checkBox_settings_disableClose
+			// chkBox_SetDisableClose
 			// 
-			resources.ApplyResources(checkBox_settings_disableClose, "checkBox_settings_disableClose");
-			checkBox_settings_disableClose.Name = "checkBox_settings_disableClose";
-			checkBox_settings_disableClose.UseVisualStyleBackColor = true;
-			checkBox_settings_disableClose.CheckedChanged += checkBox_settings_disableClose_CheckedChanged;
+			resources.ApplyResources(chkBox_SetDisableClose, "chkBox_SetDisableClose");
+			chkBox_SetDisableClose.Name = "chkBox_SetDisableClose";
+			chkBox_SetDisableClose.UseVisualStyleBackColor = true;
+			chkBox_SetDisableClose.CheckedChanged += checkBox_settings_disableClose_CheckedChanged;
 			// 
-			// trackBar_transparant
+			// tkBar_Trans
 			// 
-			resources.ApplyResources(trackBar_transparant, "trackBar_transparant");
-			trackBar_transparant.LargeChange = 10;
-			trackBar_transparant.Maximum = 90;
-			trackBar_transparant.Name = "trackBar_transparant";
-			trackBar_transparant.TickFrequency = 10;
-			trackBar_transparant.ValueChanged += trackBar_transparant_ValueChanged;
+			resources.ApplyResources(tkBar_Trans, "tkBar_Trans");
+			tkBar_Trans.LargeChange = 10;
+			tkBar_Trans.Maximum = 90;
+			tkBar_Trans.Name = "tkBar_Trans";
+			tkBar_Trans.TickFrequency = 10;
+			tkBar_Trans.ValueChanged += trackBar_transparant_ValueChanged;
 			// 
-			// checkBox_settings_keepDisplay
+			// chkBox_SetScreenOn
 			// 
-			resources.ApplyResources(checkBox_settings_keepDisplay, "checkBox_settings_keepDisplay");
-			checkBox_settings_keepDisplay.Name = "checkBox_settings_keepDisplay";
-			checkBox_settings_keepDisplay.UseVisualStyleBackColor = true;
-			checkBox_settings_keepDisplay.CheckedChanged += checkBox_settings_keepDisplay_CheckedChanged;
+			resources.ApplyResources(chkBox_SetScreenOn, "chkBox_SetScreenOn");
+			chkBox_SetScreenOn.Name = "chkBox_SetScreenOn";
+			chkBox_SetScreenOn.UseVisualStyleBackColor = true;
+			chkBox_SetScreenOn.CheckedChanged += checkBox_settings_keepDisplay_CheckedChanged;
 			// 
-			// checkBox_settings_preventFromSleeping
+			// chkBox_SetAwake
 			// 
-			resources.ApplyResources(checkBox_settings_preventFromSleeping, "checkBox_settings_preventFromSleeping");
-			checkBox_settings_preventFromSleeping.Name = "checkBox_settings_preventFromSleeping";
-			checkBox_settings_preventFromSleeping.UseVisualStyleBackColor = true;
-			checkBox_settings_preventFromSleeping.CheckedChanged += checkBox_settings_preventFromSleeping_CheckedChanged;
+			resources.ApplyResources(chkBox_SetAwake, "chkBox_SetAwake");
+			chkBox_SetAwake.Name = "chkBox_SetAwake";
+			chkBox_SetAwake.UseVisualStyleBackColor = true;
+			chkBox_SetAwake.CheckedChanged += checkBox_settings_preventFromSleeping_CheckedChanged;
 			// 
-			// checkBox_settings_useNotify
+			// chkBox_SetNotify
 			// 
-			resources.ApplyResources(checkBox_settings_useNotify, "checkBox_settings_useNotify");
-			checkBox_settings_useNotify.Name = "checkBox_settings_useNotify";
-			checkBox_settings_useNotify.UseVisualStyleBackColor = true;
-			checkBox_settings_useNotify.CheckedChanged += checkBox_settings_useNotify_CheckedChanged;
+			resources.ApplyResources(chkBox_SetNotify, "chkBox_SetNotify");
+			chkBox_SetNotify.Name = "chkBox_SetNotify";
+			chkBox_SetNotify.UseVisualStyleBackColor = true;
+			chkBox_SetNotify.CheckedChanged += checkBox_settings_useNotify_CheckedChanged;
 			// 
-			// checkBox_settings_hideToIcon
+			// chkBox_SetHideToTray
 			// 
-			resources.ApplyResources(checkBox_settings_hideToIcon, "checkBox_settings_hideToIcon");
-			checkBox_settings_hideToIcon.Name = "checkBox_settings_hideToIcon";
-			checkBox_settings_hideToIcon.UseVisualStyleBackColor = true;
-			checkBox_settings_hideToIcon.CheckedChanged += checkBox_settings_hideToIcon_CheckedChanged;
+			resources.ApplyResources(chkBox_SetHideToTray, "chkBox_SetHideToTray");
+			chkBox_SetHideToTray.Name = "chkBox_SetHideToTray";
+			chkBox_SetHideToTray.UseVisualStyleBackColor = true;
+			chkBox_SetHideToTray.CheckedChanged += checkBox_settings_hideToIcon_CheckedChanged;
 			// 
-			// checkBox_settings_showCV
+			// chkBox_SetShow
 			// 
-			resources.ApplyResources(checkBox_settings_showCV, "checkBox_settings_showCV");
-			checkBox_settings_showCV.Name = "checkBox_settings_showCV";
-			checkBox_settings_showCV.UseVisualStyleBackColor = true;
-			checkBox_settings_showCV.CheckedChanged += checkBox_settings_showCV_CheckedChanged;
+			resources.ApplyResources(chkBox_SetShow, "chkBox_SetShow");
+			chkBox_SetShow.Name = "chkBox_SetShow";
+			chkBox_SetShow.UseVisualStyleBackColor = true;
+			chkBox_SetShow.CheckedChanged += checkBox_settings_showCV_CheckedChanged;
 			// 
-			// tabPage_main_home
+			// tabPage_Home
 			// 
-			tabPage_main_home.Controls.Add(splitContainer_Tab0_Main);
-			resources.ApplyResources(tabPage_main_home, "tabPage_main_home");
-			tabPage_main_home.Name = "tabPage_main_home";
-			tabPage_main_home.UseVisualStyleBackColor = true;
+			tabPage_Home.Controls.Add(splitContainer0);
+			resources.ApplyResources(tabPage_Home, "tabPage_Home");
+			tabPage_Home.Name = "tabPage_Home";
+			tabPage_Home.UseVisualStyleBackColor = true;
 			// 
-			// splitContainer_Tab0_Main
+			// splitContainer0
 			// 
-			resources.ApplyResources(splitContainer_Tab0_Main, "splitContainer_Tab0_Main");
-			splitContainer_Tab0_Main.FixedPanel = FixedPanel.Panel1;
-			splitContainer_Tab0_Main.Name = "splitContainer_Tab0_Main";
+			resources.ApplyResources(splitContainer0, "splitContainer0");
+			splitContainer0.FixedPanel = FixedPanel.Panel1;
+			splitContainer0.Name = "splitContainer0";
 			// 
-			// splitContainer_Tab0_Main.Panel1
+			// splitContainer0.Panel1
 			// 
-			splitContainer_Tab0_Main.Panel1.Controls.Add(gpBox_home_addSet);
-			splitContainer_Tab0_Main.Panel1.Controls.Add(btn_home_main);
-			splitContainer_Tab0_Main.Panel1.Controls.Add(gpBox_home_ctrlSet);
-			splitContainer_Tab0_Main.Panel1.Controls.Add(gpBox_home_gameSet);
+			splitContainer0.Panel1.Controls.Add(gpBox_AwardSet);
+			splitContainer0.Panel1.Controls.Add(btn_Main);
+			splitContainer0.Panel1.Controls.Add(gpBox_CtrlSet);
+			splitContainer0.Panel1.Controls.Add(gpBox_GameSet);
 			// 
-			// splitContainer_Tab0_Main.Panel2
+			// splitContainer0.Panel2
 			// 
-			splitContainer_Tab0_Main.Panel2.Controls.Add(listBox_home);
+			splitContainer0.Panel2.Controls.Add(listBox_Log);
 			// 
-			// gpBox_home_addSet
+			// gpBox_AwardSet
 			// 
-			gpBox_home_addSet.Controls.Add(radioBtn_home_addIgnore);
-			gpBox_home_addSet.Controls.Add(radioBtn_home_addPlay);
-			gpBox_home_addSet.Controls.Add(radioBtn_home_addNo);
-			resources.ApplyResources(gpBox_home_addSet, "gpBox_home_addSet");
-			gpBox_home_addSet.Name = "gpBox_home_addSet";
-			gpBox_home_addSet.TabStop = false;
+			gpBox_AwardSet.Controls.Add(radioBtn_AwardIgnore);
+			gpBox_AwardSet.Controls.Add(radioBtn_AwardPlay);
+			gpBox_AwardSet.Controls.Add(radioBtn_AwardNo);
+			resources.ApplyResources(gpBox_AwardSet, "gpBox_AwardSet");
+			gpBox_AwardSet.Name = "gpBox_AwardSet";
+			gpBox_AwardSet.TabStop = false;
 			// 
-			// radioBtn_home_addIgnore
+			// radioBtn_AwardIgnore
 			// 
-			resources.ApplyResources(radioBtn_home_addIgnore, "radioBtn_home_addIgnore");
-			radioBtn_home_addIgnore.Name = "radioBtn_home_addIgnore";
-			radioBtn_home_addIgnore.UseVisualStyleBackColor = true;
-			radioBtn_home_addIgnore.CheckedChanged += radioBtn_home_add_CheckedChanged;
+			resources.ApplyResources(radioBtn_AwardIgnore, "radioBtn_AwardIgnore");
+			radioBtn_AwardIgnore.Name = "radioBtn_AwardIgnore";
+			radioBtn_AwardIgnore.UseVisualStyleBackColor = true;
+			radioBtn_AwardIgnore.CheckedChanged += radioBtn_home_add_CheckedChanged;
 			// 
-			// radioBtn_home_addPlay
+			// radioBtn_AwardPlay
 			// 
-			resources.ApplyResources(radioBtn_home_addPlay, "radioBtn_home_addPlay");
-			radioBtn_home_addPlay.Name = "radioBtn_home_addPlay";
-			radioBtn_home_addPlay.UseVisualStyleBackColor = true;
-			radioBtn_home_addPlay.CheckedChanged += radioBtn_home_add_CheckedChanged;
+			resources.ApplyResources(radioBtn_AwardPlay, "radioBtn_AwardPlay");
+			radioBtn_AwardPlay.Name = "radioBtn_AwardPlay";
+			radioBtn_AwardPlay.UseVisualStyleBackColor = true;
+			radioBtn_AwardPlay.CheckedChanged += radioBtn_home_add_CheckedChanged;
 			// 
-			// radioBtn_home_addNo
+			// radioBtn_AwardNo
 			// 
-			resources.ApplyResources(radioBtn_home_addNo, "radioBtn_home_addNo");
-			radioBtn_home_addNo.Checked = true;
-			radioBtn_home_addNo.Name = "radioBtn_home_addNo";
-			radioBtn_home_addNo.TabStop = true;
-			radioBtn_home_addNo.UseVisualStyleBackColor = true;
-			radioBtn_home_addNo.CheckedChanged += radioBtn_home_add_CheckedChanged;
+			resources.ApplyResources(radioBtn_AwardNo, "radioBtn_AwardNo");
+			radioBtn_AwardNo.Checked = true;
+			radioBtn_AwardNo.Name = "radioBtn_AwardNo";
+			radioBtn_AwardNo.TabStop = true;
+			radioBtn_AwardNo.UseVisualStyleBackColor = true;
+			radioBtn_AwardNo.CheckedChanged += radioBtn_home_add_CheckedChanged;
 			// 
-			// btn_home_main
+			// btn_Main
 			// 
-			resources.ApplyResources(btn_home_main, "btn_home_main");
-			btn_home_main.Name = "btn_home_main";
-			btn_home_main.UseVisualStyleBackColor = true;
-			btn_home_main.Click += btn_home_main_Click;
+			resources.ApplyResources(btn_Main, "btn_Main");
+			btn_Main.Name = "btn_Main";
+			btn_Main.UseVisualStyleBackColor = true;
+			btn_Main.Click += btn_home_main_Click;
 			// 
-			// gpBox_home_ctrlSet
+			// gpBox_CtrlSet
 			// 
-			gpBox_home_ctrlSet.Controls.Add(radioBtn_home_ctrlInput);
-			gpBox_home_ctrlSet.Controls.Add(radioBtn_home_ctrlMsg);
-			resources.ApplyResources(gpBox_home_ctrlSet, "gpBox_home_ctrlSet");
-			gpBox_home_ctrlSet.Name = "gpBox_home_ctrlSet";
-			gpBox_home_ctrlSet.TabStop = false;
+			gpBox_CtrlSet.Controls.Add(radioBtn_CtrlInput);
+			gpBox_CtrlSet.Controls.Add(radioBtn_CtrlMsg);
+			resources.ApplyResources(gpBox_CtrlSet, "gpBox_CtrlSet");
+			gpBox_CtrlSet.Name = "gpBox_CtrlSet";
+			gpBox_CtrlSet.TabStop = false;
 			// 
-			// radioBtn_home_ctrlInput
+			// radioBtn_CtrlInput
 			// 
-			resources.ApplyResources(radioBtn_home_ctrlInput, "radioBtn_home_ctrlInput");
-			radioBtn_home_ctrlInput.Name = "radioBtn_home_ctrlInput";
-			radioBtn_home_ctrlInput.UseVisualStyleBackColor = true;
-			radioBtn_home_ctrlInput.CheckedChanged += radioBtn_home_ctrl_CheckedChanged;
+			resources.ApplyResources(radioBtn_CtrlInput, "radioBtn_CtrlInput");
+			radioBtn_CtrlInput.Name = "radioBtn_CtrlInput";
+			radioBtn_CtrlInput.UseVisualStyleBackColor = true;
+			radioBtn_CtrlInput.CheckedChanged += radioBtn_home_ctrl_CheckedChanged;
 			// 
-			// radioBtn_home_ctrlMsg
+			// radioBtn_CtrlMsg
 			// 
-			resources.ApplyResources(radioBtn_home_ctrlMsg, "radioBtn_home_ctrlMsg");
-			radioBtn_home_ctrlMsg.Checked = true;
-			radioBtn_home_ctrlMsg.Name = "radioBtn_home_ctrlMsg";
-			radioBtn_home_ctrlMsg.TabStop = true;
-			radioBtn_home_ctrlMsg.UseVisualStyleBackColor = true;
-			radioBtn_home_ctrlMsg.CheckedChanged += radioBtn_home_ctrl_CheckedChanged;
+			resources.ApplyResources(radioBtn_CtrlMsg, "radioBtn_CtrlMsg");
+			radioBtn_CtrlMsg.Checked = true;
+			radioBtn_CtrlMsg.Name = "radioBtn_CtrlMsg";
+			radioBtn_CtrlMsg.TabStop = true;
+			radioBtn_CtrlMsg.UseVisualStyleBackColor = true;
+			radioBtn_CtrlMsg.CheckedChanged += radioBtn_home_ctrl_CheckedChanged;
 			// 
-			// gpBox_home_gameSet
+			// gpBox_GameSet
 			// 
-			gpBox_home_gameSet.Controls.Add(radioBtn_home_gameNew);
-			gpBox_home_gameSet.Controls.Add(radioBtn_home_gameLast);
-			resources.ApplyResources(gpBox_home_gameSet, "gpBox_home_gameSet");
-			gpBox_home_gameSet.Name = "gpBox_home_gameSet";
-			gpBox_home_gameSet.TabStop = false;
+			gpBox_GameSet.Controls.Add(radioBtn_GameNew);
+			gpBox_GameSet.Controls.Add(radioBtn_GameLast);
+			resources.ApplyResources(gpBox_GameSet, "gpBox_GameSet");
+			gpBox_GameSet.Name = "gpBox_GameSet";
+			gpBox_GameSet.TabStop = false;
 			// 
-			// radioBtn_home_gameNew
+			// radioBtn_GameNew
 			// 
-			resources.ApplyResources(radioBtn_home_gameNew, "radioBtn_home_gameNew");
-			radioBtn_home_gameNew.Name = "radioBtn_home_gameNew";
-			radioBtn_home_gameNew.UseVisualStyleBackColor = true;
-			radioBtn_home_gameNew.CheckedChanged += radioBtn_home_game_CheckedChanged;
+			resources.ApplyResources(radioBtn_GameNew, "radioBtn_GameNew");
+			radioBtn_GameNew.Name = "radioBtn_GameNew";
+			radioBtn_GameNew.UseVisualStyleBackColor = true;
+			radioBtn_GameNew.CheckedChanged += radioBtn_home_game_CheckedChanged;
 			// 
-			// radioBtn_home_gameLast
+			// radioBtn_GameLast
 			// 
-			resources.ApplyResources(radioBtn_home_gameLast, "radioBtn_home_gameLast");
-			radioBtn_home_gameLast.Checked = true;
-			radioBtn_home_gameLast.Name = "radioBtn_home_gameLast";
-			radioBtn_home_gameLast.TabStop = true;
-			radioBtn_home_gameLast.UseVisualStyleBackColor = true;
-			radioBtn_home_gameLast.CheckedChanged += radioBtn_home_game_CheckedChanged;
+			resources.ApplyResources(radioBtn_GameLast, "radioBtn_GameLast");
+			radioBtn_GameLast.Checked = true;
+			radioBtn_GameLast.Name = "radioBtn_GameLast";
+			radioBtn_GameLast.TabStop = true;
+			radioBtn_GameLast.UseVisualStyleBackColor = true;
+			radioBtn_GameLast.CheckedChanged += radioBtn_home_game_CheckedChanged;
 			// 
-			// listBox_home
+			// listBox_Log
 			// 
-			resources.ApplyResources(listBox_home, "listBox_home");
-			listBox_home.FormattingEnabled = true;
-			listBox_home.Name = "listBox_home";
-			listBox_home.SelectionMode = SelectionMode.None;
-			listBox_home.TabStop = false;
-			listBox_home.UseTabStops = false;
+			resources.ApplyResources(listBox_Log, "listBox_Log");
+			listBox_Log.FormattingEnabled = true;
+			listBox_Log.Name = "listBox_Log";
+			listBox_Log.SelectionMode = SelectionMode.None;
+			listBox_Log.TabStop = false;
+			listBox_Log.UseTabStops = false;
 			// 
-			// tabControl_main
+			// tabControl0
 			// 
-			tabControl_main.Controls.Add(tabPage_main_home);
-			tabControl_main.Controls.Add(tabPage_main_settings);
-			resources.ApplyResources(tabControl_main, "tabControl_main");
-			tabControl_main.Name = "tabControl_main";
-			tabControl_main.SelectedIndex = 0;
+			tabControl0.Controls.Add(tabPage_Home);
+			tabControl0.Controls.Add(tabPage_Set);
+			resources.ApplyResources(tabControl0, "tabControl0");
+			tabControl0.Name = "tabControl0";
+			tabControl0.SelectedIndex = 0;
 			// 
 			// FormMain
 			// 
 			resources.ApplyResources(this, "$this");
 			AutoScaleMode = AutoScaleMode.Font;
-			Controls.Add(tabControl_main);
+			Controls.Add(tabControl0);
 			Name = "FormMain";
 			Deactivate += FormMain_Deactivate;
 			FormClosing += FormMain_FormClosing;
 			FormClosed += FormMain_FormClosed;
 			Load += FormMain_Load;
 			ctxtMenu_notifyR.ResumeLayout(false);
-			tabPage_main_settings.ResumeLayout(false);
-			tabPage_main_settings.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)trackBar_transparant).EndInit();
-			tabPage_main_home.ResumeLayout(false);
-			splitContainer_Tab0_Main.Panel1.ResumeLayout(false);
-			splitContainer_Tab0_Main.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)splitContainer_Tab0_Main).EndInit();
-			splitContainer_Tab0_Main.ResumeLayout(false);
-			gpBox_home_addSet.ResumeLayout(false);
-			gpBox_home_addSet.PerformLayout();
-			gpBox_home_ctrlSet.ResumeLayout(false);
-			gpBox_home_ctrlSet.PerformLayout();
-			gpBox_home_gameSet.ResumeLayout(false);
-			gpBox_home_gameSet.PerformLayout();
-			tabControl_main.ResumeLayout(false);
+			tabPage_Set.ResumeLayout(false);
+			tabPage_Set.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)tkBar_Trans).EndInit();
+			tabPage_Home.ResumeLayout(false);
+			splitContainer0.Panel1.ResumeLayout(false);
+			splitContainer0.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)splitContainer0).EndInit();
+			splitContainer0.ResumeLayout(false);
+			gpBox_AwardSet.ResumeLayout(false);
+			gpBox_AwardSet.PerformLayout();
+			gpBox_CtrlSet.ResumeLayout(false);
+			gpBox_CtrlSet.PerformLayout();
+			gpBox_GameSet.ResumeLayout(false);
+			gpBox_GameSet.PerformLayout();
+			tabControl0.ResumeLayout(false);
 			ResumeLayout(false);
 		}
 
@@ -331,30 +331,30 @@
 		private NotifyIcon notifyIcon_main;
 		private ContextMenuStrip ctxtMenu_notifyR;
 		private ToolStripMenuItem ctxtMenu_notifyR_exit;
-		private TabPage tabPage_main_settings;
-		private Label label_transp_value;
-		private Label label_transparant;
-		private CheckBox checkBox_settings_disableClose;
-		private TrackBar trackBar_transparant;
-		private CheckBox checkBox_settings_keepDisplay;
-		private CheckBox checkBox_settings_preventFromSleeping;
-		private CheckBox checkBox_settings_useNotify;
-		private CheckBox checkBox_settings_hideToIcon;
-		private CheckBox checkBox_settings_showCV;
-		private TabPage tabPage_main_home;
-		private SplitContainer splitContainer_Tab0_Main;
-		private GroupBox gpBox_home_addSet;
-		private RadioButton radioBtn_home_addIgnore;
-		private RadioButton radioBtn_home_addPlay;
-		private RadioButton radioBtn_home_addNo;
-		private Button btn_home_main;
-		private GroupBox gpBox_home_ctrlSet;
-		private RadioButton radioBtn_home_ctrlInput;
-		private RadioButton radioBtn_home_ctrlMsg;
-		private GroupBox gpBox_home_gameSet;
-		private RadioButton radioBtn_home_gameNew;
-		private RadioButton radioBtn_home_gameLast;
-		private ListBox listBox_home;
-		private TabControl tabControl_main;
+		private TabPage tabPage_Set;
+		private Label label_TransValue;
+		private Label label_TransTitle;
+		private CheckBox chkBox_SetDisableClose;
+		private TrackBar tkBar_Trans;
+		private CheckBox chkBox_SetScreenOn;
+		private CheckBox chkBox_SetAwake;
+		private CheckBox chkBox_SetNotify;
+		private CheckBox chkBox_SetHideToTray;
+		private CheckBox chkBox_SetShow;
+		private TabPage tabPage_Home;
+		private SplitContainer splitContainer0;
+		private GroupBox gpBox_AwardSet;
+		private RadioButton radioBtn_AwardIgnore;
+		private RadioButton radioBtn_AwardPlay;
+		private RadioButton radioBtn_AwardNo;
+		private Button btn_Main;
+		private GroupBox gpBox_CtrlSet;
+		private RadioButton radioBtn_CtrlInput;
+		private RadioButton radioBtn_CtrlMsg;
+		private GroupBox gpBox_GameSet;
+		private RadioButton radioBtn_GameNew;
+		private RadioButton radioBtn_GameLast;
+		private ListBox listBox_Log;
+		private TabControl tabControl0;
 	}
 }
