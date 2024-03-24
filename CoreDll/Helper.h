@@ -152,6 +152,9 @@ protected:
 	std::queue<unsigned long> m_hrm; // 返回消息的队列
 	std::mutex m_hrm_mutex; // 返回消息的互斥体
 
+	RECT m_workArea;
+	POINT m_screenSize;
+
 	// 上一次比赛 和 新比赛 的图样，以及查找范围。
 	cv::Mat mat_ChaGameLast;
 	cv::Mat mat_ChaGameNew;

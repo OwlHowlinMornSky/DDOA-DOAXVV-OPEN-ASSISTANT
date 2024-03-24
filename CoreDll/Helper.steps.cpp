@@ -225,23 +225,16 @@ bool Helper::Step_Click(cv::Point pt) {
 #ifdef _TEST_NEW_MOUSE
 	if (m_set.Mouse_ForMouse) {
 		GetWindowRect(m_doaxvv, &rect);
-		int ScreenW = 1;
-		int ScreenH = 1;
 		{ // 把目标窗口移动到屏幕范围内
-			//获取可用桌面大小
-			RECT sc{ 0 };
-			SystemParametersInfoW(SPI_GETWORKAREA, 0, &sc, 0);
-			if (rect.right > sc.right)
-				rect.left -= rect.right - sc.right;
-			if (rect.left < sc.left)
-				rect.left = sc.left;
-			if (rect.bottom > sc.bottom)
-				rect.top -= rect.bottom - sc.bottom;
-			if (rect.top < sc.top)
-				rect.top = sc.top;
+			if (rect.right > m_workArea.right)
+				rect.left -= rect.right - m_workArea.right;
+			if (rect.left < m_workArea.left)
+				rect.left = m_workArea.left;
+			if (rect.bottom > m_workArea.bottom)
+				rect.top -= rect.bottom - m_workArea.bottom;
+			if (rect.top < m_workArea.top)
+				rect.top = m_workArea.top;
 			SetWindowPos(m_doaxvv, NULL, rect.left, rect.top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOACTIVATE);
-			ScreenW = sc.right - sc.left;
-			ScreenH = sc.bottom - sc.top;
 		}
 		// 移动光标
 		if (!(pt.x == g_last_mouse_point.x && pt.y == g_last_mouse_point.y)) {
@@ -259,8 +252,8 @@ bool Helper::Step_Click(cv::Point pt) {
 				tmp.y += vecy * i;
 
 				ClientToScreen(m_doaxvv, &tmp);
-				tmp.x = tmp.x * 65535ll / ScreenW;
-				tmp.y = tmp.y * 65535ll / ScreenH;
+				tmp.x = tmp.x * 65535ll / m_screenSize.x;
+				tmp.y = tmp.y * 65535ll / m_screenSize.y;
 
 				INPUT inputs = {};
 				inputs.type = INPUT_MOUSE;
@@ -274,8 +267,8 @@ bool Helper::Step_Click(cv::Point pt) {
 			tmp.y = pt.y;
 
 			ClientToScreen(m_doaxvv, &tmp);
-			tmp.x = tmp.x * 65535ll / ScreenW;
-			tmp.y = tmp.y * 65535ll / ScreenH;
+			tmp.x = tmp.x * 65535ll / m_screenSize.x;
+			tmp.y = tmp.y * 65535ll / m_screenSize.y;
 
 			INPUT inputs = {};
 			inputs.type = INPUT_MOUSE;
@@ -289,8 +282,8 @@ bool Helper::Step_Click(cv::Point pt) {
 		POINT p{ pt.x, pt.y };
 		ClientToScreen(m_doaxvv, &p);
 
-		p.x = p.x * 65535ll / ScreenW;
-		p.y = p.y * 65535ll / ScreenH;
+		p.x = p.x * 65535ll / m_screenSize.x;
+		p.y = p.y * 65535ll / m_screenSize.y;
 
 		INPUT inputs[1] = {};
 		UINT uSent;

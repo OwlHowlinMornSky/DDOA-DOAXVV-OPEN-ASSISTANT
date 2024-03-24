@@ -137,6 +137,13 @@ void Helper::Work() {
 			throw 0;
 		}
 
+		// 获取可用桌面大小
+		SystemParametersInfoW(SPI_GETWORKAREA, 0, &m_workArea, 0);
+
+		// 获取屏幕大小
+		m_screenSize.x = GetSystemMetrics(SM_CXSCREEN);
+		m_screenSize.y = GetSystemMetrics(SM_CYSCREEN);
+
 		// Run task.
 		Task_Challenge();
 	}
