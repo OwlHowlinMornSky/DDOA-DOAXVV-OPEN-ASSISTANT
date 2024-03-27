@@ -111,6 +111,7 @@
     <ClCompile Include="MatchTemplate.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Time.cpp" />
+    <ClCompile Include="WndHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="API.h" />
@@ -123,6 +124,7 @@
     <ClInclude Include="ReturnMessages.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Time.h" />
+    <ClInclude Include="WndHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CoreDll.rc" />

@@ -142,9 +142,7 @@ protected:
 // 成员变量
 protected:
 	std::atomic_bool m_running; // 正在运行的标记。true为正在运行
-	std::atomic_bool m_askedForStop; // 请求停止的标记。true为需要停止
-
-	Settings m_set;
+	//std::atomic_bool m_askedForStop; // 请求停止的标记。true为需要停止
 
 	HWND m_doaxvv; // doaxvv窗口句柄
 	wgc::ICapture* r_capture; // capture索引

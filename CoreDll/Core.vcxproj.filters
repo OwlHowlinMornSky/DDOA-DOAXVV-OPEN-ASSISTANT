@@ -39,6 +39,9 @@
     <ClCompile Include="MatchTemplate.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="WndHandler.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clock.h">
@@ -69,6 +72,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="MatchTemplate.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WndHandler.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

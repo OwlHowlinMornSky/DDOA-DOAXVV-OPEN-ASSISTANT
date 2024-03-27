@@ -189,7 +189,7 @@ bool Helper::Step_WaitFor(
 	cv::Mat mat;
 	cv::Rect trect;
 	MSG msg{ 0 };
-	while (!m_askedForStop) {
+	while (!Settings::g_askedForStop) {
 		// show mat时必须处理该线程的窗口消息，cv的窗口才正常
 		// 没有show mat时也必须处理消息，否则收不到capture到的帧（似乎是分离线程初始化wgc导致的
 		if (PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
@@ -210,7 +210,7 @@ bool Helper::Step_WaitFor(
 			Sleep(30);
 		}
 	}
-	if (m_askedForStop) // throw 0 表示停止
+	if (Settings::g_askedForStop) // throw 0 表示停止
 		throw 0;
 	return true;
 }
@@ -223,7 +223,7 @@ bool Helper::Step_Click(cv::Point pt) {
 	pt.y = static_cast<int>(pt.y / 540.0f * (rect.bottom - rect.top));
 
 #ifdef _TEST_NEW_MOUSE
-	if (m_set.Mouse_ForMouse) {
+	if (Settings::g_set.Mouse_ForMouse) {
 		GetWindowRect(m_doaxvv, &rect);
 		{ // 把目标窗口移动到屏幕范围内
 			if (rect.right > m_workArea.right)
@@ -416,8 +416,8 @@ bool Helper::Step_KeepClickingUntil(
 		if (maxTime > Time::Zero && clock.getElapsedTime() >= maxTime) // 应用超时
 			return false;
 		Step_Click(clkPt); // 点击
-	} while (!m_askedForStop && !Step_WaitFor(matTemplate, searchRect, rect, clkTime, thres));
-	if (m_askedForStop)
+	} while (!Settings::g_askedForStop && !Step_WaitFor(matTemplate, searchRect, rect, clkTime, thres));
+	if (Settings::g_askedForStop)
 		throw 0;
 	return true;
 }
@@ -434,8 +434,8 @@ bool Helper::Step_KeepClickingUntilNo(
 		if (maxTime > Time::Zero && clock.getElapsedTime() >= maxTime) // 应用超时
 			return false;
 		Step_Click(clkPt); // 点击
-	} while (!m_askedForStop && Step_WaitFor(matTemplate, searchRect, rect, clkTime, thres));
-	if (m_askedForStop)
+	} while (!Settings::g_askedForStop && Step_WaitFor(matTemplate, searchRect, rect, clkTime, thres));
+	if (Settings::g_askedForStop)
 		throw 0;
 	return true;
 }

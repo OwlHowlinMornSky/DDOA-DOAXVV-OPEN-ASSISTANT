@@ -35,7 +35,7 @@ namespace ohms {
 Helper::Helper() :
 
 	m_running(false), // 未运行
-	m_askedForStop(false), // 没有要求停止
+	//m_askedForStop(false), // 没有要求停止
 
 	m_doaxvv(0), // 初始未查找
 	r_capture(nullptr) // 初始无索引
@@ -84,8 +84,8 @@ bool Helper::start() {
 	}
 	r_capture->setClipToClientArea(true);
 
-	m_askedForStop = false; // 清除运行标志（绝对不能移动到上面去）
-	m_set = ohms::Settings::mainSettings;
+	Settings::g_askedForStop = false; // 清除运行标志（绝对不能移动到上面去）
+	ohms::Settings::MakeOneCopy();
 	std::thread sub(&Helper::Work, this);
 	sub.detach(); // 在子线程运行工作
 	return !sub.joinable();
@@ -94,7 +94,7 @@ bool Helper::start() {
 void Helper::askForStop() {
 	if (m_running) { // 运行的时候才有意义
 		PushMsg(HelperReturnMessage::LOG_Stopping);
-		m_askedForStop = true;
+		Settings::g_askedForStop = true;
 	}
 	return;
 }
@@ -119,10 +119,10 @@ void Helper::Work() {
 	PushMsg(HelperReturnMessage::CMD_BtnToStop); // 让主按钮变为stop
 
 	// 按设置防止关闭屏幕和睡眠
-	if (m_set.PreventFromSleep) {
+	if (Settings::g_set.PreventFromSleep) {
 		SetThreadExecutionState(
 			ES_CONTINUOUS | ES_SYSTEM_REQUIRED |
-			(m_set.KeepDisplay ? ES_DISPLAY_REQUIRED : 0)
+			(Settings::g_set.KeepDisplay ? ES_DISPLAY_REQUIRED : 0)
 		);
 	}
 

@@ -30,7 +30,7 @@ bool Helper::Task_StartUp() {
 
 bool Helper::Task_Challenge() {
 	PushMsg(HelperReturnMessage::LOG_Challenge_Start);
-	const bool forNew = m_set.ChaGame_ForNew; // 保存设置
+	const bool forNew = Settings::g_set.ChaGame_ForNew; // 保存设置
 
 	bool forAddThisTime = false;
 
@@ -69,7 +69,7 @@ bool Helper::Task_Challenge() {
 		PushMsg(HelperReturnMessage::LOG_Challenge_Play);
 		{
 			size_t tc = 0;
-			while (!m_askedForStop) {
+			while (!Settings::g_askedForStop) {
 				// 点击挑战，直到进入加载画面。
 				pt = { rect.x + 50, rect.y + 20 };
 				if (Step_KeepClickingUntil(pt, mat_Loading, rect_Loading, seconds(1.5f), seconds(0.3f), 20.0f))
@@ -101,10 +101,10 @@ bool Helper::Task_Challenge() {
 		PushMsg(HelperReturnMessage::LOG_Challenge_Over);
 
 		// 检查是否有奖励挑战赛。
-		if (m_set.ChaGame_CheckAddition) {
+		if (Settings::g_set.ChaGame_CheckAddition) {
 			if (Step_WaitFor(mat_ChaAddBtn, rect_ChaAddBtn, rect, seconds(2.0f))) {
 				PushMsg(HelperReturnMessage::LOG_Challenge_FindAdd);
-				if (m_set.ChaGame_EnterAddition) { // 进入奖励挑战赛。
+				if (Settings::g_set.ChaGame_EnterAddition) { // 进入奖励挑战赛。
 					if (forNew) {
 						pt.x = rect.x + 30;
 						pt.y = rect.y + 50;

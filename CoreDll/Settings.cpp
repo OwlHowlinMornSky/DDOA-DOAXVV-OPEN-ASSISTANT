@@ -23,6 +23,9 @@
 namespace ohms {
 
 Settings Settings::mainSettings;
+Settings Settings::g_set;
+
+std::atomic_bool Settings::g_askedForStop;
 
 Settings::Settings() :
 	Mouse_ForMouse(false), // 默认发窗口消息
@@ -33,5 +36,9 @@ Settings::Settings() :
 	ChaGame_EnterAddition(true), // 默认进入奖励挑战赛
 	ChaGame_CheckAddition(false) // 默认不检查奖励挑战赛
 {}
+
+void Settings::MakeOneCopy() {
+	g_set = mainSettings;
+}
 
 }
