@@ -48,14 +48,14 @@ public:
 	virtual ~WndHandler();
 
 public:
-	void Update();
+	bool Update();
 
 	SetReturnValue SetForLaucher();
 	SetReturnValue SetForGame();
 	void Reset();
 	StateValue GetState() const;
 
-	int WaitFor(const MatchTemplate& _temp, Time _tlimit);
+	int WaitFor(const MatchTemplate& _temp, Time _tlimit = milliseconds(10'000));
 	int WaitForMultiple(std::vector<const MatchTemplate*> _temps, Time _tlimit);
 
 	/**
@@ -63,21 +63,20 @@ public:
 	 * @param pt 位置
 	 * @return 未使用
 	*/
-	virtual bool ClickAt(cv::Point pt) = 0;
+	bool ClickAt(cv::Point pt);
 	/**
 	 * @brief 移动光标。范围是统一尺寸（960 540），自动缩放到当前DOAXVV大小
 	 * @param pt 位置
 	 * @return 未使用
 	*/
-	virtual bool MoveMouseTo(cv::Point pt) = 0;
+	bool MoveMouseTo(cv::Point pt);
 
 protected:
 	/**
-	 * @brief 从capture复制mat，同时检查capture是否refresh，顺便resize到统一尺寸（960 540）。
-	 * @param target 保存mat的位置
+	 * @brief 从capture复制mat到m_mat，同时检查capture是否refresh，顺便resize到统一尺寸（960 540）。
 	 * @return capture已refresh并复制成功则为true，未refresh返回false，复制失败返回false
 	*/
-	bool CopyMat(cv::Mat& target);
+	bool CopyMat();
 
 private:
 	HWND m_hwnd; // 窗口句柄
@@ -86,6 +85,7 @@ private:
 	POINT m_screenSize;
 	POINT m_lastMousePoint;
 	RECT m_workArea;
+	cv::Mat m_mat;
 };
 
 }

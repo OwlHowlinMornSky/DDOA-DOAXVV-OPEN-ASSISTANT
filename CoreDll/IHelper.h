@@ -61,7 +61,7 @@ public:
 	 * @param show 为 true 则显示截图。
 	 * @return 0 if success.
 	*/
-	virtual long SetShowCaptureOrNot(bool show) = 0;
+	//virtual long SetShowCaptureOrNot(bool show) = 0;
 };
 
 } // namespace ohms

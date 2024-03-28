@@ -22,8 +22,6 @@
 
 #include "API.h"
 
-#include <atomic>
-
 namespace ohms {
 
 struct CORE_API Settings {
@@ -41,8 +39,6 @@ struct CORE_API Settings {
 	static Settings g_set;
 
 	static void MakeOneCopy();
-
-	static std::atomic_bool g_askedForStop; // 请求停止的标记。true为需要停止
 };
 
 }

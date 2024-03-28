@@ -22,6 +22,7 @@
 
 #include "Clock.h"
 #include "Settings.h"
+#include "AskedForStop.h"
 
 namespace {
 
@@ -39,18 +40,21 @@ WndHandler::WndHandler() :
 	m_screenSize(),
 	m_state(StateValue::Idle),
 	m_workArea(),
-	r_capture(ohms::wgc::ICapture::getInstance())
-{}
+	r_capture(nullptr) {}
 
-WndHandler::~WndHandler() {}
+WndHandler::~WndHandler() {
+	Reset();
+}
 
-void WndHandler::Update() {
+bool WndHandler::Update() {
 	// 获取可用桌面大小
 	SystemParametersInfoW(SPI_GETWORKAREA, 0, &m_workArea, 0);
 	// 获取屏幕大小
 	m_screenSize.x = GetSystemMetrics(SM_CXSCREEN);
 	m_screenSize.y = GetSystemMetrics(SM_CYSCREEN);
-	return;
+	// 获取截图实例
+	r_capture = ohms::wgc::ICapture::getInstance();
+	return r_capture != nullptr;
 }
 
 WndHandler::SetReturnValue WndHandler::SetForLaucher() {
@@ -86,7 +90,11 @@ WndHandler::SetReturnValue WndHandler::SetForGame() {
 void WndHandler::Reset() {
 	m_state = StateValue::Idle;
 	m_hwnd = NULL;
-	r_capture->stopCapture();
+	if (r_capture)
+		r_capture->stopCapture();
+	m_workArea = {};
+	m_screenSize = {};
+	r_capture = nullptr;
 	return;
 }
 
@@ -97,10 +105,9 @@ WndHandler::StateValue WndHandler::GetState() const {
 int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
 	r_capture->askForRefresh();
 	Clock clk;
-	cv::Mat mat;
 	cv::Rect trect;
 	MSG msg{ 0 };
-	while (!Settings::g_askedForStop) {
+	while (!g_askedForStop) {
 		// show mat时必须处理该线程的窗口消息，cv的窗口才正常
 		// 没有show mat时也必须处理消息，否则收不到capture到的帧（似乎是分离线程初始化wgc导致的
 		if (PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
@@ -108,7 +115,7 @@ int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
 			DispatchMessageW(&msg);
 		}
 		else {
-			if (CopyMat(mat) && _temp.Match(mat))
+			if (CopyMat() && _temp.Match(m_mat))
 				break;
 			if (_tlimit > Time::Zero && clk.getElapsedTime() > _tlimit) // 应用超时
 				return -1;
@@ -116,7 +123,7 @@ int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
 			Sleep(30);
 		}
 	}
-	if (Settings::g_askedForStop)
+	if (g_askedForStop)
 		throw 0; // throw 0 表示停止
 	return 0;
 }
@@ -124,11 +131,10 @@ int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
 int WndHandler::WaitForMultiple(std::vector<const MatchTemplate*> _temps, Time _tlimit) {
 	r_capture->askForRefresh();
 	Clock clk;
-	cv::Mat mat;
 	cv::Rect trect;
 	MSG msg{ 0 };
 	int res = -1;
-	while (!Settings::g_askedForStop) {
+	while (!g_askedForStop) {
 		// show mat时必须处理该线程的窗口消息，cv的窗口才正常
 		// 没有show mat时也必须处理消息，否则收不到capture到的帧（似乎是分离线程初始化wgc导致的
 		if (PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
@@ -136,10 +142,10 @@ int WndHandler::WaitForMultiple(std::vector<const MatchTemplate*> _temps, Time _
 			DispatchMessageW(&msg);
 		}
 		else {
-			if (CopyMat(mat)) {
+			if (CopyMat()) {
 				int c = 0;
 				for (const MatchTemplate* i : _temps) {
-					if (i->Match(mat)) {
+					if (i->Match(m_mat)) {
 						res = c;
 						break;
 					}
@@ -154,18 +160,232 @@ int WndHandler::WaitForMultiple(std::vector<const MatchTemplate*> _temps, Time _
 			Sleep(30);
 		}
 	}
-	if (Settings::g_askedForStop)
+	if (g_askedForStop)
 		throw 0; // throw 0 表示停止
 	return res;
 }
 
-bool WndHandler::CopyMat(cv::Mat& target) {
+bool WndHandler::ClickAt(cv::Point pt) {
+	// 缩放到当前客户区大小
+	RECT rect{ 0 };
+	GetClientRect(m_hwnd, &rect);
+	pt.x = pt.x * (rect.right - rect.left) / 960;
+	pt.y = pt.y * (rect.bottom - rect.top) / 540;
+
+	if (Settings::g_set.Mouse_ForMouse) {
+		GetWindowRect(m_hwnd, &rect);
+
+		// 把目标窗口移动到屏幕范围内
+		if (rect.right > m_workArea.right)
+			rect.left -= rect.right - m_workArea.right;
+		if (rect.left < m_workArea.left)
+			rect.left = m_workArea.left;
+		if (rect.bottom > m_workArea.bottom)
+			rect.top -= rect.bottom - m_workArea.bottom;
+		if (rect.top < m_workArea.top)
+			rect.top = m_workArea.top;
+		SetWindowPos(m_hwnd, NULL, rect.left, rect.top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOACTIVATE);
+
+		// 移动光标
+		if (!(pt.x == m_lastMousePoint.x && pt.y == m_lastMousePoint.y)) {
+			int vecx = pt.x - m_lastMousePoint.x;
+			int vecy = pt.y - m_lastMousePoint.y;
+			float deltaLength = std::sqrtf(1.0f * vecx * vecx + vecy * vecy);
+			int stepCnt = static_cast<int>(std::roundf(std::sqrtf(deltaLength) / 2.0f));
+			stepCnt++;
+			vecx /= stepCnt;
+			vecy /= stepCnt;
+			POINT tmp;
+			for (int i = 1; i < stepCnt; ++i) {
+				tmp = m_lastMousePoint;
+				tmp.x += vecx * i;
+				tmp.y += vecy * i;
+
+				ClientToScreen(m_hwnd, &tmp);
+				tmp.x = tmp.x * 65535ll / m_screenSize.x;
+				tmp.y = tmp.y * 65535ll / m_screenSize.y;
+
+				INPUT inputs = {};
+				inputs.type = INPUT_MOUSE;
+				inputs.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+				inputs.mi.dx = tmp.x;
+				inputs.mi.dy = tmp.y;
+				SendInput(1, &inputs, sizeof(INPUT));
+				Sleep(9);
+			}
+			tmp.x = pt.x;
+			tmp.y = pt.y;
+
+			ClientToScreen(m_hwnd, &tmp);
+			tmp.x = tmp.x * 65535ll / m_screenSize.x;
+			tmp.y = tmp.y * 65535ll / m_screenSize.y;
+
+			INPUT inputs = {};
+			inputs.type = INPUT_MOUSE;
+			inputs.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+			inputs.mi.dx = tmp.x;
+			inputs.mi.dy = tmp.y;
+			SendInput(1, &inputs, sizeof(INPUT));
+			Sleep(9);
+			m_lastMousePoint = { pt.x, pt.y };
+		}
+		POINT p{ pt.x, pt.y };
+		ClientToScreen(m_hwnd, &p);
+
+		p.x = p.x * 65535ll / m_screenSize.x;
+		p.y = p.y * 65535ll / m_screenSize.y;
+
+		INPUT inputs[1] = {};
+		UINT uSent;
+
+		ZeroMemory(inputs, sizeof(inputs));
+		inputs[0].type = INPUT_MOUSE;
+		inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_ABSOLUTE;
+		inputs[0].mi.dx = p.x;
+		inputs[0].mi.dy = p.y;
+		uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+
+		Sleep(60);
+
+		ZeroMemory(inputs, sizeof(inputs));
+		inputs[0].type = INPUT_MOUSE;
+		inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP | MOUSEEVENTF_ABSOLUTE;
+		inputs[0].mi.dx = p.x;
+		inputs[0].mi.dy = p.y;
+		uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+	}
+	else {
+		PostMessageW(m_hwnd, WM_SETFOCUS, 0, 0);
+		// 移动光标
+		if (!(pt.x == m_lastMousePoint.x && pt.y == m_lastMousePoint.y)) {
+			int vecx = pt.x - m_lastMousePoint.x;
+			int vecy = pt.y - m_lastMousePoint.y;
+			float deltaLength = std::sqrtf(1.0f * vecx * vecx + vecy * vecy);
+			int stepCnt = static_cast<int>(std::roundf(std::sqrtf(deltaLength) / 2.0f));
+			stepCnt++;
+			vecx /= stepCnt;
+			vecy /= stepCnt;
+			POINT tmp;
+			for (int i = 1; i < stepCnt; ++i) {
+				tmp = m_lastMousePoint;
+				tmp.x += vecx * i;
+				tmp.y += vecy * i;
+				PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(tmp.x, tmp.y));
+				Sleep(9);
+			}
+			tmp.x = pt.x;
+			tmp.y = pt.y;
+			PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(tmp.x, tmp.y));
+			Sleep(9);
+			m_lastMousePoint = { pt.x, pt.y };
+		}
+		PostMessageW(m_hwnd, WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(pt.x, pt.y));
+		Sleep(40);
+		PostMessageW(m_hwnd, WM_LBUTTONUP, 0, MAKELPARAM(pt.x, pt.y));
+	}
+	return true;
+}
+
+bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
+	RECT rect{ 0 };
+	GetClientRect(m_hwnd, &rect);
+	pt.x = pt.x * (rect.right - rect.left) / 960;
+	pt.y = pt.y * (rect.bottom - rect.top) / 540;
+
+	if (Settings::g_set.Mouse_ForMouse) {
+		GetWindowRect(m_hwnd, &rect);
+
+		// 把目标窗口移动到屏幕范围内
+		if (rect.right > m_workArea.right)
+			rect.left -= rect.right - m_workArea.right;
+		if (rect.left < m_workArea.left)
+			rect.left = m_workArea.left;
+		if (rect.bottom > m_workArea.bottom)
+			rect.top -= rect.bottom - m_workArea.bottom;
+		if (rect.top < m_workArea.top)
+			rect.top = m_workArea.top;
+		SetWindowPos(m_hwnd, NULL, rect.left, rect.top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOACTIVATE);
+
+		// 移动光标
+		if (!(pt.x == m_lastMousePoint.x && pt.y == m_lastMousePoint.y)) {
+			int vecx = pt.x - m_lastMousePoint.x;
+			int vecy = pt.y - m_lastMousePoint.y;
+			float deltaLength = std::sqrtf(1.0f * vecx * vecx + vecy * vecy);
+			int stepCnt = static_cast<int>(std::roundf(std::sqrtf(deltaLength) / 2.0f));
+			stepCnt++;
+			vecx /= stepCnt;
+			vecy /= stepCnt;
+			POINT tmp;
+			for (int i = 1; i < stepCnt; ++i) {
+				tmp = m_lastMousePoint;
+				tmp.x += vecx * i;
+				tmp.y += vecy * i;
+
+				ClientToScreen(m_hwnd, &tmp);
+				tmp.x = tmp.x * 65535ll / m_screenSize.x;
+				tmp.y = tmp.y * 65535ll / m_screenSize.y;
+
+				INPUT inputs = {};
+				inputs.type = INPUT_MOUSE;
+				inputs.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+				inputs.mi.dx = tmp.x;
+				inputs.mi.dy = tmp.y;
+				SendInput(1, &inputs, sizeof(INPUT));
+				Sleep(9);
+			}
+			tmp.x = pt.x;
+			tmp.y = pt.y;
+
+			ClientToScreen(m_hwnd, &tmp);
+			tmp.x = tmp.x * 65535ll / m_screenSize.x;
+			tmp.y = tmp.y * 65535ll / m_screenSize.y;
+
+			INPUT inputs = {};
+			inputs.type = INPUT_MOUSE;
+			inputs.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+			inputs.mi.dx = tmp.x;
+			inputs.mi.dy = tmp.y;
+			SendInput(1, &inputs, sizeof(INPUT));
+			Sleep(9);
+			m_lastMousePoint = { pt.x, pt.y };
+		}
+	}
+	else {
+		PostMessageW(m_hwnd, WM_SETFOCUS, 0, 0);
+		// 移动光标
+		if (!(pt.x == m_lastMousePoint.x && pt.y == m_lastMousePoint.y)) {
+			int vecx = pt.x - m_lastMousePoint.x;
+			int vecy = pt.y - m_lastMousePoint.y;
+			float deltaLength = std::sqrtf(1.0f * vecx * vecx + vecy * vecy);
+			int stepCnt = static_cast<int>(std::roundf(std::sqrtf(deltaLength) / 2.0f));
+			stepCnt++;
+			vecx /= stepCnt;
+			vecy /= stepCnt;
+			POINT tmp;
+			for (int i = 1; i < stepCnt; ++i) {
+				tmp = m_lastMousePoint;
+				tmp.x += vecx * i;
+				tmp.y += vecy * i;
+				PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(tmp.x, tmp.y));
+				Sleep(9);
+			}
+			tmp.x = pt.x;
+			tmp.y = pt.y;
+			PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(tmp.x, tmp.y));
+			Sleep(9);
+			m_lastMousePoint = { pt.x, pt.y };
+		}
+	}
+	return true;
+}
+
+bool WndHandler::CopyMat() {
 	if (r_capture->isRefreshed()) { // refresh过再处理画面才有意义
-		if (r_capture->copyMatTo(target, true)) { // 要求转换为BGR
-			if (target.size().width != 960 || target.size().height != 540) { // 确保大小满足要求
-				auto sz = target.size();
+		if (r_capture->copyMatTo(m_mat, true)) { // 要求转换为BGR
+			if (m_mat.size().width != 960 || m_mat.size().height != 540) { // 确保大小满足要求
+				auto sz = m_mat.size();
 				cv::resize(
-					target, target,
+					m_mat, m_mat,
 					cv::Size(960, 540),
 					0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR
 				); // 双线性缩放

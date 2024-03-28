@@ -86,12 +86,16 @@ namespace ohms {
 
 MatchTemplateInfo::MatchTemplateInfo() :
 	isFixed(false),
-	thershold(65535) {}
+	thershold(65535),
+	rect() {}
 
-MatchTemplateInfo::MatchTemplateInfo(bool _isFixed, short _thershold, cv::Rect _rect) :
+MatchTemplateInfo::MatchTemplateInfo(bool _isFixed, unsigned short _thershold, cv::Rect&& _rect) :
 	isFixed(_isFixed),
 	thershold(_thershold),
 	rect(_rect) {}
+
+MatchTemplate::MatchTemplate(const MatchTemplateInfo& _info) :
+	m_info(_info) {}
 
 MatchTemplate::MatchTemplate(MatchTemplateInfo&& _info) :
 	m_info(_info) {}
@@ -149,6 +153,10 @@ bool MatchTemplate::Match(const cv::Mat& sample) const {
 bool MatchTemplate::LoadMat(const std::string& file) {
 	m_target = cv::imread(file);
 	return !m_target.empty();
+}
+
+const cv::Rect& MatchTemplate::GetLastMatchRect() const {
+	return m_lastMatch;
 }
 
 }

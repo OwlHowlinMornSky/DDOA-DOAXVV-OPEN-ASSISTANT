@@ -38,6 +38,7 @@ IHelper* ohms::IHelper::instance() {
 
 void IHelper::drop() {
 	delete ::g_helper;
+	::g_helper = nullptr;
 }
 
 } // namespace ohms

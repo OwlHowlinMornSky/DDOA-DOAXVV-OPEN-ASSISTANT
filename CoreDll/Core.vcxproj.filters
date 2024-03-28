@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="API">
+      <UniqueIdentifier>{a3663a63-7512-4216-b187-25e5d598201c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Clock.cpp">
@@ -42,15 +45,15 @@
     <ClCompile Include="WndHandler.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="AskedForStop.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clock.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Helper.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="IHelper.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
@@ -60,9 +63,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>资源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="API.h">
       <Filter>资源文件</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
@@ -75,6 +75,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="WndHandler.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="API.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="IHelper.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="AskedForStop.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

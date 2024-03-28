@@ -21,7 +21,11 @@
 #include "Helper.h"
 
 #include <iostream>
+#include <fstream>
 #include <thread>
+
+#include "Settings.h"
+#include "AskedForStop.h"
 
 namespace {
 
@@ -34,11 +38,11 @@ namespace ohms {
 
 Helper::Helper() :
 
-	m_running(false), // 未运行
+	m_running(false) // 未运行
 	//m_askedForStop(false), // 没有要求停止
 
-	m_doaxvv(0), // 初始未查找
-	r_capture(nullptr) // 初始无索引
+	//m_doaxvv(0), // 初始未查找
+	//r_capture(nullptr) // 初始无索引
 
 {
 	if (!wgc::ICapture::setup(true)) {
@@ -46,45 +50,69 @@ Helper::Helper() :
 		throw 1;
 	}
 
+	m_assets.assign("assets");
+
+	std::ifstream ifs;
+	ifs.open(m_assets / "tempLists.ini");
+	size_t sz;
+	ifs >> sz;
+	for (size_t i = 0; i < sz; ++i) {
+		std::string name;
+		bool fix;
+		unsigned short thres;
+		int r0, r1, r2, r3;
+		ifs >> name >> fix >> thres >> r0 >> r1 >> r2 >> r3;
+
+		m_templateList.emplace(name, MatchTemplateInfo(fix, thres, { r0, r1, r2, r3 }));
+	}
+
 	// 初始化各种mat目标和相应搜索范围
-	mat_ChaGameLast = cv::imread("assets/lastFight.png");
-	mat_ChaGameNew = cv::imread("assets/newFight.png");
-	rect_ChaGame = { 600, 240, 100, 300 }; // 600 -> 700, 240 -> 540
+	//mat_ChaGameLast = cv::imread("assets/lastFight.png");
+	//mat_ChaGameNew = cv::imread("assets/newFight.png");
+	//rect_ChaGame = { 600, 240, 100, 300 }; // 600 -> 700, 240 -> 540
 
-	mat_StartGame = cv::imread("assets/start.png");
-	rect_StartGame = { 700, 470, 200, 70 }; // 700 -> 900, 470 -> 540
+	//mat_StartGame = cv::imread("assets/start.png");
+	//rect_StartGame = { 700, 470, 200, 70 }; // 700 -> 900, 470 -> 540
 
-	mat_Result = cv::imread("assets/result.png");
-	rect_Result = { 640, 35, 320, 70 }; // 640 -> 960, 140 ( 35 -> 105 )
+	//mat_Result = cv::imread("assets/result.png");
+	//rect_Result = { 640, 35, 320, 70 }; // 640 -> 960, 140 ( 35 -> 105 )
 
-	mat_Loading = cv::imread("assets/loading.png");
-	rect_Loading = { 0, 0, 300, 180 }; // 300, 180
+	//mat_Loading = cv::imread("assets/loading.png");
+	//rect_Loading = { 0, 0, 300, 180 }; // 300, 180
 
-	mat_LowFP = cv::imread("assets/fp.png");
-	rect_LowFP = { 256, 60, 400, 210 }; // 256 -> 656, 60 -> 270
+	//mat_LowFP = cv::imread("assets/fp.png");
+	//rect_LowFP = { 256, 60, 400, 210 }; // 256 -> 656, 60 -> 270
 
-	mat_ChaTabBar = cv::imread("assets/default.png");
-	rect_ChaTabBar = { 640, 80, 320, 190 }; // 640 -> 960, 80 -> 270
+	//mat_ChaTabBar = cv::imread("assets/default.png");
+	//rect_ChaTabBar = { 640, 80, 320, 190 }; // 640 -> 960, 80 -> 270
 
-	mat_ChaAddBtn = cv::imread("assets/add.png");
-	rect_ChaAddBtn = { 860, 120, 100, 240 }; // 860 -> 960, 120 -> 360
+	//mat_ChaAddBtn = cv::imread("assets/add.png");
+	//rect_ChaAddBtn = { 860, 120, 100, 240 }; // 860 -> 960, 120 -> 360
+
+	m_handler = std::make_unique<WndHandler>();
 	return;
 }
 
-Helper::~Helper() {}
+Helper::~Helper() {
+	m_handler.reset();
+}
 
 bool Helper::start() {
 	if (m_running) { // 已经有任务运行（或者有bug没清除运行标记）
 		PushMsg(HelperReturnMessage::LOG_StartError_Running);
 		return false;
 	}
-	r_capture = wgc::ICapture::getInstance(); // 获取capture索引
-	if (!r_capture) { // capture获取失败（但是App初始化获取成功才运行过来，所以这个理论上永远不会触发）
+	//r_capture = wgc::ICapture::getInstance(); // 获取capture索引
+	//if (!r_capture) { // capture获取失败（但是App初始化获取成功才运行过来，所以这个理论上永远不会触发）
+	//	return false;
+	//}
+	//r_capture->setClipToClientArea(true);
+
+	if (!m_handler->Update()) {
 		return false;
 	}
-	r_capture->setClipToClientArea(true);
 
-	Settings::g_askedForStop = false; // 清除运行标志（绝对不能移动到上面去）
+	g_askedForStop = false; // 清除运行标志（绝对不能移动到上面去）
 	ohms::Settings::MakeOneCopy();
 	std::thread sub(&Helper::Work, this);
 	sub.detach(); // 在子线程运行工作
@@ -94,7 +122,7 @@ bool Helper::start() {
 void Helper::askForStop() {
 	if (m_running) { // 运行的时候才有意义
 		PushMsg(HelperReturnMessage::LOG_Stopping);
-		Settings::g_askedForStop = true;
+		g_askedForStop = true;
 	}
 	return;
 }
@@ -127,22 +155,22 @@ void Helper::Work() {
 	}
 
 	try {
-		m_doaxvv = FindWindowW(g_findCls, g_findWnd); // 查找doaxvv窗口
-		if (m_doaxvv == NULL) {
-			PushMsg(HelperReturnMessage::LOG_WorkError_NoWnd);
-			throw 0;
-		}
-		if (!IsWindow(m_doaxvv) || IsIconic(m_doaxvv) || !r_capture->startCapture(m_doaxvv)) { // 这些是能截图的必要条件
-			PushMsg(HelperReturnMessage::LOG_WorkError_FailedCapture);
-			throw 0;
-		}
+		//m_doaxvv = FindWindowW(g_findCls, g_findWnd); // 查找doaxvv窗口
+		//if (m_doaxvv == NULL) {
+		//	PushMsg(HelperReturnMessage::LOG_WorkError_NoWnd);
+		//	throw 0;
+		//}
+		//if (!IsWindow(m_doaxvv) || IsIconic(m_doaxvv) || !r_capture->startCapture(m_doaxvv)) { // 这些是能截图的必要条件
+		//	PushMsg(HelperReturnMessage::LOG_WorkError_FailedCapture);
+		//	throw 0;
+		//}
 
 		// 获取可用桌面大小
-		SystemParametersInfoW(SPI_GETWORKAREA, 0, &m_workArea, 0);
+		//SystemParametersInfoW(SPI_GETWORKAREA, 0, &m_workArea, 0);
 
 		// 获取屏幕大小
-		m_screenSize.x = GetSystemMetrics(SM_CXSCREEN);
-		m_screenSize.y = GetSystemMetrics(SM_CYSCREEN);
+		//m_screenSize.x = GetSystemMetrics(SM_CXSCREEN);
+		//m_screenSize.y = GetSystemMetrics(SM_CYSCREEN);
 
 		// Run task.
 		Task_Challenge();
@@ -156,7 +184,8 @@ void Helper::Work() {
 	catch (...) {
 		PushMsg(HelperReturnMessage::LOG_WorkError_Exception);
 	}
-	r_capture->stopCapture(); // 停止截图
+	//r_capture->stopCapture(); // 停止截图
+	m_handler->Reset();
 
 	// 允许关闭屏幕和睡眠
 	SetThreadExecutionState(ES_CONTINUOUS);

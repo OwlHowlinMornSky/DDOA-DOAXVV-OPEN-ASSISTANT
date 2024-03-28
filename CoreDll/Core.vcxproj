@@ -103,6 +103,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AskedForStop.cpp" />
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Helper.steps.cpp" />
@@ -115,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="API.h" />
+    <ClInclude Include="AskedForStop.h" />
     <ClInclude Include="Clock.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Helper.h" />

@@ -20,6 +20,9 @@
 */
 #include "Helper.h"
 
+#include "Settings.h"
+#include "AskedForStop.h"
+
 namespace ohms {
 
 bool Helper::Task_StartUp() {
@@ -29,6 +32,35 @@ bool Helper::Task_StartUp() {
 }
 
 bool Helper::Task_Challenge() {
+	switch (m_handler->SetForGame()) {
+	case WndHandler::SetReturnValue::WndNotFound:
+		PushMsg(HelperReturnMessage::LOG_WorkError_NoWnd);
+		throw 0;
+		break;
+	case WndHandler::SetReturnValue::CaptureFailed:
+		PushMsg(HelperReturnMessage::LOG_WorkError_FailedCapture);
+		throw 0;
+		break;
+	}
+
+	std::unique_ptr<MatchTemplate> 
+		temp_default   = std::make_unique<MatchTemplate>(m_templateList.at("default")),
+		temp_lastFight = std::make_unique<MatchTemplate>(m_templateList.at("lastFight")),
+		temp_newFight  = std::make_unique<MatchTemplate>(m_templateList.at("newFight")),
+		temp_start     = std::make_unique<MatchTemplate>(m_templateList.at("start")),
+		temp_loading   = std::make_unique<MatchTemplate>(m_templateList.at("loading")),
+		temp_fp        = std::make_unique<MatchTemplate>(m_templateList.at("fp")),
+		temp_result    = std::make_unique<MatchTemplate>(m_templateList.at("result")),
+		temp_add       = std::make_unique<MatchTemplate>(m_templateList.at("add"));
+	temp_default->LoadMat((m_assets / "default.png").string());
+	temp_lastFight->LoadMat((m_assets / "lastFight.png").string());
+	temp_newFight->LoadMat((m_assets / "newFight.png").string());
+	temp_start->LoadMat((m_assets / "start.png").string());
+	temp_loading->LoadMat((m_assets / "loading.png").string());
+	temp_fp->LoadMat((m_assets / "fp.png").string());
+	temp_result->LoadMat((m_assets / "result.png").string());
+	temp_add->LoadMat((m_assets / "add.png").string());
+
 	PushMsg(HelperReturnMessage::LOG_Challenge_Start);
 	const bool forNew = Settings::g_set.ChaGame_ForNew; // 保存设置
 
@@ -48,7 +80,8 @@ bool Helper::Task_Challenge() {
 		PushMsgCode(HelperReturnMessage::LOG_Challenge_BeginNum, i);
 
 		// 查找目标比赛按钮。
-		if (!Step_WaitFor(forNew ? mat_ChaGameNew : mat_ChaGameLast, rect_ChaGame, rect, seconds(10.0f)))
+		//if (!Step_WaitFor(forNew ? mat_ChaGameNew : mat_ChaGameLast, rect_ChaGame, rect, seconds(10.0f)))
+		if (!m_handler->WaitFor(forNew ? *temp_newFight : *temp_lastFight))
 			Step_TaskError(
 				forNew ?
 				HelperReturnMessage::STR_Task_Challenge_NoNew :
@@ -59,23 +92,28 @@ bool Helper::Task_Challenge() {
 		// 点击比赛，直到进入编队画面（找到挑战按钮）。
 		PushMsg(forAddThisTime ? HelperReturnMessage::LOG_Challenge_EnterAdd :
 				(forNew ? HelperReturnMessage::LOG_Challenge_EnterNew : HelperReturnMessage::LOG_Challenge_EnterLast));
-		if (!Step_KeepClickingUntil({ 900, rect.y }, mat_StartGame, rect_StartGame))
+		//if (!Step_KeepClickingUntil({ 900, rect.y }, mat_StartGame, rect_StartGame))
+		if (!Step_KeepClickingUntil({ 900, rect.y }, *temp_start))
 			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoEnter);
 
 		forAddThisTime = false;
 
 		// 查找“挑战”按钮。
-		Step_WaitFor(mat_StartGame, rect_StartGame, rect);
+		//Step_WaitFor(mat_StartGame, rect_StartGame, rect);
+		m_handler->WaitFor(*temp_start);
+		rect = temp_start->GetLastMatchRect();
 		PushMsg(HelperReturnMessage::LOG_Challenge_Play);
 		{
 			size_t tc = 0;
-			while (!Settings::g_askedForStop) {
+			while (!g_askedForStop) {
 				// 点击挑战，直到进入加载画面。
 				pt = { rect.x + 50, rect.y + 20 };
-				if (Step_KeepClickingUntil(pt, mat_Loading, rect_Loading, seconds(1.5f), seconds(0.3f), 20.0f))
+				//if (Step_KeepClickingUntil(pt, mat_Loading, rect_Loading, seconds(1.5f), seconds(0.3f), 20.0f))
+				if (Step_KeepClickingUntil(pt, *temp_loading, seconds(1.5f), seconds(0.3f)))
 					break;
 				// 瞟一眼是否是fp不足。
-				if (Step_WaitFor(mat_LowFP, rect_LowFP, rect, seconds(0.2f)))
+				//if (Step_WaitFor(mat_LowFP, rect_LowFP, rect, seconds(0.2f)))
+				if (m_handler->WaitFor(*temp_fp, seconds(0.2f)))
 					Step_TaskError(HelperReturnMessage::STR_Task_Challenge_LowFP);
 				// 尝试次数超限则报错。
 				if (++tc > 12)
@@ -85,30 +123,34 @@ bool Helper::Task_Challenge() {
 
 		// 等待结束。
 		PushMsg(HelperReturnMessage::LOG_Challenge_WaitForEnd);
-		if (!Step_WaitFor(mat_Result, rect_Result, rect, seconds(5 * 60.0f), 25.0f))
+		//if (!Step_WaitFor(mat_Result, rect_Result, rect, seconds(5 * 60.0f), 25.0f))
+		if (!m_handler->WaitFor(*temp_result, seconds(5 * 60.0f)))
 			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_TimeOut);
 
 		// 点击，直到进入加载画面。
 		PushMsg(HelperReturnMessage::LOG_Challenge_End);
 		pt = { rect.x + 100, rect.y };
-		if (!Step_KeepClickingUntil(pt, mat_Loading, rect_Loading, seconds(60.0f), seconds(0.1f), 20.0f))
+		//if (!Step_KeepClickingUntil(pt, mat_Loading, rect_Loading, seconds(60.0f), seconds(0.1f), 20.0f))
+		if (!Step_KeepClickingUntil(pt, *temp_loading, seconds(60.0f), seconds(0.1f)))
 			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoEnd);
 
 		// 等待到挑战赛标签页出现。
 		PushMsg(HelperReturnMessage::LOG_Challenge_Quiting);
-		if (!Step_WaitFor(mat_ChaTabBar, rect_ChaTabBar, rect, seconds(60.0f)))
+		//if (!Step_WaitFor(mat_ChaTabBar, rect_ChaTabBar, rect, seconds(60.0f)))
+		if (!m_handler->WaitFor(*temp_default, seconds(60.0f)))
 			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoOver);
 		PushMsg(HelperReturnMessage::LOG_Challenge_Over);
 
 		// 检查是否有奖励挑战赛。
 		if (Settings::g_set.ChaGame_CheckAddition) {
-			if (Step_WaitFor(mat_ChaAddBtn, rect_ChaAddBtn, rect, seconds(2.0f))) {
+			//if (Step_WaitFor(mat_ChaAddBtn, rect_ChaAddBtn, rect, seconds(2.0f))) {
+			if (m_handler->WaitFor(*temp_add, seconds(2.0f))) {
 				PushMsg(HelperReturnMessage::LOG_Challenge_FindAdd);
 				if (Settings::g_set.ChaGame_EnterAddition) { // 进入奖励挑战赛。
 					if (forNew) {
 						pt.x = rect.x + 30;
 						pt.y = rect.y + 50;
-						if (Step_KeepClickingUntil(pt, mat_ChaGameNew, rect_ChaGame, seconds(10.0f), seconds(2.0f))) {
+						if (Step_KeepClickingUntil(pt, *temp_newFight, seconds(10.0f), seconds(2.0f))) {
 							PushMsg(HelperReturnMessage::LOG_Challenge_OpenedAdd);
 							forAddThisTime = true;
 						}
@@ -122,10 +164,11 @@ bool Helper::Task_Challenge() {
 					}
 				}
 				else { // 回到“推荐”栏。
-					if (Step_WaitFor(mat_ChaTabBar, rect_ChaTabBar, rect, seconds(5.0f))) {
+					//if (Step_WaitFor(mat_ChaTabBar, rect_ChaTabBar, rect, seconds(5.0f))) {
+					if (m_handler->WaitFor(*temp_default, seconds(5.0f))) {
 						pt.x = rect.x + 40;
 						pt.y = rect.y + 12;
-						if (Step_KeepClickingUntilNo(pt, mat_ChaAddBtn, rect_ChaAddBtn, seconds(10.0f), seconds(0.5f))) {
+						if (Step_KeepClickingUntilNo(pt, *temp_add, seconds(10.0f), seconds(0.5f))) {
 							PushMsg(HelperReturnMessage::LOG_Challenge_IgnoredAdd);
 						}
 						else {

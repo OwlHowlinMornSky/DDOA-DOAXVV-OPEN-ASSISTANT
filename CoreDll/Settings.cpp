@@ -25,8 +25,6 @@ namespace ohms {
 Settings Settings::mainSettings;
 Settings Settings::g_set;
 
-std::atomic_bool Settings::g_askedForStop;
-
 Settings::Settings() :
 	Mouse_ForMouse(false), // 默认发窗口消息
 	PreventFromSleep(true), // 默认阻止睡眠

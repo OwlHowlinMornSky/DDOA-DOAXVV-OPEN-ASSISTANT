@@ -20,6 +20,7 @@
 */
 #pragma once
 
+#include <map>
 #include <opencv2/core/types.hpp>
 #include <opencv2/core/mat.hpp>
 
@@ -27,15 +28,18 @@ namespace ohms {
 
 struct MatchTemplateInfo {
 	bool isFixed; // 是否为固定区域检查（true则为固定区域检查，false则为广阔范围搜索）。
-	short thershold; // 判定阈值，差异量上限。
+	unsigned short thershold; // 判定阈值，差异量上限。
 	cv::Rect rect; // 检查范围（固定检查时左上指定位置，大小取决于mat；范围搜索时即范围，必须比mat大）。
 
 	MatchTemplateInfo();
-	MatchTemplateInfo(bool _isFixed, short _thershold, cv::Rect _rect);
+	MatchTemplateInfo(bool _isFixed, unsigned short _thershold, cv::Rect&& _rect);
 };
+
+typedef std::map<std::string, MatchTemplateInfo> TemplateListType;
 
 class MatchTemplate final {
 public:
+	MatchTemplate(const MatchTemplateInfo& _info);
 	MatchTemplate(MatchTemplateInfo&& _info);
 	~MatchTemplate();
 
@@ -53,6 +57,8 @@ public:
 	 * @return 加载是否成功。
 	 */
 	bool LoadMat(const std::string& file);
+
+	const cv::Rect& GetLastMatchRect() const;
 
 private:
 	MatchTemplateInfo m_info;
