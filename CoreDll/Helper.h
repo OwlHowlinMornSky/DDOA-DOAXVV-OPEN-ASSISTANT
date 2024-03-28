@@ -81,40 +81,6 @@ protected:
 // (在 Helper.steps.cpp 实现)
 protected:
 	/**
-	 * @brief 从capture复制mat，同时检查capture是否refresh，顺便resize到统一尺寸（960 540）。
-	 * @param target 保存mat的位置
-	 * @return capture已refresh并复制成功则为true，未refresh返回false，复制失败返回false
-	*/
-	//bool Step_CopyMat(cv::Mat& target);
-
-	/**
-	 * @brief 等待画面出现目标。askedForStop则 throw 0
-	 * @param matTemplate 目标
-	 * @param searchRect 搜索范围
-	 * @param findRect 找到的区域
-	 * @param maxTime 超时时间（小于等于0则为永久）
-	 * @param thres 差异阈值
-	 * @return true则找到目标，findRect保存找到的区域，false则为超时
-	*/
-	//bool Step_WaitFor(
-	//	const cv::Mat& matTemplate, const cv::Rect searchRect, cv::Rect& findRect,
-	//	Time maxTime = seconds(10.0f), float thres = 10.0f
-	//);
-
-	/**
-	 * @brief 单击。范围是统一尺寸（960 540），自动缩放到当前DOAXVV大小
-	 * @param pt 位置
-	 * @return 未使用
-	*/
-	//bool Step_Click(cv::Point pt);
-	/**
-	 * @brief 移动光标。范围是统一尺寸（960 540），自动缩放到当前DOAXVV大小
-	 * @param pt 位置
-	 * @return 未使用
-	*/
-	//bool Step_Move(cv::Point pt);
-
-	/**
 	 * @brief 持续点击指定位置，直到画面出现目标。askedForStop则 throw 0
 	 * @param clkPt 指定点击位置，范围与 step_click 一致
 	 * @param matTemplate 目标
@@ -124,18 +90,10 @@ protected:
 	 * @param thres 阈值
 	 * @return true则已找到目标，false则为超时
 	*/
-	/*bool Step_KeepClickingUntil(
-		const cv::Point clkPt, const cv::Mat& matTemplate, const cv::Rect searchRect,
-		Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f), float thres = 10.0f
-	);*/
 	bool Step_KeepClickingUntil(
 		const cv::Point clkPt, const MatchTemplate& _temp, Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f)
 	);
 
-	/*bool Step_KeepClickingUntilNo(
-		const cv::Point clkPt, const cv::Mat& matTemplate, const cv::Rect searchRect,
-		Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f), float thres = 10.0f
-	);*/
 	bool Step_KeepClickingUntilNo(
 		const cv::Point clkPt, const MatchTemplate& _temp, Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f)
 	);
@@ -149,10 +107,6 @@ protected:
 // 成员变量
 protected:
 	std::atomic_bool m_running; // 正在运行的标记。true为正在运行
-	//std::atomic_bool m_askedForStop; // 请求停止的标记。true为需要停止
-
-	//HWND m_doaxvv; // doaxvv窗口句柄
-	//wgc::ICapture* r_capture; // capture索引
 
 	std::queue<unsigned long> m_hrm; // 返回消息的队列
 	std::mutex m_hrm_mutex; // 返回消息的互斥体
@@ -160,38 +114,6 @@ protected:
 	std::filesystem::path m_assets;
 	std::unique_ptr<WndHandler> m_handler;
 	TemplateListType m_templateList;
-
-	//RECT m_workArea;
-	//POINT m_screenSize;
-
-	// 上一次比赛 和 新比赛 的图样，以及查找范围。
-	//cv::Mat mat_ChaGameLast;
-	//cv::Mat mat_ChaGameNew;
-	//cv::Rect rect_ChaGame;
-
-	//// 编队页面右下角的 挑战按钮。
-	//cv::Mat mat_StartGame;
-	//cv::Rect rect_StartGame;
-
-	//// 结算页面右上角的 RESULT。
-	//cv::Mat mat_Result;
-	//cv::Rect rect_Result;
-
-	//// 加载页面左上角的 DOAXVV。
-	//cv::Mat mat_Loading;
-	//cv::Rect rect_Loading;
-
-	//// 编队页面中间 可能出现的 FP不足。
-	//cv::Mat mat_LowFP;
-	//cv::Rect rect_LowFP;
-
-	//// 挑战赛页面的 标签页栏 (推荐、主要、每日、活动)。
-	//cv::Mat mat_ChaTabBar;
-	//cv::Rect rect_ChaTabBar;
-
-	//// 挑战赛页面的奖励挑战赛按钮右端。
-	//cv::Mat mat_ChaAddBtn;
-	//cv::Rect rect_ChaAddBtn;
 };
 
 /*

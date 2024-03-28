@@ -77,7 +77,7 @@ inline bool check(const cv::Mat& matSample, const cv::Mat& matTemplate, float th
 		diff = matDiffrenceColor(matSample, matTemplate);
 	else
 		diff = matDiffrencePixel(matSample, matTemplate);
-	return ((diff * 100.0f) < thres);
+	return (diff < thres);
 }
 
 }

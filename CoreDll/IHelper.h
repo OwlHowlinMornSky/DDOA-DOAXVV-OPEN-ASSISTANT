@@ -54,14 +54,6 @@ public:
 	 * @brief 弹出返回消息
 	*/
 	virtual unsigned long msgPop() = 0;
-
-public:
-	/**
-	 * @brief 设置是否显示调试性截图。
-	 * @param show 为 true 则显示截图。
-	 * @return 0 if success.
-	*/
-	//virtual long SetShowCaptureOrNot(bool show) = 0;
 };
 
 } // namespace ohms

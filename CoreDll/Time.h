@@ -28,7 +28,7 @@ namespace ohms {
 /**
  * @brief 时间。
 */
-class CORE_API Time final {
+class Time final {
 public:
 	Time();
 

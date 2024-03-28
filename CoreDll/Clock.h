@@ -20,7 +20,6 @@
 */
 #pragma once
 
-#include "API.h"
 #include "Time.h"
 
 namespace ohms {
@@ -28,7 +27,7 @@ namespace ohms {
 /**
  * @brief 精确时钟。
 */
-class CORE_API Clock final {
+class Clock final {
 public:
 	Clock();
 

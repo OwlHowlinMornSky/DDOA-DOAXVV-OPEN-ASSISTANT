@@ -68,6 +68,7 @@ WndHandler::SetReturnValue WndHandler::SetForLaucher() {
 	if (!IsWindow(m_hwnd) || IsIconic(m_hwnd) || !r_capture->startCapture(m_hwnd)) { // 这些是能截图的必要条件
 		return SetReturnValue::CaptureFailed;
 	}
+	r_capture->setClipToClientArea(true);
 	m_state = StateValue::Launcher;
 	return SetReturnValue::OK;
 }
@@ -83,6 +84,7 @@ WndHandler::SetReturnValue WndHandler::SetForGame() {
 	if (!IsWindow(m_hwnd) || IsIconic(m_hwnd) || !r_capture->startCapture(m_hwnd)) { // 这些是能截图的必要条件
 		return SetReturnValue::CaptureFailed;
 	}
+	r_capture->setClipToClientArea(true);
 	m_state = StateValue::Game;
 	return SetReturnValue::OK;
 }
@@ -92,9 +94,6 @@ void WndHandler::Reset() {
 	m_hwnd = NULL;
 	if (r_capture)
 		r_capture->stopCapture();
-	m_workArea = {};
-	m_screenSize = {};
-	r_capture = nullptr;
 	return;
 }
 
@@ -171,6 +170,8 @@ bool WndHandler::ClickAt(cv::Point pt) {
 	GetClientRect(m_hwnd, &rect);
 	pt.x = pt.x * (rect.right - rect.left) / 960;
 	pt.y = pt.y * (rect.bottom - rect.top) / 540;
+
+	//MessageBoxA(0, (std::to_string(pt.x) + ", " + std::to_string(pt.y)).c_str(), "t", 0);
 
 	if (Settings::g_set.Mouse_ForMouse) {
 		GetWindowRect(m_hwnd, &rect);
