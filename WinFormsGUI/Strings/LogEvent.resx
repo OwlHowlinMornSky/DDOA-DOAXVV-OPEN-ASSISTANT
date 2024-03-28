@@ -162,6 +162,9 @@
   <data name="Challenge_WaitForEnd" xml:space="preserve">
     <value>等待结算</value>
   </data>
+  <data name="TaskOver" xml:space="preserve">
+    <value>任务完成</value>
+  </data>
   <data name="Task_Error" xml:space="preserve">
     <value>任务出错</value>
   </data>

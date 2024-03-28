@@ -223,6 +223,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 任务完成 的本地化字符串。
+        /// </summary>
+        internal static string TaskOver {
+            get {
+                return ResourceManager.GetString("TaskOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 未描述的事件：{0} 的本地化字符串。
         /// </summary>
         internal static string UNKNOWN {

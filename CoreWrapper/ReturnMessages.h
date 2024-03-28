@@ -46,6 +46,7 @@ public enum class ReturnMessage {
 	LOG_TaskStop,
 	LOG_TaskError_Exception,
 	LOG_TaskError, // 下跟参数
+	LOG_TaskOver,
 
 	LOG_Challenge_Start,
 	LOG_Challenge_BeginNum, // 挑战赛开始（下跟次数！）

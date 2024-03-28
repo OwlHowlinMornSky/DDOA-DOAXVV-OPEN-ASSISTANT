@@ -109,8 +109,11 @@ bool Helper::Task_Challenge() {
 				if (Step_KeepClickingUntil(pt, *temp_loading, seconds(1.5f), seconds(0.3f)))
 					break;
 				// 瞟一眼是否是fp不足。
-				if (0 == m_handler->WaitFor(*temp_fp, seconds(0.2f)))
-					Step_TaskError(HelperReturnMessage::STR_Task_Challenge_LowFP);
+				if (0 == m_handler->WaitFor(*temp_fp, seconds(0.2f))) {
+					//Step_TaskError(HelperReturnMessage::STR_Task_Challenge_LowFP);
+					PushMsg(HelperReturnMessage::LOG_TaskOver);
+					throw 0;
+				}
 				// 尝试次数超限则报错。
 				if (++tc > 12)
 					Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoStart);

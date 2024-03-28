@@ -379,6 +379,16 @@ namespace WinFormsGUI {
 							ToolTipIcon.Info
 						);
 					break;
+				case ReturnMessage.LOG_TaskOver:
+					Log(Strings.LogEvent.TaskOver);
+					if (Settings.GUI.Default.UseNotify)
+						notifyIcon_Main.ShowBalloonTip(
+							Settings.Param.Default.NotifyTime,
+							Strings.LogEvent.TaskOver,
+							Strings.LogEvent.TaskOver,
+							ToolTipIcon.Info
+						);
+					break;
 
 				case ReturnMessage.LOG_Challenge_Start:
 					Log(Strings.LogEvent.Challenge_Start);
