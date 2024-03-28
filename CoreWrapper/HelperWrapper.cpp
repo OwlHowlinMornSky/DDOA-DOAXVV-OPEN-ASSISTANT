@@ -32,8 +32,7 @@ HelperWrapper::HelperWrapper() {
 }
 
 HelperWrapper::~HelperWrapper() {
-	ohms::IHelper::drop();
-	r_helper = nullptr;
+	Drop();
 }
 
 System::Boolean HelperWrapper::Start() {
@@ -75,7 +74,7 @@ System::Int32 HelperWrapper::SetMouseSendInputOrSendMessage(bool sendInput) {
 
 System::Int32 HelperWrapper::SetShowCaptureOrNot(bool show) {
 	//return r_helper->SetShowCaptureOrNot(show);
-	return 0;
+	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetKeepAwakeOrNot(bool keep) {

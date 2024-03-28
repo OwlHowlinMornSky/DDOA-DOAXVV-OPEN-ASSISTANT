@@ -30,15 +30,9 @@
 namespace ohms {
 
 Helper::Helper() :
-
 	m_running(false) // 未运行
 
 {
-	if (!wgc::ICapture::setup(true)) {
-		MessageBoxW(NULL, L"Failed to setup WGC", L"DDOA", MB_ICONERROR);
-		throw 1;
-	}
-
 	m_assets.assign("assets");
 
 	std::ifstream ifs;
@@ -55,13 +49,10 @@ Helper::Helper() :
 		m_templateList.emplace(name, MatchTemplateInfo(fix, thres, { r0, r1, r2, r3 }));
 	}
 
-	m_handler = std::make_unique<WndHandler>();
 	return;
 }
 
-Helper::~Helper() {
-	m_handler.reset();
-}
+Helper::~Helper() {}
 
 bool Helper::start() {
 	if (m_running) { // 已经有任务运行（或者有bug没清除运行标记）
@@ -69,6 +60,10 @@ bool Helper::start() {
 		return false;
 	}
 
+	m_handler = WndHandler::Instance();
+	if (m_handler == nullptr) {
+		return false;
+	}
 	if (!m_handler->Update()) {
 		return false;
 	}
@@ -132,8 +127,6 @@ void Helper::Work() {
 
 	// 允许关闭屏幕和睡眠
 	SetThreadExecutionState(ES_CONTINUOUS);
-
-	cv::destroyAllWindows(); // 销毁show窗口
 
 	m_running = false; // 清除标记
 	PushMsg(HelperReturnMessage::CMD_BtnToStart); // 让主按钮变成start

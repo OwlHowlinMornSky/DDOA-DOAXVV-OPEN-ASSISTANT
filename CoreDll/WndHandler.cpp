@@ -18,17 +18,24 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+#include <opencv2/opencv.hpp> // 不能移下去，因为windows头文件不能在opencv头文件之前。
+
 #include "WndHandler.h"
 
 #include "Clock.h"
 #include "Settings.h"
 #include "AskedForStop.h"
 
+#include <ohms/WGC.h>
+
 namespace {
 
 const WCHAR g_findCls[] = L"DOAX VenusVacation"; // 查找doaxvv窗口的类的名字
 const WCHAR g_findWnd[] = L"DOAX VenusVacation"; // 查找doaxvv窗口的名字
 const WCHAR g_finGWnd[] = L"DOAX VenusVacation Launcher"; // 查找doaxvv launcher窗口的名字
+
+ohms::wgc::ICapture* r_capture = nullptr; // capture索引
+ohms::WndHandler* g_wndh;
 
 }
 
@@ -39,11 +46,26 @@ WndHandler::WndHandler() :
 	m_lastMousePoint(),
 	m_screenSize(),
 	m_state(StateValue::Idle),
-	m_workArea(),
-	r_capture(nullptr) {}
+	m_workArea() {}
 
 WndHandler::~WndHandler() {
 	Reset();
+}
+
+WndHandler* WndHandler::Instance() {
+	if (::g_wndh == nullptr) {
+		if (!wgc::ICapture::setup(true)) {
+			MessageBoxW(NULL, L"Failed to setup WGC", L"DDOA", MB_ICONERROR);
+			return nullptr;
+		}
+		::g_wndh = new WndHandler;
+	}
+	return ::g_wndh;
+}
+
+void WndHandler::Drop() {
+	delete ::g_wndh;
+	g_wndh = nullptr;
 }
 
 bool WndHandler::Update() {

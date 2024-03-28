@@ -20,17 +20,19 @@
 */
 #pragma once
 
-#include <ohms/WGC.h>
-#include <opencv2/opencv.hpp>
-
 #include "MatchTemplate.h"
+#include "Time.h"
+
 #include <array>
 
-#include "Time.h"
+#include <opencv2/core/types.hpp>
+#include <opencv2/core/mat.hpp>
+
+#include "framework.h" // 不能移上去，因为windows头文件不能在opencv头文件之前。
 
 namespace ohms {
 
-class WndHandler {
+class WndHandler final {
 public:
 	enum class SetReturnValue {
 		OK = 0,
@@ -43,9 +45,13 @@ public:
 		Game
 	};
 
-public:
+protected:
 	WndHandler();
+public:
 	virtual ~WndHandler();
+
+	static WndHandler* Instance();
+	static void Drop();
 
 public:
 	bool Update();
@@ -81,7 +87,6 @@ protected:
 private:
 	HWND m_hwnd; // 窗口句柄
 	StateValue m_state;
-	wgc::ICapture* r_capture; // capture索引
 	POINT m_screenSize;
 	POINT m_lastMousePoint;
 	RECT m_workArea;

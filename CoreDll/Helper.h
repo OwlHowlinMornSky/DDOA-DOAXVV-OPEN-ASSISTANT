@@ -29,8 +29,7 @@
 #include "IHelper.h"
 #include "WndHandler.h"
 
-#include <ohms/WGC.h>
-#include <opencv2/opencv.hpp>
+//#include <opencv2/opencv.hpp>
 
 namespace ohms {
 
@@ -112,7 +111,7 @@ protected:
 	std::mutex m_hrm_mutex; // 返回消息的互斥体
 
 	std::filesystem::path m_assets;
-	std::unique_ptr<WndHandler> m_handler;
+	WndHandler* m_handler;
 	TemplateListType m_templateList;
 };
 
