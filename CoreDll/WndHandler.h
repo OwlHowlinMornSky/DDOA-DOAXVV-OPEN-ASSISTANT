@@ -74,7 +74,7 @@ public:
 	 * @brief 设定目标窗口为DOAXVV的登录器窗口。
 	 * @return “设定”操作的状态。
 	 */
-	SetReturnValue SetForLaucher();
+	SetReturnValue SetForLauncher();
 	/**
 	 * @brief 设定目标窗口为DOAXVV的游戏窗口。
 	 * @return “设定”操作的状态。

@@ -32,7 +32,7 @@ bool Helper::Task_StartUp() {
 }
 
 bool Helper::Task_Challenge() {
-	switch (m_handler->SetForGame()) {
+	switch (r_handler->SetForGame()) {
 	case WndHandler::SetReturnValue::WndNotFound:
 		PushMsg(HelperReturnMessage::LOG_WorkError_NoWnd);
 		throw 0;
@@ -80,7 +80,7 @@ bool Helper::Task_Challenge() {
 		PushMsgCode(HelperReturnMessage::LOG_Challenge_BeginNum, i);
 
 		// 查找目标比赛按钮。
-		if (-1 == m_handler->WaitFor(forNew ? *temp_newFight : *temp_lastFight))
+		if (-1 == r_handler->WaitFor(forNew ? *temp_newFight : *temp_lastFight))
 			Step_TaskError(
 				forNew ?
 				HelperReturnMessage::STR_Task_Challenge_NoNew :
@@ -98,7 +98,7 @@ bool Helper::Task_Challenge() {
 		forAddThisTime = false;
 
 		// 查找“挑战”按钮。
-		m_handler->WaitFor(*temp_start);
+		r_handler->WaitFor(*temp_start);
 		rect = temp_start->GetLastMatchRect();
 		PushMsg(HelperReturnMessage::LOG_Challenge_Play);
 		{
@@ -109,7 +109,7 @@ bool Helper::Task_Challenge() {
 				if (Step_KeepClickingUntil(pt, *temp_loading, seconds(1.5f), seconds(0.3f)))
 					break;
 				// 瞟一眼是否是fp不足。
-				if (0 == m_handler->WaitFor(*temp_fp, seconds(0.2f))) {
+				if (0 == r_handler->WaitFor(*temp_fp, seconds(0.2f))) {
 					//Step_TaskError(HelperReturnMessage::STR_Task_Challenge_LowFP);
 					PushMsg(HelperReturnMessage::LOG_TaskOver);
 					throw 0;
@@ -122,7 +122,7 @@ bool Helper::Task_Challenge() {
 
 		// 等待结束。
 		PushMsg(HelperReturnMessage::LOG_Challenge_WaitForEnd);
-		if (-1 == m_handler->WaitFor(*temp_result, seconds(5 * 60.0f)))
+		if (-1 == r_handler->WaitFor(*temp_result, seconds(5 * 60.0f)))
 			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_TimeOut);
 
 		// 点击，直到进入加载画面。
@@ -134,13 +134,13 @@ bool Helper::Task_Challenge() {
 
 		// 等待到挑战赛标签页出现。
 		PushMsg(HelperReturnMessage::LOG_Challenge_Quiting);
-		if (-1 == m_handler->WaitFor(*temp_default, seconds(60.0f)))
+		if (-1 == r_handler->WaitFor(*temp_default, seconds(60.0f)))
 			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoOver);
 		PushMsg(HelperReturnMessage::LOG_Challenge_Over);
 
 		// 检查是否有奖励挑战赛。
 		if (Settings::g_set.ChaGame_CheckAddition) {
-			if (0 == m_handler->WaitFor(*temp_add, seconds(2.0f))) {
+			if (0 == r_handler->WaitFor(*temp_add, seconds(2.0f))) {
 				rect = temp_add->GetLastMatchRect();
 				PushMsg(HelperReturnMessage::LOG_Challenge_FindAdd);
 				if (Settings::g_set.ChaGame_EnterAddition) { // 进入奖励挑战赛。
@@ -161,7 +161,7 @@ bool Helper::Task_Challenge() {
 					}
 				}
 				else { // 回到“推荐”栏。
-					if (0 == m_handler->WaitFor(*temp_default, seconds(5.0f))) {
+					if (0 == r_handler->WaitFor(*temp_default, seconds(5.0f))) {
 						rect = temp_default->GetLastMatchRect();
 						pt.x = rect.x + 40;
 						pt.y = rect.y + 12;

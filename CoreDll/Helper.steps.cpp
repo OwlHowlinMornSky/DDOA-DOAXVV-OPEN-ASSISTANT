@@ -33,8 +33,8 @@ bool Helper::Step_KeepClickingUntil(const cv::Point clkPt, const MatchTemplate& 
 	do {
 		if (maxTime > Time::Zero && clock.getElapsedTime() >= maxTime) // 应用超时
 			return false;
-		m_handler->ClickAt(clkPt); // 点击
-	} while (!g_askedForStop && (-1 == m_handler->WaitFor(_temp, clkTime)));
+		r_handler->ClickAt(clkPt); // 点击
+	} while (!g_askedForStop && (-1 == r_handler->WaitFor(_temp, clkTime)));
 	if (g_askedForStop)
 		throw 0;
 	return true;
@@ -48,8 +48,8 @@ bool Helper::Step_KeepClickingUntilNo(const cv::Point clkPt, const MatchTemplate
 	do {
 		if (maxTime > Time::Zero && clock.getElapsedTime() >= maxTime) // 应用超时
 			return false;
-		m_handler->ClickAt(clkPt); // 点击
-	} while (!g_askedForStop && (0 == m_handler->WaitFor(_temp, clkTime)));
+		r_handler->ClickAt(clkPt); // 点击
+	} while (!g_askedForStop && (0 == r_handler->WaitFor(_temp, clkTime)));
 	if (g_askedForStop)
 		throw 0;
 	return true;

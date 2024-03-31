@@ -60,11 +60,11 @@ bool Helper::start() {
 		return false;
 	}
 
-	m_handler = WndHandler::Instance();
-	if (m_handler == nullptr) {
+	r_handler = WndHandler::Instance();
+	if (r_handler == nullptr) {
 		return false;
 	}
-	if (!m_handler->Update()) {
+	if (!r_handler->Update()) {
 		return false;
 	}
 
@@ -123,7 +123,7 @@ void Helper::Work() {
 	catch (...) {
 		PushMsg(HelperReturnMessage::LOG_WorkError_Exception);
 	}
-	m_handler->Reset(); // 停止截图
+	r_handler->Reset(); // 停止截图
 
 	// 允许关闭屏幕和睡眠
 	SetThreadExecutionState(ES_CONTINUOUS);

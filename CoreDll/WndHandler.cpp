@@ -79,7 +79,7 @@ bool WndHandler::Update() {
 	return r_capture != nullptr;
 }
 
-WndHandler::SetReturnValue WndHandler::SetForLaucher() {
+WndHandler::SetReturnValue WndHandler::SetForLauncher() {
 	if (m_state == StateValue::Launcher)
 		return SetReturnValue::OK;
 	Reset();

@@ -116,7 +116,7 @@ protected:
 	std::mutex m_hrm_mutex; // 返回消息的互斥体
 
 	std::filesystem::path m_assets; // 图片资源文件夹
-	WndHandler* m_handler;
+	WndHandler* r_handler; // 对窗口操作器实例的链接。
 	TemplateListType m_templateList; // 模板列表。从文件中加载
 };
 
