@@ -59,9 +59,6 @@
     <ClInclude Include="Time.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ReturnMessages.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>资源文件</Filter>
     </ClInclude>
@@ -84,6 +81,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Settings.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="ReturnMessages.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

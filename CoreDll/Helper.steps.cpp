@@ -28,7 +28,6 @@ namespace ohms {
 bool Helper::Step_KeepClickingUntil(const cv::Point clkPt, const MatchTemplate& _temp, Time maxTime, Time clkTime) {
 	if (clkTime < milliseconds(10)) // 点击时间不能小于10毫秒（规定的）
 		clkTime = milliseconds(10);
-	cv::Rect rect;
 	Clock clock;
 	do {
 		if (maxTime > Time::Zero && clock.getElapsedTime() >= maxTime) // 应用超时
@@ -43,7 +42,6 @@ bool Helper::Step_KeepClickingUntil(const cv::Point clkPt, const MatchTemplate& 
 bool Helper::Step_KeepClickingUntilNo(const cv::Point clkPt, const MatchTemplate& _temp, Time maxTime, Time clkTime) {
 	if (clkTime < milliseconds(10)) // 点击时间不能小于10毫秒（规定的）
 		clkTime = milliseconds(10);
-	cv::Rect rect;
 	Clock clock;
 	do {
 		if (maxTime > Time::Zero && clock.getElapsedTime() >= maxTime) // 应用超时

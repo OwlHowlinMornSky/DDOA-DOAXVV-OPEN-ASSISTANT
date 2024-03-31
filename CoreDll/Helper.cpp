@@ -147,4 +147,13 @@ void Helper::PushMsgCode(unsigned long hrm, unsigned long code) {
 	return;
 }
 
+std::unique_ptr<MatchTemplate> Helper::CreateTemplate(const std::string& name) {
+	std::unique_ptr<MatchTemplate> res = std::make_unique<MatchTemplate>(m_templateList.at(name));
+	if (!res->LoadMat((m_assets / (name + ".png")).string())) {
+		throw 1;
+		return std::unique_ptr<MatchTemplate>();
+	}
+	return std::move(res);
+}
+
 } // namespace ohms

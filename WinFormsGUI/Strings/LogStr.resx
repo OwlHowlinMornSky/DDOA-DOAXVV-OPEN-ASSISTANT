@@ -150,6 +150,9 @@
   <data name="Task_Challenge_TimeOut" xml:space="preserve">
     <value>挑战超时</value>
   </data>
+  <data name="Task_FailedToLoadTemplateFile" xml:space="preserve">
+    <value>加载模板文件失败</value>
+  </data>
   <data name="UNKNOWN" xml:space="preserve">
     <value>未描述的错误：{0}</value>
   </data>

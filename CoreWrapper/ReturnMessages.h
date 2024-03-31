@@ -78,6 +78,7 @@ public enum class ReturnMessage {
 	STR_Task_Challenge_AddNotSup,
 	STR_Task_Challenge_IgnoreAddFailed,
 	STR_Task_Challenge_OpenAddFailed,
+	STR_Task_FailedToLoadTemplateFile,
 };
 
 }

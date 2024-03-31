@@ -81,6 +81,7 @@ enum CORE_API HelperReturnMessage : unsigned long {
 	STR_Task_Challenge_AddNotSup,
 	STR_Task_Challenge_IgnoreAddFailed,
 	STR_Task_Challenge_OpenAddFailed,
+	STR_Task_FailedToLoadTemplateFile,
 };
 
 }

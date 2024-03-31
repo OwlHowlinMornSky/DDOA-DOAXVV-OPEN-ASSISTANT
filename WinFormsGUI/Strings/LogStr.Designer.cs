@@ -160,6 +160,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 加载模板文件失败 的本地化字符串。
+        /// </summary>
+        internal static string Task_FailedToLoadTemplateFile {
+            get {
+                return ResourceManager.GetString("Task_FailedToLoadTemplateFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 未描述的错误：{0} 的本地化字符串。
         /// </summary>
         internal static string UNKNOWN {

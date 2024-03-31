@@ -26,58 +26,59 @@
 namespace ohms {
 
 bool Helper::Task_StartUp() {
-	system("start steam://rungameid/958260");
-
+	if (r_handler->SetForGame() != WndHandler::SetReturnValue::OK) {
+		if (r_handler->SetForLauncher() != WndHandler::SetReturnValue::OK) {
+			system("start steam://rungameid/958260");
+			do {
+				Sleep(1000);
+			} while (r_handler->SetForLauncher() != WndHandler::SetReturnValue::OK);
+		}
+		// 点击开始。
+		do {
+			Sleep(1000);
+		} while (r_handler->SetForGame() != WndHandler::SetReturnValue::OK);
+	}
 	return true;
 }
 
 bool Helper::Task_Challenge() {
-	switch (r_handler->SetForGame()) {
-	case WndHandler::SetReturnValue::WndNotFound:
-		PushMsg(HelperReturnMessage::LOG_WorkError_NoWnd);
-		throw 0;
-		break;
-	case WndHandler::SetReturnValue::CaptureFailed:
-		PushMsg(HelperReturnMessage::LOG_WorkError_FailedCapture);
-		throw 0;
-		break;
-	}
-
-	std::unique_ptr<MatchTemplate> 
-		temp_default   = std::make_unique<MatchTemplate>(m_templateList.at("default")),
-		temp_lastFight = std::make_unique<MatchTemplate>(m_templateList.at("lastFight")),
-		temp_newFight  = std::make_unique<MatchTemplate>(m_templateList.at("newFight")),
-		temp_start     = std::make_unique<MatchTemplate>(m_templateList.at("start")),
-		temp_loading   = std::make_unique<MatchTemplate>(m_templateList.at("loading")),
-		temp_fp        = std::make_unique<MatchTemplate>(m_templateList.at("fp")),
-		temp_result    = std::make_unique<MatchTemplate>(m_templateList.at("result")),
-		temp_add       = std::make_unique<MatchTemplate>(m_templateList.at("add"));
-	temp_default->LoadMat((m_assets / "default.png").string());
-	temp_lastFight->LoadMat((m_assets / "lastFight.png").string());
-	temp_newFight->LoadMat((m_assets / "newFight.png").string());
-	temp_start->LoadMat((m_assets / "start.png").string());
-	temp_loading->LoadMat((m_assets / "loading.png").string());
-	temp_fp->LoadMat((m_assets / "fp.png").string());
-	temp_result->LoadMat((m_assets / "result.png").string());
-	temp_add->LoadMat((m_assets / "add.png").string());
-
-	PushMsg(HelperReturnMessage::LOG_Challenge_Start);
-	const bool forNew = Settings::g_set.ChaGame_ForNew; // 保存设置
-
-	bool forAddThisTime = false;
-
-	cv::Rect rect;
-	cv::Point pt;
-
-	unsigned long i = 0; // 次数
-
 	try {
+		PushMsg(HelperReturnMessage::LOG_Challenge_Start);
+		const bool forNew = Settings::g_set.ChaGame_ForNew; // 保存设置
+
+		switch (r_handler->SetForGame()) {
+		case WndHandler::SetReturnValue::WndNotFound:
+			PushMsg(HelperReturnMessage::LOG_WorkError_NoWnd);
+			throw 0;
+			break;
+		case WndHandler::SetReturnValue::CaptureFailed:
+			PushMsg(HelperReturnMessage::LOG_WorkError_FailedCapture);
+			throw 0;
+			break;
+		}
+
+		std::unique_ptr<MatchTemplate>
+			temp_chaBar = CreateTemplate("default"),
+			temp_lastFight = CreateTemplate("lastFight"),
+			temp_newFight = CreateTemplate("newFight"),
+			temp_startGame = CreateTemplate("start"),
+			temp_loading = CreateTemplate("loading"),
+			temp_lowFp = CreateTemplate("fp"),
+			temp_gameResult = CreateTemplate("result"),
+			temp_awardCha = CreateTemplate("add");
+
+		bool forAddThisTime = false;
+
+		cv::Point pt;
+
+		unsigned long playCnt = 0; // 次数
+
 	begin_point:
 
-		++i;
-		if (i > 1)
+		++playCnt;
+		if (playCnt > 1)
 			PushMsg(HelperReturnMessage::CMD_EmptyLine);
-		PushMsgCode(HelperReturnMessage::LOG_Challenge_BeginNum, i);
+		PushMsgCode(HelperReturnMessage::LOG_Challenge_BeginNum, playCnt);
 
 		// 查找目标比赛按钮。
 		if (-1 == r_handler->WaitFor(forNew ? *temp_newFight : *temp_lastFight))
@@ -87,66 +88,62 @@ bool Helper::Task_Challenge() {
 				HelperReturnMessage::STR_Task_Challenge_NoLast
 			);
 
-
 		// 点击比赛，直到进入编队画面（找到挑战按钮）。
 		PushMsg(forAddThisTime ? HelperReturnMessage::LOG_Challenge_EnterAdd :
 				(forNew ? HelperReturnMessage::LOG_Challenge_EnterNew : HelperReturnMessage::LOG_Challenge_EnterLast));
-		rect = (forNew ? temp_newFight : temp_lastFight)->GetLastMatchRect();
-		if (!Step_KeepClickingUntil({ 900, rect.y }, *temp_start))
+		pt = { 900, (forNew ? temp_newFight : temp_lastFight)->GetLastMatchRect().y };
+		if (!Step_KeepClickingUntil(pt, *temp_startGame))
 			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoEnter);
 
 		forAddThisTime = false;
 
 		// 查找“挑战”按钮。
-		r_handler->WaitFor(*temp_start);
-		rect = temp_start->GetLastMatchRect();
+		r_handler->WaitFor(*temp_startGame);
+		pt = temp_startGame->GetLastMatchRect().tl() + cv::Point2i(50, 20);
 		PushMsg(HelperReturnMessage::LOG_Challenge_Play);
-		{
-			size_t tc = 0;
-			while (!g_askedForStop) {
-				// 点击挑战，直到进入加载画面。
-				pt = { rect.x + 50, rect.y + 20 };
-				if (Step_KeepClickingUntil(pt, *temp_loading, seconds(1.5f), seconds(0.3f)))
-					break;
-				// 瞟一眼是否是fp不足。
-				if (0 == r_handler->WaitFor(*temp_fp, seconds(0.2f))) {
-					//Step_TaskError(HelperReturnMessage::STR_Task_Challenge_LowFP);
-					PushMsg(HelperReturnMessage::LOG_TaskOver);
-					throw 0;
-				}
-				// 尝试次数超限则报错。
-				if (++tc > 12)
+		for (int i = 0, n = 10; i < n; ++i) {
+			r_handler->ClickAt(pt);
+			switch (r_handler->WaitForMultiple({ temp_loading.get(), temp_lowFp.get() }, seconds(2.0f))) {
+			default:
+			case -1:
+				if (i == n - 1) {
 					Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoStart);
+				}
+				break;
+			case 0:
+				i = n;
+				break;
+			case 1:
+				PushMsg(HelperReturnMessage::LOG_TaskOver);
+				throw 0;
+				break;
 			}
 		}
 
 		// 等待结束。
 		PushMsg(HelperReturnMessage::LOG_Challenge_WaitForEnd);
-		if (-1 == r_handler->WaitFor(*temp_result, seconds(5 * 60.0f)))
+		if (-1 == r_handler->WaitFor(*temp_gameResult, seconds(5 * 60.0f)))
 			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_TimeOut);
 
 		// 点击，直到进入加载画面。
 		PushMsg(HelperReturnMessage::LOG_Challenge_End);
-		rect = temp_result->GetLastMatchRect();
-		pt = { rect.x + 100, rect.y };
+		pt = temp_gameResult->GetLastMatchRect().tl() + cv::Point2i(100, 0);
 		if (!Step_KeepClickingUntil(pt, *temp_loading, seconds(60.0f), seconds(0.1f)))
 			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoEnd);
 
 		// 等待到挑战赛标签页出现。
 		PushMsg(HelperReturnMessage::LOG_Challenge_Quiting);
-		if (-1 == r_handler->WaitFor(*temp_default, seconds(60.0f)))
+		if (-1 == r_handler->WaitFor(*temp_chaBar, seconds(60.0f)))
 			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoOver);
 		PushMsg(HelperReturnMessage::LOG_Challenge_Over);
 
 		// 检查是否有奖励挑战赛。
 		if (Settings::g_set.ChaGame_CheckAddition) {
-			if (0 == r_handler->WaitFor(*temp_add, seconds(2.0f))) {
-				rect = temp_add->GetLastMatchRect();
+			if (0 == r_handler->WaitFor(*temp_awardCha, seconds(2.0f))) {
 				PushMsg(HelperReturnMessage::LOG_Challenge_FindAdd);
 				if (Settings::g_set.ChaGame_EnterAddition) { // 进入奖励挑战赛。
 					if (forNew) {
-						pt.x = rect.x + 30;
-						pt.y = rect.y + 50;
+						pt = temp_awardCha->GetLastMatchRect().tl() + cv::Point2i(30, 50);
 						if (Step_KeepClickingUntil(pt, *temp_newFight, seconds(10.0f), seconds(2.0f))) {
 							PushMsg(HelperReturnMessage::LOG_Challenge_OpenedAdd);
 							forAddThisTime = true;
@@ -161,11 +158,9 @@ bool Helper::Task_Challenge() {
 					}
 				}
 				else { // 回到“推荐”栏。
-					if (0 == r_handler->WaitFor(*temp_default, seconds(5.0f))) {
-						rect = temp_default->GetLastMatchRect();
-						pt.x = rect.x + 40;
-						pt.y = rect.y + 12;
-						if (Step_KeepClickingUntilNo(pt, *temp_add, seconds(10.0f), seconds(0.5f))) {
+					if (0 == r_handler->WaitFor(*temp_chaBar, seconds(5.0f))) {
+						pt = temp_chaBar->GetLastMatchRect().tl() + cv::Point2i(40, 12);
+						if (Step_KeepClickingUntilNo(pt, *temp_awardCha, seconds(10.0f), seconds(0.5f))) {
 							PushMsg(HelperReturnMessage::LOG_Challenge_IgnoredAdd);
 						}
 						else {
@@ -183,11 +178,17 @@ bool Helper::Task_Challenge() {
 		goto begin_point;
 	}
 	catch (int err) {
-		if (err == 0) { // 返回false表示主动停止
+		switch (err) {
+		case 0: // 返回false表示主动停止
 			PushMsg(HelperReturnMessage::LOG_TaskStop);
 			return false;
-		}
-		else { // 不是0就是真错误
+		case 1:
+			PushMsgCode(
+				HelperReturnMessage::LOG_TaskError,
+				HelperReturnMessage::STR_Task_FailedToLoadTemplateFile
+			);
+			break;
+		default:
 			PushMsg(HelperReturnMessage::LOG_TaskError_Exception);
 		}
 	}

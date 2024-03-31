@@ -67,6 +67,8 @@ protected:
 	*/
 	void PushMsgCode(unsigned long hrm, unsigned long code);
 
+	std::unique_ptr<MatchTemplate> CreateTemplate(const std::string& name);
+
 // 任务
 // 返回 false 表示无法继续
 // (在 Helper.tasks.cpp 实现)

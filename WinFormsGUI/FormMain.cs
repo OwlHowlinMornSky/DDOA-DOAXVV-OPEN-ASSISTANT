@@ -329,7 +329,6 @@ namespace WinFormsGUI {
 						);
 					break;
 				case ReturnMessage.LOG_TaskError:
-					Log();
 					m = m_helper.GetMessage();
 					string text = "null";
 					switch (m) {
@@ -365,6 +364,9 @@ namespace WinFormsGUI {
 						break;
 					case ReturnMessage.STR_Task_Challenge_OpenAddFailed:
 						text = Strings.LogStr.Task_Challenge_OpenAddFailed;
+						break;
+					case ReturnMessage.STR_Task_FailedToLoadTemplateFile:
+						text = Strings.LogStr.Task_FailedToLoadTemplateFile;
 						break;
 					default:
 						text = string.Format(Strings.LogStr.UNKNOWN, m.ToString());
