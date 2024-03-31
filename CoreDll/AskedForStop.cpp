@@ -22,6 +22,6 @@
 
 namespace ohms {
 
-std::atomic_bool g_askedForStop;
+std::atomic_bool g_askedForStop = false;
 
 }

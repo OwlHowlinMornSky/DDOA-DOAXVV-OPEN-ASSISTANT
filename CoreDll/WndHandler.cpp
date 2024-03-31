@@ -54,7 +54,7 @@ WndHandler::~WndHandler() {
 
 WndHandler* WndHandler::Instance() {
 	if (::g_wndh == nullptr) {
-		if (!wgc::ICapture::setup(true)) {
+		if (!wgc::ICapture::setup(true)) { // 初始化WGC
 			MessageBoxW(NULL, L"Failed to setup WGC", L"DDOA", MB_ICONERROR);
 			return nullptr;
 		}
@@ -114,7 +114,7 @@ WndHandler::SetReturnValue WndHandler::SetForGame() {
 void WndHandler::Reset() {
 	m_state = StateValue::Idle;
 	m_hwnd = NULL;
-	if (r_capture)
+	if (r_capture) // 停止截图
 		r_capture->stopCapture();
 	return;
 }
@@ -258,6 +258,7 @@ bool WndHandler::ClickAt(cv::Point pt) {
 		p.x = p.x * 65535ll / m_screenSize.x;
 		p.y = p.y * 65535ll / m_screenSize.y;
 
+		// 点击
 		INPUT inputs[1] = {};
 		UINT uSent;
 
@@ -302,6 +303,7 @@ bool WndHandler::ClickAt(cv::Point pt) {
 			Sleep(9);
 			m_lastMousePoint = { pt.x, pt.y };
 		}
+		// 点击
 		PostMessageW(m_hwnd, WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(pt.x, pt.y));
 		Sleep(40);
 		PostMessageW(m_hwnd, WM_LBUTTONUP, 0, MAKELPARAM(pt.x, pt.y));

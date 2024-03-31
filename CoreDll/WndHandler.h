@@ -32,6 +32,9 @@
 
 namespace ohms {
 
+/**
+ * @brief 窗口操作器。
+ */
 class WndHandler final {
 public:
 	enum class SetReturnValue {
@@ -50,18 +53,56 @@ protected:
 public:
 	virtual ~WndHandler();
 
+	/**
+	 * @brief 获取唯一实例。首次获取时初始化WGC并构造。
+	 * @return 指向实例的指针。
+	 */
 	static WndHandler* Instance();
+	/**
+	 * @brief 销毁实例。
+	 */
 	static void Drop();
 
 public:
+	/**
+	 * @brief 更新基础信息。请在开始工作时调用一次。
+	 * @return 获取wgc实例是否成功。
+	 */
 	bool Update();
 
+	/**
+	 * @brief 设定目标窗口为DOAXVV的登录器窗口。
+	 * @return “设定”操作的状态。
+	 */
 	SetReturnValue SetForLaucher();
+	/**
+	 * @brief 设定目标窗口为DOAXVV的游戏窗口。
+	 * @return “设定”操作的状态。
+	 */
 	SetReturnValue SetForGame();
+	/**
+	 * @brief 重设状态，清除目标窗口。
+	 */
 	void Reset();
+	/**
+	 * @brief 获取当前设定的目标。
+	 * @return 设定的目标。
+	 */
 	StateValue GetState() const;
 
+	/**
+	 * @brief 等待画面出现模板。
+	 * @param _temp 模板。
+	 * @param _tlimit 限时。
+	 * @return -1为超时，0为匹配成功。
+	 */
 	int WaitFor(const MatchTemplate& _temp, Time _tlimit = milliseconds(10'000));
+	/**
+	 * @brief 等待画面出现模板之一。
+	 * @param _temps 模板列。
+	 * @param _tlimit 限时。
+	 * @return -1为超时，自然数则为匹配到的模板的序号。
+	 */
 	int WaitForMultiple(std::vector<const MatchTemplate*> _temps, Time _tlimit);
 
 	/**
@@ -86,11 +127,11 @@ protected:
 
 private:
 	HWND m_hwnd; // 窗口句柄
-	StateValue m_state;
-	POINT m_screenSize;
-	POINT m_lastMousePoint;
-	RECT m_workArea;
-	cv::Mat m_mat;
+	StateValue m_state; // 目标状态。
+	POINT m_screenSize; // 屏幕大小。
+	POINT m_lastMousePoint; // 鼠标位置记录。
+	RECT m_workArea; // 工作区域（即除去任务栏）。
+	cv::Mat m_mat; // 截取到的帧的存储位置。
 };
 
 }

@@ -25,13 +25,23 @@
 
 namespace ohms {
 
+/**
+ * @brief Helper的对外接口。
+ */
 class CORE_API IHelper {
 protected:
 	IHelper() = default;
 public:
 	virtual ~IHelper() = default;
 
+	/**
+	 * @brief 获取唯一实例。首次获取时构造。
+	 * @return 指向实例的指针。
+	 */
 	static IHelper* instance();
+	/**
+	 * @brief 销毁实例。
+	 */
 	static void drop();
 
 public:

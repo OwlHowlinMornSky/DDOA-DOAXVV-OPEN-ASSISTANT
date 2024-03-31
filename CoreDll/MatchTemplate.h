@@ -26,6 +26,9 @@
 
 namespace ohms {
 
+/**
+ * @brief 匹配模板的基本信息。
+ */
 struct MatchTemplateInfo {
 	bool isFixed; // 是否为固定区域检查（true则为固定区域检查，false则为广阔范围搜索）。
 	unsigned short thershold; // 判定阈值，差异量上限。
@@ -37,6 +40,9 @@ struct MatchTemplateInfo {
 
 typedef std::map<std::string, MatchTemplateInfo> TemplateListType;
 
+/**
+ * @brief 匹配模板。
+ */
 class MatchTemplate final {
 public:
 	MatchTemplate(const MatchTemplateInfo& _info);
@@ -58,12 +64,16 @@ public:
 	 */
 	bool LoadMat(const std::string& file);
 
+	/**
+	 * @brief 获取上次匹配区域。范围搜索时才有意义。
+	 * @return 上次匹配的位置。
+	 */
 	const cv::Rect& GetLastMatchRect() const;
 
 private:
-	MatchTemplateInfo m_info;
-	mutable cv::Rect m_lastMatch;
-	cv::Mat m_target;
+	MatchTemplateInfo m_info; // 基本信息
+	mutable cv::Rect m_lastMatch; // 上次匹配区域。
+	cv::Mat m_target; // 匹配图。
 };
 
 }

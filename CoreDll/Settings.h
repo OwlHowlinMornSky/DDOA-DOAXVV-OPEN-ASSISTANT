@@ -24,6 +24,9 @@
 
 namespace ohms {
 
+/**
+ * @brief Core部分设置内容。
+ */
 struct CORE_API Settings {
 	bool Ctrl_UseSendInput; // 选择控制鼠标。
 	bool KeepAwake; // 阻止睡眠。
@@ -35,9 +38,12 @@ struct CORE_API Settings {
 
 	Settings();
 
-	static Settings mainSettings;
-	static Settings g_set;
+	static Settings mainSettings; // 对外使用的设置。
+	static Settings g_set; // 内部保存的设置副本。
 
+	/**
+	 * @brief 将mainSettings复制到g_set。
+	 */
 	static void MakeOneCopy();
 };
 
