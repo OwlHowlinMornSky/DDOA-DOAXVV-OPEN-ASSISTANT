@@ -124,6 +124,7 @@ WndHandler::StateValue WndHandler::GetState() const {
 }
 
 int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
+	assert(m_state != StateValue::Idle);
 	r_capture->askForRefresh();
 	Clock clk;
 	cv::Rect trect;
@@ -150,6 +151,7 @@ int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
 }
 
 int WndHandler::WaitForMultiple(std::vector<const MatchTemplate*> _temps, Time _tlimit) {
+	assert(m_state != StateValue::Idle);
 	r_capture->askForRefresh();
 	Clock clk;
 	cv::Rect trect;
@@ -187,6 +189,7 @@ int WndHandler::WaitForMultiple(std::vector<const MatchTemplate*> _temps, Time _
 }
 
 bool WndHandler::ClickAt(cv::Point pt) {
+	assert(m_state != StateValue::Idle);
 	// 缩放到当前客户区大小
 	RECT rect{ 0 };
 	GetClientRect(m_hwnd, &rect);
@@ -312,6 +315,7 @@ bool WndHandler::ClickAt(cv::Point pt) {
 }
 
 bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
+	assert(m_state != StateValue::Idle);
 	RECT rect{ 0 };
 	GetClientRect(m_hwnd, &rect);
 	pt.x = pt.x * (rect.right - rect.left) / 960;
