@@ -195,7 +195,7 @@ bool WndHandler::ClickAt(cv::Point pt) {
 
 	//MessageBoxA(0, (std::to_string(pt.x) + ", " + std::to_string(pt.y)).c_str(), "t", 0);
 
-	if (Settings::g_set.Mouse_ForMouse) {
+	if (Settings::g_set.Ctrl_UseSendInput) {
 		GetWindowRect(m_hwnd, &rect);
 
 		// 把目标窗口移动到屏幕范围内
@@ -315,7 +315,7 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 	pt.x = pt.x * (rect.right - rect.left) / 960;
 	pt.y = pt.y * (rect.bottom - rect.top) / 540;
 
-	if (Settings::g_set.Mouse_ForMouse) {
+	if (Settings::g_set.Ctrl_UseSendInput) {
 		GetWindowRect(m_hwnd, &rect);
 
 		// 把目标窗口移动到屏幕范围内

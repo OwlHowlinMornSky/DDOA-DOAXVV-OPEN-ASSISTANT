@@ -68,7 +68,7 @@ System::Int32 HelperWrapper::SetChallengeForNewOrLast(bool forNew) {
 }
 
 System::Int32 HelperWrapper::SetMouseSendInputOrSendMessage(bool sendInput) {
-	ohms::Settings::mainSettings.Mouse_ForMouse = sendInput;
+	ohms::Settings::mainSettings.Ctrl_UseSendInput = sendInput;
 	return System::Int32(0);
 }
 
@@ -78,12 +78,12 @@ System::Int32 HelperWrapper::SetShowCaptureOrNot(bool show) {
 }
 
 System::Int32 HelperWrapper::SetKeepAwakeOrNot(bool keep) {
-	ohms::Settings::mainSettings.PreventFromSleep = keep;
+	ohms::Settings::mainSettings.KeepAwake = keep;
 	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetKeepScreenOnOrNot(bool keep) {
-	ohms::Settings::mainSettings.KeepDisplay = keep;
+	ohms::Settings::mainSettings.KeepScreenOn = keep;
 	return System::Int32(0);
 }
 

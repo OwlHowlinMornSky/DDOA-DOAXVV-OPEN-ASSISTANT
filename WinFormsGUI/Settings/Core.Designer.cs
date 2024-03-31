@@ -26,72 +26,72 @@ namespace WinFormsGUI.Settings {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Game_ForNew {
+        public bool Cha_PlayNew {
             get {
-                return ((bool)(this["Game_ForNew"]));
+                return ((bool)(this["Cha_PlayNew"]));
             }
             set {
-                this["Game_ForNew"] = value;
+                this["Cha_PlayNew"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Ctrl_ForMouse {
+        public bool CtrlSendInput {
             get {
-                return ((bool)(this["Ctrl_ForMouse"]));
+                return ((bool)(this["CtrlSendInput"]));
             }
             set {
-                this["Ctrl_ForMouse"] = value;
+                this["CtrlSendInput"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ShowCV {
+        public bool ShowCapture {
             get {
-                return ((bool)(this["ShowCV"]));
+                return ((bool)(this["ShowCapture"]));
             }
             set {
-                this["ShowCV"] = value;
+                this["ShowCapture"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool PreventSleep {
+        public bool KeepAwake {
             get {
-                return ((bool)(this["PreventSleep"]));
+                return ((bool)(this["KeepAwake"]));
             }
             set {
-                this["PreventSleep"] = value;
+                this["KeepAwake"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool KeepDisplay {
+        public bool KeepScreenOn {
             get {
-                return ((bool)(this["KeepDisplay"]));
+                return ((bool)(this["KeepScreenOn"]));
             }
             set {
-                this["KeepDisplay"] = value;
+                this["KeepScreenOn"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int Cha_Add {
+        public int Cha_Award {
             get {
-                return ((int)(this["Cha_Add"]));
+                return ((int)(this["Cha_Award"]));
             }
             set {
-                this["Cha_Add"] = value;
+                this["Cha_Award"] = value;
             }
         }
     }

@@ -2,22 +2,22 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WinFormsGUI.Settings" GeneratedClassName="Core">
   <Profiles />
   <Settings>
-    <Setting Name="Game_ForNew" Type="System.Boolean" Scope="User">
+    <Setting Name="Cha_PlayNew" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="Ctrl_ForMouse" Type="System.Boolean" Scope="User">
+    <Setting Name="CtrlSendInput" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ShowCV" Type="System.Boolean" Scope="User">
+    <Setting Name="ShowCapture" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="PreventSleep" Type="System.Boolean" Scope="User">
+    <Setting Name="KeepAwake" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="KeepDisplay" Type="System.Boolean" Scope="User">
+    <Setting Name="KeepScreenOn" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="Cha_Add" Type="System.Int32" Scope="User">
+    <Setting Name="Cha_Award" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>

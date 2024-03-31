@@ -25,9 +25,9 @@
 namespace ohms {
 
 struct CORE_API Settings {
-	bool Mouse_ForMouse; // 选择控制鼠标。
-	bool PreventFromSleep; // 阻止睡眠。
-	bool KeepDisplay; // 阻止睡眠同时保持显示。
+	bool Ctrl_UseSendInput; // 选择控制鼠标。
+	bool KeepAwake; // 阻止睡眠。
+	bool KeepScreenOn; // 阻止睡眠同时保持显示。
 
 	bool ChaGame_ForNew; // 选择新比赛。
 	bool ChaGame_EnterAddition; // 进入奖励挑战赛。

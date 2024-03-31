@@ -103,10 +103,10 @@ void Helper::Work() {
 	PushMsg(HelperReturnMessage::CMD_BtnToStop); // 让主按钮变为stop
 
 	// 按设置防止关闭屏幕和睡眠
-	if (Settings::g_set.PreventFromSleep) {
+	if (Settings::g_set.KeepAwake) {
 		SetThreadExecutionState(
 			ES_CONTINUOUS | ES_SYSTEM_REQUIRED |
-			(Settings::g_set.KeepDisplay ? ES_DISPLAY_REQUIRED : 0)
+			(Settings::g_set.KeepScreenOn ? ES_DISPLAY_REQUIRED : 0)
 		);
 	}
 

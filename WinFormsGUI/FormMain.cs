@@ -52,10 +52,10 @@ namespace WinFormsGUI {
 		}
 
 		private void InitLoadSettings_Home() {
-			radioBtn_GameNew.Checked = Settings.Core.Default.Game_ForNew;
-			radioBtn_CtrlInput.Checked = Settings.Core.Default.Ctrl_ForMouse;
+			radioBtn_GameNew.Checked = Settings.Core.Default.Cha_PlayNew;
+			radioBtn_CtrlInput.Checked = Settings.Core.Default.CtrlSendInput;
 
-			switch (Settings.Core.Default.Cha_Add) {
+			switch (Settings.Core.Default.Cha_Award) {
 			case 1:
 				radioBtn_AwardPlay.Checked = true;
 				break;
@@ -70,16 +70,16 @@ namespace WinFormsGUI {
 
 		private void InitLoadSettings_Settings() {
 #if DEBUG
-			Settings.Core.Default.ShowCV = true;
+			Settings.Core.Default.ShowCapture = true;
 #endif
-			chkBox_SetShow.Checked = Settings.Core.Default.ShowCV;
+			chkBox_SetShow.Checked = Settings.Core.Default.ShowCapture;
 			chkBox_SetHideToTray.Checked = Settings.GUI.Default.HideToTray;
 			chkBox_SetNotify.Checked = Settings.GUI.Default.UseNotify;
 
-			if (Settings.Core.Default.PreventSleep) {
+			if (Settings.Core.Default.KeepAwake) {
 				chkBox_SetAwake.Checked = true;
 				chkBox_SetScreenOn.Enabled = true;
-				chkBox_SetScreenOn.Checked = Settings.Core.Default.KeepDisplay;
+				chkBox_SetScreenOn.Checked = Settings.Core.Default.KeepScreenOn;
 			}
 			else {
 				chkBox_SetAwake.Checked = false;
@@ -170,25 +170,25 @@ namespace WinFormsGUI {
 
 		private void RadioBtn_Game_CheckedChanged(object sender, EventArgs e) {
 			m_helper.SetChallengeForNewOrLast(radioBtn_GameNew.Checked);
-			Settings.Core.Default.Game_ForNew = radioBtn_GameNew.Checked;
+			Settings.Core.Default.Cha_PlayNew = radioBtn_GameNew.Checked;
 		}
 
 		private void RadioBtn_Ctrl_CheckedChanged(object sender, EventArgs e) {
 			m_helper.SetMouseSendInputOrSendMessage(radioBtn_CtrlInput.Checked);
-			Settings.Core.Default.Ctrl_ForMouse = radioBtn_CtrlInput.Checked;
+			Settings.Core.Default.CtrlSendInput = radioBtn_CtrlInput.Checked;
 		}
 
 		private void RadioBtn_Award_CheckedChanged(object sender, EventArgs e) {
 			m_helper.SetChallengeCheckAwardOrNot(!radioBtn_AwardNo.Checked);
 			m_helper.SetChallengePlayAwardOrNot(radioBtn_AwardPlay.Checked);
 			if (radioBtn_AwardNo.Checked) {
-				Settings.Core.Default.Cha_Add = 0;
+				Settings.Core.Default.Cha_Award = 0;
 			}
 			else if (radioBtn_AwardPlay.Checked) {
-				Settings.Core.Default.Cha_Add = 1;
+				Settings.Core.Default.Cha_Award = 1;
 			}
 			else {
-				Settings.Core.Default.Cha_Add = 2;
+				Settings.Core.Default.Cha_Award = 2;
 			}
 		}
 
@@ -198,7 +198,7 @@ namespace WinFormsGUI {
 
 		private void ChkBox_SetShow_CheckedChanged(object sender, EventArgs e) {
 			m_helper.SetShowCaptureOrNot(chkBox_SetShow.Checked);
-			Settings.Core.Default.ShowCV = chkBox_SetShow.Checked;
+			Settings.Core.Default.ShowCapture = chkBox_SetShow.Checked;
 		}
 
 		private void ChkBox_SetHideToTray_CheckedChanged(object sender, EventArgs e) {
@@ -211,12 +211,12 @@ namespace WinFormsGUI {
 
 		private void ChkBox_SetAwake_CheckedChanged(object sender, EventArgs e) {
 			if (chkBox_SetAwake.Checked) {
-				Settings.Core.Default.PreventSleep = true;
+				Settings.Core.Default.KeepAwake = true;
 				chkBox_SetScreenOn.Enabled = true;
 				m_helper.SetKeepAwakeOrNot(true);
 			}
 			else {
-				Settings.Core.Default.PreventSleep = false;
+				Settings.Core.Default.KeepAwake = false;
 				chkBox_SetScreenOn.Checked = false;
 				chkBox_SetScreenOn.Enabled = false;
 				m_helper.SetKeepAwakeOrNot(false);
@@ -225,7 +225,7 @@ namespace WinFormsGUI {
 
 		private void ChkBox_SetScreenOn_CheckedChanged(object sender, EventArgs e) {
 			m_helper.SetKeepScreenOnOrNot(chkBox_SetScreenOn.Checked);
-			Settings.Core.Default.KeepDisplay = chkBox_SetScreenOn.Checked;
+			Settings.Core.Default.KeepScreenOn = chkBox_SetScreenOn.Checked;
 		}
 
 		private void ChkBox_SetDisableClose_CheckedChanged(object sender, EventArgs e) {
