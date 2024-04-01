@@ -212,7 +212,9 @@ bool WndHandler::ClickAt(cv::Point pt) {
 			rect.top = m_workArea.top;
 		SetWindowPos(m_hwnd, NULL, rect.left, rect.top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOACTIVATE);
 
-		// 移动光标
+		INPUT input = {};
+
+		// 有距离时连续移动光标
 		if (!(pt.x == m_lastMousePoint.x && pt.y == m_lastMousePoint.y)) {
 			int vecx = pt.x - m_lastMousePoint.x;
 			int vecy = pt.y - m_lastMousePoint.y;
@@ -231,59 +233,46 @@ bool WndHandler::ClickAt(cv::Point pt) {
 				tmp.x = tmp.x * 65535ll / m_screenSize.x;
 				tmp.y = tmp.y * 65535ll / m_screenSize.y;
 
-				INPUT inputs = {};
-				inputs.type = INPUT_MOUSE;
-				inputs.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-				inputs.mi.dx = tmp.x;
-				inputs.mi.dy = tmp.y;
-				SendInput(1, &inputs, sizeof(INPUT));
+				input.type = INPUT_MOUSE;
+				input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+				input.mi.dx = tmp.x;
+				input.mi.dy = tmp.y;
+				SendInput(1, &input, sizeof(INPUT));
 				Sleep(9);
 			}
-			tmp.x = pt.x;
-			tmp.y = pt.y;
-
-			ClientToScreen(m_hwnd, &tmp);
-			tmp.x = tmp.x * 65535ll / m_screenSize.x;
-			tmp.y = tmp.y * 65535ll / m_screenSize.y;
-
-			INPUT inputs = {};
-			inputs.type = INPUT_MOUSE;
-			inputs.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-			inputs.mi.dx = tmp.x;
-			inputs.mi.dy = tmp.y;
-			SendInput(1, &inputs, sizeof(INPUT));
-			Sleep(9);
-			m_lastMousePoint = { pt.x, pt.y };
 		}
 		POINT p{ pt.x, pt.y };
 		ClientToScreen(m_hwnd, &p);
-
 		p.x = p.x * 65535ll / m_screenSize.x;
 		p.y = p.y * 65535ll / m_screenSize.y;
 
-		// 点击
-		INPUT inputs[1] = {};
-		UINT uSent;
+		// 最终移动光标到目的地
+		input.type = INPUT_MOUSE;
+		input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+		input.mi.dx = p.x;
+		input.mi.dy = p.y;
+		SendInput(1, &input, sizeof(INPUT));
+		Sleep(9);
+		m_lastMousePoint = { pt.x, pt.y };
 
-		ZeroMemory(inputs, sizeof(inputs));
-		inputs[0].type = INPUT_MOUSE;
-		inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_ABSOLUTE;
-		inputs[0].mi.dx = p.x;
-		inputs[0].mi.dy = p.y;
-		uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+		// 点击
+		input.type = INPUT_MOUSE;
+		input.mi.dwFlags = MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_ABSOLUTE;
+		input.mi.dx = p.x;
+		input.mi.dy = p.y;
+		SendInput(1, &input, sizeof(INPUT));
 
 		Sleep(60);
 
-		ZeroMemory(inputs, sizeof(inputs));
-		inputs[0].type = INPUT_MOUSE;
-		inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP | MOUSEEVENTF_ABSOLUTE;
-		inputs[0].mi.dx = p.x;
-		inputs[0].mi.dy = p.y;
-		uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+		input.type = INPUT_MOUSE;
+		input.mi.dwFlags = MOUSEEVENTF_LEFTUP | MOUSEEVENTF_ABSOLUTE;
+		input.mi.dx = p.x;
+		input.mi.dy = p.y;
+		SendInput(1, &input, sizeof(INPUT));
 	}
 	else {
 		PostMessageW(m_hwnd, WM_SETFOCUS, 0, 0);
-		// 移动光标
+		// 有距离时连续移动光标
 		if (!(pt.x == m_lastMousePoint.x && pt.y == m_lastMousePoint.y)) {
 			int vecx = pt.x - m_lastMousePoint.x;
 			int vecy = pt.y - m_lastMousePoint.y;
@@ -300,12 +289,11 @@ bool WndHandler::ClickAt(cv::Point pt) {
 				PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(tmp.x, tmp.y));
 				Sleep(9);
 			}
-			tmp.x = pt.x;
-			tmp.y = pt.y;
-			PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(tmp.x, tmp.y));
+		}
+		// 最终移动光标到目的地
+		PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
 			Sleep(9);
 			m_lastMousePoint = { pt.x, pt.y };
-		}
 		// 点击
 		PostMessageW(m_hwnd, WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(pt.x, pt.y));
 		Sleep(40);
@@ -335,7 +323,9 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 			rect.top = m_workArea.top;
 		SetWindowPos(m_hwnd, NULL, rect.left, rect.top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOACTIVATE);
 
-		// 移动光标
+		INPUT input = {};
+
+		// 有距离时连续移动光标
 		if (!(pt.x == m_lastMousePoint.x && pt.y == m_lastMousePoint.y)) {
 			int vecx = pt.x - m_lastMousePoint.x;
 			int vecy = pt.y - m_lastMousePoint.y;
@@ -354,34 +344,32 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 				tmp.x = tmp.x * 65535ll / m_screenSize.x;
 				tmp.y = tmp.y * 65535ll / m_screenSize.y;
 
-				INPUT inputs = {};
-				inputs.type = INPUT_MOUSE;
-				inputs.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-				inputs.mi.dx = tmp.x;
-				inputs.mi.dy = tmp.y;
-				SendInput(1, &inputs, sizeof(INPUT));
+				input.type = INPUT_MOUSE;
+				input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+				input.mi.dx = tmp.x;
+				input.mi.dy = tmp.y;
+				SendInput(1, &input, sizeof(INPUT));
 				Sleep(9);
 			}
-			tmp.x = pt.x;
-			tmp.y = pt.y;
+		}
+		POINT p{ pt.x, pt.y };
+		ClientToScreen(m_hwnd, &p);
+		p.x = p.x * 65535ll / m_screenSize.x;
+		p.y = p.y * 65535ll / m_screenSize.y;
 
-			ClientToScreen(m_hwnd, &tmp);
-			tmp.x = tmp.x * 65535ll / m_screenSize.x;
-			tmp.y = tmp.y * 65535ll / m_screenSize.y;
-
-			INPUT inputs = {};
-			inputs.type = INPUT_MOUSE;
-			inputs.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-			inputs.mi.dx = tmp.x;
-			inputs.mi.dy = tmp.y;
-			SendInput(1, &inputs, sizeof(INPUT));
+		// 最终移动光标到目的地
+		input.type = INPUT_MOUSE;
+		input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+		input.mi.dx = p.x;
+		input.mi.dy = p.y;
+		SendInput(1, &input, sizeof(INPUT));
 			Sleep(9);
 			m_lastMousePoint = { pt.x, pt.y };
 		}
 	}
 	else {
 		PostMessageW(m_hwnd, WM_SETFOCUS, 0, 0);
-		// 移动光标
+		// 有距离时连续移动光标
 		if (!(pt.x == m_lastMousePoint.x && pt.y == m_lastMousePoint.y)) {
 			int vecx = pt.x - m_lastMousePoint.x;
 			int vecy = pt.y - m_lastMousePoint.y;
@@ -398,9 +386,9 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 				PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(tmp.x, tmp.y));
 				Sleep(9);
 			}
-			tmp.x = pt.x;
-			tmp.y = pt.y;
-			PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(tmp.x, tmp.y));
+		}
+		// 最终移动光标到目的地
+		PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
 			Sleep(9);
 			m_lastMousePoint = { pt.x, pt.y };
 		}
