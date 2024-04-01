@@ -351,9 +351,6 @@ namespace WinFormsGUI {
 					case ReturnMessage.STR_Task_Challenge_NoEnter:
 						text = Strings.LogStr.Task_Challenge_NoEnter;
 						break;
-					case ReturnMessage.STR_Task_Challenge_LowFP:
-						text = Strings.LogStr.Task_Challenge_LowFP;
-						break;
 					case ReturnMessage.STR_Task_Challenge_NoStart:
 						text = Strings.LogStr.Task_Challenge_NoStart;
 						break;
@@ -403,24 +400,6 @@ namespace WinFormsGUI {
 					break;
 				case ReturnMessage.LOG_Challenge_BeginNum: // 挑战赛开始（下跟次数！）
 					Log(string.Format(Strings.LogEvent.Challenge_BeginNum, m_helper.GetCode()));
-					break;
-				case ReturnMessage.LOG_Challenge_EnterLast:
-					Log(Strings.LogEvent.Challenge_EnterLast);
-					break;
-				case ReturnMessage.LOG_Challenge_EnterNew:
-					Log(Strings.LogEvent.Challenge_EnterNew);
-					break;
-				case ReturnMessage.LOG_Challenge_Play:
-					Log(Strings.LogEvent.Challenge_Play);
-					break;
-				case ReturnMessage.LOG_Challenge_WaitForEnd:
-					Log(Strings.LogEvent.Challenge_WaitForEnd);
-					break;
-				case ReturnMessage.LOG_Challenge_End:
-					Log(Strings.LogEvent.Challenge_End);
-					break;
-				case ReturnMessage.LOG_Challenge_Quiting:
-					Log(Strings.LogEvent.Challenge_Quiting);
 					break;
 				case ReturnMessage.LOG_Challenge_Over:
 					Log(Strings.LogEvent.Challenge_Over);

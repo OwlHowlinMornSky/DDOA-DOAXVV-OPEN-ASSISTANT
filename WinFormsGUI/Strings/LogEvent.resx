@@ -120,17 +120,8 @@
   <data name="Challenge_BeginNum" xml:space="preserve">
     <value>开始第 {0} 次比赛</value>
   </data>
-  <data name="Challenge_End" xml:space="preserve">
-    <value>挑战结束</value>
-  </data>
   <data name="Challenge_EnterAdd" xml:space="preserve">
     <value>进入奖励挑战赛</value>
-  </data>
-  <data name="Challenge_EnterLast" xml:space="preserve">
-    <value>进入上一次比赛</value>
-  </data>
-  <data name="Challenge_EnterNew" xml:space="preserve">
-    <value>进入新比赛</value>
   </data>
   <data name="Challenge_Exit" xml:space="preserve">
     <value>任务结束: 挑战赛</value>
@@ -150,17 +141,8 @@
   <data name="Challenge_Over" xml:space="preserve">
     <value>比赛结束</value>
   </data>
-  <data name="Challenge_Play" xml:space="preserve">
-    <value>开始挑战</value>
-  </data>
-  <data name="Challenge_Quiting" xml:space="preserve">
-    <value>正在退出比赛</value>
-  </data>
   <data name="Challenge_Start" xml:space="preserve">
     <value>任务开始: 挑战赛</value>
-  </data>
-  <data name="Challenge_WaitForEnd" xml:space="preserve">
-    <value>等待结算</value>
   </data>
   <data name="Task_Complete" xml:space="preserve">
     <value>任务完成</value>

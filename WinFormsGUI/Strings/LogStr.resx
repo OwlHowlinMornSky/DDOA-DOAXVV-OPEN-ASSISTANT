@@ -129,9 +129,6 @@
   <data name="Task_Challenge_IgnoreAddFailed" xml:space="preserve">
     <value>忽略奖励挑战赛出错</value>
   </data>
-  <data name="Task_Challenge_LowFP" xml:space="preserve">
-    <value>FP耗尽</value>
-  </data>
   <data name="Task_Challenge_NoEnd" xml:space="preserve">
     <value>无法退出挑战</value>
   </data>

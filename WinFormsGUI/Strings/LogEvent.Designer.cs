@@ -70,38 +70,11 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 挑战结束 的本地化字符串。
-        /// </summary>
-        internal static string Challenge_End {
-            get {
-                return ResourceManager.GetString("Challenge_End", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 进入奖励挑战赛 的本地化字符串。
         /// </summary>
         internal static string Challenge_EnterAdd {
             get {
                 return ResourceManager.GetString("Challenge_EnterAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 进入上一次比赛 的本地化字符串。
-        /// </summary>
-        internal static string Challenge_EnterLast {
-            get {
-                return ResourceManager.GetString("Challenge_EnterLast", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 进入新比赛 的本地化字符串。
-        /// </summary>
-        internal static string Challenge_EnterNew {
-            get {
-                return ResourceManager.GetString("Challenge_EnterNew", resourceCulture);
             }
         }
         
@@ -160,38 +133,11 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 开始挑战 的本地化字符串。
-        /// </summary>
-        internal static string Challenge_Play {
-            get {
-                return ResourceManager.GetString("Challenge_Play", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 正在退出比赛 的本地化字符串。
-        /// </summary>
-        internal static string Challenge_Quiting {
-            get {
-                return ResourceManager.GetString("Challenge_Quiting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 任务开始: 挑战赛 的本地化字符串。
         /// </summary>
         internal static string Challenge_Start {
             get {
                 return ResourceManager.GetString("Challenge_Start", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 等待结算 的本地化字符串。
-        /// </summary>
-        internal static string Challenge_WaitForEnd {
-            get {
-                return ResourceManager.GetString("Challenge_WaitForEnd", resourceCulture);
             }
         }
         

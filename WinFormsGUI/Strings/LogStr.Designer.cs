@@ -97,15 +97,6 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 FP耗尽 的本地化字符串。
-        /// </summary>
-        internal static string Task_Challenge_LowFP {
-            get {
-                return ResourceManager.GetString("Task_Challenge_LowFP", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 无法退出挑战 的本地化字符串。
         /// </summary>
         internal static string Task_Challenge_NoEnd {

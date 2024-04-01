@@ -50,12 +50,6 @@ public enum class ReturnMessage {
 
 	LOG_Challenge_Start,
 	LOG_Challenge_BeginNum, // 挑战赛开始（下跟次数！）
-	LOG_Challenge_EnterLast,
-	LOG_Challenge_EnterNew,
-	LOG_Challenge_Play,
-	LOG_Challenge_WaitForEnd,
-	LOG_Challenge_End,
-	LOG_Challenge_Quiting,
 	LOG_Challenge_Over,
 	LOG_Challenge_Exit,
 	LOG_Challenge_EnterAdd,
@@ -70,7 +64,6 @@ public enum class ReturnMessage {
 	STR_Task_Challenge_NoNew,
 	STR_Task_Challenge_NoLast,
 	STR_Task_Challenge_NoEnter,
-	STR_Task_Challenge_LowFP,
 	STR_Task_Challenge_NoStart,
 	STR_Task_Challenge_TimeOut,
 	STR_Task_Challenge_NoEnd,

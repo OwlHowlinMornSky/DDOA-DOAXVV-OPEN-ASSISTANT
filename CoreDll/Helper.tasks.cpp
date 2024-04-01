@@ -67,113 +67,112 @@ bool Helper::Task_Challenge() {
 			temp_gameResult = CreateTemplate("result"),
 			temp_awardCha = CreateTemplate("add");
 
-		bool forAddThisTime = false;
-
 		cv::Point pt;
-
 		unsigned long playCnt = 0; // 次数
+		bool forAddThisTime = false; // 是否已经进入奖励挑战赛
+		unsigned long playAwardCnt = 0; // 奖励挑战赛次数
 
-	begin_point:
-
-		++playCnt;
-		if (playCnt > 1)
-			PushMsg(HelperReturnMessage::CMD_EmptyLine);
-		PushMsgCode(HelperReturnMessage::LOG_Challenge_BeginNum, playCnt);
-
-		// 查找目标比赛按钮。
-		if (-1 == r_handler->WaitFor(forNew ? *temp_newFight : *temp_lastFight))
-			Step_TaskError(
-				forNew ?
-				HelperReturnMessage::STR_Task_Challenge_NoNew :
-				HelperReturnMessage::STR_Task_Challenge_NoLast
-			);
-
-		// 点击比赛，直到进入编队画面（找到挑战按钮）。
-		PushMsg(forAddThisTime ? HelperReturnMessage::LOG_Challenge_EnterAdd :
-				(forNew ? HelperReturnMessage::LOG_Challenge_EnterNew : HelperReturnMessage::LOG_Challenge_EnterLast));
-		pt = { 900, (forNew ? temp_newFight : temp_lastFight)->GetLastMatchRect().y };
-		if (!Step_KeepClickingUntil(pt, *temp_startGame))
-			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoEnter);
-
-		forAddThisTime = false;
-
-		// 查找“挑战”按钮。
-		r_handler->WaitFor(*temp_startGame);
-		pt = temp_startGame->GetLastMatchRect().tl() + cv::Point2i(50, 20);
-		PushMsg(HelperReturnMessage::LOG_Challenge_Play);
-		for (int i = 0, n = 10; i < n; ++i) {
-			r_handler->ClickAt(pt);
-			switch (r_handler->WaitForMultiple({ temp_loading.get(), temp_lowFp.get() }, seconds(2.0f))) {
-			default:
-			case -1:
-				if (i == n - 1)
-					Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoStart);
-				break;
-			case 0:
-				i = n;
-				break;
-			case 1:
-				throw TaskExceptionCode::TaskComplete;
-				break;
-			}
-		}
-
-		// 等待结束。
-		PushMsg(HelperReturnMessage::LOG_Challenge_WaitForEnd);
-		if (-1 == r_handler->WaitFor(*temp_gameResult, seconds(5 * 60.0f)))
-			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_TimeOut);
-
-		// 点击，直到进入加载画面。
-		PushMsg(HelperReturnMessage::LOG_Challenge_End);
-		pt = temp_gameResult->GetLastMatchRect().tl() + cv::Point2i(100, 0);
-		if (!Step_KeepClickingUntil(pt, *temp_loading, seconds(60.0f), seconds(0.1f)))
-			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoEnd);
-
-		// 等待到挑战赛标签页出现。
-		PushMsg(HelperReturnMessage::LOG_Challenge_Quiting);
-		if (-1 == r_handler->WaitFor(*temp_chaBar, seconds(60.0f)))
-			Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoOver);
-		PushMsg(HelperReturnMessage::LOG_Challenge_Over);
-
-		// 检查是否有奖励挑战赛。
-		if (Settings::g_set.ChaGame_CheckAddition) {
-			if (0 == r_handler->WaitFor(*temp_awardCha, seconds(2.0f))) {
-				PushMsg(HelperReturnMessage::LOG_Challenge_FindAdd);
-				if (Settings::g_set.ChaGame_EnterAddition) { // 进入奖励挑战赛。
-					if (forNew) {
-						pt = temp_awardCha->GetLastMatchRect().tl() + cv::Point2i(30, 50);
-						if (Step_KeepClickingUntil(pt, *temp_newFight, seconds(10.0f), seconds(2.0f))) {
-							PushMsg(HelperReturnMessage::LOG_Challenge_OpenedAdd);
-							forAddThisTime = true;
-						}
-						else {
-							Step_TaskError(HelperReturnMessage::STR_Task_Challenge_OpenAddFailed);
-						}
-						//Step_Click(pt);
-					}
-					else {
-						Step_TaskError(HelperReturnMessage::STR_Task_Challenge_AddNotSup);
-					}
-				}
-				else { // 回到“推荐”栏。
-					if (0 == r_handler->WaitFor(*temp_chaBar, seconds(5.0f))) {
-						pt = temp_chaBar->GetLastMatchRect().tl() + cv::Point2i(40, 12);
-						if (Step_KeepClickingUntilNo(pt, *temp_awardCha, seconds(10.0f), seconds(0.5f))) {
-							PushMsg(HelperReturnMessage::LOG_Challenge_IgnoredAdd);
-						}
-						else {
-							Step_TaskError(HelperReturnMessage::STR_Task_Challenge_IgnoreAddFailed);
-						}
-						//Step_Click(pt);
-					}
-				}
+		while (true) {
+			if (forAddThisTime) {
+				++playAwardCnt;
+				PushMsgCode(HelperReturnMessage::LOG_Challenge_EnterAdd, playCnt);
 			}
 			else {
-				PushMsg(HelperReturnMessage::LOG_Challenge_NotFindAdd);
+				++playCnt;
+				PushMsgCode(HelperReturnMessage::LOG_Challenge_BeginNum, playCnt);
+			}
+
+			// 查找目标比赛按钮。
+			if (-1 == r_handler->WaitFor(forNew ? *temp_newFight : *temp_lastFight))
+				Step_TaskError(
+					forNew ?
+					HelperReturnMessage::STR_Task_Challenge_NoNew :
+					HelperReturnMessage::STR_Task_Challenge_NoLast
+				);
+
+			// 点击比赛，直到进入编队画面（找到挑战按钮）。
+			//PushMsg(forAddThisTime ? HelperReturnMessage::LOG_Challenge_EnterAdd :
+			//		(forNew ? HelperReturnMessage::LOG_Challenge_EnterNew : HelperReturnMessage::LOG_Challenge_EnterLast));
+			pt = { 900, (forNew ? temp_newFight : temp_lastFight)->GetLastMatchRect().y };
+			if (!Step_KeepClickingUntil(pt, *temp_startGame))
+				Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoEnter);
+
+			forAddThisTime = false;
+
+			// 查找“挑战”按钮。
+			r_handler->WaitFor(*temp_startGame);
+			pt = temp_startGame->GetLastMatchRect().tl() + cv::Point2i(50, 20);
+			//PushMsg(HelperReturnMessage::LOG_Challenge_Play);
+			for (int i = 0, n = 10; i < n; ++i) {
+				r_handler->ClickAt(pt);
+				switch (r_handler->WaitForMultiple({ temp_loading.get(), temp_lowFp.get() }, seconds(2.0f))) {
+				default:
+				case -1:
+					if (i == n - 1)
+						Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoStart);
+					break;
+				case 0:
+					i = n;
+					break;
+				case 1:
+					throw TaskExceptionCode::TaskComplete;
+					break;
+				}
+			}
+
+			// 等待结束。
+			//PushMsg(HelperReturnMessage::LOG_Challenge_WaitForEnd);
+			if (-1 == r_handler->WaitFor(*temp_gameResult, seconds(5 * 60.0f)))
+				Step_TaskError(HelperReturnMessage::STR_Task_Challenge_TimeOut);
+
+			// 点击，直到进入加载画面。
+			//PushMsg(HelperReturnMessage::LOG_Challenge_End);
+			pt = temp_gameResult->GetLastMatchRect().tl() + cv::Point2i(100, 0);
+			if (!Step_KeepClickingUntil(pt, *temp_loading, seconds(60.0f), seconds(0.1f)))
+				Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoEnd);
+
+			// 等待到挑战赛标签页出现。
+			//PushMsg(HelperReturnMessage::LOG_Challenge_Quiting);
+			if (-1 == r_handler->WaitFor(*temp_chaBar, seconds(60.0f)))
+				Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoOver);
+			PushMsg(HelperReturnMessage::LOG_Challenge_Over);
+
+			// 检查是否有奖励挑战赛。
+			if (Settings::g_set.ChaGame_CheckAddition) {
+				if (0 == r_handler->WaitFor(*temp_awardCha, seconds(2.0f))) {
+					PushMsg(HelperReturnMessage::LOG_Challenge_FindAdd);
+					if (Settings::g_set.ChaGame_EnterAddition) { // 进入奖励挑战赛。
+						if (forNew) {
+							pt = temp_awardCha->GetLastMatchRect().tl() + cv::Point2i(30, 50);
+							if (Step_KeepClickingUntil(pt, *temp_newFight, seconds(10.0f), seconds(2.0f))) {
+								PushMsg(HelperReturnMessage::LOG_Challenge_OpenedAdd);
+								forAddThisTime = true;
+							}
+							else {
+								Step_TaskError(HelperReturnMessage::STR_Task_Challenge_OpenAddFailed);
+							}
+						}
+						else {
+							Step_TaskError(HelperReturnMessage::STR_Task_Challenge_AddNotSup);
+						}
+					}
+					else { // 回到“推荐”栏。
+						if (0 == r_handler->WaitFor(*temp_chaBar, seconds(5.0f))) {
+							pt = temp_chaBar->GetLastMatchRect().tl() + cv::Point2i(40, 12);
+							if (Step_KeepClickingUntilNo(pt, *temp_awardCha, seconds(10.0f), seconds(0.5f))) {
+								PushMsg(HelperReturnMessage::LOG_Challenge_IgnoredAdd);
+							}
+							else {
+								Step_TaskError(HelperReturnMessage::STR_Task_Challenge_IgnoreAddFailed);
+							}
+						}
+					}
+				}
+				else {
+					PushMsg(HelperReturnMessage::LOG_Challenge_NotFindAdd);
+				}
 			}
 		}
-
-		goto begin_point;
 	}
 	catch (int err) {
 		switch (err) {
@@ -195,7 +194,6 @@ bool Helper::Task_Challenge() {
 		}
 	}
 	catch (...) {
-		MessageBoxA(0, "!!!", "???", 0);
 		PushMsg(HelperReturnMessage::LOG_TaskError_Exception);
 		taskReturnCode = false;
 	}
