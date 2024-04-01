@@ -28,9 +28,12 @@
 #include "AskedForStop.h"
 #include "TaskExceptionCode.h"
 
+#include "CoreLog.h"
+
 namespace ohms {
 
 Helper::Helper() :
+	r_handler(nullptr),
 	m_running(false) // 未运行
 {
 	return;
@@ -39,13 +42,19 @@ Helper::Helper() :
 Helper::~Helper() {}
 
 int Helper::setup() {
+	if (!SetupLog())
+		return 1;
+
 	m_assets.assign("assets");
+	CoreLog() << "Helper set assets folder path as " << m_assets << '.' << std::endl;
 
 	std::ifstream ifs;
 	ifs.open(m_assets / "tempLists.ini");
-
-	if (!ifs.is_open())
-		return 1;
+	if (!ifs.is_open()) {
+		CoreLog() << "Helper failed to opens template lists." << std::endl;
+		return 2;
+	}
+	CoreLog() << "Helper opened template lists." << std::endl;
 
 	size_t sz;
 	ifs >> sz;
@@ -55,30 +64,35 @@ int Helper::setup() {
 		unsigned short thres;
 		int r0, r1, r2, r3;
 		ifs >> name >> fix >> thres >> r0 >> r1 >> r2 >> r3;
+		CoreLog() << "Helper read template [" << name << "]." << std::endl;
 
 		m_templateList.emplace(name, MatchTemplateInfo(fix, thres, { r0, r1, r2, r3 }));
 	}
-
+	CoreLog() << "Helper have read " << sz << " templates." << std::endl;
 	return 0;
 }
 
 bool Helper::start() {
 	if (m_running) { // 已经有任务运行（或者有bug没清除运行标记）
 		PushMsg(HelperReturnMessage::LOG_StartError_Running);
+		CoreLog() << "Helper: Unexpected Start Repeatly. [Failed to Start]" << std::endl;
 		return false;
 	}
 
 	r_handler = WndHandler::Instance();
 	if (r_handler == nullptr) {
+		CoreLog() << "Helper: Handler Unavailable. [Failed to Start]" << std::endl;
 		return false;
 	}
 	if (!r_handler->Update()) {
+		CoreLog() << "Helper: Handler Failed to Update. [Failed to Start]" << std::endl;
 		return false;
 	}
 
 	g_askedForStop = false; // 清除运行标志（绝对不能移动到上面去）
 	ohms::Settings::MakeOneCopy();
 	std::thread sub(&Helper::Work, this);
+	CoreLog() << "Helper: Detach Thread! [Start]" << std::endl;
 	sub.detach(); // 在子线程运行工作
 	return !sub.joinable();
 }

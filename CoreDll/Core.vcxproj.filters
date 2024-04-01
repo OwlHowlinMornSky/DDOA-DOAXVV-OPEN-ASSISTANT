@@ -48,6 +48,9 @@
     <ClCompile Include="AskedForStop.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="CoreLog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clock.h">
@@ -87,6 +90,9 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="TaskExceptionCode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreLog.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

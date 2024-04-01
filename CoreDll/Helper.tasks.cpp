@@ -24,6 +24,8 @@
 #include "AskedForStop.h"
 #include "TaskExceptionCode.h"
 
+#include "CoreLog.h"
+
 namespace ohms {
 
 bool Helper::Task_StartUp() {
@@ -45,14 +47,17 @@ bool Helper::Task_StartUp() {
 bool Helper::Task_Challenge() {
 	bool taskReturnCode = true; // 若返回false表示终止后续任务。
 	try {
+		CoreLog() << "Task.Challenge: Start." << std::endl;
 		PushMsg(HelperReturnMessage::LOG_Challenge_Start);
 		const bool forNew = Settings::g_set.ChaGame_ForNew; // 保存设置
 
 		switch (r_handler->SetForGame()) {
 		case WndHandler::SetReturnValue::WndNotFound:
+			CoreLog() << "Task.Challenge: Game Window Not Found." << std::endl;
 			Step_TaskError(HelperReturnMessage::STR_Task_Error_NoWnd);
 			break;
 		case WndHandler::SetReturnValue::CaptureFailed:
+			CoreLog() << "Task.Challenge: Game Window Cannot Capture." << std::endl;
 			Step_TaskError(HelperReturnMessage::STR_Task_Error_FailedCapture);
 			break;
 		}
@@ -91,8 +96,7 @@ bool Helper::Task_Challenge() {
 				);
 
 			// 点击比赛，直到进入编队画面（找到挑战按钮）。
-			//PushMsg(forAddThisTime ? HelperReturnMessage::LOG_Challenge_EnterAdd :
-			//		(forNew ? HelperReturnMessage::LOG_Challenge_EnterNew : HelperReturnMessage::LOG_Challenge_EnterLast));
+			CoreLog() << "Task.Challenge: Enter Game <" << (forAddThisTime ? "Award" : (forNew ? "New" : "Last")) << ">." << std::endl;
 			pt = { 900, (forNew ? temp_newFight : temp_lastFight)->GetLastMatchRect().y };
 			if (!Step_KeepClickingUntil(pt, *temp_startGame))
 				Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoEnter);
@@ -102,7 +106,7 @@ bool Helper::Task_Challenge() {
 			// 查找“挑战”按钮。
 			r_handler->WaitFor(*temp_startGame);
 			pt = temp_startGame->GetLastMatchRect().tl() + cv::Point2i(50, 20);
-			//PushMsg(HelperReturnMessage::LOG_Challenge_Play);
+			CoreLog() << "Task.Challenge: Play Game." << std::endl;
 			for (int i = 0, n = 10; i < n; ++i) {
 				r_handler->ClickAt(pt);
 				switch (r_handler->WaitForMultiple({ temp_loading.get(), temp_lowFp.get() }, seconds(2.0f))) {
@@ -121,18 +125,18 @@ bool Helper::Task_Challenge() {
 			}
 
 			// 等待结束。
-			//PushMsg(HelperReturnMessage::LOG_Challenge_WaitForEnd);
+			CoreLog() << "Task.Challenge: In Game, Waitting for End." << std::endl;
 			if (-1 == r_handler->WaitFor(*temp_gameResult, seconds(5 * 60.0f)))
 				Step_TaskError(HelperReturnMessage::STR_Task_Challenge_TimeOut);
 
 			// 点击，直到进入加载画面。
-			//PushMsg(HelperReturnMessage::LOG_Challenge_End);
+			CoreLog() << "Task.Challenge: Game End, Trying to Exit." << std::endl;
 			pt = temp_gameResult->GetLastMatchRect().tl() + cv::Point2i(100, 0);
 			if (!Step_KeepClickingUntil(pt, *temp_loading, seconds(60.0f), seconds(0.1f)))
 				Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoEnd);
 
 			// 等待到挑战赛标签页出现。
-			//PushMsg(HelperReturnMessage::LOG_Challenge_Quiting);
+			CoreLog() << "Task.Challenge: Game Exit, Waitting for Challenge Page." << std::endl;
 			if (-1 == r_handler->WaitFor(*temp_chaBar, seconds(60.0f)))
 				Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoOver);
 			PushMsg(HelperReturnMessage::LOG_Challenge_Over);
@@ -197,6 +201,7 @@ bool Helper::Task_Challenge() {
 		PushMsg(HelperReturnMessage::LOG_TaskError_Exception);
 		taskReturnCode = false;
 	}
+	CoreLog() << "Task.Challenge: Exit." << std::endl;
 	PushMsg(HelperReturnMessage::LOG_Challenge_Exit);
 	return taskReturnCode;
 }

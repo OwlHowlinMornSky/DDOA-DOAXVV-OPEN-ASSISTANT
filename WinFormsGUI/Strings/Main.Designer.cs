@@ -77,5 +77,41 @@ namespace WinFormsGUI.Strings {
                 return ResourceManager.GetString("Btn_Main_Stop", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 核心模块初始化失败 的本地化字符串。
+        /// </summary>
+        internal static string ProgramCoreInitializationFailed {
+            get {
+                return ResourceManager.GetString("ProgramCoreInitializationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 无法创建日志文件 的本地化字符串。
+        /// </summary>
+        internal static string ProgramCoreInitializationFailed_CoreLogOpenFailed {
+            get {
+                return ResourceManager.GetString("ProgramCoreInitializationFailed_CoreLogOpenFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 无法读取模板列表 的本地化字符串。
+        /// </summary>
+        internal static string ProgramCoreInitializationFailed_LoadTemplateListFailed {
+            get {
+                return ResourceManager.GetString("ProgramCoreInitializationFailed_LoadTemplateListFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 未知原因 的本地化字符串。
+        /// </summary>
+        internal static string ProgramCoreInitializationFailed_UnknownReason {
+            get {
+                return ResourceManager.GetString("ProgramCoreInitializationFailed_UnknownReason", resourceCulture);
+            }
+        }
     }
 }
