@@ -130,6 +130,9 @@ int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
 	Clock clk;
 	cv::Rect trect;
 	MSG msg{ 0 };
+#ifdef _DEBUG
+	bool matchRes = false;
+#endif // _DEBUG
 	while (!g_askedForStop) {
 		// show mat时必须处理该线程的窗口消息，cv的窗口才正常
 		// 没有show mat时也必须处理消息，否则收不到capture到的帧（似乎是分离线程初始化wgc导致的
@@ -138,8 +141,25 @@ int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
 			DispatchMessageW(&msg);
 		}
 		else {
+#ifdef _DEBUG
+			if (CopyMat() && (matchRes = _temp.Match(m_mat))) {
+				if (Settings::mainSettings.Debug_ShowCapture) {
+					if (_temp.GetIsFixed()) {
+						cv::rectangle(m_mat, _temp.GetSearchRect(), matchRes ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0); // 画寻找范围框（满足阈值为绿，否则为红）
+					}
+					else {
+						cv::rectangle(m_mat, _temp.GetSearchRect(), cv::Scalar(255, 0, 0), 2, 8, 0); // 蓝线画寻找范围框
+						cv::rectangle(m_mat, _temp.GetLastMatchRect(), matchRes ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0); // 画最佳匹配框（满足阈值为绿，否则为红）
+					}
+					cv::resize(m_mat, m_mat, m_mat.size() / 2, 0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR); // 缩小到一半
+					cv::imshow("show", m_mat); // show
+				}
+				break;
+			}
+#else
 			if (CopyMat() && _temp.Match(m_mat))
 				break;
+#endif
 			if (_tlimit > Time::Zero && clk.getElapsedTime() > _tlimit) // 应用超时
 				return -1;
 			r_capture->askForRefresh();
@@ -175,6 +195,30 @@ int WndHandler::WaitForMultiple(std::vector<const MatchTemplate*> _temps, Time _
 					}
 					c++;
 				}
+#ifdef _DEBUG
+				if (Settings::mainSettings.Debug_ShowCapture) {
+					for (const MatchTemplate* i : _temps) {
+						if (i->GetIsFixed()) {
+							cv::rectangle(m_mat, i->GetSearchRect(), cv::Scalar(0, 0, 255), 2, 8, 0); // 画寻找范围框（红）
+						}
+						else {
+							cv::rectangle(m_mat, i->GetSearchRect(), cv::Scalar(255, 0, 0), 2, 8, 0); // 蓝线画寻找范围框
+							cv::rectangle(m_mat, i->GetLastMatchRect(), cv::Scalar(0, 0, 255), 2, 8, 0); // 画最佳匹配框（红）
+						}
+					}
+					if (res != -1) {
+						if (_temps[res]->GetIsFixed()) {
+							cv::rectangle(m_mat, _temps[res]->GetSearchRect(), cv::Scalar(0, 255, 0), 2, 8, 0); // 画寻找范围框（绿）
+						}
+						else {
+							cv::rectangle(m_mat, _temps[res]->GetSearchRect(), cv::Scalar(255, 0, 0), 2, 8, 0); // 蓝线画寻找范围框
+							cv::rectangle(m_mat, _temps[res]->GetLastMatchRect(), cv::Scalar(0, 255, 0), 2, 8, 0); // 画最佳匹配框（绿）
+						}
+					}
+					cv::resize(m_mat, m_mat, m_mat.size() / 2, 0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR); // 缩小到一半
+					cv::imshow("show", m_mat); // show
+				}
+#endif // _DEBUG
 				if (res != -1)
 					break;
 			}

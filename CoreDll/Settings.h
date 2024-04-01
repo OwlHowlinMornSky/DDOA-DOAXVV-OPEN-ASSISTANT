@@ -36,6 +36,8 @@ struct CORE_API Settings {
 	bool ChaGame_EnterAddition; // 进入奖励挑战赛。
 	bool ChaGame_CheckAddition; // 是否检查奖励挑战赛。
 
+	bool Debug_ShowCapture;
+
 	Settings();
 
 	static Settings mainSettings; // 对外使用的设置。

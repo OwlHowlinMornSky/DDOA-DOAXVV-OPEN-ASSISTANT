@@ -134,19 +134,6 @@ bool MatchTemplate::Match(const cv::Mat& sample) const {
 
 	// 检查最佳区域是否满足阈值
 	bool res = check(srcImage, m_target, m_info.thershold / 65536.0f);
-
-#ifdef _DEBUG
-	sample.copyTo(srcImage); // 复制原始输入
-	if (m_info.isFixed) {
-		cv::rectangle(srcImage, m_info.rect, res ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0); // 蓝线画寻找范围框
-	}
-	else {
-		cv::rectangle(srcImage, m_info.rect, cv::Scalar(255, 0, 0), 2, 8, 0); // 蓝线画寻找范围框
-		cv::rectangle(srcImage, m_lastMatch, res ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0); // 画最佳匹配框（满足阈值为绿，否则为红）
-	}
-	cv::resize(srcImage, srcImage, srcImage.size() / 2, 0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR); // 缩小到一半
-	cv::imshow("show", srcImage); // show
-#endif
 	return res;
 }
 
@@ -157,6 +144,14 @@ bool MatchTemplate::LoadMat(const std::string& file) {
 
 const cv::Rect& MatchTemplate::GetLastMatchRect() const {
 	return m_lastMatch;
+}
+
+const bool MatchTemplate::GetIsFixed() const {
+    return m_info.isFixed;
+}
+
+const cv::Rect& MatchTemplate::GetSearchRect() const {
+	return m_info.rect;
 }
 
 }

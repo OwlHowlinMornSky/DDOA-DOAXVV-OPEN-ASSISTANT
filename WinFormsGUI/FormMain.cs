@@ -25,7 +25,6 @@ namespace WinFormsGUI {
 
 		#region ==========Members==========
 
-		private readonly HelperWrapper m_helper = new();
 		private bool m_btnMainIsStart = true;
 		private Size m_label_transp_value_size = new();
 
@@ -71,6 +70,7 @@ namespace WinFormsGUI {
 		private void InitLoadSettings_Settings() {
 #if DEBUG
 			Settings.Core.Default.ShowCapture = true;
+			chkBox_SetShow.Visible = true;
 #endif
 			chkBox_SetShow.Checked = Settings.Core.Default.ShowCapture;
 			chkBox_SetHideToTray.Checked = Settings.GUI.Default.HideToTray;
@@ -136,15 +136,11 @@ namespace WinFormsGUI {
 		}
 
 		private void FormMain_FormClosing(object sender, FormClosingEventArgs e) {
-			m_helper.AskForStop();
+			Program.helper.AskForStop();
 			DropSaveSettings();
-			while (m_helper.IsRunning()) {
+			while (Program.helper.IsRunning()) {
 				Thread.Sleep(30);
 			}
-		}
-
-		private void FormMain_FormClosed(object sender, FormClosedEventArgs e) {
-			m_helper.Drop();
 		}
 
 		#endregion
@@ -156,7 +152,7 @@ namespace WinFormsGUI {
 			if (m_btnMainIsStart) { 
 				WorkLock();
 				listBox_Log.Items.Clear();
-				if (!m_helper.Start()) {
+				if (!Program.helper.Start()) {
 					Log(Strings.LogEvent.Work_CanNotStartWork);
 					WorkUnlock();
 					return;
@@ -164,23 +160,23 @@ namespace WinFormsGUI {
 				timer_Main.Enabled = true;
 			}
 			else {
-				m_helper.AskForStop();
+				Program.helper.AskForStop();
 			}
 		}
 
 		private void RadioBtn_Game_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetChallengeForNewOrLast(radioBtn_GameNew.Checked);
+			Program.helper.SetChallengeForNewOrLast(radioBtn_GameNew.Checked);
 			Settings.Core.Default.Cha_PlayNew = radioBtn_GameNew.Checked;
 		}
 
 		private void RadioBtn_Ctrl_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetMouseSendInputOrSendMessage(radioBtn_CtrlInput.Checked);
+			Program.helper.SetMouseSendInputOrSendMessage(radioBtn_CtrlInput.Checked);
 			Settings.Core.Default.CtrlSendInput = radioBtn_CtrlInput.Checked;
 		}
 
 		private void RadioBtn_Award_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetChallengeCheckAwardOrNot(!radioBtn_AwardNo.Checked);
-			m_helper.SetChallengePlayAwardOrNot(radioBtn_AwardPlay.Checked);
+			Program.helper.SetChallengeCheckAwardOrNot(!radioBtn_AwardNo.Checked);
+			Program.helper.SetChallengePlayAwardOrNot(radioBtn_AwardPlay.Checked);
 			if (radioBtn_AwardNo.Checked) {
 				Settings.Core.Default.Cha_Award = 0;
 			}
@@ -197,7 +193,7 @@ namespace WinFormsGUI {
 		#region ----------Settings----------
 
 		private void ChkBox_SetShow_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetShowCaptureOrNot(chkBox_SetShow.Checked);
+			Program.helper.SetShowCaptureOrNot(chkBox_SetShow.Checked);
 			Settings.Core.Default.ShowCapture = chkBox_SetShow.Checked;
 		}
 
@@ -213,18 +209,18 @@ namespace WinFormsGUI {
 			if (chkBox_SetAwake.Checked) {
 				Settings.Core.Default.KeepAwake = true;
 				chkBox_SetScreenOn.Enabled = true;
-				m_helper.SetKeepAwakeOrNot(true);
+				Program.helper.SetKeepAwakeOrNot(true);
 			}
 			else {
 				Settings.Core.Default.KeepAwake = false;
 				chkBox_SetScreenOn.Checked = false;
 				chkBox_SetScreenOn.Enabled = false;
-				m_helper.SetKeepAwakeOrNot(false);
+				Program.helper.SetKeepAwakeOrNot(false);
 			}
 		}
 
 		private void ChkBox_SetScreenOn_CheckedChanged(object sender, EventArgs e) {
-			m_helper.SetKeepScreenOnOrNot(chkBox_SetScreenOn.Checked);
+			Program.helper.SetKeepScreenOnOrNot(chkBox_SetScreenOn.Checked);
 			Settings.Core.Default.KeepScreenOn = chkBox_SetScreenOn.Checked;
 		}
 
@@ -270,7 +266,7 @@ namespace WinFormsGUI {
 
 		private void Timer_Main_Tick(object sender, EventArgs e) {
 			ReturnMessage m;
-			while ((m = m_helper.GetMessage()) != ReturnMessage.None)
+			while ((m = Program.helper.GetMessage()) != ReturnMessage.None)
 				switch (m) {
 				case ReturnMessage.CMD_EmptyLine:
 					Log();
@@ -305,7 +301,7 @@ namespace WinFormsGUI {
 						notifyIcon_Main.ShowBalloonTip(
 							Settings.Param.Default.NotifyTime,
 							Strings.LogEvent.Work_Complete,
-							Strings.LogEvent.Work_Complete,
+							Strings.LogEvent.Work_Complete_Describtion,
 							ToolTipIcon.Info
 						);
 					break;
@@ -339,7 +335,7 @@ namespace WinFormsGUI {
 						);
 					break;
 				case ReturnMessage.LOG_TaskError:
-					m = m_helper.GetMessage();
+					m = Program.helper.GetMessage();
 					string text = "null";
 					switch (m) {
 					case ReturnMessage.STR_Task_Challenge_NoNew:
@@ -399,7 +395,7 @@ namespace WinFormsGUI {
 					Log(Strings.LogEvent.Challenge_Start);
 					break;
 				case ReturnMessage.LOG_Challenge_BeginNum: // 挑战赛开始（下跟次数！）
-					Log(string.Format(Strings.LogEvent.Challenge_BeginNum, m_helper.GetCode()));
+					Log(string.Format(Strings.LogEvent.Challenge_BeginNum, Program.helper.GetCode()));
 					break;
 				case ReturnMessage.LOG_Challenge_Over:
 					Log(Strings.LogEvent.Challenge_Over);

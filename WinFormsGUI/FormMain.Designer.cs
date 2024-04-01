@@ -305,7 +305,6 @@
 			Name = "FormMain";
 			Deactivate += FormMain_Deactivate;
 			FormClosing += FormMain_FormClosing;
-			FormClosed += FormMain_FormClosed;
 			Load += FormMain_Load;
 			ctxtMenu_NotifyR.ResumeLayout(false);
 			tabPage_Set.ResumeLayout(false);

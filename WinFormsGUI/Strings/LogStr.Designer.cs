@@ -70,7 +70,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 找不到DOAXVV窗口 的本地化字符串。
+        ///   查找类似 找不到游戏窗口 的本地化字符串。
         /// </summary>
         internal static string Task_CanNotFindWnd {
             get {

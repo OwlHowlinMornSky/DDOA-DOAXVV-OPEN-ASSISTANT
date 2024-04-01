@@ -27,7 +27,7 @@ namespace Wrapper {
 HelperWrapper::HelperWrapper() {
 	r_helper = ohms::IHelper::instance();
 	if (!r_helper) {
-		throw gcnew System::NotImplementedException();
+		throw gcnew System::TypeLoadException();
 	}
 }
 
@@ -57,6 +57,10 @@ System::UInt32 HelperWrapper::GetCode() {
 	return res;
 }
 
+System::Int32 HelperWrapper::Setup() {
+    return r_helper->setup();
+}
+
 System::Void HelperWrapper::Drop() {
 	ohms::IHelper::drop();
 	r_helper = nullptr;
@@ -73,7 +77,7 @@ System::Int32 HelperWrapper::SetMouseSendInputOrSendMessage(bool sendInput) {
 }
 
 System::Int32 HelperWrapper::SetShowCaptureOrNot(bool show) {
-	//return r_helper->SetShowCaptureOrNot(show);
+	ohms::Settings::mainSettings.Debug_ShowCapture = show;
 	return System::Int32(0);
 }
 

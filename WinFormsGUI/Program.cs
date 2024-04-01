@@ -18,8 +18,13 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+using Wrapper;
+
 namespace WinFormsGUI {
 	internal static class Program {
+
+		internal readonly static HelperWrapper helper = new();
+
 		/// <summary>
 		///  The main entry point for the application.
 		/// </summary>
@@ -28,7 +33,9 @@ namespace WinFormsGUI {
 			// To customize application configuration such as set high DPI settings or default font,
 			// see https://aka.ms/applicationconfiguration.
 			ApplicationConfiguration.Initialize();
+			helper.Setup();
 			Application.Run(new FormMain());
+			helper.Drop();
 		}
 	}
 }

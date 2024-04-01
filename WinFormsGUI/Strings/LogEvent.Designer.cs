@@ -79,7 +79,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 任务结束: 挑战赛 的本地化字符串。
+        ///   查找类似 任务结束【挑战赛】 的本地化字符串。
         /// </summary>
         internal static string Challenge_Exit {
             get {
@@ -133,7 +133,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 任务开始: 挑战赛 的本地化字符串。
+        ///   查找类似 任务开始【挑战赛】 的本地化字符串。
         /// </summary>
         internal static string Challenge_Start {
             get {
@@ -210,6 +210,15 @@ namespace WinFormsGUI.Strings {
         internal static string Work_Complete {
             get {
                 return ResourceManager.GetString("Work_Complete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 所有任务均已完成 的本地化字符串。
+        /// </summary>
+        internal static string Work_Complete_Describtion {
+            get {
+                return ResourceManager.GetString("Work_Complete_Describtion", resourceCulture);
             }
         }
         

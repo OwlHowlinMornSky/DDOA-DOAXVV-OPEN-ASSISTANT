@@ -121,7 +121,7 @@
     <value>无法截图</value>
   </data>
   <data name="Task_CanNotFindWnd" xml:space="preserve">
-    <value>找不到DOAXVV窗口</value>
+    <value>找不到游戏窗口</value>
   </data>
   <data name="Task_Challenge_AddNotSup" xml:space="preserve">
     <value>“上一次比赛”不支持进入“奖励挑战赛”</value>

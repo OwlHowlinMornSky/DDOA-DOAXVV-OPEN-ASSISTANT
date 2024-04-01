@@ -38,6 +38,7 @@ public:
 	ReturnMessage GetMessage();
 	System::UInt32 GetCode();
 
+	System::Int32 Setup();
 	System::Void Drop();
 
 public:

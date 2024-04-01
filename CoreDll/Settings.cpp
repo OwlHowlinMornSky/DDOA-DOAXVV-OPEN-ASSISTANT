@@ -32,7 +32,10 @@ Settings::Settings() :
 
 	ChaGame_ForNew(false), // 默认上一次比赛
 	ChaGame_EnterAddition(true), // 默认进入奖励挑战赛
-	ChaGame_CheckAddition(false) // 默认不检查奖励挑战赛
+	ChaGame_CheckAddition(false), // 默认不检查奖励挑战赛
+
+	Debug_ShowCapture(false)
+
 {}
 
 void Settings::MakeOneCopy() {

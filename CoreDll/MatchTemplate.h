@@ -70,6 +70,10 @@ public:
 	 */
 	const cv::Rect& GetLastMatchRect() const;
 
+	const bool GetIsFixed() const;
+
+	const cv::Rect& GetSearchRect() const;
+
 private:
 	MatchTemplateInfo m_info; // 基本信息
 	mutable cv::Rect m_lastMatch; // 上次匹配区域。

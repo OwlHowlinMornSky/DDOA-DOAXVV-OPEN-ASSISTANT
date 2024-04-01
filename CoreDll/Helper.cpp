@@ -32,12 +32,21 @@ namespace ohms {
 
 Helper::Helper() :
 	m_running(false) // 未运行
-
 {
+	return;
+}
+
+Helper::~Helper() {}
+
+int Helper::setup() {
 	m_assets.assign("assets");
 
 	std::ifstream ifs;
 	ifs.open(m_assets / "tempLists.ini");
+
+	if (!ifs.is_open())
+		return 1;
+
 	size_t sz;
 	ifs >> sz;
 	for (size_t i = 0; i < sz; ++i) {
@@ -50,10 +59,8 @@ Helper::Helper() :
 		m_templateList.emplace(name, MatchTemplateInfo(fix, thres, { r0, r1, r2, r3 }));
 	}
 
-	return;
+	return 0;
 }
-
-Helper::~Helper() {}
 
 bool Helper::start() {
 	if (m_running) { // 已经有任务运行（或者有bug没清除运行标记）
