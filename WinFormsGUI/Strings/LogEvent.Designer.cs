@@ -196,6 +196,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 任务完成 的本地化字符串。
+        /// </summary>
+        internal static string Task_Complete {
+            get {
+                return ResourceManager.GetString("Task_Complete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 任务出错 的本地化字符串。
         /// </summary>
         internal static string Task_Error {
@@ -223,15 +232,6 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 任务完成 的本地化字符串。
-        /// </summary>
-        internal static string TaskOver {
-            get {
-                return ResourceManager.GetString("TaskOver", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 未描述的事件：{0} 的本地化字符串。
         /// </summary>
         internal static string UNKNOWN {
@@ -250,29 +250,20 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 无法截图 的本地化字符串。
-        /// </summary>
-        internal static string Work_CanNotCapture {
-            get {
-                return ResourceManager.GetString("Work_CanNotCapture", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 找不到DOAXVV窗口 的本地化字符串。
-        /// </summary>
-        internal static string Work_CanNotFindWnd {
-            get {
-                return ResourceManager.GetString("Work_CanNotFindWnd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 无法启动任务 的本地化字符串。
         /// </summary>
         internal static string Work_CanNotStartWork {
             get {
                 return ResourceManager.GetString("Work_CanNotStartWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 工作完成 的本地化字符串。
+        /// </summary>
+        internal static string Work_Complete {
+            get {
+                return ResourceManager.GetString("Work_Complete", resourceCulture);
             }
         }
         

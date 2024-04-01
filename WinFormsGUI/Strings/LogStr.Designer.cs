@@ -61,6 +61,24 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 无法截图 的本地化字符串。
+        /// </summary>
+        internal static string Task_CanNotCapture {
+            get {
+                return ResourceManager.GetString("Task_CanNotCapture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 找不到DOAXVV窗口 的本地化字符串。
+        /// </summary>
+        internal static string Task_CanNotFindWnd {
+            get {
+                return ResourceManager.GetString("Task_CanNotFindWnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 “上一次比赛”不支持进入“奖励挑战赛” 的本地化字符串。
         /// </summary>
         internal static string Task_Challenge_AddNotSup {

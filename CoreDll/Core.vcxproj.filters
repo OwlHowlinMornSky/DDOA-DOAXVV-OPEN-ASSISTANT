@@ -86,6 +86,9 @@
     <ClInclude Include="ReturnMessages.h">
       <Filter>API</Filter>
     </ClInclude>
+    <ClInclude Include="TaskExceptionCode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CoreDll.rc">

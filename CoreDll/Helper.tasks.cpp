@@ -22,6 +22,7 @@
 
 #include "Settings.h"
 #include "AskedForStop.h"
+#include "TaskExceptionCode.h"
 
 namespace ohms {
 
@@ -42,18 +43,17 @@ bool Helper::Task_StartUp() {
 }
 
 bool Helper::Task_Challenge() {
+	bool taskReturnCode = true; // 若返回false表示终止后续任务。
 	try {
 		PushMsg(HelperReturnMessage::LOG_Challenge_Start);
 		const bool forNew = Settings::g_set.ChaGame_ForNew; // 保存设置
 
 		switch (r_handler->SetForGame()) {
 		case WndHandler::SetReturnValue::WndNotFound:
-			PushMsg(HelperReturnMessage::LOG_WorkError_NoWnd);
-			throw 0;
+			Step_TaskError(HelperReturnMessage::STR_Task_Error_NoWnd);
 			break;
 		case WndHandler::SetReturnValue::CaptureFailed:
-			PushMsg(HelperReturnMessage::LOG_WorkError_FailedCapture);
-			throw 0;
+			Step_TaskError(HelperReturnMessage::STR_Task_Error_FailedCapture);
 			break;
 		}
 
@@ -106,16 +106,14 @@ bool Helper::Task_Challenge() {
 			switch (r_handler->WaitForMultiple({ temp_loading.get(), temp_lowFp.get() }, seconds(2.0f))) {
 			default:
 			case -1:
-				if (i == n - 1) {
+				if (i == n - 1)
 					Step_TaskError(HelperReturnMessage::STR_Task_Challenge_NoStart);
-				}
 				break;
 			case 0:
 				i = n;
 				break;
 			case 1:
-				PushMsg(HelperReturnMessage::LOG_TaskOver);
-				throw 0;
+				throw TaskExceptionCode::TaskComplete;
 				break;
 			}
 		}
@@ -179,24 +177,30 @@ bool Helper::Task_Challenge() {
 	}
 	catch (int err) {
 		switch (err) {
-		case 0: // 返回false表示主动停止
+		case TaskExceptionCode::UserStop:
 			PushMsg(HelperReturnMessage::LOG_TaskStop);
-			return false;
-		case 1:
-			PushMsgCode(
-				HelperReturnMessage::LOG_TaskError,
-				HelperReturnMessage::STR_Task_FailedToLoadTemplateFile
-			);
+			taskReturnCode = false;
+			break;
+		case TaskExceptionCode::TaskComplete:
+			PushMsg(HelperReturnMessage::LOG_TaskComplete);
+			break;
+		case TaskExceptionCode::KnownErrorButNotCritical:
+			break;
+		case TaskExceptionCode::KnownErrorCritical:
+			taskReturnCode = false;
 			break;
 		default:
 			PushMsg(HelperReturnMessage::LOG_TaskError_Exception);
+			taskReturnCode = false;
 		}
 	}
 	catch (...) {
+		MessageBoxA(0, "!!!", "???", 0);
 		PushMsg(HelperReturnMessage::LOG_TaskError_Exception);
+		taskReturnCode = false;
 	}
 	PushMsg(HelperReturnMessage::LOG_Challenge_Exit);
-	return true;
+	return taskReturnCode;
 }
 
 }

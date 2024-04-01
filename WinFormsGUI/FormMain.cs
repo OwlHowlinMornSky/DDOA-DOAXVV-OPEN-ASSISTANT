@@ -276,7 +276,6 @@ namespace WinFormsGUI {
 					Log();
 					break;
 				case ReturnMessage.CMD_Stopped:
-					Log(Strings.LogEvent.Work_Stopped);
 					WorkUnlock();
 					timer_Main.Enabled = false;
 					break;
@@ -297,13 +296,21 @@ namespace WinFormsGUI {
 				case ReturnMessage.LOG_Stopping:
 					Log(Strings.LogEvent.Work_Stopping);
 					break;
-				case ReturnMessage.LOG_WorkError_NoWnd:
-					Log(Strings.LogEvent.Work_CanNotFindWnd);
+				case ReturnMessage.LOG_Stopped:
+					Log(Strings.LogEvent.Work_Stopped);
 					break;
-				case ReturnMessage.LOG_WorkError_FailedCapture:
-					Log(Strings.LogEvent.Work_CanNotCapture);
+				case ReturnMessage.LOG_Complete:
+					Log(Strings.LogEvent.Work_Complete);
+					if (Settings.GUI.Default.UseNotify)
+						notifyIcon_Main.ShowBalloonTip(
+							Settings.Param.Default.NotifyTime,
+							Strings.LogEvent.Work_Complete,
+							Strings.LogEvent.Work_Complete,
+							ToolTipIcon.Info
+						);
 					break;
-				case ReturnMessage.LOG_WorkError_Exception:
+
+				case ReturnMessage.LOG_WorkError_ExceptionInternalError:
 					Log();
 					Log(Strings.LogEvent.Work_Exception);
 					if (Settings.GUI.Default.UseNotify)
@@ -317,6 +324,9 @@ namespace WinFormsGUI {
 
 				case ReturnMessage.LOG_TaskStop:
 					Log(Strings.LogEvent.Task_Stop);
+					break;
+				case ReturnMessage.LOG_TaskComplete:
+					Log(Strings.LogEvent.Task_Complete);
 					break;
 				case ReturnMessage.LOG_TaskError_Exception:
 					Log(Strings.LogEvent.Task_Exception);
@@ -368,6 +378,12 @@ namespace WinFormsGUI {
 					case ReturnMessage.STR_Task_FailedToLoadTemplateFile:
 						text = Strings.LogStr.Task_FailedToLoadTemplateFile;
 						break;
+					case ReturnMessage.STR_Task_Error_NoWnd:
+						text = Strings.LogStr.Task_CanNotFindWnd;
+						break;
+					case ReturnMessage.STR_Task_Error_FailedCapture:
+						text = Strings.LogStr.Task_CanNotCapture;
+						break;
 					default:
 						text = string.Format(Strings.LogStr.UNKNOWN, m.ToString());
 						break;
@@ -378,16 +394,6 @@ namespace WinFormsGUI {
 							Settings.Param.Default.NotifyTime,
 							Strings.LogEvent.Task_Error,
 							text,
-							ToolTipIcon.Info
-						);
-					break;
-				case ReturnMessage.LOG_TaskOver:
-					Log(Strings.LogEvent.TaskOver);
-					if (Settings.GUI.Default.UseNotify)
-						notifyIcon_Main.ShowBalloonTip(
-							Settings.Param.Default.NotifyTime,
-							Strings.LogEvent.TaskOver,
-							Strings.LogEvent.TaskOver,
 							ToolTipIcon.Info
 						);
 					break;

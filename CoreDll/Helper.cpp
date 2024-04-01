@@ -26,6 +26,7 @@
 
 #include "Settings.h"
 #include "AskedForStop.h"
+#include "TaskExceptionCode.h"
 
 namespace ohms {
 
@@ -114,20 +115,20 @@ void Helper::Work() {
 		// Run task.
 		Task_Challenge();
 	}
-	catch (int err) {
-		// catch 到 0 是 主动停止，不是 0 则是错误
-		if (err != 0) {
-			PushMsg(HelperReturnMessage::LOG_WorkError_Exception);
-		}
-	}
 	catch (...) {
-		PushMsg(HelperReturnMessage::LOG_WorkError_Exception);
+		PushMsg(HelperReturnMessage::LOG_WorkError_ExceptionInternalError);
 	}
 	r_handler->Reset(); // 停止截图
 
 	// 允许关闭屏幕和睡眠
 	SetThreadExecutionState(ES_CONTINUOUS);
 
+	if (g_askedForStop) {
+		PushMsg(HelperReturnMessage::LOG_Stopped);
+	}
+	else {
+		PushMsg(HelperReturnMessage::LOG_Complete);
+	}
 	m_running = false; // 清除标记
 	PushMsg(HelperReturnMessage::CMD_BtnToStart); // 让主按钮变成start
 	PushMsg(HelperReturnMessage::CMD_Stopped); // 通知已完全停止
@@ -150,7 +151,7 @@ void Helper::PushMsgCode(unsigned long hrm, unsigned long code) {
 std::unique_ptr<MatchTemplate> Helper::CreateTemplate(const std::string& name) {
 	std::unique_ptr<MatchTemplate> res = std::make_unique<MatchTemplate>(m_templateList.at(name));
 	if (!res->LoadMat((m_assets / (name + ".png")).string())) {
-		throw 1;
+		Step_TaskError(HelperReturnMessage::STR_Task_FailedToLoadTemplateFile);
 		return std::unique_ptr<MatchTemplate>();
 	}
 	return std::move(res);

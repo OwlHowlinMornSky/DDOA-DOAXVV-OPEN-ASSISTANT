@@ -22,6 +22,7 @@
 
 #include "Clock.h"
 #include "AskedForStop.h"
+#include "TaskExceptionCode.h"
 
 namespace ohms {
 
@@ -55,7 +56,7 @@ bool Helper::Step_KeepClickingUntilNo(const cv::Point clkPt, const MatchTemplate
 
 void Helper::Step_TaskError(unsigned long type) {
 	PushMsgCode(HelperReturnMessage::LOG_TaskError, type);
-	throw 0; // 要求停止
+	throw TaskExceptionCode::KnownErrorButNotCritical; // 要求停止
 }
 
 } // namespace ohms

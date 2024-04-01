@@ -127,6 +127,7 @@
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="WndHandler.h" />
+    <ClInclude Include="TaskExceptionCode.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CoreDll.rc" />

@@ -25,6 +25,7 @@
 #include "Clock.h"
 #include "Settings.h"
 #include "AskedForStop.h"
+#include "TaskExceptionCode.h"
 
 #include <ohms/WGC.h>
 
@@ -146,7 +147,7 @@ int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
 		}
 	}
 	if (g_askedForStop)
-		throw 0; // throw 0 表示停止
+		throw TaskExceptionCode::UserStop; // throw 0 表示停止
 	return 0;
 }
 
@@ -184,7 +185,7 @@ int WndHandler::WaitForMultiple(std::vector<const MatchTemplate*> _temps, Time _
 		}
 	}
 	if (g_askedForStop)
-		throw 0; // throw 0 表示停止
+		throw TaskExceptionCode::UserStop; // throw 0 表示停止
 	return res;
 }
 
@@ -292,8 +293,8 @@ bool WndHandler::ClickAt(cv::Point pt) {
 		}
 		// 最终移动光标到目的地
 		PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
-			Sleep(9);
-			m_lastMousePoint = { pt.x, pt.y };
+		Sleep(9);
+		m_lastMousePoint = { pt.x, pt.y };
 		// 点击
 		PostMessageW(m_hwnd, WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(pt.x, pt.y));
 		Sleep(40);
@@ -363,9 +364,8 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 		input.mi.dx = p.x;
 		input.mi.dy = p.y;
 		SendInput(1, &input, sizeof(INPUT));
-			Sleep(9);
-			m_lastMousePoint = { pt.x, pt.y };
-		}
+		Sleep(9);
+		m_lastMousePoint = { pt.x, pt.y };
 	}
 	else {
 		PostMessageW(m_hwnd, WM_SETFOCUS, 0, 0);
@@ -389,9 +389,8 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 		}
 		// 最终移动光标到目的地
 		PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
-			Sleep(9);
-			m_lastMousePoint = { pt.x, pt.y };
-		}
+		Sleep(9);
+		m_lastMousePoint = { pt.x, pt.y };
 	}
 	return true;
 }

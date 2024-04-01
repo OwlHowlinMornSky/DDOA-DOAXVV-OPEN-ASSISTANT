@@ -162,7 +162,7 @@
   <data name="Challenge_WaitForEnd" xml:space="preserve">
     <value>等待结算</value>
   </data>
-  <data name="TaskOver" xml:space="preserve">
+  <data name="Task_Complete" xml:space="preserve">
     <value>任务完成</value>
   </data>
   <data name="Task_Error" xml:space="preserve">
@@ -180,14 +180,11 @@
   <data name="Work_AlreadyRunning" xml:space="preserve">
     <value>不能重复运行任务</value>
   </data>
-  <data name="Work_CanNotCapture" xml:space="preserve">
-    <value>无法截图</value>
-  </data>
-  <data name="Work_CanNotFindWnd" xml:space="preserve">
-    <value>找不到DOAXVV窗口</value>
-  </data>
   <data name="Work_CanNotStartWork" xml:space="preserve">
     <value>无法启动任务</value>
+  </data>
+  <data name="Work_Complete" xml:space="preserve">
+    <value>工作完成</value>
   </data>
   <data name="Work_Error" xml:space="preserve">
     <value>工作出错</value>

@@ -41,15 +41,15 @@ enum CORE_API HelperReturnMessage : unsigned long {
 	_LOG_START = 0x000000fful,
 	LOG_StartError_Running,
 	LOG_Stopping,
+	LOG_Stopped,
+	LOG_Complete,
 
-	LOG_WorkError_NoWnd,
-	LOG_WorkError_FailedCapture,
-	LOG_WorkError_Exception,
+	LOG_WorkError_ExceptionInternalError,
 
 	LOG_TaskStop,
+	LOG_TaskComplete,
 	LOG_TaskError_Exception,
 	LOG_TaskError, // 下跟参数
-	LOG_TaskOver,
 
 	LOG_Challenge_Start,
 	LOG_Challenge_BeginNum, // 挑战赛开始（下跟次数！）
@@ -82,6 +82,8 @@ enum CORE_API HelperReturnMessage : unsigned long {
 	STR_Task_Challenge_IgnoreAddFailed,
 	STR_Task_Challenge_OpenAddFailed,
 	STR_Task_FailedToLoadTemplateFile,
+	STR_Task_Error_NoWnd,
+	STR_Task_Error_FailedCapture,
 };
 
 }
