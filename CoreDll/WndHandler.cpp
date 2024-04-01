@@ -130,9 +130,6 @@ int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
 	Clock clk;
 	cv::Rect trect;
 	MSG msg{ 0 };
-#ifdef _DEBUG
-	bool matchRes = false;
-#endif // _DEBUG
 	while (!g_askedForStop) {
 		// show mat时必须处理该线程的窗口消息，cv的窗口才正常
 		// 没有show mat时也必须处理消息，否则收不到capture到的帧（似乎是分离线程初始化wgc导致的
@@ -142,7 +139,8 @@ int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
 		}
 		else {
 #ifdef _DEBUG
-			if (CopyMat() && (matchRes = _temp.Match(m_mat))) {
+			if (CopyMat()) {
+				bool matchRes = _temp.Match(m_mat);
 				if (Settings::mainSettings.Debug_ShowCapture) {
 					if (_temp.GetIsFixed()) {
 						cv::rectangle(m_mat, _temp.GetSearchRect(), matchRes ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0); // 画寻找范围框（满足阈值为绿，否则为红）
@@ -154,7 +152,8 @@ int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
 					cv::resize(m_mat, m_mat, m_mat.size() / 2, 0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR); // 缩小到一半
 					cv::imshow("show", m_mat); // show
 				}
-				break;
+				if (matchRes)
+					break;
 			}
 #else
 			if (CopyMat() && _temp.Match(m_mat))
