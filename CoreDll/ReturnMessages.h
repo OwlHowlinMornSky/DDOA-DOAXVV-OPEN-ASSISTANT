@@ -55,7 +55,7 @@ enum CORE_API HelperReturnMessage : unsigned long {
 	LOG_Challenge_BeginNum, // 挑战赛开始（下跟次数！）
 	LOG_Challenge_Over,
 	LOG_Challenge_Exit,
-	LOG_Challenge_EnterAdd,
+	LOG_Challenge_BeginAdd, // 奖励挑战赛开始（下跟次数！）
 	LOG_Challenge_IgnoredAdd,
 	LOG_Challenge_NotFindAdd,
 	LOG_Challenge_FindAdd,

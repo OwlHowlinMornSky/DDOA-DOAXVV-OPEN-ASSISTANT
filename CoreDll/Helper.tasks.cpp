@@ -78,15 +78,6 @@ bool Helper::Task_Challenge() {
 		unsigned long playAwardCnt = 0; // 奖励挑战赛次数
 
 		while (true) {
-			if (forAddThisTime) {
-				++playAwardCnt;
-				PushMsgCode(HelperReturnMessage::LOG_Challenge_EnterAdd, playCnt);
-			}
-			else {
-				++playCnt;
-				PushMsgCode(HelperReturnMessage::LOG_Challenge_BeginNum, playCnt);
-			}
-
 			// 查找目标比赛按钮。
 			if (-1 == r_handler->WaitFor(forNew ? *temp_newFight : *temp_lastFight))
 				Step_TaskError(
@@ -124,6 +115,15 @@ bool Helper::Task_Challenge() {
 				}
 			}
 
+			if (forAddThisTime) {
+				++playAwardCnt;
+				PushMsgCode(HelperReturnMessage::LOG_Challenge_BeginAdd, playCnt);
+			}
+			else {
+				++playCnt;
+				PushMsgCode(HelperReturnMessage::LOG_Challenge_BeginNum, playCnt);
+			}
+
 			// 等待结束。
 			CoreLog() << "Task.Challenge: In Game, Waitting for End." << std::endl;
 			if (-1 == r_handler->WaitFor(*temp_gameResult, seconds(5 * 60.0f)))
@@ -151,6 +151,7 @@ bool Helper::Task_Challenge() {
 							if (Step_KeepClickingUntil(pt, *temp_newFight, seconds(10.0f), seconds(2.0f))) {
 								PushMsg(HelperReturnMessage::LOG_Challenge_OpenedAdd);
 								forAddThisTime = true;
+								playAwardCnt = 0;
 							}
 							else {
 								Step_TaskError(HelperReturnMessage::STR_Task_Challenge_OpenAddFailed);

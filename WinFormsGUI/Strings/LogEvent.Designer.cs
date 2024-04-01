@@ -61,20 +61,20 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 开始奖励挑战赛 {0} 次 的本地化字符串。
+        /// </summary>
+        internal static string Challenge_BeginAdd {
+            get {
+                return ResourceManager.GetString("Challenge_BeginAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 开始第 {0} 次比赛 的本地化字符串。
         /// </summary>
         internal static string Challenge_BeginNum {
             get {
                 return ResourceManager.GetString("Challenge_BeginNum", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 进入奖励挑战赛 的本地化字符串。
-        /// </summary>
-        internal static string Challenge_EnterAdd {
-            get {
-                return ResourceManager.GetString("Challenge_EnterAdd", resourceCulture);
             }
         }
         

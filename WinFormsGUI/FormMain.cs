@@ -403,8 +403,8 @@ namespace WinFormsGUI {
 				case ReturnMessage.LOG_Challenge_Exit:
 					Log(Strings.LogEvent.Challenge_Exit);
 					break;
-				case ReturnMessage.LOG_Challenge_EnterAdd:
-					Log(Strings.LogEvent.Challenge_EnterAdd);
+				case ReturnMessage.LOG_Challenge_BeginAdd: // 奖励挑战赛开始（下跟次数！）
+					Log(string.Format(Strings.LogEvent.Challenge_BeginAdd, Program.helper.GetCode()));
 					break;
 				case ReturnMessage.LOG_Challenge_IgnoredAdd:
 					Log(Strings.LogEvent.Challenge_IgnoredAdd);

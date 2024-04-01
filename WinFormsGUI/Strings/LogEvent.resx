@@ -117,11 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Challenge_BeginAdd" xml:space="preserve">
+    <value>开始奖励挑战赛 {0} 次</value>
+  </data>
   <data name="Challenge_BeginNum" xml:space="preserve">
     <value>开始第 {0} 次比赛</value>
-  </data>
-  <data name="Challenge_EnterAdd" xml:space="preserve">
-    <value>进入奖励挑战赛</value>
   </data>
   <data name="Challenge_Exit" xml:space="preserve">
     <value>任务结束【挑战赛】</value>
