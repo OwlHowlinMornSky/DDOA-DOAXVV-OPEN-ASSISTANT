@@ -28,19 +28,19 @@ std::ofstream g_coreLog;
 
 bool SetupLog() {
 	std::filesystem::path m_logFolder;
-	m_logFolder.assign("log");
+	m_logFolder.assign("corelog.log");
 	if (!(std::filesystem::exists(m_logFolder) && std::filesystem::is_directory(m_logFolder)) && !std::filesystem::create_directory(m_logFolder))
 		return false;
 	// 生成 带当前时间的 输出名称
-	struct tm t = { 0 };
+	/*struct tm t = { 0 };
 	time_t ts = time(0);
 	localtime_s(&t, &ts);
 	char buf[128];
-	strftime(buf, sizeof(buf), "CoreLog-%Y-%m-%d-%H-%M-%S.log", &t);
-	g_coreLog.open(m_logFolder / buf);
+	strftime(buf, sizeof(buf), "CoreLog-%Y-%m-%d-%H-%M-%S.log", &t);*/
+	g_coreLog.open(m_logFolder/* / buf*/, std::ios_base::app);
 	if (!g_coreLog.is_open())
 		return false;
-	LogLine("Log Set.");
+	LogLine("Logger Set.");
 	return true;
 }
 
