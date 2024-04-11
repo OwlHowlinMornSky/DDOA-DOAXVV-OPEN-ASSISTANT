@@ -36,7 +36,8 @@ struct CORE_API Settings {
 	bool ChaGame_EnterAddition; // 进入奖励挑战赛。
 	bool ChaGame_CheckAddition; // 是否检查奖励挑战赛。
 
-	bool Debug_ShowCapture;
+	bool Debug_ShowCapture; // [调试] 是否显示截取到的帧。
+	bool Debug_DebugHandler; // [调试] 是否以DDOA调试器为目标。
 
 	Settings();
 

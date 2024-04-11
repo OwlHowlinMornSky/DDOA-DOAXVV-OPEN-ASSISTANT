@@ -45,7 +45,9 @@ public:
 	enum class StateValue {
 		Idle = 0,
 		Launcher,
-		Game
+		Game,
+		DebuggerGame,
+		DebuggerLauncher
 	};
 
 protected:
@@ -117,6 +119,14 @@ public:
 	 * @return 未使用
 	*/
 	bool MoveMouseTo(cv::Point pt);
+
+protected:
+	/**
+	 * @brief 设定目标窗口为DDOA调试器窗口。
+	 * @param isGame 操作重定向类型。
+	 * @return “设定”操作的状态。
+	 */
+	SetReturnValue SetForDebugger(bool isGame);
 
 protected:
 	/**

@@ -51,12 +51,13 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\opencv\4.8.0\build\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)WinFormsGUI\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.22000.0\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionName)-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)WinFormsGUI\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.22000.0\;$(OHMS_LIB_DIR)\opencv\4.8.0\build\x64\vc16\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(SolutionName)-Core.lib;opencv_world480d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -69,18 +70,25 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\opencv\4.8.0\build\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)WinFormsGUI\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.22000.0\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionName)-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)WinFormsGUI\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.22000.0\;$(OHMS_LIB_DIR)\opencv\4.8.0\build\x64\vc16\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(SolutionName)-Core.lib;opencv_world480.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="TestOnCon.cpp" />
+    <ClCompile Include="ExactMatchRect.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="WorkRunTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ExactMatchRect.h" />
+    <ClInclude Include="WorkRunTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

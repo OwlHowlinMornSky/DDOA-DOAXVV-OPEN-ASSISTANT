@@ -34,6 +34,7 @@ namespace {
 const WCHAR g_findCls[] = L"DOAX VenusVacation"; // 查找doaxvv窗口的类的名字
 const WCHAR g_findWnd[] = L"DOAX VenusVacation"; // 查找doaxvv窗口的名字
 const WCHAR g_finGWnd[] = L"DOAX VenusVacation Launcher"; // 查找doaxvv launcher窗口的名字
+const WCHAR g_finDWnd[] = L"DDOA-DEBUG"; // 查找调试窗口的名字
 
 ohms::wgc::ICapture* r_capture = nullptr; // capture索引
 ohms::WndHandler* g_wndh;
@@ -81,6 +82,8 @@ bool WndHandler::Update() {
 }
 
 WndHandler::SetReturnValue WndHandler::SetForLauncher() {
+	if(Settings::g_set.Debug_DebugHandler)
+		return SetForDebugger(false);
 	if (m_state == StateValue::Launcher)
 		return SetReturnValue::OK;
 	Reset();
@@ -97,6 +100,8 @@ WndHandler::SetReturnValue WndHandler::SetForLauncher() {
 }
 
 WndHandler::SetReturnValue WndHandler::SetForGame() {
+	if (Settings::g_set.Debug_DebugHandler)
+		return SetForDebugger(true);
 	if (m_state == StateValue::Game)
 		return SetReturnValue::OK;
 	Reset();
@@ -121,6 +126,14 @@ void WndHandler::Reset() {
 }
 
 WndHandler::StateValue WndHandler::GetState() const {
+	switch (m_state) {
+	case StateValue::DebuggerGame:
+		return StateValue::Game;
+	case StateValue::DebuggerLauncher:
+		return StateValue::Launcher;
+	default:
+		break;
+	}
 	return m_state;
 }
 
@@ -436,6 +449,24 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 		m_lastMousePoint = { pt.x, pt.y };
 	}
 	return true;
+}
+
+WndHandler::SetReturnValue WndHandler::SetForDebugger(bool isGame) {
+	if (m_state == StateValue::DebuggerGame || m_state == StateValue::DebuggerLauncher) {
+		m_state = isGame ? StateValue::DebuggerGame : StateValue::DebuggerLauncher;
+		return SetReturnValue::OK;
+	}
+	Reset();
+	m_hwnd = FindWindowW(NULL, g_finDWnd); // 查找调试窗口
+	if (m_hwnd == NULL) {
+		return SetReturnValue::WndNotFound;
+	}
+	if (!IsWindow(m_hwnd) || IsIconic(m_hwnd) || !r_capture->startCapture(m_hwnd)) { // 这些是能截图的必要条件
+		return SetReturnValue::CaptureFailed;
+	}
+	r_capture->setClipToClientArea(true);
+	m_state = isGame ? StateValue::DebuggerGame : StateValue::DebuggerLauncher;
+	return SetReturnValue::OK;
 }
 
 bool WndHandler::CopyMat() {
