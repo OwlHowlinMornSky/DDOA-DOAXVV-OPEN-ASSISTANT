@@ -22,6 +22,9 @@
 
 #include <iostream>
 #include <string>
+
+#define CppConTest
+
 #include "../CoreDll/IHelper.h"
 #include "../CoreDll/Settings.h"
 
@@ -45,7 +48,7 @@ int WorkRunTest() {
 	if (!r_helper) {
 		return 1;
 	}
-	r_helper->setup();
+	r_helper->setup(false);
 
 	Settings::mainSettings.Debug_ShowCapture = true;
 

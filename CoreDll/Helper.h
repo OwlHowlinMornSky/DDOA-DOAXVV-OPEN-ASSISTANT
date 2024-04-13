@@ -44,7 +44,7 @@ public:
 
 // 继承的，接口。
 public:
-	virtual int setup() override;
+	virtual int setup(bool winrtInited = true) override;
 	virtual bool start() override;
 	virtual void askForStop() override;
 	virtual bool isRunning() override;

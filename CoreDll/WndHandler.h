@@ -59,7 +59,7 @@ public:
 	 * @brief 获取唯一实例。首次获取时初始化WGC并构造。
 	 * @return 指向实例的指针。
 	 */
-	static WndHandler* Instance();
+	static WndHandler* Instance(bool winrtInited = true);
 	/**
 	 * @brief 销毁实例。
 	 */

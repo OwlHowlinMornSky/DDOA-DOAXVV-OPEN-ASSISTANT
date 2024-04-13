@@ -18,6 +18,8 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+#include <opencv2/highgui.hpp>
+
 #include "Helper.h"
 
 #include <iostream>
@@ -41,7 +43,7 @@ Helper::Helper() :
 
 Helper::~Helper() {}
 
-int Helper::setup() {
+int Helper::setup(bool winrtInited) {
 	if (!SetupLog())
 		return 1;
 
@@ -69,6 +71,8 @@ int Helper::setup() {
 		m_templateList.emplace(name, MatchTemplateInfo(fix, thres, { r0, r1, r2, r3 }));
 	}
 	CoreLog() << "Helper have read " << sz << " templates." << std::endl;
+
+	r_handler = WndHandler::Instance(winrtInited);
 	return 0;
 }
 
@@ -153,6 +157,8 @@ void Helper::Work() {
 	m_running = false; // 清除标记
 	PushMsg(HelperReturnMessage::CMD_BtnToStart); // 让主按钮变成start
 	PushMsg(HelperReturnMessage::CMD_Stopped); // 通知已完全停止
+
+	cv::destroyAllWindows();
 	return;
 }
 

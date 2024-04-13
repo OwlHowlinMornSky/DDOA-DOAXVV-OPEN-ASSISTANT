@@ -22,7 +22,7 @@
 #include "ExactMatchRect.h"
 
 int main() {
-	return GetExactMatchRect();
+	//return GetExactMatchRect();
 	return WorkRunTest();
 	return 0;
 }

@@ -54,9 +54,9 @@ WndHandler::~WndHandler() {
 	Reset();
 }
 
-WndHandler* WndHandler::Instance() {
+WndHandler* WndHandler::Instance(bool winrtInited) {
 	if (::g_wndh == nullptr) {
-		if (!wgc::ICapture::setup(true)) { // 初始化WGC
+		if (!wgc::ICapture::setup(winrtInited)) { // 初始化WGC
 			MessageBoxW(NULL, L"Failed to setup WGC", L"DDOA", MB_ICONERROR);
 			return nullptr;
 		}
@@ -91,7 +91,7 @@ WndHandler::SetReturnValue WndHandler::SetForLauncher() {
 	if (m_hwnd == NULL) {
 		return SetReturnValue::WndNotFound;
 	}
-	if (!IsWindow(m_hwnd) || IsIconic(m_hwnd) || !r_capture->startCapture(m_hwnd)) { // 这些是能截图的必要条件
+	if (!IsWindow(m_hwnd) || IsIconic(m_hwnd) || !r_capture->startCaptureWindow(m_hwnd)) { // 这些是能截图的必要条件
 		return SetReturnValue::CaptureFailed;
 	}
 	r_capture->setClipToClientArea(true);
@@ -109,7 +109,7 @@ WndHandler::SetReturnValue WndHandler::SetForGame() {
 	if (m_hwnd == NULL) {
 		return SetReturnValue::WndNotFound;
 	}
-	if (!IsWindow(m_hwnd) || IsIconic(m_hwnd) || !r_capture->startCapture(m_hwnd)) { // 这些是能截图的必要条件
+	if (!IsWindow(m_hwnd) || IsIconic(m_hwnd) || !r_capture->startCaptureWindow(m_hwnd)) { // 这些是能截图的必要条件
 		return SetReturnValue::CaptureFailed;
 	}
 	r_capture->setClipToClientArea(true);
@@ -142,41 +142,32 @@ int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
 	r_capture->askForRefresh();
 	Clock clk;
 	cv::Rect trect;
-	MSG msg{ 0 };
 	while (!g_askedForStop) {
-		// show mat时必须处理该线程的窗口消息，cv的窗口才正常
-		// 没有show mat时也必须处理消息，否则收不到capture到的帧（似乎是分离线程初始化wgc导致的
-		if (PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
-			TranslateMessage(&msg);
-			DispatchMessageW(&msg);
-		}
-		else {
 #ifdef _DEBUG
-			if (CopyMat()) {
-				bool matchRes = _temp.Match(m_mat);
-				if (Settings::mainSettings.Debug_ShowCapture) {
-					if (_temp.GetIsFixed()) {
-						cv::rectangle(m_mat, _temp.GetSearchRect(), matchRes ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0); // 画寻找范围框（满足阈值为绿，否则为红）
-					}
-					else {
-						cv::rectangle(m_mat, _temp.GetSearchRect(), cv::Scalar(255, 0, 0), 2, 8, 0); // 蓝线画寻找范围框
-						cv::rectangle(m_mat, _temp.GetLastMatchRect(), matchRes ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0); // 画最佳匹配框（满足阈值为绿，否则为红）
-					}
-					cv::resize(m_mat, m_mat, m_mat.size() / 2, 0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR); // 缩小到一半
-					cv::imshow("show", m_mat); // show
+		if (CopyMat()) {
+			bool matchRes = _temp.Match(m_mat);
+			if (Settings::mainSettings.Debug_ShowCapture) {
+				if (_temp.GetIsFixed()) {
+					cv::rectangle(m_mat, _temp.GetSearchRect(), matchRes ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0); // 画寻找范围框（满足阈值为绿，否则为红）
 				}
-				if (matchRes)
-					break;
+				else {
+					cv::rectangle(m_mat, _temp.GetSearchRect(), cv::Scalar(255, 0, 0), 2, 8, 0); // 蓝线画寻找范围框
+					cv::rectangle(m_mat, _temp.GetLastMatchRect(), matchRes ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0); // 画最佳匹配框（满足阈值为绿，否则为红）
+				}
+				cv::resize(m_mat, m_mat, m_mat.size() / 2, 0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR); // 缩小到一半
+				cv::imshow("show", m_mat); // show
+				cv::waitKey(1);
 			}
-#else
-			if (CopyMat() && _temp.Match(m_mat))
+			if (matchRes)
 				break;
-#endif
-			if (_tlimit > Time::Zero && clk.getElapsedTime() > _tlimit) // 应用超时
-				return -1;
-			r_capture->askForRefresh();
-			Sleep(30);
 		}
+#else
+		if (CopyMat() && _temp.Match(m_mat))
+			break;
+#endif
+		if (_tlimit > Time::Zero && clk.getElapsedTime() > _tlimit) // 应用超时
+			return -1;
+		Sleep(20);
 	}
 	if (g_askedForStop)
 		throw TaskExceptionCode::UserStop; // throw 0 表示停止
@@ -188,57 +179,48 @@ int WndHandler::WaitForMultiple(std::vector<const MatchTemplate*> _temps, Time _
 	r_capture->askForRefresh();
 	Clock clk;
 	cv::Rect trect;
-	MSG msg{ 0 };
 	int res = -1;
 	while (!g_askedForStop) {
-		// show mat时必须处理该线程的窗口消息，cv的窗口才正常
-		// 没有show mat时也必须处理消息，否则收不到capture到的帧（似乎是分离线程初始化wgc导致的
-		if (PeekMessageW(&msg, NULL, NULL, NULL, PM_REMOVE)) {
-			TranslateMessage(&msg);
-			DispatchMessageW(&msg);
-		}
-		else {
-			if (CopyMat()) {
-				int c = 0;
-				for (const MatchTemplate* i : _temps) {
-					if (i->Match(m_mat)) {
-						res = c;
-						break;
-					}
-					c++;
-				}
-#ifdef _DEBUG
-				if (Settings::mainSettings.Debug_ShowCapture) {
-					for (const MatchTemplate* i : _temps) {
-						if (i->GetIsFixed()) {
-							cv::rectangle(m_mat, i->GetSearchRect(), cv::Scalar(0, 0, 255), 2, 8, 0); // 画寻找范围框（红）
-						}
-						else {
-							cv::rectangle(m_mat, i->GetSearchRect(), cv::Scalar(255, 0, 0), 2, 8, 0); // 蓝线画寻找范围框
-							cv::rectangle(m_mat, i->GetLastMatchRect(), cv::Scalar(0, 0, 255), 2, 8, 0); // 画最佳匹配框（红）
-						}
-					}
-					if (res != -1) {
-						if (_temps[res]->GetIsFixed()) {
-							cv::rectangle(m_mat, _temps[res]->GetSearchRect(), cv::Scalar(0, 255, 0), 2, 8, 0); // 画寻找范围框（绿）
-						}
-						else {
-							cv::rectangle(m_mat, _temps[res]->GetSearchRect(), cv::Scalar(255, 0, 0), 2, 8, 0); // 蓝线画寻找范围框
-							cv::rectangle(m_mat, _temps[res]->GetLastMatchRect(), cv::Scalar(0, 255, 0), 2, 8, 0); // 画最佳匹配框（绿）
-						}
-					}
-					cv::resize(m_mat, m_mat, m_mat.size() / 2, 0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR); // 缩小到一半
-					cv::imshow("show", m_mat); // show
-				}
-#endif // _DEBUG
-				if (res != -1)
+		if (CopyMat()) {
+			int c = 0;
+			for (const MatchTemplate* i : _temps) {
+				if (i->Match(m_mat)) {
+					res = c;
 					break;
+				}
+				c++;
 			}
-			if (_tlimit > Time::Zero && clk.getElapsedTime() > _tlimit) // 应用超时
-				return -1;
-			r_capture->askForRefresh();
-			Sleep(30);
+#ifdef _DEBUG
+			if (Settings::mainSettings.Debug_ShowCapture) {
+				for (const MatchTemplate* i : _temps) {
+					if (i->GetIsFixed()) {
+						cv::rectangle(m_mat, i->GetSearchRect(), cv::Scalar(0, 0, 255), 2, 8, 0); // 画寻找范围框（红）
+					}
+					else {
+						cv::rectangle(m_mat, i->GetSearchRect(), cv::Scalar(255, 0, 0), 2, 8, 0); // 蓝线画寻找范围框
+						cv::rectangle(m_mat, i->GetLastMatchRect(), cv::Scalar(0, 0, 255), 2, 8, 0); // 画最佳匹配框（红）
+					}
+				}
+				if (res != -1) {
+					if (_temps[res]->GetIsFixed()) {
+						cv::rectangle(m_mat, _temps[res]->GetSearchRect(), cv::Scalar(0, 255, 0), 2, 8, 0); // 画寻找范围框（绿）
+					}
+					else {
+						cv::rectangle(m_mat, _temps[res]->GetSearchRect(), cv::Scalar(255, 0, 0), 2, 8, 0); // 蓝线画寻找范围框
+						cv::rectangle(m_mat, _temps[res]->GetLastMatchRect(), cv::Scalar(0, 255, 0), 2, 8, 0); // 画最佳匹配框（绿）
+					}
+				}
+				cv::resize(m_mat, m_mat, m_mat.size() / 2, 0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR); // 缩小到一半
+				cv::imshow("show", m_mat); // show
+				cv::waitKey(1);
+			}
+#endif // _DEBUG
+			if (res != -1)
+				break;
 		}
+		if (_tlimit > Time::Zero && clk.getElapsedTime() > _tlimit) // 应用超时
+			return -1;
+		Sleep(20);
 	}
 	if (g_askedForStop)
 		throw TaskExceptionCode::UserStop; // throw 0 表示停止
@@ -461,7 +443,7 @@ WndHandler::SetReturnValue WndHandler::SetForDebugger(bool isGame) {
 	if (m_hwnd == NULL) {
 		return SetReturnValue::WndNotFound;
 	}
-	if (!IsWindow(m_hwnd) || IsIconic(m_hwnd) || !r_capture->startCapture(m_hwnd)) { // 这些是能截图的必要条件
+	if (!IsWindow(m_hwnd) || IsIconic(m_hwnd) || !r_capture->startCaptureWindow(m_hwnd)) { // 这些是能截图的必要条件
 		return SetReturnValue::CaptureFailed;
 	}
 	r_capture->setClipToClientArea(true);
@@ -471,9 +453,9 @@ WndHandler::SetReturnValue WndHandler::SetForDebugger(bool isGame) {
 
 bool WndHandler::CopyMat() {
 	if (r_capture->isRefreshed()) { // refresh过再处理画面才有意义
+		r_capture->askForRefresh();
 		if (r_capture->copyMatTo(m_mat, true)) { // 要求转换为BGR
 			if (m_mat.size().width != 960 || m_mat.size().height != 540) { // 确保大小满足要求
-				auto sz = m_mat.size();
 				cv::resize(
 					m_mat, m_mat,
 					cv::Size(960, 540),

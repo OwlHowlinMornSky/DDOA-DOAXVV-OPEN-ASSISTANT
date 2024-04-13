@@ -28,6 +28,7 @@ namespace WinFormsGUI {
 		private bool m_btnMainIsStart = true;
 		private Size m_label_transp_value_size = new();
 
+
 		#endregion
 
 		public FormMain() {
