@@ -22,10 +22,11 @@
 
 #include "API.h"
 
-namespace ohms {
+namespace ohms::TaskEnum {
 
-enum class CORE_API TaskEnum : unsigned char {
+enum CORE_API TaskEnum : unsigned long {
 	None = 0,
+
 	StartUp,
 	Daily,
 	Room,

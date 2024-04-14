@@ -58,7 +58,7 @@ System::UInt32 HelperWrapper::GetCode() {
 }
 
 System::Int32 HelperWrapper::Setup() {
-    return r_helper->setup();
+	return r_helper->setup();
 }
 
 System::Void HelperWrapper::Drop() {
@@ -98,6 +98,16 @@ System::Int32 HelperWrapper::SetChallengeCheckAwardOrNot(bool check) {
 
 System::Int32 HelperWrapper::SetChallengePlayAwardOrNot(bool play) {
 	ohms::Settings::LegacyCha::DEFAULT.EnterAddition = play;
+	return System::Int32(0);
+}
+
+System::Int32 HelperWrapper::SetTaskList(array<System::UInt32>^ list) {
+	if (list->Length >= ohms::Settings::Global::ListLength)
+		return System::Int32(1);
+	ohms::Settings::Global::DEFAULT.ClearList();
+	for (int i = 0, n = list->Length; i < n; ++i) {
+		ohms::Settings::Global::DEFAULT.Work_TaskList[i] = list[i];
+	}
 	return System::Int32(0);
 }
 

@@ -33,10 +33,17 @@ struct CORE_API Global {
 		Work_TaskList() // 默认为空
 	{}
 
+	void ClearList() {
+		for (int i = 0; i < ListLength; ++i) {
+			Work_TaskList[i] = TaskEnum::None;
+		}
+	}
+
 	bool KeepAwake; // 阻止睡眠。
 	bool KeepScreenOn; // 阻止睡眠同时保持显示。
 
-	ohms::TaskEnum Work_TaskList[32]; // 选择任务并设置顺序。
+	static const size_t ListLength = 32;
+	unsigned long Work_TaskList[ListLength]; // 选择任务并设置顺序。
 };
 
 }

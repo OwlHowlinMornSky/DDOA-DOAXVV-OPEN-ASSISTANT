@@ -139,12 +139,18 @@ void Helper::Work() {
 	}
 
 	try {
-		int flag = 0;
+		size_t flag = 0;
 		std::unique_ptr<ITask> task;
-		while (m_set.Work_TaskList[flag] != TaskEnum::None) {
+		while (
+			flag < Settings::Global::ListLength &&
+			m_set.Work_TaskList[flag] != TaskEnum::None
+			) {
 			if (ITask::CreateTask(m_set.Work_TaskList[flag], task)) {
-				task->Run(*this);
+				bool res = task->Run(*this);
+				if (!res) // 返回false表示无法继续
+					break;
 			}
+			flag++;
 		}
 	}
 	catch (...) {

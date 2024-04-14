@@ -20,24 +20,24 @@
 */
 #pragma once
 
-#include "TaskEnum.h"
-#include <memory>
-#include "Helper.h"
+#include <TaskEnum.h>
 
-namespace ohms {
+namespace Wrapper {
 
-class ITask {
-public:
-	ITask() = default;
-	virtual ~ITask() = default;
+public enum class TaskEnumWrap : System::UInt32 {
+	None = ohms::TaskEnum::None,
 
-	virtual bool Run(Helper& h) = 0;
+	StartUp,
+	Daily,
+	Room,
+	Challenge,
+	Spring,
+	Award,
+	Exit,
 
-protected:
-	unsigned long m_taskType;
+	LegacyCha,
 
-public:
-	static bool CreateTask(unsigned long type, std::unique_ptr<ITask>& outPtr);
+	COUNT
 };
 
 }

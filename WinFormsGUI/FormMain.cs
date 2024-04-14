@@ -128,6 +128,10 @@ namespace WinFormsGUI {
 			notifyIcon_Main.Text = Text;
 			WorkUnlock();
 			InitLoadSettings();
+
+			uint[] l = [(uint)TaskEnumWrap.LegacyCha];
+
+			Program.helper.SetTaskList(l);
 		}
 
 		private void FormMain_Deactivate(object sender, EventArgs e) {
@@ -150,7 +154,7 @@ namespace WinFormsGUI {
 
 		private void Btn_Main_Click(object sender, EventArgs e) {
 			btn_Main.Enabled = false;
-			if (m_btnMainIsStart) { 
+			if (m_btnMainIsStart) {
 				WorkLock();
 				listBox_Log.Items.Clear();
 				if (!Program.helper.Start()) {

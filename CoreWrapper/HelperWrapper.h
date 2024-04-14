@@ -22,6 +22,7 @@
 
 #include <IHelper.h>
 #include "ReturnMessages.h"
+#include "TaskEnumWrap.h"
 
 namespace Wrapper {
 
@@ -84,6 +85,12 @@ public:
 	 * @return 0 if success.
 	*/
 	System::Int32 SetChallengePlayAwardOrNot(bool play);
+	/**
+	 * @brief 设置任务列表。
+	 * @param list 任务列表。
+	 * @return 0 if success, 1 if too long.
+	 */
+	System::Int32 SetTaskList(array<System::UInt32>^ list);
 
 private:
 	ohms::IHelper* r_helper;

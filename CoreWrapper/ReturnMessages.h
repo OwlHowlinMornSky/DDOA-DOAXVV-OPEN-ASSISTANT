@@ -24,7 +24,7 @@
 
 namespace Wrapper {
 
-public enum class ReturnMessage {
+public enum class ReturnMessage : System::UInt32 {
 	None = ohms::ReturnMsgEnum::None,
 
 
