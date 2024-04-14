@@ -20,8 +20,24 @@
 */
 #pragma once
 
-#include "Settings_Global.h"
-#include "Settings_LegacyCha.h"
-#include "Settings_WndHandler.h"
+#include "TaskEnum.h"
+#include <memory>
+#include "Helper.h"
 
-// 【ToDo】 非 线程安全
+namespace ohms {
+
+class ITask {
+public:
+	ITask() = default;
+	virtual ~ITask() = default;
+
+	virtual bool Run(Helper& h) = 0;
+
+protected:
+	TaskEnum m_taskType;
+
+public:
+	static bool CreateTask(TaskEnum type, std::unique_ptr<ITask>& outPtr);
+};
+
+}

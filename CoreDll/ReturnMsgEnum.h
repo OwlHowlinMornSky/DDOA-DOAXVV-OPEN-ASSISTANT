@@ -22,12 +22,12 @@
 
 #include "API.h"
 
-namespace ohms::HelperReturnMessage {
+namespace ohms::ReturnMsgEnum {
 
 /**
  * @brief Helper 向 GUI 的回执。
 */
-enum CORE_API HelperReturnMessage : unsigned long {
+enum CORE_API ReturnMessage : unsigned long {
 	None = 0,   // 空。
 
 

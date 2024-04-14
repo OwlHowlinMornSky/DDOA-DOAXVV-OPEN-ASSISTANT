@@ -13,30 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="API">
+    <Filter Include="Export">
       <UniqueIdentifier>{a3663a63-7512-4216-b187-25e5d598201c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Impl">
+      <UniqueIdentifier>{78da0caf-a60e-49b4-9853-63f492fc4c2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tasks">
+      <UniqueIdentifier>{3207b15b-5c16-4835-bc15-e8bcb0ba48de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Export\Settings">
+      <UniqueIdentifier>{47978258-776d-40b1-84c1-bb8830d8fb2e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Clock.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Helper.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Helper.steps.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Helper.tasks.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="IHelper.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Settings.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MatchTemplate.cpp">
@@ -48,18 +42,33 @@
     <ClCompile Include="AskedForStop.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Clock.cpp">
+      <Filter>Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Impl</Filter>
+    </ClCompile>
     <ClCompile Include="CoreLog.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="ITask.cpp">
+      <Filter>Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="Task_Challenge.cpp">
+      <Filter>Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.cpp">
+      <Filter>Export\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="IHelper.cpp">
+      <Filter>Export</Filter>
+    </ClCompile>
+    <ClCompile Include="Task_LegacyCha.cpp">
+      <Filter>Tasks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Clock.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Helper.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Time.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
@@ -69,34 +78,58 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="API.h">
-      <Filter>API</Filter>
+      <Filter>Export</Filter>
     </ClInclude>
     <ClInclude Include="IHelper.h">
-      <Filter>API</Filter>
+      <Filter>Export</Filter>
     </ClInclude>
     <ClInclude Include="AskedForStop.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="framework.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Settings.h">
-      <Filter>API</Filter>
-    </ClInclude>
-    <ClInclude Include="ReturnMessages.h">
-      <Filter>API</Filter>
-    </ClInclude>
-    <ClInclude Include="TaskExceptionCode.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CoreLog.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="ReturnMsgEnum.h">
+      <Filter>Export</Filter>
     </ClInclude>
     <ClInclude Include="MatchTemplate.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="TaskEnum.h">
-      <Filter>API</Filter>
+      <Filter>Export</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock.h">
+      <Filter>Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreLog.h">
+      <Filter>Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskExceptionCode.h">
+      <Filter>Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ITask.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="Task_Challenge.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings_LegacyCha.h">
+      <Filter>Export\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>Export\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings_WndHandler.h">
+      <Filter>Export\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="Task_LegacyCha.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings_Global.h">
+      <Filter>Export\Settings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

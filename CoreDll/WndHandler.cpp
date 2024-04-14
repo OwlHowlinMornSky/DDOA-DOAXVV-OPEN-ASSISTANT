@@ -82,7 +82,7 @@ bool WndHandler::Update() {
 }
 
 WndHandler::SetReturnValue WndHandler::SetForLauncher() {
-	if(Settings::g_set.Debug_DebugHandler)
+	if(Settings::WndHandler::DEFAULT.Debug_DebugHandler)
 		return SetForDebugger(false);
 	if (m_state == StateValue::Launcher)
 		return SetReturnValue::OK;
@@ -100,7 +100,7 @@ WndHandler::SetReturnValue WndHandler::SetForLauncher() {
 }
 
 WndHandler::SetReturnValue WndHandler::SetForGame() {
-	if (Settings::g_set.Debug_DebugHandler)
+	if (Settings::WndHandler::DEFAULT.Debug_DebugHandler)
 		return SetForDebugger(true);
 	if (m_state == StateValue::Game)
 		return SetReturnValue::OK;
@@ -146,7 +146,7 @@ int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
 #ifdef _DEBUG
 		if (CopyMat()) {
 			bool matchRes = _temp.Match(m_mat);
-			if (Settings::mainSettings.Debug_ShowCapture) {
+			if (Settings::WndHandler::DEFAULT.Debug_ShowCapture) {
 				if (_temp.GetIsFixed()) {
 					cv::rectangle(m_mat, _temp.GetSearchRect(), matchRes ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255), 2, 8, 0); // 画寻找范围框（满足阈值为绿，否则为红）
 				}
@@ -191,7 +191,7 @@ int WndHandler::WaitForMultiple(std::vector<const MatchTemplate*> _temps, Time _
 				c++;
 			}
 #ifdef _DEBUG
-			if (Settings::mainSettings.Debug_ShowCapture) {
+			if (Settings::WndHandler::DEFAULT.Debug_ShowCapture) {
 				for (const MatchTemplate* i : _temps) {
 					if (i->GetIsFixed()) {
 						cv::rectangle(m_mat, i->GetSearchRect(), cv::Scalar(0, 0, 255), 2, 8, 0); // 画寻找范围框（红）
@@ -237,7 +237,7 @@ bool WndHandler::ClickAt(cv::Point pt) {
 
 	//MessageBoxA(0, (std::to_string(pt.x) + ", " + std::to_string(pt.y)).c_str(), "t", 0);
 
-	if (Settings::g_set.Ctrl_UseSendInput) {
+	if (Settings::WndHandler::DEFAULT.UseSendInput) {
 		GetWindowRect(m_hwnd, &rect);
 
 		// 把目标窗口移动到屏幕范围内
@@ -348,7 +348,7 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 	pt.x = pt.x * (rect.right - rect.left) / 960;
 	pt.y = pt.y * (rect.bottom - rect.top) / 540;
 
-	if (Settings::g_set.Ctrl_UseSendInput) {
+	if (Settings::WndHandler::DEFAULT.UseSendInput) {
 		GetWindowRect(m_hwnd, &rect);
 
 		// 把目标窗口移动到屏幕范围内
@@ -430,6 +430,34 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 		Sleep(9);
 		m_lastMousePoint = { pt.x, pt.y };
 	}
+	return true;
+}
+
+bool WndHandler::KeepClickingUntil(const cv::Point clkPt, const MatchTemplate& _temp, Time maxTime, Time clkTime) {
+	if (clkTime < milliseconds(10)) // 点击时间不能小于10毫秒（规定的）
+		clkTime = milliseconds(10);
+	Clock clock;
+	do {
+		if (maxTime > Time::Zero && clock.getElapsedTime() >= maxTime) // 应用超时
+			return false;
+		ClickAt(clkPt); // 点击
+	} while (!g_askedForStop && (-1 == WaitFor(_temp, clkTime)));
+	if (g_askedForStop)
+		throw 0;
+	return true;
+}
+
+bool WndHandler::KeepClickingUntilNo(const cv::Point clkPt, const MatchTemplate& _temp, Time maxTime, Time clkTime) {
+	if (clkTime < milliseconds(10)) // 点击时间不能小于10毫秒（规定的）
+		clkTime = milliseconds(10);
+	Clock clock;
+	do {
+		if (maxTime > Time::Zero && clock.getElapsedTime() >= maxTime) // 应用超时
+			return false;
+		ClickAt(clkPt); // 点击
+	} while (!g_askedForStop && (0 == WaitFor(_temp, clkTime)));
+	if (g_askedForStop)
+		throw 0;
 	return true;
 }
 

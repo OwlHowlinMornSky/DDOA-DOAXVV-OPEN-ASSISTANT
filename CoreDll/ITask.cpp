@@ -18,10 +18,35 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "ITask.h"
 
-#include "Settings_Global.h"
-#include "Settings_LegacyCha.h"
-#include "Settings_WndHandler.h"
+#include "Task_Challenge.h"
 
-// 【ToDo】 非 线程安全
+namespace ohms {
+
+bool ITask::CreateTask(TaskEnum type, std::unique_ptr<ITask>& outPtr) {
+	switch (type) {
+	case TaskEnum::StartUp:
+		break;
+	case TaskEnum::Daily:
+		break;
+	case TaskEnum::Room:
+		break;
+	case TaskEnum::Challenge:
+		break;
+	case TaskEnum::Spring:
+		break;
+	case TaskEnum::Award:
+		break;
+	case TaskEnum::Exit:
+		break;
+	case TaskEnum::LegacyCha:
+		outPtr = std::make_unique<Task_Challenge>();
+		return true;
+	default:
+		break;
+	}
+	return false;
+}
+
+}

@@ -67,37 +67,37 @@ System::Void HelperWrapper::Drop() {
 }
 
 System::Int32 HelperWrapper::SetChallengeForNewOrLast(bool forNew) {
-	ohms::Settings::mainSettings.ChaGame_ForNew = forNew;
+	ohms::Settings::LegacyCha::DEFAULT.ForNew = forNew;
 	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetMouseSendInputOrSendMessage(bool sendInput) {
-	ohms::Settings::mainSettings.Ctrl_UseSendInput = sendInput;
+	ohms::Settings::WndHandler::DEFAULT.UseSendInput = sendInput;
 	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetShowCaptureOrNot(bool show) {
-	ohms::Settings::mainSettings.Debug_ShowCapture = show;
+	ohms::Settings::WndHandler::DEFAULT.Debug_ShowCapture = show;
 	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetKeepAwakeOrNot(bool keep) {
-	ohms::Settings::mainSettings.KeepAwake = keep;
+	ohms::Settings::Global::DEFAULT.KeepAwake = keep;
 	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetKeepScreenOnOrNot(bool keep) {
-	ohms::Settings::mainSettings.KeepScreenOn = keep;
+	ohms::Settings::Global::DEFAULT.KeepScreenOn = keep;
 	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetChallengeCheckAwardOrNot(bool check) {
-	ohms::Settings::mainSettings.ChaGame_CheckAddition = check;
+	ohms::Settings::LegacyCha::DEFAULT.CheckAddition = check;
 	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetChallengePlayAwardOrNot(bool play) {
-	ohms::Settings::mainSettings.ChaGame_EnterAddition = play;
+	ohms::Settings::LegacyCha::DEFAULT.EnterAddition = play;
 	return System::Int32(0);
 }
 

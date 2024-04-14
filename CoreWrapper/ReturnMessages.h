@@ -25,17 +25,17 @@
 namespace Wrapper {
 
 public enum class ReturnMessage {
-	None = ohms::HelperReturnMessage::None,
+	None = ohms::ReturnMsgEnum::None,
 
 
-	_CMD_START = ohms::HelperReturnMessage::_CMD_START,
+	_CMD_START = ohms::ReturnMsgEnum::_CMD_START,
 	CMD_EmptyLine,  // 添加一个空行。
 	CMD_Stopped,    // 任务已停止。
 	CMD_BtnToStop,  // 按钮切换为 “停止”。
 	CMD_BtnToStart, // 按钮切换为 “开始”。
 
 
-	_LOG_START = ohms::HelperReturnMessage::_LOG_START,
+	_LOG_START = ohms::ReturnMsgEnum::_LOG_START,
 	LOG_StartError_Running,
 	LOG_Stopping,
 	LOG_Stopped,
@@ -59,7 +59,7 @@ public enum class ReturnMessage {
 	LOG_Challenge_OpenedAdd,
 
 
-	_STR_START = ohms::HelperReturnMessage::_STR_START,
+	_STR_START = ohms::ReturnMsgEnum::_STR_START,
 	// 以下都是 LOG_TaskError 指定参数
 	STR_Task_Challenge_NoNew,
 	STR_Task_Challenge_NoLast,

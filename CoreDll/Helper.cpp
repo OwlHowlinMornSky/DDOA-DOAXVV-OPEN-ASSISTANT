@@ -31,6 +31,7 @@
 #include "TaskExceptionCode.h"
 
 #include "CoreLog.h"
+#include "ITask.h"
 
 namespace ohms {
 
@@ -78,7 +79,7 @@ int Helper::setup(bool winrtInited) {
 
 bool Helper::start() {
 	if (m_running) { // 已经有任务运行（或者有bug没清除运行标记）
-		PushMsg(HelperReturnMessage::LOG_StartError_Running);
+		PushMsg(ReturnMsgEnum::LOG_StartError_Running);
 		CoreLog() << "Helper: Unexpected Start Repeatly. [Failed to Start]" << std::endl;
 		return false;
 	}
@@ -94,7 +95,6 @@ bool Helper::start() {
 	}
 
 	g_askedForStop = false; // 清除运行标志（绝对不能移动到上面去）
-	ohms::Settings::MakeOneCopy();
 	std::thread sub(&Helper::Work, this);
 	CoreLog() << "Helper: Detach Thread! [Start]" << std::endl;
 	sub.detach(); // 在子线程运行工作
@@ -103,7 +103,7 @@ bool Helper::start() {
 
 void Helper::askForStop() {
 	if (m_running) { // 运行的时候才有意义
-		PushMsg(HelperReturnMessage::LOG_Stopping);
+		PushMsg(ReturnMsgEnum::LOG_Stopping);
 		g_askedForStop = true;
 	}
 	return;
@@ -116,7 +116,7 @@ bool Helper::isRunning() {
 unsigned long Helper::msgPop() {
 	std::lock_guard lg(m_hrm_mutex); // 上锁
 	if (m_hrm.empty()) { // 没有消息
-		return HelperReturnMessage::None;
+		return ReturnMsgEnum::None;
 	}
 	// 获取队首并弹出
 	unsigned long res = m_hrm.front();
@@ -126,22 +126,29 @@ unsigned long Helper::msgPop() {
 
 void Helper::Work() {
 	m_running = true; // 设置标记（return前要清除）
-	PushMsg(HelperReturnMessage::CMD_BtnToStop); // 让主按钮变为stop
+	PushMsg(ReturnMsgEnum::CMD_BtnToStop); // 让主按钮变为stop
+
+	Settings::Global m_set = Settings::Global::DEFAULT;
 
 	// 按设置防止关闭屏幕和睡眠
-	if (Settings::g_set.KeepAwake) {
+	if (m_set.KeepAwake) {
 		SetThreadExecutionState(
 			ES_CONTINUOUS | ES_SYSTEM_REQUIRED |
-			(Settings::g_set.KeepScreenOn ? ES_DISPLAY_REQUIRED : 0)
+			(m_set.KeepScreenOn ? ES_DISPLAY_REQUIRED : 0)
 		);
 	}
 
 	try {
-		// Run task.
-		Task_Challenge();
+		int flag = 0;
+		std::unique_ptr<ITask> task;
+		while (m_set.Work_TaskList[flag] != TaskEnum::None) {
+			if (ITask::CreateTask(m_set.Work_TaskList[flag], task)) {
+				task->Run(*this);
+			}
+		}
 	}
 	catch (...) {
-		PushMsg(HelperReturnMessage::LOG_WorkError_ExceptionInternalError);
+		PushMsg(ReturnMsgEnum::LOG_WorkError_ExceptionInternalError);
 	}
 	r_handler->Reset(); // 停止截图
 
@@ -149,14 +156,14 @@ void Helper::Work() {
 	SetThreadExecutionState(ES_CONTINUOUS);
 
 	if (g_askedForStop) {
-		PushMsg(HelperReturnMessage::LOG_Stopped);
+		PushMsg(ReturnMsgEnum::LOG_Stopped);
 	}
 	else {
-		PushMsg(HelperReturnMessage::LOG_Complete);
+		PushMsg(ReturnMsgEnum::LOG_Complete);
 	}
 	m_running = false; // 清除标记
-	PushMsg(HelperReturnMessage::CMD_BtnToStart); // 让主按钮变成start
-	PushMsg(HelperReturnMessage::CMD_Stopped); // 通知已完全停止
+	PushMsg(ReturnMsgEnum::CMD_BtnToStart); // 让主按钮变成start
+	PushMsg(ReturnMsgEnum::CMD_Stopped); // 通知已完全停止
 
 	cv::destroyAllWindows();
 	return;
@@ -178,10 +185,15 @@ void Helper::PushMsgCode(unsigned long hrm, unsigned long code) {
 std::unique_ptr<MatchTemplate> Helper::CreateTemplate(const std::string& name) {
 	std::unique_ptr<MatchTemplate> res = std::make_unique<MatchTemplate>(m_templateList.at(name));
 	if (!res->LoadMat((m_assets / (name + ".png")).string())) {
-		Step_TaskError(HelperReturnMessage::STR_Task_FailedToLoadTemplateFile);
+		TaskError(ReturnMsgEnum::STR_Task_FailedToLoadTemplateFile);
 		return std::unique_ptr<MatchTemplate>();
 	}
 	return std::move(res);
+}
+
+void Helper::TaskError(unsigned long type) {
+	PushMsgCode(ReturnMsgEnum::LOG_TaskError, type);
+	throw TaskExceptionCode::KnownErrorButNotCritical; // 要求停止
 }
 
 } // namespace ohms

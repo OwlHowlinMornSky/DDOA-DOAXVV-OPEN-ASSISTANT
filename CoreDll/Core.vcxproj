@@ -107,11 +107,13 @@
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="CoreLog.cpp" />
     <ClCompile Include="Helper.cpp" />
-    <ClCompile Include="Helper.steps.cpp" />
     <ClCompile Include="Helper.tasks.cpp" />
     <ClCompile Include="IHelper.cpp" />
+    <ClCompile Include="ITask.cpp" />
     <ClCompile Include="MatchTemplate.cpp" />
     <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="Task_Challenge.cpp" />
+    <ClCompile Include="Task_LegacyCha.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="WndHandler.cpp" />
   </ItemGroup>
@@ -123,11 +125,17 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="IHelper.h" />
+    <ClInclude Include="ITask.h" />
     <ClInclude Include="MatchTemplate.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="ReturnMessages.h" />
+    <ClInclude Include="ReturnMsgEnum.h" />
     <ClInclude Include="Settings.h" />
+    <ClInclude Include="Settings_LegacyCha.h" />
+    <ClInclude Include="Settings_Global.h" />
+    <ClInclude Include="Settings_WndHandler.h" />
     <ClInclude Include="TaskEnum.h" />
+    <ClInclude Include="Task_Challenge.h" />
+    <ClInclude Include="Task_LegacyCha.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="WndHandler.h" />
     <ClInclude Include="TaskExceptionCode.h" />

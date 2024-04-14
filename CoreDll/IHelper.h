@@ -21,7 +21,7 @@
 #pragma once
 
 #include "API.h"
-#include "ReturnMessages.h"
+#include "ReturnMsgEnum.h"
 
 namespace ohms {
 

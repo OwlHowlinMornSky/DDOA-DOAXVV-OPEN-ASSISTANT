@@ -20,8 +20,25 @@
 */
 #pragma once
 
-#include "Settings_Global.h"
+#include "ITask.h"
 #include "Settings_LegacyCha.h"
-#include "Settings_WndHandler.h"
+#include "WndHandler.h"
 
-// 【ToDo】 非 线程安全
+namespace ohms {
+
+class Task_LegacyCha :
+	public ITask {
+public:
+	Task_LegacyCha();
+	virtual ~Task_LegacyCha() override;
+
+	virtual bool Run(Helper& h) override;
+
+protected:
+	Settings::LegacyCha m_set; // 设置数据的副本
+	Helper* r_helper;
+	WndHandler* r_handler;
+};
+
+}
+

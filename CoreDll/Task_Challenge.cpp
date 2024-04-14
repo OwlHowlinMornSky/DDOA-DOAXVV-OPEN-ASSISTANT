@@ -18,10 +18,16 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "Task_Challenge.h"
 
-#include "Settings_Global.h"
-#include "Settings_LegacyCha.h"
-#include "Settings_WndHandler.h"
+namespace ohms {
 
-// 【ToDo】 非 线程安全
+ohms::Task_Challenge::Task_Challenge() {}
+
+Task_Challenge::~Task_Challenge() {}
+
+bool Task_Challenge::Run(Helper& h) {
+	return false;
+}
+
+}

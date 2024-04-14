@@ -20,8 +20,21 @@
 */
 #pragma once
 
-#include "Settings_Global.h"
-#include "Settings_LegacyCha.h"
-#include "Settings_WndHandler.h"
+#include "ITask.h"
 
-// 【ToDo】 非 线程安全
+namespace ohms {
+
+class Task_Challenge :
+	public ITask {
+public:
+	Task_Challenge();
+	virtual ~Task_Challenge() override;
+
+	virtual bool Run(Helper& h) override;
+
+protected:
+
+};
+
+}
+

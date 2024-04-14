@@ -20,8 +20,21 @@
 */
 #pragma once
 
-#include "Settings_Global.h"
-#include "Settings_LegacyCha.h"
-#include "Settings_WndHandler.h"
+#include "API.h"
 
-// 【ToDo】 非 线程安全
+namespace ohms::Settings {
+
+struct CORE_API LegacyCha {
+	static LegacyCha DEFAULT; // 本体在 Settings.cpp
+	LegacyCha() :
+		ForNew(false), // 默认上一次比赛
+		EnterAddition(true), // 默认进入奖励挑战赛
+		CheckAddition(false) // 默认不检查奖励挑战赛
+	{}
+
+	bool ForNew; // 选择新比赛。
+	bool EnterAddition; // 进入奖励挑战赛。
+	bool CheckAddition; // 是否检查奖励挑战赛。
+};
+
+}

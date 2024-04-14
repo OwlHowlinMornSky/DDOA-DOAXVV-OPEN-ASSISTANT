@@ -20,8 +20,23 @@
 */
 #pragma once
 
-#include "Settings_Global.h"
-#include "Settings_LegacyCha.h"
-#include "Settings_WndHandler.h"
+#include "API.h"
+#include "TaskEnum.h"
 
-// 【ToDo】 非 线程安全
+namespace ohms::Settings {
+
+struct CORE_API Global {
+	static Global DEFAULT; // 本体在 Settings.cpp
+	Global() :
+		KeepAwake(true), // 默认阻止睡眠
+		KeepScreenOn(false), // 默认不保持显示
+		Work_TaskList() // 默认为空
+	{}
+
+	bool KeepAwake; // 阻止睡眠。
+	bool KeepScreenOn; // 阻止睡眠同时保持显示。
+
+	ohms::TaskEnum Work_TaskList[32]; // 选择任务并设置顺序。
+};
+
+}

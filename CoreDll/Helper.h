@@ -56,6 +56,7 @@ protected:
 	 * @brief 运行在子线程的工作。
 	*/
 	void Work();
+public:
 	/**
 	 * @brief 压入回执消息
 	 * @param hrm 回执消息
@@ -70,6 +71,12 @@ protected:
 
 	std::unique_ptr<MatchTemplate> CreateTemplate(const std::string& name);
 
+	/**
+	 * @brief 报错（写入logger并弹窗），并 throw 0
+	 * @param str 报错信息
+	*/
+	void TaskError(unsigned long type);
+
 // 任务
 // 返回 false 表示无法继续
 // (在 Helper.tasks.cpp 实现)
@@ -77,39 +84,6 @@ protected:
 	bool Task_StartUp(); // 启动游戏。
 
 	bool Task_Challenge(); // 挑战赛。
-
-// 单步操作
-// (在 Helper.steps.cpp 实现)
-protected:
-	/**
-	 * @brief 持续点击指定位置，直到画面出现目标。askedForStop则 throw 0
-	 * @param clkPt 指定点击位置，范围与 step_click 一致
-	 * @param _temp 目标模板
-	 * @param maxTime 超时时间（小于等于0则为永久）
-	 * @param clkTime 点击间隔（不能小于10毫秒）
-	 * @return true则已找到目标，false则为超时
-	*/
-	bool Step_KeepClickingUntil(
-		const cv::Point clkPt, const MatchTemplate& _temp, Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f)
-	);
-
-	/**
-	 * @brief 持续点击指定位置，直到画面没有目标。askedForStop则 throw 0
-	 * @param clkPt 指定点击位置，范围与 step_click 一致
-	 * @param _temp 目标模板
-	 * @param maxTime 超时时间（小于等于0则为永久）
-	 * @param clkTime 点击间隔（不能小于10毫秒）
-	 * @return true则已排除目标，false则为超时
-	*/
-	bool Step_KeepClickingUntilNo(
-		const cv::Point clkPt, const MatchTemplate& _temp, Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f)
-	);
-
-	/**
-	 * @brief 报错（写入logger并弹窗），并 throw 0
-	 * @param str 报错信息
-	*/
-	void Step_TaskError(unsigned long type);
 
 // 成员变量
 protected:
