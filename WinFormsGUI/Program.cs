@@ -63,7 +63,8 @@ namespace WinFormsGUI {
 				}
 				return;
 			}
-			Application.Run(new FormMain());
+			//Application.Run(new FormMain());
+			Application.Run(new FormSort());
 			helper.Drop();
 		}
 	}

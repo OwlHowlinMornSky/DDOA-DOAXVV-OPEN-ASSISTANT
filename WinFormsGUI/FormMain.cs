@@ -28,7 +28,6 @@ namespace WinFormsGUI {
 		private bool m_btnMainIsStart = true;
 		private Size m_label_transp_value_size = new();
 
-
 		#endregion
 
 		public FormMain() {
@@ -89,6 +88,9 @@ namespace WinFormsGUI {
 			}
 			chkBox_SetDisableClose.Checked = Settings.GUI.Default.DisableClose;
 
+			if (Settings.GUI.Default.LastPosition.X != -1 && Settings.GUI.Default.LastPosition.Y != -1)
+				Location = Settings.GUI.Default.LastPosition;
+
 			tkBar_Trans.Value = Settings.GUI.Default.Transparent;
 			m_label_transp_value_size = label_TransValue.Size;
 			label_TransValue.Text = tkBar_Trans.Value.ToString() + "%";
@@ -97,8 +99,6 @@ namespace WinFormsGUI {
 		private void InitLoadSettings() {
 			InitLoadSettings_Home();
 			InitLoadSettings_Settings();
-			if (Settings.GUI.Default.LastPosition.X != -1 && Settings.GUI.Default.LastPosition.Y != -1)
-				Location = Settings.GUI.Default.LastPosition;
 		}
 
 		private void DropSaveSettings() {
