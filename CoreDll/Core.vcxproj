@@ -127,6 +127,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ReturnMessages.h" />
     <ClInclude Include="Settings.h" />
+    <ClInclude Include="TaskEnum.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="WndHandler.h" />
     <ClInclude Include="TaskExceptionCode.h" />

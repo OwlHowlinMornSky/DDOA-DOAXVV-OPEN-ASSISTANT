@@ -22,6 +22,9 @@
 
 #include "API.h"
 
+#include "TaskEnum.h"
+#include <list>
+
 namespace ohms {
 
 /**
@@ -38,6 +41,8 @@ struct CORE_API Settings {
 
 	bool Debug_ShowCapture; // [调试] 是否显示截取到的帧。
 	bool Debug_DebugHandler; // [调试] 是否以DDOA调试器为目标。
+
+	std::list<ohms::TaskEnum> Work_TaskList; // 选择任务并设置顺序。
 
 	Settings();
 

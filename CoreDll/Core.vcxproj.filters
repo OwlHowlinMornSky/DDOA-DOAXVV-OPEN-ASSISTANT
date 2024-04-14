@@ -95,6 +95,9 @@
     <ClInclude Include="MatchTemplate.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="TaskEnum.h">
+      <Filter>API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CoreDll.rc">
