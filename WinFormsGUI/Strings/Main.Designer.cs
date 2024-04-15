@@ -113,5 +113,95 @@ namespace WinFormsGUI.Strings {
                 return ResourceManager.GetString("ProgramCoreInitializationFailed_UnknownReason", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 [null] 的本地化字符串。
+        /// </summary>
+        internal static string Task000 {
+            get {
+                return ResourceManager.GetString("Task000", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 启动游戏 的本地化字符串。
+        /// </summary>
+        internal static string Task001 {
+            get {
+                return ResourceManager.GetString("Task001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 日常任务 的本地化字符串。
+        /// </summary>
+        internal static string Task002 {
+            get {
+                return ResourceManager.GetString("Task002", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 岛主房间 的本地化字符串。
+        /// </summary>
+        internal static string Task003 {
+            get {
+                return ResourceManager.GetString("Task003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 挑战赛 的本地化字符串。
+        /// </summary>
+        internal static string Task004 {
+            get {
+                return ResourceManager.GetString("Task004", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 温泉 的本地化字符串。
+        /// </summary>
+        internal static string Task005 {
+            get {
+                return ResourceManager.GetString("Task005", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 领取奖励 的本地化字符串。
+        /// </summary>
+        internal static string Task006 {
+            get {
+                return ResourceManager.GetString("Task006", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 退出游戏 的本地化字符串。
+        /// </summary>
+        internal static string Task007 {
+            get {
+                return ResourceManager.GetString("Task007", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 【旧】刷挑战赛 的本地化字符串。
+        /// </summary>
+        internal static string Task008 {
+            get {
+                return ResourceManager.GetString("Task008", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Test 的本地化字符串。
+        /// </summary>
+        internal static string Task666 {
+            get {
+                return ResourceManager.GetString("Task666", resourceCulture);
+            }
+        }
     }
 }

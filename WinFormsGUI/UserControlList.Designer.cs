@@ -28,7 +28,7 @@
 			button_all = new Button();
 			button_clear = new Button();
 			contextMenuStrip1 = new ContextMenuStrip(components);
-			toolStripMenuItem_Sort = new ToolStripMenuItem();
+			toolStripMenuItem_Edit = new ToolStripMenuItem();
 			toolStripSeparator1 = new ToolStripSeparator();
 			toolStripMenuItem_All = new ToolStripMenuItem();
 			toolStripMenuItem_Clear = new ToolStripMenuItem();
@@ -39,7 +39,6 @@
 			// 
 			flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 			flowLayoutPanel1.AutoSize = true;
-			flowLayoutPanel1.BackColor = Color.IndianRed;
 			flowLayoutPanel1.Location = new Point(0, 0);
 			flowLayoutPanel1.Name = "flowLayoutPanel1";
 			flowLayoutPanel1.Size = new Size(180, 0);
@@ -69,17 +68,17 @@
 			// 
 			// contextMenuStrip1
 			// 
-			contextMenuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem_Sort, toolStripSeparator1, toolStripMenuItem_All, toolStripMenuItem_Clear });
+			contextMenuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem_Edit, toolStripSeparator1, toolStripMenuItem_All, toolStripMenuItem_Clear });
 			contextMenuStrip1.Name = "contextMenuStrip1";
 			contextMenuStrip1.ShowImageMargin = false;
 			contextMenuStrip1.Size = new Size(76, 76);
 			// 
-			// toolStripMenuItem_Sort
+			// toolStripMenuItem_Edit
 			// 
-			toolStripMenuItem_Sort.Name = "toolStripMenuItem_Sort";
-			toolStripMenuItem_Sort.Size = new Size(75, 22);
-			toolStripMenuItem_Sort.Text = "排序";
-			toolStripMenuItem_Sort.Click += OnClickSortList;
+			toolStripMenuItem_Edit.Name = "toolStripMenuItem_Edit";
+			toolStripMenuItem_Edit.Size = new Size(75, 22);
+			toolStripMenuItem_Edit.Text = "编辑";
+			toolStripMenuItem_Edit.Click += OnClickEditList;
 			// 
 			// toolStripSeparator1
 			// 
@@ -124,7 +123,7 @@
 		private Button button_all;
 		private Button button_clear;
 		private ContextMenuStrip contextMenuStrip1;
-		private ToolStripMenuItem toolStripMenuItem_Sort;
+		private ToolStripMenuItem toolStripMenuItem_Edit;
 		private ToolStripSeparator toolStripSeparator1;
 		private ToolStripMenuItem toolStripMenuItem_All;
 		private ToolStripMenuItem toolStripMenuItem_Clear;

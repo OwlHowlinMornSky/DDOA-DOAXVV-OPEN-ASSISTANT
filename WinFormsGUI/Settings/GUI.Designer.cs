@@ -97,13 +97,25 @@ namespace WinFormsGUI.Settings {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0, 1, 2, 3, 4, 5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1, 2, 3, 4, 5, 6, 7, 8")]
         public string ListItems {
             get {
                 return ((string)(this["ListItems"]));
             }
             set {
                 this["ListItems"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ListItemCheckList {
+            get {
+                return ((string)(this["ListItemCheckList"]));
+            }
+            set {
+                this["ListItemCheckList"] = value;
             }
         }
     }

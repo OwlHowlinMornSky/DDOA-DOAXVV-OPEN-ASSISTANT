@@ -135,4 +135,34 @@
   <data name="ProgramCoreInitializationFailed_UnknownReason" xml:space="preserve">
     <value>未知原因</value>
   </data>
+  <data name="Task000" xml:space="preserve">
+    <value>[null]</value>
+  </data>
+  <data name="Task001" xml:space="preserve">
+    <value>启动游戏</value>
+  </data>
+  <data name="Task002" xml:space="preserve">
+    <value>日常任务</value>
+  </data>
+  <data name="Task003" xml:space="preserve">
+    <value>岛主房间</value>
+  </data>
+  <data name="Task004" xml:space="preserve">
+    <value>挑战赛</value>
+  </data>
+  <data name="Task005" xml:space="preserve">
+    <value>温泉</value>
+  </data>
+  <data name="Task006" xml:space="preserve">
+    <value>领取奖励</value>
+  </data>
+  <data name="Task007" xml:space="preserve">
+    <value>退出游戏</value>
+  </data>
+  <data name="Task008" xml:space="preserve">
+    <value>【旧】刷挑战赛</value>
+  </data>
+  <data name="Task666" xml:space="preserve">
+    <value>Test</value>
+  </data>
 </root>

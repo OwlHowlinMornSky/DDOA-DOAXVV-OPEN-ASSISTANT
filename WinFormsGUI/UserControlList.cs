@@ -23,12 +23,10 @@ namespace WinFormsGUI {
 
 		public UserControlList() {
 			InitializeComponent();
-
-			//flowLayoutPanel1.Controls.Clear();
-
 		}
 
-		public void SetList(List<uint> list) {
+		private void SetList(List<uint> list) {
+			m_listTasks = list;
 			flowLayoutPanel1.Controls.Clear();
 			int cnt = 0;
 			foreach (var i in list) {
@@ -41,7 +39,7 @@ namespace WinFormsGUI {
 				var checkBox = new CheckBox() {
 					DataContext = data,
 					Width = 135,
-					Text = "CB" + i,
+					Text = Strings.Main.ResourceManager.GetString("Task" + i.ToString("000")),
 				};
 				checkBox.CheckedChanged += OnListCheckBoxChanged;
 				checkBox.MouseEnter += OnListCheckBoxEnter;
@@ -67,14 +65,14 @@ namespace WinFormsGUI {
 			var checkBox = (CheckBox)sender;
 			var data = (ListItemUserData)checkBox.DataContext;
 			int rank = data.rank;
-			MessageBox.Show($"CheckBox #{rank} Changed to {checkBox.Checked}.");
+			//MessageBox.Show($"CheckBox #{rank} Changed to {checkBox.Checked}.");
 		}
 
 		private void OnListRadioBtnChanged(object sender, EventArgs e) {
 			var radioBtn = (RadioButton)sender;
 			var data = (ListItemUserData)radioBtn.DataContext;
 			int rank = data.rank;
-			MessageBox.Show($"RadioBtn #{rank} Changed to {radioBtn.Checked}.");
+			//MessageBox.Show($"RadioBtn #{rank} Changed to {radioBtn.Checked}.");
 		}
 
 		private void OnListCheckBoxEnter(object sender, EventArgs e) {
@@ -115,19 +113,37 @@ namespace WinFormsGUI {
 			}
 		}
 
-		private void OnClickSortList(object sender, EventArgs args) {
+		private void OnClickEditList(object sender, EventArgs args) {
+			var dialog = new FormListEdit();
+			dialog.ListTasks = m_listTasks;
+			var res = dialog.ShowDialog();
+			if (res == DialogResult.OK) {
+				SetList(dialog.ListTasks);
+				OnClickChooseAll(null, null);
+			}
 		}
 
 		private void UserControlList_Load(object sender, EventArgs e) {
 			string str = Settings.GUI.Default.ListItems;
 			var strs = str.Split(',');
-			m_listTasks = [];
+			List<uint> tasks = [];
 			foreach (var s in strs) {
+				if (s.Length == 0)
+					continue;
 				var n = uint.Parse(s);
 				if (n > (uint)TaskEnumWrap.None)
-					m_listTasks.Add(n);
+					tasks.Add(n);
 			}
-			SetList(m_listTasks);
+			SetList(tasks);
+
+			str = Settings.GUI.Default.ListItemCheckList;
+			strs = str.Split(',');
+			foreach (var s in strs) {
+				if (s.Length == 0)
+					continue;
+				var n = int.Parse(s);
+				((CheckBox)flowLayoutPanel1.Controls[n * 2]).Checked = true;
+			}
 		}
 
 		/// <summary>
@@ -135,13 +151,25 @@ namespace WinFormsGUI {
 		/// </summary>
 		public void OnClose() {
 			string str = "";
-			str += (uint)TaskEnumWrap.None;
 			foreach (var s in m_listTasks) {
 				if (s > (uint)TaskEnumWrap.None) {
-					str += ',';
 					str += s;
+					str += ',';
 				}
 			}
+			Settings.GUI.Default.ListItems = str;
+
+			str = "";
+			foreach (var ctrl in flowLayoutPanel1.Controls) {
+				if (ctrl.GetType() == typeof(CheckBox)) {
+					var checkBox = (CheckBox)ctrl;
+					if (checkBox.Checked) {
+						str += ((ListItemUserData)checkBox.DataContext).rank;
+						str += ',';
+					}
+				}
+			}
+			Settings.GUI.Default.ListItemCheckList = str;
 		}
 	}
 }

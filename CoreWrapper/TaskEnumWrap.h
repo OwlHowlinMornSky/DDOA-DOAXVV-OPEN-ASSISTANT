@@ -21,6 +21,7 @@
 #pragma once
 
 #include <TaskEnum.h>
+#include <Settings.h>
 
 namespace Wrapper {
 
@@ -37,7 +38,10 @@ public enum class TaskEnumWrap : System::UInt32 {
 
 	LegacyCha,
 
-	COUNT
+	COUNT,
+
+
+	TaskMaxNum = ohms::Settings::Global::ListLength
 };
 
 }
