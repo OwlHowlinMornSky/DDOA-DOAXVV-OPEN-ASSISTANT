@@ -18,16 +18,25 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Task_Challenge.h"
+#pragma once
+
+#include "ITask.h"
+#include "WndHandler.h"
 
 namespace ohms {
 
-Task_Challenge::Task_Challenge() {}
+class Task_StartUp :
+	public ITask {
+public:
+	Task_StartUp();
+	virtual ~Task_StartUp() override;
 
-Task_Challenge::~Task_Challenge() {}
+public:
+	virtual bool Run(Helper& h) override;
 
-bool Task_Challenge::Run(Helper& h) {
-	return false;
-}
+protected:
+	Helper* r_helper;
+	WndHandler* r_handler;
+};
 
 }

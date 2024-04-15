@@ -30,6 +30,7 @@ public:
 	Task_Challenge();
 	virtual ~Task_Challenge() override;
 
+public:
 	virtual bool Run(Helper& h) override;
 
 protected:

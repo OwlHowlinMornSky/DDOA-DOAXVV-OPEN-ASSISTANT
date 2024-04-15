@@ -107,13 +107,13 @@
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="CoreLog.cpp" />
     <ClCompile Include="Helper.cpp" />
-    <ClCompile Include="Helper.tasks.cpp" />
     <ClCompile Include="IHelper.cpp" />
     <ClCompile Include="ITask.cpp" />
     <ClCompile Include="MatchTemplate.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Task_Challenge.cpp" />
     <ClCompile Include="Task_LegacyCha.cpp" />
+    <ClCompile Include="Task_StartUp.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="WndHandler.cpp" />
   </ItemGroup>
@@ -136,6 +136,7 @@
     <ClInclude Include="TaskEnum.h" />
     <ClInclude Include="Task_Challenge.h" />
     <ClInclude Include="Task_LegacyCha.h" />
+    <ClInclude Include="Task_StartUp.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="WndHandler.h" />
     <ClInclude Include="TaskExceptionCode.h" />

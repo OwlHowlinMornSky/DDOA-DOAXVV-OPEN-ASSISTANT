@@ -24,7 +24,7 @@
 
 namespace ohms {
 
-ohms::Task_LegacyCha::Task_LegacyCha() :
+Task_LegacyCha::Task_LegacyCha() :
 	r_helper(nullptr),
 	r_handler(nullptr),
 	m_set(Settings::LegacyCha::DEFAULT) {}

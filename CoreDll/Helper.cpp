@@ -37,7 +37,7 @@ namespace ohms {
 
 Helper::Helper() :
 	r_handler(nullptr),
-	m_running(false) // 未运行
+	m_running(false) // 初始未运行
 {
 	return;
 }
@@ -124,6 +124,33 @@ unsigned long Helper::msgPop() {
 	return res;
 }
 
+void Helper::PushMsg(unsigned long hrm) {
+	std::lock_guard lg(m_hrm_mutex); // 上锁
+	m_hrm.push(hrm); // 压入
+	return;
+}
+
+void Helper::PushMsgCode(unsigned long hrm, unsigned long code) {
+	std::lock_guard lg(m_hrm_mutex); // 上锁
+	m_hrm.push(hrm); // 压入
+	m_hrm.push(code); // 压入
+	return;
+}
+
+std::unique_ptr<MatchTemplate> Helper::CreateTemplate(const std::string& name) {
+	std::unique_ptr<MatchTemplate> res = std::make_unique<MatchTemplate>(m_templateList.at(name));
+	if (!res->LoadMat((m_assets / (name + ".png")).string())) {
+		TaskError(ReturnMsgEnum::STR_Task_FailedToLoadTemplateFile);
+		return std::unique_ptr<MatchTemplate>();
+	}
+	return std::move(res);
+}
+
+void Helper::TaskError(unsigned long type) {
+	PushMsgCode(ReturnMsgEnum::LOG_TaskError, type);
+	throw TaskExceptionCode::KnownErrorButNotCritical; // 要求停止
+}
+
 void Helper::Work() {
 	m_running = true; // 设置标记（return前要清除）
 	PushMsg(ReturnMsgEnum::CMD_BtnToStop); // 让主按钮变为stop
@@ -173,33 +200,6 @@ void Helper::Work() {
 
 	cv::destroyAllWindows();
 	return;
-}
-
-void Helper::PushMsg(unsigned long hrm) {
-	std::lock_guard lg(m_hrm_mutex); // 上锁
-	m_hrm.push(hrm); // 压入
-	return;
-}
-
-void Helper::PushMsgCode(unsigned long hrm, unsigned long code) {
-	std::lock_guard lg(m_hrm_mutex); // 上锁
-	m_hrm.push(hrm); // 压入
-	m_hrm.push(code); // 压入
-	return;
-}
-
-std::unique_ptr<MatchTemplate> Helper::CreateTemplate(const std::string& name) {
-	std::unique_ptr<MatchTemplate> res = std::make_unique<MatchTemplate>(m_templateList.at(name));
-	if (!res->LoadMat((m_assets / (name + ".png")).string())) {
-		TaskError(ReturnMsgEnum::STR_Task_FailedToLoadTemplateFile);
-		return std::unique_ptr<MatchTemplate>();
-	}
-	return std::move(res);
-}
-
-void Helper::TaskError(unsigned long type) {
-	PushMsgCode(ReturnMsgEnum::LOG_TaskError, type);
-	throw TaskExceptionCode::KnownErrorButNotCritical; // 要求停止
 }
 
 } // namespace ohms

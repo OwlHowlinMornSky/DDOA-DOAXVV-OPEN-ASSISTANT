@@ -31,6 +31,12 @@ public:
 	ITask() = default;
 	virtual ~ITask() = default;
 
+public:
+	/**
+	 * @brief 运行任务。
+	 * @param h 来源 Helper 实例。
+	 * @return 返回 false 表示无法继续
+	 */
 	virtual bool Run(Helper& h) = 0;
 
 protected:

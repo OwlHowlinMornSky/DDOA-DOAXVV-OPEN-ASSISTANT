@@ -50,12 +50,6 @@ public:
 	virtual bool isRunning() override;
 	virtual unsigned long msgPop() override;
 
-// 内部的，具体实现。
-protected:
-	/**
-	 * @brief 运行在子线程的工作。
-	*/
-	void Work();
 public:
 	/**
 	 * @brief 压入回执消息
@@ -77,13 +71,12 @@ public:
 	*/
 	void TaskError(unsigned long type);
 
-// 任务
-// 返回 false 表示无法继续
-// (在 Helper.tasks.cpp 实现)
+// 内部的，具体实现。
 protected:
-	bool Task_StartUp(); // 启动游戏。
-
-	bool Task_Challenge(); // 挑战赛。
+	/**
+	 * @brief 运行在子线程的工作。
+	*/
+	void Work();
 
 // 成员变量
 protected:

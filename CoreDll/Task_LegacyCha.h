@@ -32,6 +32,7 @@ public:
 	Task_LegacyCha();
 	virtual ~Task_LegacyCha() override;
 
+public:
 	virtual bool Run(Helper& h) override;
 
 protected:

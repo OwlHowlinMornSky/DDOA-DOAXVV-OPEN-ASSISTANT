@@ -18,16 +18,33 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Task_Challenge.h"
+#include "Task_StartUp.h"
 
 namespace ohms {
 
-Task_Challenge::Task_Challenge() {}
+Task_StartUp::Task_StartUp() :
+	r_handler(nullptr),
+	r_helper(nullptr) {}
 
-Task_Challenge::~Task_Challenge() {}
+Task_StartUp::~Task_StartUp() {}
 
-bool Task_Challenge::Run(Helper& h) {
-	return false;
+bool Task_StartUp::Run(Helper& h) {
+	r_handler = WndHandler::Instance();
+	r_helper = &h;
+
+	if (r_handler->SetForGame() != WndHandler::SetReturnValue::OK) {
+		if (r_handler->SetForLauncher() != WndHandler::SetReturnValue::OK) {
+			system("start steam://rungameid/958260");
+			do {
+				Sleep(1000);
+			} while (r_handler->SetForLauncher() != WndHandler::SetReturnValue::OK);
+		}
+		// 点击开始。
+		do {
+			Sleep(1000);
+		} while (r_handler->SetForGame() != WndHandler::SetReturnValue::OK);
+	}
+	return true;
 }
 
 }
