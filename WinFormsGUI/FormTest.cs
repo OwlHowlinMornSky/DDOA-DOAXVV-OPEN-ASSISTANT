@@ -9,9 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinFormsGUI {
-	public partial class FormSort : Form {
-		public FormSort() {
+	public partial class FormTest : Form {
+		public FormTest() {
 			InitializeComponent();
+
+			//userControlList1.SetList([1, 2, 3]);
+
+
 		}
 
 	}

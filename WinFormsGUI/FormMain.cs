@@ -88,8 +88,8 @@ namespace WinFormsGUI {
 			}
 			chkBox_SetDisableClose.Checked = Settings.GUI.Default.DisableClose;
 
-			if (Settings.GUI.Default.LastPosition.X != -1 && Settings.GUI.Default.LastPosition.Y != -1)
-				Location = Settings.GUI.Default.LastPosition;
+			if (Settings.GUI.Default.WndLastPosition.X != -1 && Settings.GUI.Default.WndLastPosition.Y != -1)
+				Location = Settings.GUI.Default.WndLastPosition;
 
 			tkBar_Trans.Value = Settings.GUI.Default.Transparent;
 			m_label_transp_value_size = label_TransValue.Size;
@@ -102,7 +102,7 @@ namespace WinFormsGUI {
 		}
 
 		private void DropSaveSettings() {
-			Settings.GUI.Default.LastPosition = Location;
+			Settings.GUI.Default.WndLastPosition = Location;
 			Settings.GUI.Default.Save();
 			Settings.Core.Default.Save();
 		}
