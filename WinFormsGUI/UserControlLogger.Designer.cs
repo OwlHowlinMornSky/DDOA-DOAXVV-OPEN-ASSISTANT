@@ -41,8 +41,8 @@
 			listBox1.SelectionMode = SelectionMode.None;
 			listBox1.Size = new Size(180, 64);
 			listBox1.TabIndex = 0;
-			listBox1.DrawItem += listBox1_DrawItem;
-			listBox1.MeasureItem += listBox1_MeasureItem;
+			listBox1.DrawItem += ListBox1_DrawItem;
+			listBox1.MeasureItem += ListBox1_MeasureItem;
 			// 
 			// UserControlLogger
 			// 
