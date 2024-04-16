@@ -17,16 +17,14 @@ namespace WinFormsGUI {
 		}
 
 		private void FormTest_Load(object sender, EventArgs e) {
+			int n = 30;
+			userControlLogger1.Log("RRSSF", Color.DarkRed);
+			for (int i = 0; i < n; ++i) {
 
-			flowLayoutPanel1.Controls.Add(new Label {
-				Text = "12345"
-			});
-			flowLayoutPanel1.Controls.Add(new Label {
-				Text = "一\r\n测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试\r\n二",
-				//AutoEllipsis = true,
-				AutoSize = true,
-				MaximumSize = new Size(123, 0)
-			});
+				userControlLogger1.Log("测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试\r\nyi\r\n二ereererererererer" + i);
+
+			}
+
 
 		}
 
@@ -35,5 +33,6 @@ namespace WinFormsGUI {
 
 			Settings.GUI.Default.Save();
 		}
+
 	}
 }

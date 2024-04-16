@@ -25,8 +25,7 @@
 		private void InitializeComponent() {
 			components = new System.ComponentModel.Container();
 			userControlList1 = new UserControlList();
-			flowLayoutPanel1 = new FlowLayoutPanel();
-			label1 = new Label();
+			userControlLogger1 = new UserControlLogger();
 			SuspendLayout();
 			// 
 			// userControlList1
@@ -39,30 +38,21 @@
 			userControlList1.Size = new Size(180, 450);
 			userControlList1.TabIndex = 0;
 			// 
-			// flowLayoutPanel1
+			// userControlLogger1
 			// 
-			flowLayoutPanel1.BackColor = Color.IndianRed;
-			flowLayoutPanel1.Location = new Point(301, 74);
-			flowLayoutPanel1.Name = "flowLayoutPanel1";
-			flowLayoutPanel1.Size = new Size(273, 144);
-			flowLayoutPanel1.TabIndex = 1;
-			// 
-			// label1
-			// 
-			label1.AutoSize = true;
-			label1.Location = new Point(377, 237);
-			label1.Name = "label1";
-			label1.Size = new Size(43, 17);
-			label1.TabIndex = 2;
-			label1.Text = "label1";
+			userControlLogger1.AutoSize = true;
+			userControlLogger1.Dock = DockStyle.Fill;
+			userControlLogger1.Location = new Point(0, 0);
+			userControlLogger1.Name = "userControlLogger1";
+			userControlLogger1.Size = new Size(800, 450);
+			userControlLogger1.TabIndex = 1;
 			// 
 			// FormTest
 			// 
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(800, 450);
-			Controls.Add(label1);
-			Controls.Add(flowLayoutPanel1);
+			Controls.Add(userControlLogger1);
 			Controls.Add(userControlList1);
 			Name = "FormTest";
 			Text = "FormTest";
@@ -75,7 +65,6 @@
 		#endregion
 
 		private UserControlList userControlList1;
-		private FlowLayoutPanel flowLayoutPanel1;
-		private Label label1;
+		private UserControlLogger userControlLogger1;
 	}
 }
