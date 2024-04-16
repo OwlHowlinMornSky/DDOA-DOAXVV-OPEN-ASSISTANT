@@ -34,7 +34,7 @@ namespace WinFormsGUI {
 
 
 		private void FormTest_Load(object sender, EventArgs e) {
-			int n = 3;
+			int n = 511;
 			userControlLogger1.Log("RRSSF", Color.DarkRed);
 			for (int i = 0; i < n; ++i) {
 

@@ -120,6 +120,8 @@ namespace WinFormsGUI {
 		}
 
 		private void UserControlLogger_SizeChanged(object sender, EventArgs e) {
+			if (listBox1.Items.Count > 512)
+				return;
 			SuspendLayout();
 			var ti = listBox1.TopIndex;
 			listBox1.DrawMode = DrawMode.OwnerDrawFixed;
