@@ -26,6 +26,7 @@
 			components = new System.ComponentModel.Container();
 			userControlList1 = new UserControlList();
 			userControlLogger1 = new UserControlLogger();
+			button1 = new Button();
 			SuspendLayout();
 			// 
 			// userControlList1
@@ -43,17 +44,30 @@
 			userControlLogger1.AutoSize = true;
 			userControlLogger1.Dock = DockStyle.Fill;
 			userControlLogger1.Location = new Point(0, 0);
+			userControlLogger1.MinimumSize = new Size(180, 0);
 			userControlLogger1.Name = "userControlLogger1";
 			userControlLogger1.Size = new Size(800, 450);
 			userControlLogger1.TabIndex = 1;
+			// 
+			// button1
+			// 
+			button1.Location = new Point(115, 151);
+			button1.Name = "button1";
+			button1.Size = new Size(75, 23);
+			button1.TabIndex = 2;
+			button1.Text = "button1";
+			button1.UseVisualStyleBackColor = true;
+			button1.Click += button1_Click;
 			// 
 			// FormTest
 			// 
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(800, 450);
+			Controls.Add(button1);
 			Controls.Add(userControlLogger1);
 			Controls.Add(userControlList1);
+			DoubleBuffered = true;
 			Name = "FormTest";
 			Text = "FormTest";
 			FormClosed += FormTest_FormClosed;
@@ -66,5 +80,6 @@
 
 		private UserControlList userControlList1;
 		private UserControlLogger userControlLogger1;
+		private Button button1;
 	}
 }

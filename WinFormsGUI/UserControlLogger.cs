@@ -39,8 +39,30 @@ namespace WinFormsGUI {
 			vScrollBarWidth = test.Width;
 		}
 
+		protected override void WndProc(ref Message m) {
+			if (m.Msg == 0x0014) // 禁掉清除背景消息
+				return;
+			base.WndProc(ref m);
+		}
+
+		private bool IsAtBottom() {
+			int flag = listBox1.TopIndex;
+			int sum = 0;
+			Graphics g = Graphics.FromHwnd(listBox1.Handle);
+			while (flag < listBox1.Items.Count) {
+				MeasureItemEventArgs e = new(g, flag);
+				listBox1_MeasureItem(listBox1, e);
+				sum += e.ItemHeight;
+				if (sum > listBox1.Height)
+					return false;
+				flag++;
+			}
+			return true;
+		}
+
 		public void Log(string message, Color color) {
-			bool scroll = listBox1.TopIndex == listBox1.Items.Count - (int)(listBox1.Height / listBox1.ItemHeight);
+			SuspendLayout();
+			bool scroll = IsAtBottom();
 			var timeStr = DateTime.Now.ToString("MM/dd HH:mm:ss　");
 			listBox1.Items.Add(
 				new LogItem() {
@@ -51,7 +73,8 @@ namespace WinFormsGUI {
 				}
 			);
 			if (scroll)
-				listBox1.TopIndex = listBox1.Items.Count - (int)(listBox1.Height / listBox1.ItemHeight);
+				listBox1.TopIndex = listBox1.Items.Count - 1;
+			ResumeLayout();
 		}
 
 		public void Log(string message) {
@@ -68,7 +91,7 @@ namespace WinFormsGUI {
 			var b = e.Bounds;
 			e.Graphics.DrawString(item.time, e.Font, new SolidBrush(item.hideTime ? Control.DefaultBackColor : m_sysClr), b);
 			b.Offset(sz0.ToSize().Width, 0);
-			b.Width -= sz0.ToSize().Width;
+			b.Width = listBox.Width - sz0.ToSize().Width - vScrollBarWidth - 1;
 			e.Graphics.DrawString(item.str, e.Font, new SolidBrush(item.color), b);
 		}
 
@@ -88,10 +111,12 @@ namespace WinFormsGUI {
 		}
 
 		private void UserControlLogger_SizeChanged(object sender, EventArgs e) {
+			SuspendLayout();
 			var ti = listBox1.TopIndex;
 			listBox1.DrawMode = DrawMode.OwnerDrawFixed;
 			listBox1.DrawMode = DrawMode.OwnerDrawVariable;
 			listBox1.TopIndex = ti;
+			ResumeLayout();
 		}
 	}
 }
