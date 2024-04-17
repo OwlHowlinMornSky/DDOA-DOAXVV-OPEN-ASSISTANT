@@ -38,18 +38,18 @@ bool Task_LegacyCha::Run(Helper& h) {
 	bool taskReturnCode = true; // 若返回false表示终止后续任务。
 	try {
 		CoreLog() << "Task.Challenge: Start." << std::endl;
-		h.PushMsg(ReturnMsgEnum::LOG_Challenge_Start);
+		h.GuiLogF(ReturnMsgEnum::ChaStart);
 
 		const bool forNew = m_set.ForNew; // 保存设置
 
 		switch (r_handler->SetForGame()) {
 		case WndHandler::SetReturnValue::WndNotFound:
 			CoreLog() << "Task.Challenge: Game Window Not Found." << std::endl;
-			h.TaskError(ReturnMsgEnum::STR_Task_Error_NoWnd);
+			h.TaskError(ReturnMsgEnum::TaskErrNoWnd);
 			break;
 		case WndHandler::SetReturnValue::CaptureFailed:
 			CoreLog() << "Task.Challenge: Game Window Cannot Capture." << std::endl;
-			h.TaskError(ReturnMsgEnum::STR_Task_Error_FailedCapture);
+			h.TaskError(ReturnMsgEnum::TaskErrNoCap);
 			break;
 		}
 
@@ -73,15 +73,15 @@ bool Task_LegacyCha::Run(Helper& h) {
 			if (-1 == r_handler->WaitFor(forNew ? *temp_newFight : *temp_lastFight))
 				h.TaskError(
 					forNew ?
-					ReturnMsgEnum::STR_Task_Challenge_NoNew :
-					ReturnMsgEnum::STR_Task_Challenge_NoLast
+					ReturnMsgEnum::TaskErrChaNoNew :
+					ReturnMsgEnum::TaskErrChaNoPri
 				);
 
 			// 点击比赛，直到进入编队画面（找到挑战按钮）。
 			CoreLog() << "Task.Challenge: Enter Game <" << (forAddThisTime ? "Award" : (forNew ? "New" : "Last")) << ">." << std::endl;
 			pt = { 900, (forNew ? temp_newFight : temp_lastFight)->GetLastMatchRect().y };
 			if (!r_handler->KeepClickingUntil(pt, *temp_startGame))
-				h.TaskError(ReturnMsgEnum::STR_Task_Challenge_NoEnter);
+				h.TaskError(ReturnMsgEnum::TaskErrChaNoEnter);
 
 			forAddThisTime = false;
 
@@ -95,7 +95,7 @@ bool Task_LegacyCha::Run(Helper& h) {
 				default:
 				case -1:
 					if (i == n - 1)
-						h.TaskError(ReturnMsgEnum::STR_Task_Challenge_NoStart);
+						h.TaskError(ReturnMsgEnum::TaskErrChaNoStart);
 					break;
 				case 0:
 					i = n;
@@ -108,64 +108,64 @@ bool Task_LegacyCha::Run(Helper& h) {
 
 			if (forAddThisTime) {
 				++playAwardCnt;
-				h.PushMsgCode(ReturnMsgEnum::LOG_Challenge_BeginAdd, playCnt);
+				h.GuiLogF_I(ReturnMsgEnum::ChaBeginAdd_I, playAwardCnt);
 			}
 			else {
 				++playCnt;
-				h.PushMsgCode(ReturnMsgEnum::LOG_Challenge_BeginNum, playCnt);
+				h.GuiLogF_I(ReturnMsgEnum::ChaBegin_I, playCnt);
 			}
 
 			// 等待结束。
 			CoreLog() << "Task.Challenge: In Game, Waitting for End." << std::endl;
 			if (-1 == r_handler->WaitFor(*temp_gameResult, seconds(5 * 60.0f)))
-				h.TaskError(ReturnMsgEnum::STR_Task_Challenge_TimeOut);
+				h.TaskError(ReturnMsgEnum::TaskErrChaTimeOut);
 
 			// 点击，直到进入加载画面。
 			CoreLog() << "Task.Challenge: Game End, Trying to Exit." << std::endl;
 			pt = temp_gameResult->GetLastMatchRect().tl() + cv::Point2i(100, 0);
 			if (!r_handler->KeepClickingUntil(pt, *temp_loading, seconds(60.0f), seconds(0.1f)))
-				h.TaskError(ReturnMsgEnum::STR_Task_Challenge_NoEnd);
+				h.TaskError(ReturnMsgEnum::TaskErrChaNoEnd);
 
 			// 等待到挑战赛标签页出现。
 			CoreLog() << "Task.Challenge: Game Exit, Waitting for Challenge Page." << std::endl;
 			if (-1 == r_handler->WaitFor(*temp_chaBar, seconds(60.0f)))
-				h.TaskError(ReturnMsgEnum::STR_Task_Challenge_NoOver);
-			h.PushMsg(ReturnMsgEnum::LOG_Challenge_Over);
+				h.TaskError(ReturnMsgEnum::TaskErrChaNoOver);
+			h.GuiLogF(ReturnMsgEnum::ChaOver);
 
 			// 检查是否有奖励挑战赛。
 			if (m_set.CheckAddition) {
 				if (0 == r_handler->WaitFor(*temp_awardCha, seconds(2.0f))) {
-					h.PushMsg(ReturnMsgEnum::LOG_Challenge_FindAdd);
+					h.GuiLogF(ReturnMsgEnum::ChaFindAdd);
 					if (m_set.EnterAddition) { // 进入奖励挑战赛。
 						if (forNew) {
 							pt = temp_awardCha->GetLastMatchRect().tl() + cv::Point2i(30, 50);
 							if (r_handler->KeepClickingUntil(pt, *temp_newFight, seconds(10.0f), seconds(2.0f))) {
-								h.PushMsg(ReturnMsgEnum::LOG_Challenge_OpenedAdd);
+								h.GuiLogF(ReturnMsgEnum::ChaOpenedAdd);
 								forAddThisTime = true;
 								playAwardCnt = 0;
 							}
 							else {
-								h.TaskError(ReturnMsgEnum::STR_Task_Challenge_OpenAddFailed);
+								h.TaskError(ReturnMsgEnum::TaskErrChaOpenAddFailed);
 							}
 						}
 						else {
-							h.TaskError(ReturnMsgEnum::STR_Task_Challenge_AddNotSup);
+							h.TaskError(ReturnMsgEnum::TaskErrChaAddNotSup);
 						}
 					}
 					else { // 回到“推荐”栏。
 						if (0 == r_handler->WaitFor(*temp_chaBar, seconds(5.0f))) {
 							pt = temp_chaBar->GetLastMatchRect().tl() + cv::Point2i(40, 12);
 							if (r_handler->KeepClickingUntilNo(pt, *temp_awardCha, seconds(10.0f), seconds(0.5f))) {
-								h.PushMsg(ReturnMsgEnum::LOG_Challenge_IgnoredAdd);
+								h.GuiLogF(ReturnMsgEnum::ChaIgnoredAdd);
 							}
 							else {
-								h.TaskError(ReturnMsgEnum::STR_Task_Challenge_IgnoreAddFailed);
+								h.TaskError(ReturnMsgEnum::TaskErrChaIgnoreAddFailed);
 							}
 						}
 					}
 				}
 				else {
-					h.PushMsg(ReturnMsgEnum::LOG_Challenge_NotFindAdd);
+					h.GuiLogF(ReturnMsgEnum::ChaNotFindAdd);
 				}
 			}
 		}
@@ -173,11 +173,11 @@ bool Task_LegacyCha::Run(Helper& h) {
 	catch (int err) {
 		switch (err) {
 		case TaskExceptionCode::UserStop:
-			h.PushMsg(ReturnMsgEnum::LOG_TaskStop);
+			h.GuiLogF(ReturnMsgEnum::TaskStop);
 			taskReturnCode = false;
 			break;
 		case TaskExceptionCode::TaskComplete:
-			h.PushMsg(ReturnMsgEnum::LOG_TaskComplete);
+			h.GuiLogF(ReturnMsgEnum::TaskComplete);
 			break;
 		case TaskExceptionCode::KnownErrorButNotCritical:
 			break;
@@ -185,16 +185,16 @@ bool Task_LegacyCha::Run(Helper& h) {
 			taskReturnCode = false;
 			break;
 		default:
-			h.PushMsg(ReturnMsgEnum::LOG_TaskError_Exception);
+			h.GuiLogF(ReturnMsgEnum::TaskException);
 			taskReturnCode = false;
 		}
 	}
 	catch (...) {
-		h.PushMsg(ReturnMsgEnum::LOG_TaskError_Exception);
+		h.GuiLogF(ReturnMsgEnum::TaskException);
 		taskReturnCode = false;
 	}
 	CoreLog() << "Task.Challenge: Exit." << std::endl;
-	h.PushMsg(ReturnMsgEnum::LOG_Challenge_Exit);
+	h.GuiLogF(ReturnMsgEnum::ChaExit);
 	return taskReturnCode;
 }
 

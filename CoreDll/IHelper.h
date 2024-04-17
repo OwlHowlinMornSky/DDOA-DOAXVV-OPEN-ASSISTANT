@@ -68,7 +68,7 @@ public:
 	/**
 	 * @brief 弹出返回消息
 	*/
-	virtual unsigned long msgPop() = 0;
+	virtual long msgPop() = 0;
 };
 
 } // namespace ohms

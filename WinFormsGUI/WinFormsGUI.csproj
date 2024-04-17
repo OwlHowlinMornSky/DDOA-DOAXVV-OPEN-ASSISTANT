@@ -66,15 +66,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Param.settings</DependentUpon>
     </Compile>
-    <Compile Update="Strings\LogEvent.Designer.cs">
+    <Compile Update="Strings\GuiLog.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>LogEvent.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Strings\LogStr.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LogStr.resx</DependentUpon>
+      <DependentUpon>GuiLog.resx</DependentUpon>
     </Compile>
     <Compile Update="Strings\Main.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -112,13 +107,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Img.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strings\LogEvent.resx">
+    <EmbeddedResource Update="Strings\GuiLog.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LogEvent.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\LogStr.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LogStr.Designer.cs</LastGenOutput>
+      <LastGenOutput>GuiLog.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Strings\Main.resx">
       <Generator>ResXFileCodeGenerator</Generator>

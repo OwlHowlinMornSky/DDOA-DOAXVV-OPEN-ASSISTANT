@@ -79,6 +79,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 找不到名为 &quot;{0}&quot; 的字符串。 的本地化字符串。
+        /// </summary>
+        internal static string NoSuchString {
+            get {
+                return ResourceManager.GetString("NoSuchString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 核心模块初始化失败 的本地化字符串。
         /// </summary>
         internal static string ProgramCoreInitializationFailed {

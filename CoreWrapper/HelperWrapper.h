@@ -51,15 +51,20 @@ public:
 	System::Boolean IsRunning();
 
 	/**
-	 * @brief 提取消息。
-	 * @return 消息。
+	 * @brief 提取指令。
+	 * @return 指令枚举。
+	 */
+	ReturnCmd GetCommand();
+	/**
+	 * @brief 提取消息字符串。
+	 * @return 消息字符串枚举。
 	 */
 	ReturnMessage GetMessage();
 	/**
-	 * @brief 提取消息/代码。
-	 * @return 消息/代码。
+	 * @brief 提取数值。
+	 * @return int32。
 	 */
-	System::UInt32 GetCode();
+	System::Int32 GetValueI();
 
 	/**
 	 * @brief 初始化。

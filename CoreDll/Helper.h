@@ -48,20 +48,19 @@ public:
 	virtual bool start() override;
 	virtual void askForStop() override;
 	virtual bool isRunning() override;
-	virtual unsigned long msgPop() override;
+	virtual long msgPop() override;
 
 public:
 	/**
 	 * @brief 压入回执消息
-	 * @param hrm 回执消息
 	*/
-	void PushMsg(unsigned long hrm);
-	/**
-	 * @brief 压入回执消息（附带指示代码）
-	 * @param hrm 回执消息
-	 * @param code 指示代码
-	*/
-	void PushMsgCode(unsigned long hrm, unsigned long code);
+	void GuiLogC_EmptyLine();
+	void GuiLogC_Stopped();
+	void GuiLogC_BtnToStop();
+	void GuiLogC_BtnToStart();
+	void GuiLogF(long hrm);
+	void GuiLogF_S(long hrm, long code);
+	void GuiLogF_I(long hrm, long code);
 
 	std::unique_ptr<MatchTemplate> CreateTemplate(const std::string& name);
 
@@ -69,7 +68,7 @@ public:
 	 * @brief 报错（写入logger并弹窗），并 throw 0
 	 * @param str 报错信息
 	*/
-	void TaskError(unsigned long type);
+	void TaskError(long str);
 
 // 内部的，具体实现。
 protected:
@@ -82,7 +81,7 @@ protected:
 protected:
 	std::atomic_bool m_running; // 正在运行的标记。true为正在运行
 
-	std::queue<unsigned long> m_hrm; // 返回消息的队列
+	std::queue<long> m_hrm; // 返回消息的队列
 	std::mutex m_hrm_mutex; // 返回消息的互斥体
 
 	std::filesystem::path m_assets; // 图片资源文件夹

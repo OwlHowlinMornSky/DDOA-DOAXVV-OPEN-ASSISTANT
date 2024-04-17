@@ -79,7 +79,7 @@ int Helper::setup(bool winrtInited) {
 
 bool Helper::start() {
 	if (m_running) { // 已经有任务运行（或者有bug没清除运行标记）
-		PushMsg(ReturnMsgEnum::LOG_StartError_Running);
+		GuiLogF(ReturnMsgEnum::WorkStartErrRunning);
 		CoreLog() << "Helper: Unexpected Start Repeatly. [Failed to Start]" << std::endl;
 		return false;
 	}
@@ -103,7 +103,7 @@ bool Helper::start() {
 
 void Helper::askForStop() {
 	if (m_running) { // 运行的时候才有意义
-		PushMsg(ReturnMsgEnum::LOG_Stopping);
+		GuiLogF(ReturnMsgEnum::WorkStopping);
 		g_askedForStop = true;
 	}
 	return;
@@ -113,47 +113,76 @@ bool Helper::isRunning() {
 	return m_running;
 }
 
-unsigned long Helper::msgPop() {
+long Helper::msgPop() {
 	std::lock_guard lg(m_hrm_mutex); // 上锁
-	if (m_hrm.empty()) { // 没有消息
-		return ReturnMsgEnum::None;
-	}
+	if (m_hrm.empty()) // 没有消息
+		return 0;
 	// 获取队首并弹出
-	unsigned long res = m_hrm.front();
+	long res = m_hrm.front();
 	m_hrm.pop();
 	return res;
 }
 
-void Helper::PushMsg(unsigned long hrm) {
+void Helper::GuiLogC_EmptyLine() {
 	std::lock_guard lg(m_hrm_mutex); // 上锁
-	m_hrm.push(hrm); // 压入
+	m_hrm.push(ReturnMsgCmd::CMD_EmptyLine);
+}
+
+void Helper::GuiLogC_Stopped() {
+	std::lock_guard lg(m_hrm_mutex); // 上锁
+	m_hrm.push(ReturnMsgCmd::CMD_Stopped);
+}
+
+void Helper::GuiLogC_BtnToStop() {
+	std::lock_guard lg(m_hrm_mutex); // 上锁
+	m_hrm.push(ReturnMsgCmd::CMD_BtnToStop);
+}
+
+void Helper::GuiLogC_BtnToStart() {
+	std::lock_guard lg(m_hrm_mutex); // 上锁
+	m_hrm.push(ReturnMsgCmd::CMD_BtnToStart);
+}
+
+void Helper::GuiLogF(long str) {
+	std::lock_guard lg(m_hrm_mutex); // 上锁
+	m_hrm.push(ReturnMsgCmd::LOG_Format);
+	m_hrm.push(str);
 	return;
 }
 
-void Helper::PushMsgCode(unsigned long hrm, unsigned long code) {
+void Helper::GuiLogF_S(long str, long s0) {
 	std::lock_guard lg(m_hrm_mutex); // 上锁
-	m_hrm.push(hrm); // 压入
-	m_hrm.push(code); // 压入
+	m_hrm.push(ReturnMsgCmd::LOG_Format_S);
+	m_hrm.push(str);
+	m_hrm.push(s0);
+	return;
+}
+
+void Helper::GuiLogF_I(long str, long i0) {
+	std::lock_guard lg(m_hrm_mutex); // 上锁
+	m_hrm.push(ReturnMsgCmd::LOG_Format_I);
+	m_hrm.push(str);
+	m_hrm.push(i0);
 	return;
 }
 
 std::unique_ptr<MatchTemplate> Helper::CreateTemplate(const std::string& name) {
 	std::unique_ptr<MatchTemplate> res = std::make_unique<MatchTemplate>(m_templateList.at(name));
 	if (!res->LoadMat((m_assets / (name + ".png")).string())) {
-		TaskError(ReturnMsgEnum::STR_Task_FailedToLoadTemplateFile);
+		TaskError(ReturnMsgEnum::TaskErrFailedToLoadTemplateFile);
 		return std::unique_ptr<MatchTemplate>();
 	}
 	return std::move(res);
 }
 
-void Helper::TaskError(unsigned long type) {
-	PushMsgCode(ReturnMsgEnum::LOG_TaskError, type);
+void Helper::TaskError(long str) {
+	GuiLogF_S(ReturnMsgEnum::TaskErr_Format, str);
 	throw TaskExceptionCode::KnownErrorButNotCritical; // 要求停止
 }
 
 void Helper::Work() {
 	m_running = true; // 设置标记（return前要清除）
-	PushMsg(ReturnMsgEnum::CMD_BtnToStop); // 让主按钮变为stop
+	GuiLogC_BtnToStop(); // 让主按钮变为stop
 
 	Settings::Global m_set = Settings::Global::DEFAULT;
 
@@ -181,7 +210,7 @@ void Helper::Work() {
 		}
 	}
 	catch (...) {
-		PushMsg(ReturnMsgEnum::LOG_WorkError_ExceptionInternalError);
+		GuiLogF(ReturnMsgEnum::WorkErrorInternalException);
 	}
 	r_handler->Reset(); // 停止截图
 
@@ -189,14 +218,14 @@ void Helper::Work() {
 	SetThreadExecutionState(ES_CONTINUOUS);
 
 	if (g_askedForStop) {
-		PushMsg(ReturnMsgEnum::LOG_Stopped);
+		GuiLogF(ReturnMsgEnum::WorkStopped);
 	}
 	else {
-		PushMsg(ReturnMsgEnum::LOG_Complete);
+		GuiLogF(ReturnMsgEnum::WorkComplete);
 	}
 	m_running = false; // 清除标记
-	PushMsg(ReturnMsgEnum::CMD_BtnToStart); // 让主按钮变成start
-	PushMsg(ReturnMsgEnum::CMD_Stopped); // 通知已完全停止
+	GuiLogC_BtnToStart(); // 让主按钮变成start
+	GuiLogC_Stopped(); // 通知已完全停止
 
 	cv::destroyAllWindows();
 	return;

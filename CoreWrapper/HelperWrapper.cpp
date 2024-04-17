@@ -47,13 +47,18 @@ System::Boolean HelperWrapper::IsRunning() {
 	return r_helper->isRunning();
 }
 
+ReturnCmd HelperWrapper::GetCommand() {
+	System::Int32 res = r_helper->msgPop();
+    return ReturnCmd(res);
+}
+
 ReturnMessage HelperWrapper::GetMessage() {
-	System::UInt32 res = r_helper->msgPop();
+	System::Int32 res = r_helper->msgPop();
 	return ReturnMessage(res);
 }
 
-System::UInt32 HelperWrapper::GetCode() {
-	System::UInt32 res = r_helper->msgPop();
+System::Int32 HelperWrapper::GetValueI() {
+	System::Int32 res = r_helper->msgPop();
 	return res;
 }
 

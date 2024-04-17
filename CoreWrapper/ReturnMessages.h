@@ -24,59 +24,92 @@
 
 namespace Wrapper {
 
+public enum class ReturnCmd : System::UInt32 {
+	None = ohms::ReturnMsgCmd::None,   // 空。
+
+	CMD_EmptyLine,  // 添加一个空行。
+	CMD_Stopped,    // 任务已停止。
+	CMD_BtnToStop,  // 按钮切换为 “停止”。
+	CMD_BtnToStart, // 按钮切换为 “开始”。
+
+	LOG_Format,
+	LOG_Format_S,
+	LOG_Format_I,
+
+	LOG_Format_SS,
+	LOG_Format_SI,
+	LOG_Format_IS,
+	LOG_Format_II,
+
+	LOG_Format_SSS,
+	LOG_Format_SSI,
+	LOG_Format_SIS,
+	LOG_Format_SII,
+	LOG_Format_ISS,
+	LOG_Format_ISI,
+	LOG_Format_IIS,
+	LOG_Format_III,
+
+	LOG_Format_SSSS,
+	LOG_Format_SSSI,
+	LOG_Format_SSIS,
+	LOG_Format_SSII,
+	LOG_Format_SISS,
+	LOG_Format_SISI,
+	LOG_Format_SIIS,
+	LOG_Format_SIII,
+	LOG_Format_ISSS,
+	LOG_Format_ISSI,
+	LOG_Format_ISIS,
+	LOG_Format_ISII,
+	LOG_Format_IISS,
+	LOG_Format_IISI,
+	LOG_Format_IIIS,
+	LOG_Format_IIII,
+};
+
 /**
  * @brief 返回消息的包装。
  */
 public enum class ReturnMessage : System::UInt32 {
 	None = ohms::ReturnMsgEnum::None,
 
+	WorkStartErrRunning,
+	WorkStopping,
+	WorkStopped,
+	WorkComplete,
 
-	_CMD_START = ohms::ReturnMsgEnum::_CMD_START,
-	CMD_EmptyLine,  // 添加一个空行。
-	CMD_Stopped,    // 任务已停止。
-	CMD_BtnToStop,  // 按钮切换为 “停止”。
-	CMD_BtnToStart, // 按钮切换为 “开始”。
+	WorkError,
+	WorkErrorInternalException,
 
+	TaskStop,
+	TaskComplete,
+	TaskException,
+	TaskErr_Format,
 
-	_LOG_START = ohms::ReturnMsgEnum::_LOG_START,
-	LOG_StartError_Running,
-	LOG_Stopping,
-	LOG_Stopped,
-	LOG_Complete,
+	ChaStart,
+	ChaBegin_I, // 挑战赛开始（下跟次数！）
+	ChaOver,
+	ChaExit,
+	ChaBeginAdd_I, // 奖励挑战赛开始（下跟次数！）
+	ChaIgnoredAdd,
+	ChaNotFindAdd,
+	ChaFindAdd,
+	ChaOpenedAdd,
 
-	LOG_WorkError_ExceptionInternalError,
-
-	LOG_TaskStop,
-	LOG_TaskComplete,
-	LOG_TaskError_Exception,
-	LOG_TaskError, // 下跟参数
-
-	LOG_Challenge_Start,
-	LOG_Challenge_BeginNum, // 挑战赛开始（下跟次数！）
-	LOG_Challenge_Over,
-	LOG_Challenge_Exit,
-	LOG_Challenge_BeginAdd, // 奖励挑战赛开始（下跟次数！）
-	LOG_Challenge_IgnoredAdd,
-	LOG_Challenge_NotFindAdd,
-	LOG_Challenge_FindAdd,
-	LOG_Challenge_OpenedAdd,
-
-
-	_STR_START = ohms::ReturnMsgEnum::_STR_START,
-	// 以下都是 LOG_TaskError 指定参数
-	STR_Task_Challenge_NoNew,
-	STR_Task_Challenge_NoLast,
-	STR_Task_Challenge_NoEnter,
-	STR_Task_Challenge_NoStart,
-	STR_Task_Challenge_TimeOut,
-	STR_Task_Challenge_NoEnd,
-	STR_Task_Challenge_NoOver,
-	STR_Task_Challenge_AddNotSup,
-	STR_Task_Challenge_IgnoreAddFailed,
-	STR_Task_Challenge_OpenAddFailed,
-	STR_Task_FailedToLoadTemplateFile,
-	STR_Task_Error_NoWnd,
-	STR_Task_Error_FailedCapture,
+	TaskErrChaNoNew,
+	TaskErrChaNoLast,
+	TaskErrChaNoEnter,
+	TaskErrChaNoStart,
+	TaskErrChaTimeOut,
+	TaskErrChaNoEnd,
+	TaskErrChaNoOver,
+	TaskErrChaAddNotSup,
+	TaskErrChaIgnoreAddFailed,
+	TaskErrChaOpenAddFailed,
+	TaskErrFailedToLoadTemplateFile,
+	TaskErrNoWnd,
+	TaskErrCaptureFailed,
 };
 
 }

@@ -158,7 +158,7 @@ namespace WinFormsGUI {
 				WorkLock();
 				listBox_Log.Items.Clear();
 				if (!Program.helper.Start()) {
-					Log(Strings.LogEvent.Work_CanNotStartWork);
+					//Log(Strings.LogEvent.Work_CanNotStartWork);
 					WorkUnlock();
 					return;
 				}
@@ -272,7 +272,8 @@ namespace WinFormsGUI {
 		private void Timer_Main_Tick(object sender, EventArgs e) {
 			ReturnMessage m;
 			while ((m = Program.helper.GetMessage()) != ReturnMessage.None)
-				switch (m) {
+				;
+				/*switch (m) {
 				case ReturnMessage.CMD_EmptyLine:
 					Log();
 					break;
@@ -344,46 +345,46 @@ namespace WinFormsGUI {
 					string text = "null";
 					switch (m) {
 					case ReturnMessage.STR_Task_Challenge_NoNew:
-						text = Strings.LogStr.Task_Challenge_NoNew;
+						text = Strings.LogStr.TaskErrChaNoNew;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoLast:
-						text = Strings.LogStr.Task_Challenge_NoLast;
+						text = Strings.LogStr.TaskErrChaNoPri;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoEnter:
-						text = Strings.LogStr.Task_Challenge_NoEnter;
+						text = Strings.LogStr.TaskErrChaNoEnter;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoStart:
-						text = Strings.LogStr.Task_Challenge_NoStart;
+						text = Strings.LogStr.TaskErrChaNoStart;
 						break;
 					case ReturnMessage.STR_Task_Challenge_TimeOut:
-						text = Strings.LogStr.Task_Challenge_TimeOut;
+						text = Strings.LogStr.TaskErrChaTimeOut;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoEnd:
-						text = Strings.LogStr.Task_Challenge_NoEnd;
+						text = Strings.LogStr.TaskErrChaNoEnd;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoOver:
-						text = Strings.LogStr.Task_Challenge_NoOver;
+						text = Strings.LogStr.TaskErrChaNoOver;
 						break;
 					case ReturnMessage.STR_Task_Challenge_AddNotSup:
-						text = Strings.LogStr.Task_Challenge_AddNotSup;
+						text = Strings.LogStr.TaskErrChaAddNotSup;
 						break;
 					case ReturnMessage.STR_Task_Challenge_IgnoreAddFailed:
-						text = Strings.LogStr.Task_Challenge_IgnoreAddFailed;
+						text = Strings.LogStr.TaskErrChaIgnoreAddFailed;
 						break;
 					case ReturnMessage.STR_Task_Challenge_OpenAddFailed:
-						text = Strings.LogStr.Task_Challenge_OpenAddFailed;
+						text = Strings.LogStr.TaskErrChaOpenAddFailed;
 						break;
 					case ReturnMessage.STR_Task_FailedToLoadTemplateFile:
-						text = Strings.LogStr.Task_FailedToLoadTemplateFile;
+						text = Strings.LogStr.TaskErrFailedToLoadTemplateFile;
 						break;
 					case ReturnMessage.STR_Task_Error_NoWnd:
-						text = Strings.LogStr.Task_CanNotFindWnd;
+						text = Strings.LogStr.TaskErrNoWnd;
 						break;
 					case ReturnMessage.STR_Task_Error_FailedCapture:
-						text = Strings.LogStr.Task_CanNotCapture;
+						text = Strings.LogStr.TaskErrNoCap;
 						break;
 					default:
-						text = string.Format(Strings.LogStr.UNKNOWN, m.ToString());
+						text = string.Format(Strings.LogStr.k, m.ToString());
 						break;
 					}
 					Log(Strings.LogEvent.Task_Error + ": " + text);
@@ -427,7 +428,7 @@ namespace WinFormsGUI {
 					Log(string.Format(Strings.LogEvent.UNKNOWN, m.ToString()));
 					break;
 
-				}
+				}*/
 			return;
 		}
 

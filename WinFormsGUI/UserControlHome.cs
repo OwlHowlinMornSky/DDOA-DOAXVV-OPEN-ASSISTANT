@@ -18,6 +18,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+using System.Drawing;
 using Wrapper;
 
 namespace WinFormsGUI {
@@ -161,7 +162,7 @@ namespace WinFormsGUI {
 				Program.helper.SetTaskList([.. userControlList.GetEnabledList()]); // 设置所选的任务
 				ClearLog(); // 清空进度提示。
 				if (!Program.helper.Start()) { // 启动失败
-					Log(Strings.LogEvent.Work_CanNotStartWork); // 提示。
+					Log(Strings.GuiLog.WorkCanNotStartWork); // 提示。
 					Program.GuiLock.Invoke(null, false); // 解锁GUI
 					return;
 				}
@@ -172,169 +173,127 @@ namespace WinFormsGUI {
 			}
 		}
 
+		private string GetLogStringFromResx(string name) {
+			string res = Strings.GuiLog.ResourceManager.GetString(name);
+			if (res == null) {
+				res = name;
+				MessageBox.Show(
+					string.Format(Strings.Main.NoSuchString, name),
+					Text,
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
+			}
+			return res;
+		}
+
 		/// <summary>
 		/// Timer读取回执信息。
 		/// </summary>
 		private void Timer_Main_Tick(object sender, EventArgs e) {
 			bool setted = false;
-			ReturnMessage m;
-			while ((m = Program.helper.GetMessage()) != ReturnMessage.None) {
+			ReturnCmd cmd;
+			while ((cmd = Program.helper.GetCommand()) != ReturnCmd.None) {
 				if (!setted) {
 					userControlLogger.LogProcessStatusChange(true);
 					setted = true;
 				}
-				switch (m) {
-				case ReturnMessage.CMD_EmptyLine:
+
+				switch (cmd) {
+				case ReturnCmd.CMD_EmptyLine:
 					//Log();
 					break;
-				case ReturnMessage.CMD_Stopped:
+				case ReturnCmd.CMD_Stopped:
 					Program.GuiLock.Invoke(null, false);
 					timer_Main.Enabled = false;
 					break;
-				case ReturnMessage.CMD_BtnToStop:
+				case ReturnCmd.CMD_BtnToStop:
 					button_Main.Text = Strings.Main.Btn_Main_Stop;
 					button_Main.Enabled = true;
 					m_btnMainIsStart = false;
 					break;
-				case ReturnMessage.CMD_BtnToStart:
+				case ReturnCmd.CMD_BtnToStart:
 					button_Main.Text = Strings.Main.Btn_Main_Start;
 					button_Main.Enabled = true;
 					m_btnMainIsStart = true;
 					break;
-
-				case ReturnMessage.LOG_StartError_Running:
-					Log(Strings.LogEvent.Work_AlreadyRunning);
-					break;
-				case ReturnMessage.LOG_Stopping:
-					Log(Strings.LogEvent.Work_Stopping);
-					break;
-				case ReturnMessage.LOG_Stopped:
-					Log(Strings.LogEvent.Work_Stopped);
-					break;
-				case ReturnMessage.LOG_Complete:
-					Log(Strings.LogEvent.Work_Complete);
-					MyPopNotification(
-						Strings.LogEvent.Work_Complete,
-						Strings.LogEvent.Work_Complete_Describtion,
-						ToolTipIcon.Info
-					);
-					break;
-
-				case ReturnMessage.LOG_WorkError_ExceptionInternalError:
-					//Log();
-					Log(Strings.LogEvent.Work_Exception);
-					MyPopNotification(
-						Strings.LogEvent.Work_Error,
-						Strings.LogEvent.Work_Exception,
-						ToolTipIcon.Error
-					);
-					break;
-
-				case ReturnMessage.LOG_TaskStop:
-					Log(Strings.LogEvent.Task_Stop);
-					break;
-				case ReturnMessage.LOG_TaskComplete:
-					Log(Strings.LogEvent.Task_Complete);
-					break;
-				case ReturnMessage.LOG_TaskError_Exception:
-					Log(Strings.LogEvent.Task_Exception);
-					MyPopNotification(
-						Strings.LogEvent.Work_Error,
-						Strings.LogEvent.Task_Exception,
-						ToolTipIcon.Error
-					);
-					break;
-				case ReturnMessage.LOG_TaskError:
-					m = Program.helper.GetMessage();
-					string text;
-					switch (m) {
-					case ReturnMessage.STR_Task_Challenge_NoNew:
-						text = Strings.LogStr.Task_Challenge_NoNew;
+				case ReturnCmd.LOG_Format: {
+					var msg = Program.helper.GetMessage();
+					switch (msg) {
+					case ReturnMessage.WorkComplete:
+						Log(Strings.GuiLog.WorkComplete);
+						MyPopNotification(
+							Strings.GuiLog.WorkComplete,
+							Strings.GuiLog.WorkCompleteDescribtion,
+							ToolTipIcon.Info
+						);
 						break;
-					case ReturnMessage.STR_Task_Challenge_NoLast:
-						text = Strings.LogStr.Task_Challenge_NoLast;
+					case ReturnMessage.WorkErrorInternalException:
+						Log(Strings.GuiLog.WorkErrorInternalException);
+						MyPopNotification(
+							Strings.GuiLog.WorkError,
+							Strings.GuiLog.WorkErrorInternalException,
+							ToolTipIcon.Error
+						);
 						break;
-					case ReturnMessage.STR_Task_Challenge_NoEnter:
-						text = Strings.LogStr.Task_Challenge_NoEnter;
-						break;
-					case ReturnMessage.STR_Task_Challenge_NoStart:
-						text = Strings.LogStr.Task_Challenge_NoStart;
-						break;
-					case ReturnMessage.STR_Task_Challenge_TimeOut:
-						text = Strings.LogStr.Task_Challenge_TimeOut;
-						break;
-					case ReturnMessage.STR_Task_Challenge_NoEnd:
-						text = Strings.LogStr.Task_Challenge_NoEnd;
-						break;
-					case ReturnMessage.STR_Task_Challenge_NoOver:
-						text = Strings.LogStr.Task_Challenge_NoOver;
-						break;
-					case ReturnMessage.STR_Task_Challenge_AddNotSup:
-						text = Strings.LogStr.Task_Challenge_AddNotSup;
-						break;
-					case ReturnMessage.STR_Task_Challenge_IgnoreAddFailed:
-						text = Strings.LogStr.Task_Challenge_IgnoreAddFailed;
-						break;
-					case ReturnMessage.STR_Task_Challenge_OpenAddFailed:
-						text = Strings.LogStr.Task_Challenge_OpenAddFailed;
-						break;
-					case ReturnMessage.STR_Task_FailedToLoadTemplateFile:
-						text = Strings.LogStr.Task_FailedToLoadTemplateFile;
-						break;
-					case ReturnMessage.STR_Task_Error_NoWnd:
-						text = Strings.LogStr.Task_CanNotFindWnd;
-						break;
-					case ReturnMessage.STR_Task_Error_FailedCapture:
-						text = Strings.LogStr.Task_CanNotCapture;
+					case ReturnMessage.TaskException:
+						Log(Strings.GuiLog.TaskException);
+						MyPopNotification(
+							Strings.GuiLog.WorkError,
+							Strings.GuiLog.TaskException,
+							ToolTipIcon.Error
+						);
 						break;
 					default:
-						text = string.Format(Strings.LogStr.UNKNOWN, m.ToString());
+						Log(Strings.GuiLog.ResourceManager.GetString(msg.ToString()));
 						break;
 					}
-					Log(Strings.LogEvent.Task_Error + ": " + text, Color.DarkRed);
-					MyPopNotification(
-						Strings.LogEvent.Task_Error,
-						text,
-						ToolTipIcon.Info
+					break;
+				}
+				case ReturnCmd.LOG_Format_S: {
+					var msg = Program.helper.GetMessage();
+					var reason = Program.helper.GetMessage();
+					string t;
+					switch (msg) {
+					case ReturnMessage.TaskErr_Format:
+						t =
+							string.Format(
+								Strings.GuiLog.TaskErr_Format,
+								Strings.GuiLog.ResourceManager.GetString(reason.ToString())
+							);
+						Log(t, Color.DarkRed);
+						MyPopNotification(Strings.GuiLog.TaskErr, t, ToolTipIcon.Info);
+						break;
+					default:
+						t =
+							string.Format(
+								Strings.GuiLog.ResourceManager.GetString(msg.ToString()),
+								Strings.GuiLog.ResourceManager.GetString(reason.ToString())
+							);
+						Log(t);
+						break;
+					}
+					break;
+				}
+				case ReturnCmd.LOG_Format_I: {
+					var msg = Program.helper.GetMessage();
+					var i = Program.helper.GetValueI();
+					Log(
+						string.Format(
+							Strings.GuiLog.ResourceManager.GetString(msg.ToString()),
+							Strings.GuiLog.ResourceManager.GetString(i.ToString())
+						)
 					);
 					break;
-
-				case ReturnMessage.LOG_Challenge_Start:
-					Log(Strings.LogEvent.Challenge_Start);
-					break;
-				case ReturnMessage.LOG_Challenge_BeginNum: // 挑战赛开始（下跟次数！）
-					Log(string.Format(Strings.LogEvent.Challenge_BeginNum, Program.helper.GetCode()));
-					break;
-				case ReturnMessage.LOG_Challenge_Over:
-					Log(Strings.LogEvent.Challenge_Over);
-					break;
-				case ReturnMessage.LOG_Challenge_Exit:
-					Log(Strings.LogEvent.Challenge_Exit);
-					break;
-				case ReturnMessage.LOG_Challenge_BeginAdd: // 奖励挑战赛开始（下跟次数！）
-					Log(string.Format(Strings.LogEvent.Challenge_BeginAdd, Program.helper.GetCode()));
-					break;
-				case ReturnMessage.LOG_Challenge_IgnoredAdd:
-					Log(Strings.LogEvent.Challenge_IgnoredAdd);
-					break;
-				case ReturnMessage.LOG_Challenge_NotFindAdd:
-					Log(Strings.LogEvent.Challenge_NotFindAdd);
-					break;
-				case ReturnMessage.LOG_Challenge_FindAdd:
-					Log(Strings.LogEvent.Challenge_FindAdd);
-					break;
-				case ReturnMessage.LOG_Challenge_OpenedAdd:
-					Log(Strings.LogEvent.Challenge_OpenedAdd);
-					break;
+				}
 				default:
-					Log(string.Format(Strings.LogEvent.UNKNOWN, m.ToString()));
 					break;
-
 				}
 			}
 			if (setted)
 				userControlLogger.LogProcessStatusChange(false);
 			return;
 		}
+
 	}
 }
