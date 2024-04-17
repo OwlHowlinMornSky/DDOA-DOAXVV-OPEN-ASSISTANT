@@ -21,36 +21,59 @@
 using Wrapper;
 
 namespace WinFormsGUI {
+	/// <summary>
+	/// 编辑“主页左侧任务列表”窗口的附属窗口，用于选择目标任务项。
+	/// </summary>
 	public partial class FormListEditChooseTask : Form {
 
+		/// <summary>
+		/// 选择的任务项id
+		/// </summary>
 		public uint choosedTask = (uint)TaskEnumWrap.None;
 
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		/// <param name="TipText">窗口标题的提示文本</param>
 		public FormListEditChooseTask(string TipText) {
 			InitializeComponent();
 			Text += TipText;
 		}
 
+		/// <summary>
+		/// 窗口加载时。
+		/// </summary>
 		private void FormListEditChooseTask_Load(object sender, EventArgs e) {
+			// 将所有可用的任务项列出
 			for (uint i = (uint)TaskEnumWrap.None + 1, n = (uint)TaskEnumWrap.COUNT;
-				i < n;
-				i++) {
+				i < n; i++) {
 				listBox1.Items.Add(Strings.Main.ResourceManager.GetString("Task" + i.ToString("000")));
 			}
 		}
 
-		private void listBox1_SelectedIndexChanged(object sender, EventArgs e) {
+		/// <summary>
+		/// ListBox改变选择时。
+		/// </summary>
+		private void ListBox1_SelectedIndexChanged(object sender, EventArgs e) {
+			// 修改选择项的记录。
 			if (listBox1.SelectedIndex == -1)
 				choosedTask = (uint)TaskEnumWrap.None;
 			else
 				choosedTask = (uint)listBox1.SelectedIndex - (uint)TaskEnumWrap.None + 1;
 		}
 
-		private void button1_Click(object sender, EventArgs e) {
+		/// <summary>
+		/// 点击“确定”按钮。
+		/// </summary>
+		private void Button1_Click(object sender, EventArgs e) {
 			DialogResult = DialogResult.OK;
 		}
 
+		/// <summary>
+		/// 点击“取消”按钮。
+		/// </summary>
 		private void button2_Click(object sender, EventArgs e) {
-			choosedTask = (uint)TaskEnumWrap.None;
+			choosedTask = (uint)TaskEnumWrap.None; // 清除选择。
 			DialogResult = DialogResult.Cancel;
 		}
 	}

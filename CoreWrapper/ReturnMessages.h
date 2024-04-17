@@ -24,6 +24,9 @@
 
 namespace Wrapper {
 
+/**
+ * @brief 返回消息的包装。
+ */
 public enum class ReturnMessage : System::UInt32 {
 	None = ohms::ReturnMsgEnum::None,
 

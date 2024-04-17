@@ -26,20 +26,49 @@
 
 namespace Wrapper {
 
+/**
+ * @brief CLI套壳，向CoreDll的IHelper服务。
+ */
 public ref class HelperWrapper {
 public:
 	HelperWrapper();
 	~HelperWrapper();
 
 public:
+	/**
+	 * @brief 开始任务（IHelper::start）
+	 * @return 启动是否成功。
+	 */
 	System::Boolean Start();
+	/**
+	 * @brief 要求停止（IHelper::askForStop）
+	 */
 	System::Void AskForStop();
+	/**
+	 * @brief 是否正在运行（IHelper::isRunning）
+	 * @return 是否运行
+	 */
 	System::Boolean IsRunning();
 
+	/**
+	 * @brief 提取消息。
+	 * @return 消息。
+	 */
 	ReturnMessage GetMessage();
+	/**
+	 * @brief 提取消息/代码。
+	 * @return 消息/代码。
+	 */
 	System::UInt32 GetCode();
 
+	/**
+	 * @brief 初始化。
+	 * @return 0 为 成功，非零整数为各类错误。
+	 */
 	System::Int32 Setup();
+	/**
+	 * @brief 销毁。
+	 */
 	System::Void Drop();
 
 public:

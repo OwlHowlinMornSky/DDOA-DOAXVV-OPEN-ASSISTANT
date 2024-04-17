@@ -34,6 +34,7 @@
 			button_cancel = new Button();
 			button_ok = new Button();
 			button_clearAll = new Button();
+			button_reset = new Button();
 			SuspendLayout();
 			// 
 			// listBox1
@@ -46,7 +47,7 @@
 			listBox1.Name = "listBox1";
 			listBox1.Size = new Size(239, 357);
 			listBox1.TabIndex = 2;
-			listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
+			listBox1.SelectedIndexChanged += ListBox1_SelectedIndexChanged;
 			// 
 			// button_add
 			// 
@@ -57,7 +58,7 @@
 			button_add.TabIndex = 3;
 			button_add.Text = "新增";
 			button_add.UseVisualStyleBackColor = true;
-			button_add.Click += button_add_Click;
+			button_add.Click += Button_add_Click;
 			// 
 			// button_Insert
 			// 
@@ -69,7 +70,7 @@
 			button_Insert.TabIndex = 4;
 			button_Insert.Text = "插入";
 			button_Insert.UseVisualStyleBackColor = true;
-			button_Insert.Click += button_Insert_Click;
+			button_Insert.Click += Button_Insert_Click;
 			// 
 			// button_modify
 			// 
@@ -81,7 +82,7 @@
 			button_modify.TabIndex = 5;
 			button_modify.Text = "编辑";
 			button_modify.UseVisualStyleBackColor = true;
-			button_modify.Click += button_modify_Click;
+			button_modify.Click += Button_modify_Click;
 			// 
 			// button_remove
 			// 
@@ -93,7 +94,7 @@
 			button_remove.TabIndex = 6;
 			button_remove.Text = "移除";
 			button_remove.UseVisualStyleBackColor = true;
-			button_remove.Click += button_remove_Click;
+			button_remove.Click += Button_remove_Click;
 			// 
 			// button_moveup
 			// 
@@ -105,7 +106,7 @@
 			button_moveup.TabIndex = 7;
 			button_moveup.Text = "上移";
 			button_moveup.UseVisualStyleBackColor = true;
-			button_moveup.Click += button_moveup_Click;
+			button_moveup.Click += Button_moveup_Click;
 			// 
 			// button_movedown
 			// 
@@ -117,7 +118,7 @@
 			button_movedown.TabIndex = 8;
 			button_movedown.Text = "下移";
 			button_movedown.UseVisualStyleBackColor = true;
-			button_movedown.Click += button_movedown_Click;
+			button_movedown.Click += Button_movedown_Click;
 			// 
 			// button_cancel
 			// 
@@ -149,13 +150,24 @@
 			button_clearAll.Size = new Size(75, 23);
 			button_clearAll.TabIndex = 9;
 			button_clearAll.Text = "清空";
-			button_clearAll.Click += button_clearAll_Click;
+			button_clearAll.Click += Button_clearAll_Click;
+			// 
+			// button_reset
+			// 
+			button_reset.Location = new Point(257, 280);
+			button_reset.Name = "button_reset";
+			button_reset.Size = new Size(75, 23);
+			button_reset.TabIndex = 10;
+			button_reset.Text = "重置";
+			button_reset.UseVisualStyleBackColor = true;
+			button_reset.Click += Button_reset_Click;
 			// 
 			// FormListEdit
 			// 
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(344, 381);
+			Controls.Add(button_reset);
 			Controls.Add(button_clearAll);
 			Controls.Add(button_ok);
 			Controls.Add(button_cancel);
@@ -189,5 +201,6 @@
 		private Button button_cancel;
 		private Button button_ok;
 		private Button button_clearAll;
+		private Button button_reset;
 	}
 }

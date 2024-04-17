@@ -37,7 +37,20 @@ namespace WinFormsGUI {
 			InitializeComponent();
 		}
 
+		public List<uint> GetEnabledList() {
+			List<uint> list = new List<uint>();
+			for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
+				var checkBox = flowLayoutPanel1.Controls[i] as CheckBox;
+				if (checkBox != null && checkBox.Checked) {
+					list.Add(((ListItemUserData)checkBox.DataContext).coreTaskEnum);
+				}
+			}
+			return list;
+		}
+
 		private void SetList(List<uint> list) {
+			SuspendLayout();
+			flowLayoutPanel1.SuspendLayout();
 			m_listTasks = list;
 			flowLayoutPanel1.Controls.Clear();
 			int cnt = 0;
@@ -71,6 +84,8 @@ namespace WinFormsGUI {
 				flowLayoutPanel1.Controls.Add(radioBtn);
 				flowLayoutPanel1.SetFlowBreak(radioBtn, true);
 			}
+			flowLayoutPanel1.ResumeLayout();
+			ResumeLayout();
 		}
 
 		private void OnListCheckBoxChanged(object sender, EventArgs e) {
@@ -127,12 +142,21 @@ namespace WinFormsGUI {
 				}
 			}
 		}
-
+		
+		/// <summary>
+		/// 触发“修改”。
+		/// </summary>
 		private void OnClickEditList(object sender, EventArgs args) {
-			var dialog = new FormListEdit();
-			dialog.ListTasks = m_listTasks;
-			var res = dialog.ShowDialog();
-			if (res == DialogResult.OK) {
+			var dialog = new FormListEdit(); // 打开修改窗口
+			DialogResult res;
+			do {
+				dialog.ListTasks = m_listTasks;
+				res = dialog.ShowDialog();
+				if (res == DialogResult.Retry) { // 与修改窗口通信，需要“重置”时，重新加载列表。
+					UserControlList_Load(null, null);
+				}
+			} while (res == DialogResult.Retry); // 与修改窗口通信，需要“重置”时，重新打开修改窗口。
+			if (res == DialogResult.OK) { // 确认即修改。
 				SetList(dialog.ListTasks);
 				OnClickChooseAll(null, null);
 			}
@@ -170,7 +194,7 @@ namespace WinFormsGUI {
 		/// <summary>
 		/// 需要手动调用
 		/// </summary>
-		public void OnClose() {
+		public void OnClosing() {
 			string str = "";
 			foreach (var s in m_listTasks) {
 				if (s > (uint)TaskEnumWrap.None) {

@@ -21,17 +21,27 @@
 using Wrapper;
 
 namespace WinFormsGUI {
+
+	/// <summary>
+	/// 编辑“主页左侧任务列表”的窗口。
+	/// </summary>
 	public partial class FormListEdit : Form {
 
+		/// <summary>
+		/// 内部保存的完整列表。
+		/// </summary>
 		private List<uint> m_listTasks = [];
 
+		/// <summary>
+		/// 对外展示的完整列表。
+		/// </summary>
 		public List<uint> ListTasks {
 			get {
 				return m_listTasks;
 			}
 			set {
 				m_listTasks = value;
-				OnListSeted();
+				OnListSeted(); // 刷新控件
 			}
 		}
 
@@ -39,6 +49,9 @@ namespace WinFormsGUI {
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// 完整列表更新后刷新控件。
+		/// </summary>
 		private void OnListSeted() {
 			listBox1.ClearSelected();
 			listBox1.Items.Clear();
@@ -49,7 +62,10 @@ namespace WinFormsGUI {
 			}
 		}
 
-		private void button_add_Click(object sender, EventArgs e) {
+		/// <summary>
+		/// 点击“添加”按钮。
+		/// </summary>
+		private void Button_add_Click(object sender, EventArgs e) {
 			if (m_listTasks.Count >= (int)TaskEnumWrap.TaskMaxNum) {
 				MessageBox.Show($"The limit of task length is {(int)TaskEnumWrap.TaskMaxNum}.");
 				return;
@@ -65,7 +81,10 @@ namespace WinFormsGUI {
 			);
 		}
 
-		private void button_Insert_Click(object sender, EventArgs e) {
+		/// <summary>
+		/// 点击“插入”按钮。
+		/// </summary>
+		private void Button_Insert_Click(object sender, EventArgs e) {
 			if (m_listTasks.Count >= (int)TaskEnumWrap.TaskMaxNum) {
 				MessageBox.Show($"The limit of task length is {(int)TaskEnumWrap.TaskMaxNum}.");
 				return;
@@ -76,14 +95,17 @@ namespace WinFormsGUI {
 			if (res == DialogResult.Cancel || choice == (uint)TaskEnumWrap.None)
 				return;
 			var index = listBox1.SelectedIndex;
-			m_listTasks.Insert(index + 1, choice);
+			m_listTasks.Insert(index, choice);
 			listBox1.Items.Insert(
-				index + 1,
+				index,
 				Strings.Main.ResourceManager.GetString("Task" + choice.ToString("000"))
 			);
 		}
 
-		private void button_modify_Click(object sender, EventArgs e) {
+		/// <summary>
+		/// 点击“修改”按钮。
+		/// </summary>
+		private void Button_modify_Click(object sender, EventArgs e) {
 			var choose = new FormListEditChooseTask(((Button)sender).Text);
 			var res = choose.ShowDialog();
 			var choice = choose.choosedTask;
@@ -95,19 +117,35 @@ namespace WinFormsGUI {
 				Strings.Main.ResourceManager.GetString("Task" + choice.ToString("000"));
 		}
 
-		private void button_remove_Click(object sender, EventArgs e) {
+		/// <summary>
+		/// 点击“移除”按钮。
+		/// </summary>
+		private void Button_remove_Click(object sender, EventArgs e) {
+			// 保存旧位置
 			var index = listBox1.SelectedIndex;
+
 			listBox1.Items.RemoveAt(index);
 			m_listTasks.RemoveAt(index);
+			
+			// 还原旧的选中项
+			if(index >= listBox1.Items.Count)
+				index = listBox1.Items.Count - 1;
+			listBox1.SelectedIndex = index;
 		}
 
-		private void button_clearAll_Click(object sender, EventArgs e) {
+		/// <summary>
+		/// 点击“清空”按钮。
+		/// </summary>
+		private void Button_clearAll_Click(object sender, EventArgs e) {
 			listBox1.ClearSelected();
 			listBox1.Items.Clear();
 			m_listTasks.Clear();
 		}
 
-		private void button_moveup_Click(object sender, EventArgs e) {
+		/// <summary>
+		/// 点击“上移”按钮。
+		/// </summary>
+		private void Button_moveup_Click(object sender, EventArgs e) {
 			var index = listBox1.SelectedIndex;
 			if (index == 0)
 				return;
@@ -118,7 +156,10 @@ namespace WinFormsGUI {
 			listBox1.SelectedIndex--;
 		}
 
-		private void button_movedown_Click(object sender, EventArgs e) {
+		/// <summary>
+		/// 点击“下移”按钮。
+		/// </summary>
+		private void Button_movedown_Click(object sender, EventArgs e) {
 			var index = listBox1.SelectedIndex;
 			if (index == m_listTasks.Count - 1)
 				return;
@@ -129,21 +170,35 @@ namespace WinFormsGUI {
 			listBox1.SelectedIndex++;
 		}
 
-		private void listBox1_SelectedIndexChanged(object sender, EventArgs e) {
-			if (listBox1.SelectedIndex != -1) {
+		/// <summary>
+		/// ListBox选中项改变。
+		/// </summary>
+		private void ListBox1_SelectedIndexChanged(object sender, EventArgs e) {
+			if (listBox1.SelectedIndex != -1) { // 选中了一项时启用针对单项修改的控件。
 				button_Insert.Enabled = true;
 				button_modify.Enabled = true;
 				button_remove.Enabled = true;
 				button_moveup.Enabled = true;
 				button_movedown.Enabled = true;
 			}
-			else {
+			else { // 取消选择时禁用之。
 				button_Insert.Enabled = false;
 				button_modify.Enabled = false;
 				button_remove.Enabled = false;
 				button_moveup.Enabled = false;
 				button_movedown.Enabled = false;
 			}
+		}
+
+		/// <summary>
+		/// 点击“重置”按钮。
+		/// </summary>
+		private void Button_reset_Click(object sender, EventArgs e) {
+			Settings.GUI.Default.Reset(); // 重置所有设置。
+			var temp = Settings.GUI.Default.ListItems; // 保存列表的默认设置。
+			Settings.GUI.Default.Reload(); // 重新读取保存的设置。
+			Settings.GUI.Default.ListItems = temp; // 这样就仅仅将列表重设为默认。
+			DialogResult = DialogResult.Retry; // 与上层窗口通信所用。
 		}
 	}
 }

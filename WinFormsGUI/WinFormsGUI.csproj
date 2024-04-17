@@ -51,10 +51,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreWrapper\Wrapper.vcxproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Img.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -132,6 +128,10 @@
 
   <ItemGroup>
     <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoreWrapper\Wrapper.vcxproj" />
   </ItemGroup>
 
 </Project>

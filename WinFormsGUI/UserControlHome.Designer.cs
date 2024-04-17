@@ -24,111 +24,117 @@
 		/// </summary>
 		private void InitializeComponent() {
 			components = new System.ComponentModel.Container();
-			tableLayoutPanel1 = new TableLayoutPanel();
-			panel1 = new Panel();
-			userControlLogger1 = new UserControlLogger();
-			panel2 = new Panel();
-			button1 = new Button();
-			userControlList1 = new UserControlList();
-			tableLayoutPanel1.SuspendLayout();
-			panel2.SuspendLayout();
+			tableLayoutPanel_Main = new TableLayoutPanel();
+			panel_Settings = new Panel();
+			userControlLogger = new UserControlLogger();
+			panel_leftCtrl = new Panel();
+			button_Main = new Button();
+			userControlList = new UserControlList();
+			timer_Main = new System.Windows.Forms.Timer(components);
+			tableLayoutPanel_Main.SuspendLayout();
+			panel_leftCtrl.SuspendLayout();
 			SuspendLayout();
 			// 
-			// tableLayoutPanel1
+			// tableLayoutPanel_Main
 			// 
-			tableLayoutPanel1.ColumnCount = 3;
-			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
-			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
-			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
-			tableLayoutPanel1.Controls.Add(panel1, 1, 0);
-			tableLayoutPanel1.Controls.Add(userControlLogger1, 2, 0);
-			tableLayoutPanel1.Controls.Add(panel2, 0, 0);
-			tableLayoutPanel1.Dock = DockStyle.Fill;
-			tableLayoutPanel1.Location = new Point(0, 0);
-			tableLayoutPanel1.MinimumSize = new Size(700, 0);
-			tableLayoutPanel1.Name = "tableLayoutPanel1";
-			tableLayoutPanel1.RowCount = 1;
-			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-			tableLayoutPanel1.Size = new Size(710, 360);
-			tableLayoutPanel1.TabIndex = 3;
+			tableLayoutPanel_Main.ColumnCount = 3;
+			tableLayoutPanel_Main.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+			tableLayoutPanel_Main.ColumnStyles.Add(new ColumnStyle());
+			tableLayoutPanel_Main.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
+			tableLayoutPanel_Main.Controls.Add(panel_Settings, 1, 0);
+			tableLayoutPanel_Main.Controls.Add(userControlLogger, 2, 0);
+			tableLayoutPanel_Main.Controls.Add(panel_leftCtrl, 0, 0);
+			tableLayoutPanel_Main.Dock = DockStyle.Fill;
+			tableLayoutPanel_Main.Location = new Point(0, 0);
+			tableLayoutPanel_Main.MinimumSize = new Size(700, 0);
+			tableLayoutPanel_Main.Name = "tableLayoutPanel_Main";
+			tableLayoutPanel_Main.RowCount = 1;
+			tableLayoutPanel_Main.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+			tableLayoutPanel_Main.Size = new Size(710, 360);
+			tableLayoutPanel_Main.TabIndex = 3;
 			// 
-			// panel1
+			// panel_Settings
 			// 
-			panel1.Dock = DockStyle.Fill;
-			panel1.Location = new Point(200, 3);
-			panel1.MaximumSize = new Size(210, 0);
-			panel1.MinimumSize = new Size(210, 0);
-			panel1.Name = "panel1";
-			panel1.Size = new Size(210, 354);
-			panel1.TabIndex = 2;
+			panel_Settings.Dock = DockStyle.Fill;
+			panel_Settings.Location = new Point(200, 3);
+			panel_Settings.MaximumSize = new Size(210, 0);
+			panel_Settings.MinimumSize = new Size(210, 0);
+			panel_Settings.Name = "panel_Settings";
+			panel_Settings.Size = new Size(210, 354);
+			panel_Settings.TabIndex = 2;
 			// 
-			// userControlLogger1
+			// userControlLogger
 			// 
-			userControlLogger1.AutoSize = true;
-			userControlLogger1.BackColor = Color.RosyBrown;
-			userControlLogger1.Dock = DockStyle.Fill;
-			userControlLogger1.Location = new Point(416, 3);
-			userControlLogger1.MinimumSize = new Size(180, 0);
-			userControlLogger1.Name = "userControlLogger1";
-			userControlLogger1.Size = new Size(291, 354);
-			userControlLogger1.TabIndex = 3;
+			userControlLogger.AutoSize = true;
+			userControlLogger.BackColor = Color.RosyBrown;
+			userControlLogger.Dock = DockStyle.Fill;
+			userControlLogger.Location = new Point(416, 3);
+			userControlLogger.MinimumSize = new Size(180, 0);
+			userControlLogger.Name = "userControlLogger";
+			userControlLogger.Size = new Size(291, 354);
+			userControlLogger.TabIndex = 3;
 			// 
-			// panel2
+			// panel_leftCtrl
 			// 
-			panel2.Controls.Add(button1);
-			panel2.Controls.Add(userControlList1);
-			panel2.Dock = DockStyle.Fill;
-			panel2.Location = new Point(3, 3);
-			panel2.Name = "panel2";
-			panel2.Size = new Size(191, 354);
-			panel2.TabIndex = 4;
-			panel2.SizeChanged += panel2_SizeChanged;
+			panel_leftCtrl.Controls.Add(button_Main);
+			panel_leftCtrl.Controls.Add(userControlList);
+			panel_leftCtrl.Dock = DockStyle.Fill;
+			panel_leftCtrl.Location = new Point(3, 3);
+			panel_leftCtrl.Name = "panel_leftCtrl";
+			panel_leftCtrl.Size = new Size(191, 354);
+			panel_leftCtrl.TabIndex = 4;
+			panel_leftCtrl.SizeChanged += Panel_LeftCtrl_SizeChanged;
 			// 
-			// button1
+			// button_Main
 			// 
-			button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-			button1.Location = new Point(3, 302);
-			button1.Name = "button1";
-			button1.Size = new Size(92, 49);
-			button1.TabIndex = 1;
-			button1.Text = "MainButton";
-			button1.UseVisualStyleBackColor = true;
-			button1.Click += button1_Click;
+			button_Main.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+			button_Main.Location = new Point(3, 302);
+			button_Main.Name = "button_Main";
+			button_Main.Size = new Size(92, 49);
+			button_Main.TabIndex = 1;
+			button_Main.Text = "MainButton";
+			button_Main.UseVisualStyleBackColor = true;
+			button_Main.Click += Button_Main_Click;
 			// 
-			// userControlList1
+			// userControlList
 			// 
-			userControlList1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-			userControlList1.BorderStyle = BorderStyle.FixedSingle;
-			userControlList1.Location = new Point(0, 0);
-			userControlList1.MaximumSize = new Size(180, 0);
-			userControlList1.MinimumSize = new Size(180, 42);
-			userControlList1.Name = "userControlList1";
-			userControlList1.Size = new Size(180, 296);
-			userControlList1.TabIndex = 0;
+			userControlList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+			userControlList.BorderStyle = BorderStyle.FixedSingle;
+			userControlList.Location = new Point(0, 0);
+			userControlList.MaximumSize = new Size(180, 0);
+			userControlList.MinimumSize = new Size(180, 42);
+			userControlList.Name = "userControlList";
+			userControlList.Size = new Size(180, 296);
+			userControlList.TabIndex = 0;
+			// 
+			// timer_Main
+			// 
+			timer_Main.Interval = 60;
+			timer_Main.Tick += Timer_Main_Tick;
 			// 
 			// UserControlHome
 			// 
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
-			Controls.Add(tableLayoutPanel1);
-			DoubleBuffered = true;
+			Controls.Add(tableLayoutPanel_Main);
 			MinimumSize = new Size(710, 360);
 			Name = "UserControlHome";
 			Size = new Size(710, 360);
 			Load += UserControlHome_Load;
-			tableLayoutPanel1.ResumeLayout(false);
-			tableLayoutPanel1.PerformLayout();
-			panel2.ResumeLayout(false);
+			tableLayoutPanel_Main.ResumeLayout(false);
+			tableLayoutPanel_Main.PerformLayout();
+			panel_leftCtrl.ResumeLayout(false);
 			ResumeLayout(false);
 		}
 
 		#endregion
 
-		private TableLayoutPanel tableLayoutPanel1;
-		private Panel panel1;
-		private UserControlLogger userControlLogger1;
-		private Panel panel2;
-		private Button button1;
-		private UserControlList userControlList1;
+		private TableLayoutPanel tableLayoutPanel_Main;
+		private Panel panel_Settings;
+		private UserControlLogger userControlLogger;
+		private Panel panel_leftCtrl;
+		private Button button_Main;
+		private UserControlList userControlList;
+		private System.Windows.Forms.Timer timer_Main;
 	}
 }

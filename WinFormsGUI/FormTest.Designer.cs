@@ -23,18 +23,22 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTest));
 			tabControl1 = new TabControl();
-			tabPage1 = new TabPage();
-			userControlHome1 = new UserControlHome();
-			tabPage2 = new TabPage();
+			tabPage_home = new TabPage();
+			tabPage_gSet = new TabPage();
+			notifyIcon_Main = new NotifyIcon(components);
+			contextMenuStrip1 = new ContextMenuStrip(components);
+			toolStripMenuItem_Exit = new ToolStripMenuItem();
 			tabControl1.SuspendLayout();
-			tabPage1.SuspendLayout();
+			contextMenuStrip1.SuspendLayout();
 			SuspendLayout();
 			// 
 			// tabControl1
 			// 
-			tabControl1.Controls.Add(tabPage1);
-			tabControl1.Controls.Add(tabPage2);
+			tabControl1.Controls.Add(tabPage_home);
+			tabControl1.Controls.Add(tabPage_gSet);
 			tabControl1.Dock = DockStyle.Fill;
 			tabControl1.Location = new Point(0, 0);
 			tabControl1.Name = "tabControl1";
@@ -42,35 +46,45 @@
 			tabControl1.Size = new Size(784, 521);
 			tabControl1.TabIndex = 0;
 			// 
-			// tabPage1
+			// tabPage_home
 			// 
-			tabPage1.BackColor = SystemColors.Control;
-			tabPage1.Controls.Add(userControlHome1);
-			tabPage1.Location = new Point(4, 26);
-			tabPage1.Name = "tabPage1";
-			tabPage1.Padding = new Padding(3);
-			tabPage1.Size = new Size(776, 491);
-			tabPage1.TabIndex = 0;
-			tabPage1.Text = "tabPage1";
+			tabPage_home.BackColor = SystemColors.Control;
+			tabPage_home.Location = new Point(4, 26);
+			tabPage_home.Name = "tabPage_home";
+			tabPage_home.Padding = new Padding(3);
+			tabPage_home.Size = new Size(776, 491);
+			tabPage_home.TabIndex = 0;
+			tabPage_home.Text = "主页";
 			// 
-			// userControlHome1
+			// tabPage_gSet
 			// 
-			userControlHome1.Dock = DockStyle.Fill;
-			userControlHome1.Location = new Point(3, 3);
-			userControlHome1.MinimumSize = new Size(580, 360);
-			userControlHome1.Name = "userControlHome1";
-			userControlHome1.Size = new Size(770, 485);
-			userControlHome1.TabIndex = 0;
+			tabPage_gSet.Location = new Point(4, 26);
+			tabPage_gSet.Name = "tabPage_gSet";
+			tabPage_gSet.Padding = new Padding(3);
+			tabPage_gSet.Size = new Size(776, 491);
+			tabPage_gSet.TabIndex = 1;
+			tabPage_gSet.Text = "设置";
+			tabPage_gSet.UseVisualStyleBackColor = true;
 			// 
-			// tabPage2
+			// notifyIcon_Main
 			// 
-			tabPage2.Location = new Point(4, 26);
-			tabPage2.Name = "tabPage2";
-			tabPage2.Padding = new Padding(3);
-			tabPage2.Size = new Size(616, 411);
-			tabPage2.TabIndex = 1;
-			tabPage2.Text = "tabPage2";
-			tabPage2.UseVisualStyleBackColor = true;
+			notifyIcon_Main.ContextMenuStrip = contextMenuStrip1;
+			notifyIcon_Main.Icon = (Icon)resources.GetObject("notifyIcon_Main.Icon");
+			notifyIcon_Main.Text = "notifyIcon1";
+			notifyIcon_Main.Visible = true;
+			// 
+			// contextMenuStrip1
+			// 
+			contextMenuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem_Exit });
+			contextMenuStrip1.Name = "contextMenuStrip1";
+			contextMenuStrip1.Size = new Size(101, 26);
+			// 
+			// toolStripMenuItem_Exit
+			// 
+			toolStripMenuItem_Exit.Name = "toolStripMenuItem_Exit";
+			toolStripMenuItem_Exit.Size = new Size(100, 22);
+			toolStripMenuItem_Exit.Text = "退出";
+			toolStripMenuItem_Exit.Click += ToolStripMenuItem_Exit_Click;
 			// 
 			// FormTest
 			// 
@@ -78,22 +92,25 @@
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(784, 521);
 			Controls.Add(tabControl1);
-			DoubleBuffered = true;
+			Icon = (Icon)resources.GetObject("$this.Icon");
 			MinimumSize = new Size(800, 560);
 			Name = "FormTest";
-			Text = "FormTest";
+			Text = "DDOA";
+			FormClosing += FormTest_FormClosing;
 			FormClosed += FormTest_FormClosed;
 			Load += FormTest_Load;
 			tabControl1.ResumeLayout(false);
-			tabPage1.ResumeLayout(false);
+			contextMenuStrip1.ResumeLayout(false);
 			ResumeLayout(false);
 		}
 
 		#endregion
 
 		private TabControl tabControl1;
-		private TabPage tabPage1;
-		private TabPage tabPage2;
-		private UserControlHome userControlHome1;
+		private TabPage tabPage_home;
+		private TabPage tabPage_gSet;
+		private NotifyIcon notifyIcon_Main;
+		private ContextMenuStrip contextMenuStrip1;
+		private ToolStripMenuItem toolStripMenuItem_Exit;
 	}
 }

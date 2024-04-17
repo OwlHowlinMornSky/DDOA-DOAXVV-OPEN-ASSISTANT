@@ -19,38 +19,65 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 namespace WinFormsGUI {
+	/// <summary>
+	/// 测试用窗口
+	/// </summary>
 	public partial class FormTest : Form {
+
+		private UserControlHome home;
+
 		public FormTest() {
 			InitializeComponent();
 
-			SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-		}
+			home = new UserControlHome() {
+				MyPopNotification = PopNotification
+			};
+			home.Dock = DockStyle.Fill;
+			tabPage_home.Controls.Add(home);
 
-		protected override void WndProc(ref Message m) {
-			if (m.Msg == 0x0014) // 禁掉清除背景消息
-				return;
-			base.WndProc(ref m);
+			SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 		}
-
 
 		private void FormTest_Load(object sender, EventArgs e) {
-
-			int n = 2;
-
-			userControlHome1.Log("RRSSF", Color.DarkRed);
-
-			for (int i = 0; i < n; ++i) {
-
-				userControlHome1.Log("测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试\r\nyi\r\n二ereererererererer" + i);
-
-			}
+			notifyIcon_Main.Text = Text;
 		}
 
-		private void FormTest_FormClosed(object sender, FormClosedEventArgs e) {
-			userControlHome1.OnClose();
+		/// <summary>
+		/// 窗口试图关闭
+		/// </summary>
+		private void FormTest_FormClosing(object sender, FormClosingEventArgs e) {
+			home.OnClosing();
 
+		}
+
+		/// <summary>
+		/// 窗口已关闭。
+		/// </summary>
+		private void FormTest_FormClosed(object sender, FormClosedEventArgs e) {
 			Settings.GUI.Default.Save();
 		}
 
+		/// <summary>
+		/// 点击托盘图标右键菜单的“退出”项。
+		/// </summary>
+		private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e) {
+			Close();
+		}
+
+		/// <summary>
+		/// 发送托盘消息。
+		/// </summary>
+		/// <param name="title">消息标题</param>
+		/// <param name="text">消息内容</param>
+		/// <param name="icon">消息图标</param>
+		private void PopNotification(string title, string text, ToolTipIcon icon) {
+			/*if (Settings.GUI.Default.UseNotify)
+				notifyIcon_Main.ShowBalloonTip(
+					Settings.Param.Default.NotifyTime,
+					title,
+					text,
+					icon
+				);*/
+		}
 	}
 }

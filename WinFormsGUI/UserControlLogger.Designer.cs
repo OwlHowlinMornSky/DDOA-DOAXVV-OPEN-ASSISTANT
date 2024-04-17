@@ -49,7 +49,6 @@
 			AutoScaleMode = AutoScaleMode.Font;
 			AutoSize = true;
 			Controls.Add(listBox1);
-			DoubleBuffered = true;
 			MinimumSize = new Size(180, 0);
 			Name = "UserControlLogger";
 			Size = new Size(180, 64);

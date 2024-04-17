@@ -39,7 +39,7 @@
 			listBox1.Name = "listBox1";
 			listBox1.Size = new Size(233, 277);
 			listBox1.TabIndex = 0;
-			listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
+			listBox1.SelectedIndexChanged += ListBox1_SelectedIndexChanged;
 			// 
 			// button1
 			// 
@@ -50,7 +50,7 @@
 			button1.TabIndex = 1;
 			button1.Text = "确定";
 			button1.UseVisualStyleBackColor = true;
-			button1.Click += button1_Click;
+			button1.Click += Button1_Click;
 			// 
 			// button2
 			// 

@@ -25,6 +25,8 @@ namespace WinFormsGUI {
 
 		internal readonly static HelperWrapper helper = new();
 
+		internal static EventHandler<bool> GuiLock;
+
 		/// <summary>
 		///  The main entry point for the application.
 		/// </summary>

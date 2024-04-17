@@ -25,6 +25,9 @@
 
 namespace Wrapper {
 
+/**
+ * @brief 任务id枚举的包装。
+ */
 public enum class TaskEnumWrap : System::UInt32 {
 	None = ohms::TaskEnum::None,
 

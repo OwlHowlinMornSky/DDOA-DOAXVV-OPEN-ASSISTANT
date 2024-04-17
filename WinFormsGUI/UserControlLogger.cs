@@ -18,6 +18,9 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace WinFormsGUI {
 
 	internal struct LogItem {
@@ -41,6 +44,9 @@ namespace WinFormsGUI {
 		private readonly Color m_sysClr = GetSystemMainColor();
 		private int vScrollBarWidth = 20;
 
+		private bool m_autoResizeItem = true;
+		public int itemCntLimit = 128;
+
 		public UserControlLogger() {
 			InitializeComponent();
 
@@ -48,10 +54,22 @@ namespace WinFormsGUI {
 			vScrollBarWidth = test.Width;
 		}
 
-		protected override void WndProc(ref Message m) {
-			if (m.Msg == 0x0014) // 禁掉清除背景消息
-				return;
-			base.WndProc(ref m);
+		public void SetAutoResizeItem(bool value) {
+			m_autoResizeItem = value;
+			listBox1.BeginUpdate();
+			listBox1.SuspendLayout();
+			SuspendLayout();
+			var ti = listBox1.TopIndex;
+			listBox1.DrawMode = DrawMode.OwnerDrawFixed;
+			listBox1.DrawMode = DrawMode.OwnerDrawVariable;
+			listBox1.TopIndex = ti;
+			ResumeLayout();
+			listBox1.ResumeLayout();
+			listBox1.EndUpdate();
+		}
+
+		public bool GetAutoResizeItem() {
+			return m_autoResizeItem;
 		}
 
 		private bool IsAtBottom() {
@@ -70,11 +88,24 @@ namespace WinFormsGUI {
 		}
 
 		public void Clear() {
-			listBox1.Items.Clear();
+			//listBox1.Items.Clear();
 		}
 
-		public void Log(string message, Color color) {
-			SuspendLayout();
+		public void LogProcessStatusChange(bool isBegin) {
+			if (isBegin) {
+				listBox1.BeginUpdate();
+				listBox1.SuspendLayout();
+				SuspendLayout();
+			}
+			else {
+				ResumeLayout();
+				listBox1.ResumeLayout();
+				listBox1.EndUpdate();
+			}
+		}
+
+
+		private void LogAdd(string message, Color color) {
 			bool scroll = IsAtBottom();
 			var timeStr = DateTime.Now.ToString("MM/dd HH:mm:ss　");
 			listBox1.Items.Add(
@@ -85,9 +116,23 @@ namespace WinFormsGUI {
 					color = color
 				}
 			);
+			while (listBox1.Items.Count > itemCntLimit)
+				listBox1.Items.RemoveAt(0);
 			if (scroll)
 				listBox1.TopIndex = listBox1.Items.Count - 1;
-			ResumeLayout();
+			return;
+		}
+
+		public void Log(string message, Color color) {
+			if (InvokeRequired) {
+				var r = BeginInvoke(new Action(() => {
+					LogAdd(message, color);
+				}));
+				EndInvoke(r);
+			}
+			else {
+				LogAdd(message, color);
+			}
 		}
 
 		public void Log(string message) {
@@ -106,7 +151,10 @@ namespace WinFormsGUI {
 			var b = e.Bounds;
 			e.Graphics.DrawString(item.time, e.Font, new SolidBrush(item.hideTime ? Control.DefaultBackColor : m_sysClr), b);
 			b.Offset(sz0.ToSize().Width, 0);
-			b.Width = listBox.Width - sz0.ToSize().Width - vScrollBarWidth - 1;
+			if (m_autoResizeItem)
+				b.Width = listBox.Width - sz0.ToSize().Width - vScrollBarWidth - 1;
+			else
+				b.Width -= sz0.ToSize().Width;
 			e.Graphics.DrawString(item.str, e.Font, new SolidBrush(item.color), b);
 		}
 
@@ -115,7 +163,11 @@ namespace WinFormsGUI {
 			var item = (LogItem)listBox.Items[e.Index];
 
 			var sz0 = e.Graphics.MeasureString(item.time, listBox.Font);
-			var sz1 = e.Graphics.MeasureString(item.str, listBox.Font, listBox.Width - sz0.ToSize().Width - vScrollBarWidth - 1);
+			SizeF sz1;
+			if (m_autoResizeItem)
+				sz1 = e.Graphics.MeasureString(item.str, listBox.Font, listBox.Width - sz0.ToSize().Width - vScrollBarWidth - 1);
+			else
+				sz1 = e.Graphics.MeasureString(item.str, listBox.Font);
 
 			var W = (int)(sz0.Width + sz1.Width);
 			var H = (int)Math.Max(sz0.Height, sz1.Height);
@@ -126,14 +178,18 @@ namespace WinFormsGUI {
 		}
 
 		private void UserControlLogger_SizeChanged(object sender, EventArgs e) {
-			if (listBox1.Items.Count > 512)
+			if (!m_autoResizeItem)
 				return;
+			listBox1.BeginUpdate();
+			listBox1.SuspendLayout();
 			SuspendLayout();
 			var ti = listBox1.TopIndex;
 			listBox1.DrawMode = DrawMode.OwnerDrawFixed;
 			listBox1.DrawMode = DrawMode.OwnerDrawVariable;
-			ResumeLayout();
 			listBox1.TopIndex = ti;
+			listBox1.ResumeLayout();
+			ResumeLayout();
+			listBox1.EndUpdate();
 		}
 	}
 }
