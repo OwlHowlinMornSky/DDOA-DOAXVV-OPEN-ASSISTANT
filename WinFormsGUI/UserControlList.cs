@@ -31,6 +31,8 @@ namespace WinFormsGUI {
 
 		private List<uint> m_listTasks = [];
 
+		public Action<ListItemUserData> SetSelectedChangedTo = x => {};
+
 		public UserControlList() {
 			InitializeComponent();
 		}
@@ -72,36 +74,39 @@ namespace WinFormsGUI {
 		}
 
 		private void OnListCheckBoxChanged(object sender, EventArgs e) {
-			var checkBox = (CheckBox)sender;
+			var checkBox = sender as CheckBox;
 			var data = (ListItemUserData)checkBox.DataContext;
 			int rank = data.rank;
 			//MessageBox.Show($"CheckBox #{rank} Changed to {checkBox.Checked}.");
 		}
 
 		private void OnListRadioBtnChanged(object sender, EventArgs e) {
-			var radioBtn = (RadioButton)sender;
+			var radioBtn = sender as RadioButton;
 			var data = (ListItemUserData)radioBtn.DataContext;
 			int rank = data.rank;
+			if (radioBtn.Checked) {
+				SetSelectedChangedTo(data);
+			}
 			//MessageBox.Show($"RadioBtn #{rank} Changed to {radioBtn.Checked}.");
 		}
 
 		private void OnListCheckBoxEnter(object sender, EventArgs e) {
-			var ctrl = (Control)sender;
+			var ctrl = sender as Control;
 			ctrl.BackColor = Color.LightBlue;
 		}
 
 		private void OnListCheckBoxLeave(object sender, EventArgs e) {
-			var ctrl = (Control)sender;
+			var ctrl = sender as Control;
 			ctrl.BackColor = Color.Transparent;
 		}
 
 		private void OnListRadioBtnEnter(object sender, EventArgs e) {
-			var ctrl = (Control)sender;
+			var ctrl = sender as Control;
 			flowLayoutPanel1.GetNextControl(ctrl, false).BackColor = Color.LightBlue;
 		}
 
 		private void OnListRadioBtnLeave(object sender, EventArgs e) {
-			var ctrl = (Control)sender;
+			var ctrl = sender as Control;
 			flowLayoutPanel1.GetNextControl(ctrl, false).BackColor = Color.Transparent;
 		}
 
@@ -154,6 +159,12 @@ namespace WinFormsGUI {
 				var n = int.Parse(s);
 				((CheckBox)flowLayoutPanel1.Controls[n * 2]).Checked = true;
 			}
+
+			if (Settings.GUI.Default.ListLastSelectedSettings >= 0) {
+				(flowLayoutPanel1.Controls[
+					Settings.GUI.Default.ListLastSelectedSettings * 2 + 1
+				] as RadioButton).Checked = true;
+			}
 		}
 
 		/// <summary>
@@ -170,16 +181,24 @@ namespace WinFormsGUI {
 			Settings.GUI.Default.ListItems = str;
 
 			str = "";
+			int selectedSet = -1;
 			foreach (var ctrl in flowLayoutPanel1.Controls) {
 				if (ctrl.GetType() == typeof(CheckBox)) {
-					var checkBox = (CheckBox)ctrl;
+					var checkBox = ctrl as CheckBox;
 					if (checkBox.Checked) {
 						str += ((ListItemUserData)checkBox.DataContext).rank;
 						str += ',';
 					}
 				}
+				else {
+					var radioBtn = ctrl as RadioButton;
+					if (radioBtn.Checked) {
+						selectedSet = ((ListItemUserData)radioBtn.DataContext).rank;
+					}
+				}
 			}
 			Settings.GUI.Default.ListItemCheckList = str;
+			Settings.GUI.Default.ListLastSelectedSettings = selectedSet;
 		}
 	}
 }

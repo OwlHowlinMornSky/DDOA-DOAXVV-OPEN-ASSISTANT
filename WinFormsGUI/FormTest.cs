@@ -34,27 +34,23 @@ namespace WinFormsGUI {
 
 
 		private void FormTest_Load(object sender, EventArgs e) {
-			int n = 511;
-			userControlLogger1.Log("RRSSF", Color.DarkRed);
+
+			int n = 2;
+
+			userControlHome1.Log("RRSSF", Color.DarkRed);
+
 			for (int i = 0; i < n; ++i) {
 
-				userControlLogger1.Log("测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试\r\nyi\r\n二ereererererererer" + i);
+				userControlHome1.Log("测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试\r\nyi\r\n二ereererererererer" + i);
 
 			}
-
-
 		}
 
 		private void FormTest_FormClosed(object sender, FormClosedEventArgs e) {
-			userControlList1.OnClose();
+			userControlHome1.OnClose();
 
 			Settings.GUI.Default.Save();
 		}
 
-		private void button1_Click(object sender, EventArgs e) {
-			SuspendLayout();
-			userControlLogger1.Log("测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试\r\nyi\r\n二ereererererererer");
-			ResumeLayout();
-		}
 	}
 }

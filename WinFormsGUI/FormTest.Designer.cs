@@ -23,63 +23,77 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			components = new System.ComponentModel.Container();
-			userControlList1 = new UserControlList();
-			userControlLogger1 = new UserControlLogger();
-			button1 = new Button();
+			tabControl1 = new TabControl();
+			tabPage1 = new TabPage();
+			userControlHome1 = new UserControlHome();
+			tabPage2 = new TabPage();
+			tabControl1.SuspendLayout();
+			tabPage1.SuspendLayout();
 			SuspendLayout();
 			// 
-			// userControlList1
+			// tabControl1
 			// 
-			userControlList1.Dock = DockStyle.Fill;
-			userControlList1.Location = new Point(0, 0);
-			userControlList1.MaximumSize = new Size(180, 0);
-			userControlList1.MinimumSize = new Size(180, 200);
-			userControlList1.Name = "userControlList1";
-			userControlList1.Size = new Size(180, 450);
-			userControlList1.TabIndex = 0;
+			tabControl1.Controls.Add(tabPage1);
+			tabControl1.Controls.Add(tabPage2);
+			tabControl1.Dock = DockStyle.Fill;
+			tabControl1.Location = new Point(0, 0);
+			tabControl1.Name = "tabControl1";
+			tabControl1.SelectedIndex = 0;
+			tabControl1.Size = new Size(784, 521);
+			tabControl1.TabIndex = 0;
 			// 
-			// userControlLogger1
+			// tabPage1
 			// 
-			userControlLogger1.AutoSize = true;
-			userControlLogger1.Dock = DockStyle.Fill;
-			userControlLogger1.Location = new Point(0, 0);
-			userControlLogger1.MinimumSize = new Size(180, 0);
-			userControlLogger1.Name = "userControlLogger1";
-			userControlLogger1.Size = new Size(800, 450);
-			userControlLogger1.TabIndex = 1;
+			tabPage1.BackColor = SystemColors.Control;
+			tabPage1.Controls.Add(userControlHome1);
+			tabPage1.Location = new Point(4, 26);
+			tabPage1.Name = "tabPage1";
+			tabPage1.Padding = new Padding(3);
+			tabPage1.Size = new Size(776, 491);
+			tabPage1.TabIndex = 0;
+			tabPage1.Text = "tabPage1";
 			// 
-			// button1
+			// userControlHome1
 			// 
-			button1.Location = new Point(115, 151);
-			button1.Name = "button1";
-			button1.Size = new Size(75, 23);
-			button1.TabIndex = 2;
-			button1.Text = "button1";
-			button1.UseVisualStyleBackColor = true;
-			button1.Click += button1_Click;
+			userControlHome1.Dock = DockStyle.Fill;
+			userControlHome1.Location = new Point(3, 3);
+			userControlHome1.MinimumSize = new Size(580, 360);
+			userControlHome1.Name = "userControlHome1";
+			userControlHome1.Size = new Size(770, 485);
+			userControlHome1.TabIndex = 0;
+			// 
+			// tabPage2
+			// 
+			tabPage2.Location = new Point(4, 26);
+			tabPage2.Name = "tabPage2";
+			tabPage2.Padding = new Padding(3);
+			tabPage2.Size = new Size(616, 411);
+			tabPage2.TabIndex = 1;
+			tabPage2.Text = "tabPage2";
+			tabPage2.UseVisualStyleBackColor = true;
 			// 
 			// FormTest
 			// 
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(800, 450);
-			Controls.Add(button1);
-			Controls.Add(userControlLogger1);
-			Controls.Add(userControlList1);
+			ClientSize = new Size(784, 521);
+			Controls.Add(tabControl1);
 			DoubleBuffered = true;
+			MinimumSize = new Size(800, 560);
 			Name = "FormTest";
 			Text = "FormTest";
 			FormClosed += FormTest_FormClosed;
 			Load += FormTest_Load;
+			tabControl1.ResumeLayout(false);
+			tabPage1.ResumeLayout(false);
 			ResumeLayout(false);
-			PerformLayout();
 		}
 
 		#endregion
 
-		private UserControlList userControlList1;
-		private UserControlLogger userControlLogger1;
-		private Button button1;
+		private TabControl tabControl1;
+		private TabPage tabPage1;
+		private TabPage tabPage2;
+		private UserControlHome userControlHome1;
 	}
 }

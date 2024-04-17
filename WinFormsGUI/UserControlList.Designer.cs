@@ -38,16 +38,15 @@
 			// flowLayoutPanel1
 			// 
 			flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-			flowLayoutPanel1.AutoSize = true;
 			flowLayoutPanel1.Location = new Point(0, 0);
 			flowLayoutPanel1.Name = "flowLayoutPanel1";
-			flowLayoutPanel1.Size = new Size(180, 0);
+			flowLayoutPanel1.Size = new Size(180, 24);
 			flowLayoutPanel1.TabIndex = 3;
 			// 
 			// button_all
 			// 
 			button_all.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-			button_all.Location = new Point(4, 8);
+			button_all.Location = new Point(4, 32);
 			button_all.Name = "button_all";
 			button_all.Size = new Size(85, 30);
 			button_all.TabIndex = 4;
@@ -58,7 +57,7 @@
 			// button_clear
 			// 
 			button_clear.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-			button_clear.Location = new Point(91, 8);
+			button_clear.Location = new Point(91, 32);
 			button_clear.Name = "button_clear";
 			button_clear.Size = new Size(85, 30);
 			button_clear.TabIndex = 5;
@@ -110,11 +109,10 @@
 			MaximumSize = new Size(180, 0);
 			MinimumSize = new Size(180, 42);
 			Name = "UserControlList";
-			Size = new Size(180, 42);
+			Size = new Size(180, 66);
 			Load += UserControlList_Load;
 			contextMenuStrip1.ResumeLayout(false);
 			ResumeLayout(false);
-			PerformLayout();
 		}
 
 		#endregion

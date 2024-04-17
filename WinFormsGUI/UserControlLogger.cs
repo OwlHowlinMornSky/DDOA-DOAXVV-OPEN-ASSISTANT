@@ -69,6 +69,10 @@ namespace WinFormsGUI {
 			return true;
 		}
 
+		public void Clear() {
+			listBox1.Items.Clear();
+		}
+
 		public void Log(string message, Color color) {
 			SuspendLayout();
 			bool scroll = IsAtBottom();
@@ -92,6 +96,8 @@ namespace WinFormsGUI {
 
 		private void ListBox1_DrawItem(object sender, DrawItemEventArgs e) {
 			var listBox = sender as ListBox;
+			if (e.Index < 0)
+				return;
 			var item = (LogItem)listBox.Items[e.Index];
 
 			e.Graphics.FillRectangle(new SolidBrush(Control.DefaultBackColor), e.Bounds);

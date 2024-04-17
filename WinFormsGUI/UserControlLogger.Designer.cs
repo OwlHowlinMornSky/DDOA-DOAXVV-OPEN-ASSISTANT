@@ -32,7 +32,6 @@
 			listBox1.BorderStyle = BorderStyle.None;
 			listBox1.Dock = DockStyle.Fill;
 			listBox1.DrawMode = DrawMode.OwnerDrawVariable;
-			listBox1.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
 			listBox1.FormattingEnabled = true;
 			listBox1.HorizontalScrollbar = true;
 			listBox1.ItemHeight = 17;
