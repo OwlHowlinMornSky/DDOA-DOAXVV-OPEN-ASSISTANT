@@ -178,7 +178,7 @@ namespace WinFormsGUI {
 			if (res == null) {
 				res = name;
 				MessageBox.Show(
-					string.Format(Strings.Main.NoSuchString, name),
+					string.Format(Strings.Main.NoSuchLogString, name),
 					Text,
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
@@ -245,7 +245,7 @@ namespace WinFormsGUI {
 						);
 						break;
 					default:
-						Log(Strings.GuiLog.ResourceManager.GetString(msg.ToString()));
+						Log(GetLogStringFromResx(msg.ToString()));
 						break;
 					}
 					break;
@@ -259,7 +259,7 @@ namespace WinFormsGUI {
 						t =
 							string.Format(
 								Strings.GuiLog.TaskErr_Format,
-								Strings.GuiLog.ResourceManager.GetString(reason.ToString())
+								GetLogStringFromResx(reason.ToString())
 							);
 						Log(t, Color.DarkRed);
 						MyPopNotification(Strings.GuiLog.TaskErr, t, ToolTipIcon.Info);
@@ -267,8 +267,8 @@ namespace WinFormsGUI {
 					default:
 						t =
 							string.Format(
-								Strings.GuiLog.ResourceManager.GetString(msg.ToString()),
-								Strings.GuiLog.ResourceManager.GetString(reason.ToString())
+								GetLogStringFromResx(msg.ToString()),
+								GetLogStringFromResx(reason.ToString())
 							);
 						Log(t);
 						break;
@@ -280,8 +280,8 @@ namespace WinFormsGUI {
 					var i = Program.helper.GetValueI();
 					Log(
 						string.Format(
-							Strings.GuiLog.ResourceManager.GetString(msg.ToString()),
-							Strings.GuiLog.ResourceManager.GetString(i.ToString())
+							GetLogStringFromResx(msg.ToString()),
+							i.ToString()
 						)
 					);
 					break;

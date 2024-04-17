@@ -79,11 +79,11 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 找不到名为 &quot;{0}&quot; 的字符串。 的本地化字符串。
+        ///   查找类似 找不到名为 &quot;{0}&quot; 的日志字符串。 的本地化字符串。
         /// </summary>
-        internal static string NoSuchString {
+        internal static string NoSuchLogString {
             get {
-                return ResourceManager.GetString("NoSuchString", resourceCulture);
+                return ResourceManager.GetString("NoSuchLogString", resourceCulture);
             }
         }
         
@@ -210,15 +210,6 @@ namespace WinFormsGUI.Strings {
         internal static string Task008 {
             get {
                 return ResourceManager.GetString("Task008", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Test 的本地化字符串。
-        /// </summary>
-        internal static string Task666 {
-            get {
-                return ResourceManager.GetString("Task666", resourceCulture);
             }
         }
     }

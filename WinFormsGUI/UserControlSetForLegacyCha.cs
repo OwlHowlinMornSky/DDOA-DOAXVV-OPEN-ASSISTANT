@@ -32,5 +32,21 @@ namespace WinFormsGUI {
 				Settings.Core.Default.AwardMatch = 2;
 			}
 		}
+
+		private void UserControlSetForLegacyCha_Load(object sender, EventArgs e) {
+			radioBtn_NewMatch.Checked = Settings.Core.Default.PlayNewMatch;
+
+			switch (Settings.Core.Default.AwardMatch) {
+			case 1:
+				radioBtn_AwardPlay.Checked = true;
+				break;
+			case 2:
+				radioBtn_AwardIgnore.Checked = true;
+				break;
+			default:
+				radioBtn_AwardNo.Checked = true;
+				break;
+			}
+		}
 	}
 }

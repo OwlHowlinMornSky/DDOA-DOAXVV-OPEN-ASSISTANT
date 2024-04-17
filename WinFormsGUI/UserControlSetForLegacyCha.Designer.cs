@@ -129,6 +129,7 @@
 			Controls.Add(gpBox_TargetMatch);
 			Name = "UserControlSetForLegacyCha";
 			Size = new Size(210, 294);
+			Load += UserControlSetForLegacyCha_Load;
 			gpBox_AwardMatch.ResumeLayout(false);
 			gpBox_AwardMatch.PerformLayout();
 			gpBox_TargetMatch.ResumeLayout(false);

@@ -123,8 +123,8 @@
   <data name="Btn_Main_Stop" xml:space="preserve">
     <value>停止</value>
   </data>
-  <data name="NoSuchString" xml:space="preserve">
-    <value>找不到名为 "{0}" 的字符串。</value>
+  <data name="NoSuchLogString" xml:space="preserve">
+    <value>找不到名为 "{0}" 的日志字符串。</value>
   </data>
   <data name="ProgramCoreInitializationFailed" xml:space="preserve">
     <value>核心模块初始化失败</value>
@@ -167,8 +167,5 @@
   </data>
   <data name="Task008" xml:space="preserve">
     <value>【旧】刷挑战赛</value>
-  </data>
-  <data name="Task666" xml:space="preserve">
-    <value>Test</value>
   </data>
 </root>
