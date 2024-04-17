@@ -23,28 +23,28 @@
 		/// 使用代码编辑器修改此方法的内容。
 		/// </summary>
 		private void InitializeComponent() {
-			gpBox_AwardSet = new GroupBox();
+			gpBox_AwardMatch = new GroupBox();
 			radioBtn_AwardIgnore = new RadioButton();
 			radioBtn_AwardPlay = new RadioButton();
 			radioBtn_AwardNo = new RadioButton();
-			gpBox_GameSet = new GroupBox();
-			radioBtn_GameNew = new RadioButton();
-			radioBtn_GameLast = new RadioButton();
-			gpBox_AwardSet.SuspendLayout();
-			gpBox_GameSet.SuspendLayout();
+			gpBox_TargetMatch = new GroupBox();
+			radioBtn_NewMatch = new RadioButton();
+			radioBtn_PreviousMatch = new RadioButton();
+			gpBox_AwardMatch.SuspendLayout();
+			gpBox_TargetMatch.SuspendLayout();
 			SuspendLayout();
 			// 
-			// gpBox_AwardSet
+			// gpBox_AwardMatch
 			// 
-			gpBox_AwardSet.Controls.Add(radioBtn_AwardIgnore);
-			gpBox_AwardSet.Controls.Add(radioBtn_AwardPlay);
-			gpBox_AwardSet.Controls.Add(radioBtn_AwardNo);
-			gpBox_AwardSet.Location = new Point(3, 89);
-			gpBox_AwardSet.Name = "gpBox_AwardSet";
-			gpBox_AwardSet.Size = new Size(200, 107);
-			gpBox_AwardSet.TabIndex = 5;
-			gpBox_AwardSet.TabStop = false;
-			gpBox_AwardSet.Text = "奖励挑战赛";
+			gpBox_AwardMatch.Controls.Add(radioBtn_AwardIgnore);
+			gpBox_AwardMatch.Controls.Add(radioBtn_AwardPlay);
+			gpBox_AwardMatch.Controls.Add(radioBtn_AwardNo);
+			gpBox_AwardMatch.Location = new Point(3, 89);
+			gpBox_AwardMatch.Name = "gpBox_AwardMatch";
+			gpBox_AwardMatch.Size = new Size(200, 107);
+			gpBox_AwardMatch.TabIndex = 5;
+			gpBox_AwardMatch.TabStop = false;
+			gpBox_AwardMatch.Text = "奖励挑战赛";
 			// 
 			// radioBtn_AwardIgnore
 			// 
@@ -56,6 +56,7 @@
 			radioBtn_AwardIgnore.TabIndex = 2;
 			radioBtn_AwardIgnore.Text = "忽略并继续";
 			radioBtn_AwardIgnore.UseVisualStyleBackColor = true;
+			radioBtn_AwardIgnore.CheckedChanged += AwardMatch_RadioBtn_CheckedChanged;
 			// 
 			// radioBtn_AwardPlay
 			// 
@@ -67,6 +68,7 @@
 			radioBtn_AwardPlay.TabIndex = 1;
 			radioBtn_AwardPlay.Text = "尝试进入";
 			radioBtn_AwardPlay.UseVisualStyleBackColor = true;
+			radioBtn_AwardPlay.CheckedChanged += AwardMatch_RadioBtn_CheckedChanged;
 			// 
 			// radioBtn_AwardNo
 			// 
@@ -80,65 +82,68 @@
 			radioBtn_AwardNo.TabStop = true;
 			radioBtn_AwardNo.Text = "不检测";
 			radioBtn_AwardNo.UseVisualStyleBackColor = true;
+			radioBtn_AwardNo.CheckedChanged += AwardMatch_RadioBtn_CheckedChanged;
 			// 
-			// gpBox_GameSet
+			// gpBox_TargetMatch
 			// 
-			gpBox_GameSet.Controls.Add(radioBtn_GameNew);
-			gpBox_GameSet.Controls.Add(radioBtn_GameLast);
-			gpBox_GameSet.Location = new Point(3, 3);
-			gpBox_GameSet.Name = "gpBox_GameSet";
-			gpBox_GameSet.Size = new Size(200, 80);
-			gpBox_GameSet.TabIndex = 4;
-			gpBox_GameSet.TabStop = false;
-			gpBox_GameSet.Text = "游戏选项";
+			gpBox_TargetMatch.Controls.Add(radioBtn_NewMatch);
+			gpBox_TargetMatch.Controls.Add(radioBtn_PreviousMatch);
+			gpBox_TargetMatch.Location = new Point(3, 3);
+			gpBox_TargetMatch.Name = "gpBox_TargetMatch";
+			gpBox_TargetMatch.Size = new Size(200, 80);
+			gpBox_TargetMatch.TabIndex = 4;
+			gpBox_TargetMatch.TabStop = false;
+			gpBox_TargetMatch.Text = "游戏选项";
 			// 
-			// radioBtn_GameNew
+			// radioBtn_NewMatch
 			// 
-			radioBtn_GameNew.AutoSize = true;
-			radioBtn_GameNew.ImeMode = ImeMode.NoControl;
-			radioBtn_GameNew.Location = new Point(6, 49);
-			radioBtn_GameNew.Name = "radioBtn_GameNew";
-			radioBtn_GameNew.Size = new Size(62, 21);
-			radioBtn_GameNew.TabIndex = 1;
-			radioBtn_GameNew.Text = "新比赛";
-			radioBtn_GameNew.UseVisualStyleBackColor = true;
+			radioBtn_NewMatch.AutoSize = true;
+			radioBtn_NewMatch.ImeMode = ImeMode.NoControl;
+			radioBtn_NewMatch.Location = new Point(6, 49);
+			radioBtn_NewMatch.Name = "radioBtn_NewMatch";
+			radioBtn_NewMatch.Size = new Size(62, 21);
+			radioBtn_NewMatch.TabIndex = 1;
+			radioBtn_NewMatch.Text = "新比赛";
+			radioBtn_NewMatch.UseVisualStyleBackColor = true;
+			radioBtn_NewMatch.CheckedChanged += MatchSet_RadioBtn_CheckedChanged;
 			// 
-			// radioBtn_GameLast
+			// radioBtn_PreviousMatch
 			// 
-			radioBtn_GameLast.AutoSize = true;
-			radioBtn_GameLast.Checked = true;
-			radioBtn_GameLast.ImeMode = ImeMode.NoControl;
-			radioBtn_GameLast.Location = new Point(6, 22);
-			radioBtn_GameLast.Name = "radioBtn_GameLast";
-			radioBtn_GameLast.Size = new Size(86, 21);
-			radioBtn_GameLast.TabIndex = 0;
-			radioBtn_GameLast.TabStop = true;
-			radioBtn_GameLast.Text = "上一次比赛";
-			radioBtn_GameLast.UseVisualStyleBackColor = true;
+			radioBtn_PreviousMatch.AutoSize = true;
+			radioBtn_PreviousMatch.Checked = true;
+			radioBtn_PreviousMatch.ImeMode = ImeMode.NoControl;
+			radioBtn_PreviousMatch.Location = new Point(6, 22);
+			radioBtn_PreviousMatch.Name = "radioBtn_PreviousMatch";
+			radioBtn_PreviousMatch.Size = new Size(86, 21);
+			radioBtn_PreviousMatch.TabIndex = 0;
+			radioBtn_PreviousMatch.TabStop = true;
+			radioBtn_PreviousMatch.Text = "上一次比赛";
+			radioBtn_PreviousMatch.UseVisualStyleBackColor = true;
+			radioBtn_PreviousMatch.CheckedChanged += MatchSet_RadioBtn_CheckedChanged;
 			// 
 			// UserControlSetForLegacyCha
 			// 
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
-			Controls.Add(gpBox_AwardSet);
-			Controls.Add(gpBox_GameSet);
+			Controls.Add(gpBox_AwardMatch);
+			Controls.Add(gpBox_TargetMatch);
 			Name = "UserControlSetForLegacyCha";
 			Size = new Size(210, 294);
-			gpBox_AwardSet.ResumeLayout(false);
-			gpBox_AwardSet.PerformLayout();
-			gpBox_GameSet.ResumeLayout(false);
-			gpBox_GameSet.PerformLayout();
+			gpBox_AwardMatch.ResumeLayout(false);
+			gpBox_AwardMatch.PerformLayout();
+			gpBox_TargetMatch.ResumeLayout(false);
+			gpBox_TargetMatch.PerformLayout();
 			ResumeLayout(false);
 		}
 
 		#endregion
 
-		private GroupBox gpBox_AwardSet;
+		private GroupBox gpBox_AwardMatch;
 		private RadioButton radioBtn_AwardIgnore;
 		private RadioButton radioBtn_AwardPlay;
 		private RadioButton radioBtn_AwardNo;
-		private GroupBox gpBox_GameSet;
-		private RadioButton radioBtn_GameNew;
-		private RadioButton radioBtn_GameLast;
+		private GroupBox gpBox_TargetMatch;
+		private RadioButton radioBtn_NewMatch;
+		private RadioButton radioBtn_PreviousMatch;
 	}
 }

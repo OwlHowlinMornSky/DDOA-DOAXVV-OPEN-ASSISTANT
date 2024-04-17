@@ -24,18 +24,20 @@ namespace WinFormsGUI {
 	/// </summary>
 	public partial class FormTest : Form {
 
-		private UserControlHome home;
+		private readonly UserControlHome home; // 因为编辑器抽风没法加控件所以只能手动用代码加了。
 
 		public FormTest() {
 			InitializeComponent();
 
-			home = new UserControlHome() {
-				MyPopNotification = PopNotification
+			home = new UserControlHome {
+				MyPopNotification = PopNotification,
+				Dock = DockStyle.Fill
 			};
-			home.Dock = DockStyle.Fill;
 			tabPage_home.Controls.Add(home);
 
 			SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+
+			Program.helper.SetShowCaptureOrNot(true);
 		}
 
 		private void FormTest_Load(object sender, EventArgs e) {
@@ -46,8 +48,26 @@ namespace WinFormsGUI {
 		/// 窗口试图关闭
 		/// </summary>
 		private void FormTest_FormClosing(object sender, FormClosingEventArgs e) {
+			if (Program.helper.IsRunning()) {
+				if (e.CloseReason != CloseReason.WindowsShutDown) {
+					// 询问是否关闭
+					var res = MessageBox.Show(
+						Strings.Main.QueryClose,
+						Text,
+						MessageBoxButtons.OKCancel,
+						MessageBoxIcon.Question
+					);
+					if (res == DialogResult.Cancel) {
+						e.Cancel = true;
+						return;
+					}
+				}
+				Program.helper.AskForStop();
+				while (Program.helper.IsRunning()) {
+					Thread.Sleep(100);
+				}
+			}
 			home.OnClosing();
-
 		}
 
 		/// <summary>
@@ -55,6 +75,8 @@ namespace WinFormsGUI {
 		/// </summary>
 		private void FormTest_FormClosed(object sender, FormClosedEventArgs e) {
 			Settings.GUI.Default.Save();
+			Settings.Core.Default.Save();
+			//Settings.Param.Default.Save();
 		}
 
 		/// <summary>
@@ -71,13 +93,13 @@ namespace WinFormsGUI {
 		/// <param name="text">消息内容</param>
 		/// <param name="icon">消息图标</param>
 		private void PopNotification(string title, string text, ToolTipIcon icon) {
-			/*if (Settings.GUI.Default.UseNotify)
+			if (Settings.GUI.Default.UseNotify)
 				notifyIcon_Main.ShowBalloonTip(
 					Settings.Param.Default.NotifyTime,
 					title,
 					text,
 					icon
-				);*/
+				);
 		}
 	}
 }

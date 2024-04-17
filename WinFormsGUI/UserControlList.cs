@@ -21,27 +21,46 @@
 using Wrapper;
 
 namespace WinFormsGUI {
-
+	/// <summary>
+	/// 放入控件确认身份的数据
+	/// </summary>
 	public struct ListItemUserData {
+		/// <summary>
+		/// 对应的内部任务id
+		/// </summary>
 		public uint coreTaskEnum;
+		/// <summary>
+		/// 在列表中的次序
+		/// </summary>
 		public int rank;
 	}
 
+	/// <summary>
+	/// 主页左侧任务列表控件
+	/// </summary>
 	public partial class UserControlList : UserControl {
 
+		/// <summary>
+		/// 保存的任务完整列表
+		/// </summary>
 		private List<uint> m_listTasks = [];
-
-		public Action<ListItemUserData> SetSelectedChangedTo = x => {};
+		/// <summary>
+		/// 选择的设置小按钮改变id时的callback
+		/// </summary>
+		public Action<uint> SetSelectedChangedTo = x => {};
 
 		public UserControlList() {
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// 获取勾选了的任务列表
+		/// </summary>
+		/// <returns>任务列表</returns>
 		public List<uint> GetEnabledList() {
-			List<uint> list = new List<uint>();
+			List<uint> list = [];
 			for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
-				var checkBox = flowLayoutPanel1.Controls[i] as CheckBox;
-				if (checkBox != null && checkBox.Checked) {
+				if (flowLayoutPanel1.Controls[i] is CheckBox checkBox && checkBox.Checked) {
 					list.Add(((ListItemUserData)checkBox.DataContext).coreTaskEnum);
 				}
 			}
@@ -81,6 +100,7 @@ namespace WinFormsGUI {
 				radioBtn.CheckedChanged += OnListRadioBtnChanged;
 				radioBtn.MouseEnter += OnListRadioBtnEnter;
 				radioBtn.MouseLeave += OnListRadioBtnLeave;
+				radioBtn.KeyDown += OnListRadioBtnKeyDown;
 				flowLayoutPanel1.Controls.Add(radioBtn);
 				flowLayoutPanel1.SetFlowBreak(radioBtn, true);
 			}
@@ -92,7 +112,6 @@ namespace WinFormsGUI {
 			var checkBox = sender as CheckBox;
 			var data = (ListItemUserData)checkBox.DataContext;
 			int rank = data.rank;
-			//MessageBox.Show($"CheckBox #{rank} Changed to {checkBox.Checked}.");
 		}
 
 		private void OnListRadioBtnChanged(object sender, EventArgs e) {
@@ -100,9 +119,8 @@ namespace WinFormsGUI {
 			var data = (ListItemUserData)radioBtn.DataContext;
 			int rank = data.rank;
 			if (radioBtn.Checked) {
-				SetSelectedChangedTo(data);
+				SetSelectedChangedTo(data.coreTaskEnum);
 			}
-			//MessageBox.Show($"RadioBtn #{rank} Changed to {radioBtn.Checked}.");
 		}
 
 		private void OnListCheckBoxEnter(object sender, EventArgs e) {
@@ -127,8 +145,7 @@ namespace WinFormsGUI {
 
 		private void OnClickChooseAll(object sender, EventArgs e) {
 			foreach (var ctrl in flowLayoutPanel1.Controls) {
-				if (ctrl.GetType() == typeof(CheckBox)) {
-					var checkBox = (CheckBox)ctrl;
+				if (ctrl is CheckBox checkBox) {
 					checkBox.Checked = true;
 				}
 			}
@@ -136,33 +153,27 @@ namespace WinFormsGUI {
 
 		private void OnClickClearList(object sender, EventArgs e) {
 			foreach (var ctrl in flowLayoutPanel1.Controls) {
-				if (ctrl.GetType() == typeof(CheckBox)) {
-					var checkBox = (CheckBox)ctrl;
+				if (ctrl is CheckBox checkBox) {
 					checkBox.Checked = false;
 				}
 			}
 		}
-		
+
 		/// <summary>
 		/// 触发“修改”。
 		/// </summary>
 		private void OnClickEditList(object sender, EventArgs args) {
-			var dialog = new FormListEdit(); // 打开修改窗口
-			DialogResult res;
-			do {
-				dialog.ListTasks = m_listTasks;
-				res = dialog.ShowDialog();
-				if (res == DialogResult.Retry) { // 与修改窗口通信，需要“重置”时，重新加载列表。
-					UserControlList_Load(null, null);
-				}
-			} while (res == DialogResult.Retry); // 与修改窗口通信，需要“重置”时，重新打开修改窗口。
+			var dialog = new FormListEdit {
+				ListTasks = m_listTasks
+			}; // 打开修改窗口
+			var res = dialog.ShowDialog();
 			if (res == DialogResult.OK) { // 确认即修改。
 				SetList(dialog.ListTasks);
 				OnClickChooseAll(null, null);
 			}
 		}
 
-		private void UserControlList_Load(object sender, EventArgs e) {
+		static public List<uint> GetTaskListFromSettingString() {
 			string str = Settings.GUI.Default.ListItems;
 			var strs = str.Split(',');
 			List<uint> tasks = [];
@@ -173,10 +184,14 @@ namespace WinFormsGUI {
 				if (n > (uint)TaskEnumWrap.None)
 					tasks.Add(n);
 			}
-			SetList(tasks);
+			return tasks;
+		}
 
-			str = Settings.GUI.Default.ListItemCheckList;
-			strs = str.Split(',');
+		private void UserControlList_Load(object sender, EventArgs e) {
+			SetList(GetTaskListFromSettingString());
+
+			var str = Settings.GUI.Default.ListItemCheckList;
+			var strs = str.Split(',');
 			foreach (var s in strs) {
 				if (s.Length == 0)
 					continue;
@@ -223,6 +238,16 @@ namespace WinFormsGUI {
 			}
 			Settings.GUI.Default.ListItemCheckList = str;
 			Settings.GUI.Default.ListLastSelectedSettings = selectedSet;
+		}
+
+		private void OnListRadioBtnKeyDown(object sender, KeyEventArgs e) {
+			if (e.KeyCode != Keys.Escape)
+				return;
+			for (int i = 1, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
+				var radioBtn = flowLayoutPanel1.Controls[i] as RadioButton;
+				radioBtn.Checked = false;
+			}
+			SetSelectedChangedTo((uint)TaskEnumWrap.None);
 		}
 	}
 }

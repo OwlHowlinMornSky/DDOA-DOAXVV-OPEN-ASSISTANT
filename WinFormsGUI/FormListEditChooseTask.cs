@@ -44,11 +44,13 @@ namespace WinFormsGUI {
 		/// 窗口加载时。
 		/// </summary>
 		private void FormListEditChooseTask_Load(object sender, EventArgs e) {
+			listBox1.BeginUpdate();
 			// 将所有可用的任务项列出
 			for (uint i = (uint)TaskEnumWrap.None + 1, n = (uint)TaskEnumWrap.COUNT;
 				i < n; i++) {
 				listBox1.Items.Add(Strings.Main.ResourceManager.GetString("Task" + i.ToString("000")));
 			}
+			listBox1.EndUpdate();
 		}
 
 		/// <summary>

@@ -100,7 +100,7 @@
 			// 
 			button_moveup.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			button_moveup.Enabled = false;
-			button_moveup.Location = new Point(257, 162);
+			button_moveup.Location = new Point(257, 142);
 			button_moveup.Name = "button_moveup";
 			button_moveup.Size = new Size(75, 23);
 			button_moveup.TabIndex = 7;
@@ -112,7 +112,7 @@
 			// 
 			button_movedown.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			button_movedown.Enabled = false;
-			button_movedown.Location = new Point(257, 191);
+			button_movedown.Location = new Point(257, 171);
 			button_movedown.Name = "button_movedown";
 			button_movedown.Size = new Size(75, 23);
 			button_movedown.TabIndex = 8;
@@ -145,7 +145,7 @@
 			// button_clearAll
 			// 
 			button_clearAll.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			button_clearAll.Location = new Point(257, 251);
+			button_clearAll.Location = new Point(257, 221);
 			button_clearAll.Name = "button_clearAll";
 			button_clearAll.Size = new Size(75, 23);
 			button_clearAll.TabIndex = 9;
@@ -154,7 +154,8 @@
 			// 
 			// button_reset
 			// 
-			button_reset.Location = new Point(257, 280);
+			button_reset.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			button_reset.Location = new Point(257, 250);
 			button_reset.Name = "button_reset";
 			button_reset.Size = new Size(75, 23);
 			button_reset.TabIndex = 10;

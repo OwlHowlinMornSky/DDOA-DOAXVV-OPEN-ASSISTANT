@@ -23,8 +23,13 @@ using Wrapper;
 namespace WinFormsGUI {
 	internal static class Program {
 
+		/// <summary>
+		/// Helper套壳的实例。
+		/// </summary>
 		internal readonly static HelperWrapper helper = new();
-
+		/// <summary>
+		/// 任务状态改变时锁定与解锁GUI的事件。
+		/// </summary>
 		internal static EventHandler<bool> GuiLock;
 
 		/// <summary>

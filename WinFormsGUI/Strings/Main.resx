@@ -135,6 +135,9 @@
   <data name="ProgramCoreInitializationFailed_UnknownReason" xml:space="preserve">
     <value>未知原因</value>
   </data>
+  <data name="QueryClose" xml:space="preserve">
+    <value>当前仍有任务进行，确定要退出吗？</value>
+  </data>
   <data name="Task000" xml:space="preserve">
     <value>[null]</value>
   </data>

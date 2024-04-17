@@ -115,6 +115,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 当前仍有任务进行，确定要退出吗？ 的本地化字符串。
+        /// </summary>
+        internal static string QueryClose {
+            get {
+                return ResourceManager.GetString("QueryClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 [null] 的本地化字符串。
         /// </summary>
         internal static string Task000 {

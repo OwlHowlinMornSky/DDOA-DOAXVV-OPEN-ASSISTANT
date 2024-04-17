@@ -42,9 +42,9 @@ namespace WinFormsGUI {
 			return Color.FromArgb(pcrColorization);
 		}
 		private readonly Color m_sysClr = GetSystemMainColor();
-		private int vScrollBarWidth = 20;
+		private readonly int vScrollBarWidth = 20;
 
-		private bool m_autoResizeItem = true;
+		private bool m_autoResizeItem = false;
 		public int itemCntLimit = 128;
 
 		public UserControlLogger() {
@@ -88,7 +88,7 @@ namespace WinFormsGUI {
 		}
 
 		public void Clear() {
-			//listBox1.Items.Clear();
+			listBox1.Items.Clear();
 		}
 
 		public void LogProcessStatusChange(bool isBegin) {
@@ -103,7 +103,6 @@ namespace WinFormsGUI {
 				listBox1.EndUpdate();
 			}
 		}
-
 
 		private void LogAdd(string message, Color color) {
 			bool scroll = IsAtBottom();

@@ -53,6 +53,7 @@ namespace WinFormsGUI {
 		/// 完整列表更新后刷新控件。
 		/// </summary>
 		private void OnListSeted() {
+			listBox1.BeginUpdate();
 			listBox1.ClearSelected();
 			listBox1.Items.Clear();
 			foreach (var task in m_listTasks) {
@@ -60,6 +61,7 @@ namespace WinFormsGUI {
 					Strings.Main.ResourceManager.GetString("Task" + task.ToString("000"))
 				);
 			}
+			listBox1.EndUpdate();
 		}
 
 		/// <summary>
@@ -100,6 +102,7 @@ namespace WinFormsGUI {
 				index,
 				Strings.Main.ResourceManager.GetString("Task" + choice.ToString("000"))
 			);
+			listBox1.SelectedIndex--; // 选择刚插入的项
 		}
 
 		/// <summary>
@@ -127,7 +130,7 @@ namespace WinFormsGUI {
 			listBox1.Items.RemoveAt(index);
 			m_listTasks.RemoveAt(index);
 			
-			// 还原旧的选中项
+			// 还原旧选中位置
 			if(index >= listBox1.Items.Count)
 				index = listBox1.Items.Count - 1;
 			listBox1.SelectedIndex = index;
@@ -195,10 +198,8 @@ namespace WinFormsGUI {
 		/// </summary>
 		private void Button_reset_Click(object sender, EventArgs e) {
 			Settings.GUI.Default.Reset(); // 重置所有设置。
-			var temp = Settings.GUI.Default.ListItems; // 保存列表的默认设置。
+			ListTasks = UserControlList.GetTaskListFromSettingString();
 			Settings.GUI.Default.Reload(); // 重新读取保存的设置。
-			Settings.GUI.Default.ListItems = temp; // 这样就仅仅将列表重设为默认。
-			DialogResult = DialogResult.Retry; // 与上层窗口通信所用。
 		}
 	}
 }

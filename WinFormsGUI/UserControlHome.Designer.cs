@@ -109,7 +109,6 @@
 			// 
 			// timer_Main
 			// 
-			timer_Main.Interval = 60;
 			timer_Main.Tick += Timer_Main_Tick;
 			// 
 			// UserControlHome

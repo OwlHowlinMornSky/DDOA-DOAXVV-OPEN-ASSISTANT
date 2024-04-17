@@ -51,10 +51,10 @@ namespace WinFormsGUI {
 		}
 
 		private void InitLoadSettings_Home() {
-			radioBtn_GameNew.Checked = Settings.Core.Default.Cha_PlayNew;
+			radioBtn_GameNew.Checked = Settings.Core.Default.PlayNewMatch;
 			radioBtn_CtrlInput.Checked = Settings.Core.Default.CtrlSendInput;
 
-			switch (Settings.Core.Default.Cha_Award) {
+			switch (Settings.Core.Default.AwardMatch) {
 			case 1:
 				radioBtn_AwardPlay.Checked = true;
 				break;
@@ -171,7 +171,7 @@ namespace WinFormsGUI {
 
 		private void RadioBtn_Game_CheckedChanged(object sender, EventArgs e) {
 			Program.helper.SetChallengeForNewOrLast(radioBtn_GameNew.Checked);
-			Settings.Core.Default.Cha_PlayNew = radioBtn_GameNew.Checked;
+			Settings.Core.Default.PlayNewMatch = radioBtn_GameNew.Checked;
 		}
 
 		private void RadioBtn_Ctrl_CheckedChanged(object sender, EventArgs e) {
@@ -183,13 +183,13 @@ namespace WinFormsGUI {
 			Program.helper.SetChallengeCheckAwardOrNot(!radioBtn_AwardNo.Checked);
 			Program.helper.SetChallengePlayAwardOrNot(radioBtn_AwardPlay.Checked);
 			if (radioBtn_AwardNo.Checked) {
-				Settings.Core.Default.Cha_Award = 0;
+				Settings.Core.Default.AwardMatch = 0;
 			}
 			else if (radioBtn_AwardPlay.Checked) {
-				Settings.Core.Default.Cha_Award = 1;
+				Settings.Core.Default.AwardMatch = 1;
 			}
 			else {
-				Settings.Core.Default.Cha_Award = 2;
+				Settings.Core.Default.AwardMatch = 2;
 			}
 		}
 
