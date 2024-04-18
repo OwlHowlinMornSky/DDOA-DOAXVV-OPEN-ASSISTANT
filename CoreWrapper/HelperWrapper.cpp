@@ -47,18 +47,23 @@ System::Boolean HelperWrapper::IsRunning() {
 	return r_helper->isRunning();
 }
 
+ReturnCmd HelperWrapper::GetCommand() {
+	System::Int32 res = r_helper->msgPop();
+    return ReturnCmd(res);
+}
+
 ReturnMessage HelperWrapper::GetMessage() {
-	System::UInt32 res = r_helper->msgPop();
+	System::Int32 res = r_helper->msgPop();
 	return ReturnMessage(res);
 }
 
-System::UInt32 HelperWrapper::GetCode() {
-	System::UInt32 res = r_helper->msgPop();
+System::Int32 HelperWrapper::GetValueI() {
+	System::Int32 res = r_helper->msgPop();
 	return res;
 }
 
 System::Int32 HelperWrapper::Setup() {
-    return r_helper->setup();
+	return r_helper->setup();
 }
 
 System::Void HelperWrapper::Drop() {
@@ -67,37 +72,47 @@ System::Void HelperWrapper::Drop() {
 }
 
 System::Int32 HelperWrapper::SetChallengeForNewOrLast(bool forNew) {
-	ohms::Settings::mainSettings.ChaGame_ForNew = forNew;
+	ohms::Settings::LegacyCha::DEFAULT.ForNew = forNew;
 	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetMouseSendInputOrSendMessage(bool sendInput) {
-	ohms::Settings::mainSettings.Ctrl_UseSendInput = sendInput;
+	ohms::Settings::WndHandler::DEFAULT.UseSendInput = sendInput;
 	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetShowCaptureOrNot(bool show) {
-	ohms::Settings::mainSettings.Debug_ShowCapture = show;
+	ohms::Settings::WndHandler::DEFAULT.Debug_ShowCapture = show;
 	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetKeepAwakeOrNot(bool keep) {
-	ohms::Settings::mainSettings.KeepAwake = keep;
+	ohms::Settings::Global::DEFAULT.KeepAwake = keep;
 	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetKeepScreenOnOrNot(bool keep) {
-	ohms::Settings::mainSettings.KeepScreenOn = keep;
+	ohms::Settings::Global::DEFAULT.KeepScreenOn = keep;
 	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetChallengeCheckAwardOrNot(bool check) {
-	ohms::Settings::mainSettings.ChaGame_CheckAddition = check;
+	ohms::Settings::LegacyCha::DEFAULT.CheckAddition = check;
 	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetChallengePlayAwardOrNot(bool play) {
-	ohms::Settings::mainSettings.ChaGame_EnterAddition = play;
+	ohms::Settings::LegacyCha::DEFAULT.EnterAddition = play;
+	return System::Int32(0);
+}
+
+System::Int32 HelperWrapper::SetTaskList(array<System::UInt32>^ list) {
+	if (list->Length >= ohms::Settings::Global::ListLength)
+		return System::Int32(1);
+	ohms::Settings::Global::DEFAULT.ClearList();
+	for (int i = 0, n = list->Length; i < n; ++i) {
+		ohms::Settings::Global::DEFAULT.Work_TaskList[i] = list[i];
+	}
 	return System::Int32(0);
 }
 

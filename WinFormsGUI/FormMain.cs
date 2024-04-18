@@ -51,10 +51,10 @@ namespace WinFormsGUI {
 		}
 
 		private void InitLoadSettings_Home() {
-			radioBtn_GameNew.Checked = Settings.Core.Default.Cha_PlayNew;
+			radioBtn_GameNew.Checked = Settings.Core.Default.PlayNewMatch;
 			radioBtn_CtrlInput.Checked = Settings.Core.Default.CtrlSendInput;
 
-			switch (Settings.Core.Default.Cha_Award) {
+			switch (Settings.Core.Default.AwardMatch) {
 			case 1:
 				radioBtn_AwardPlay.Checked = true;
 				break;
@@ -88,6 +88,9 @@ namespace WinFormsGUI {
 			}
 			chkBox_SetDisableClose.Checked = Settings.GUI.Default.DisableClose;
 
+			if (Settings.GUI.Default.WndLastPosition.X != -1 && Settings.GUI.Default.WndLastPosition.Y != -1)
+				Location = Settings.GUI.Default.WndLastPosition;
+
 			tkBar_Trans.Value = Settings.GUI.Default.Transparent;
 			m_label_transp_value_size = label_TransValue.Size;
 			label_TransValue.Text = tkBar_Trans.Value.ToString() + "%";
@@ -96,12 +99,10 @@ namespace WinFormsGUI {
 		private void InitLoadSettings() {
 			InitLoadSettings_Home();
 			InitLoadSettings_Settings();
-			if (Settings.GUI.Default.LastPosition.X != -1 && Settings.GUI.Default.LastPosition.Y != -1)
-				Location = Settings.GUI.Default.LastPosition;
 		}
 
 		private void DropSaveSettings() {
-			Settings.GUI.Default.LastPosition = Location;
+			Settings.GUI.Default.WndLastPosition = Location;
 			Settings.GUI.Default.Save();
 			Settings.Core.Default.Save();
 		}
@@ -127,6 +128,10 @@ namespace WinFormsGUI {
 			notifyIcon_Main.Text = Text;
 			WorkUnlock();
 			InitLoadSettings();
+
+			uint[] l = [(uint)TaskEnumWrap.LegacyCha];
+
+			Program.helper.SetTaskList(l);
 		}
 
 		private void FormMain_Deactivate(object sender, EventArgs e) {
@@ -149,11 +154,11 @@ namespace WinFormsGUI {
 
 		private void Btn_Main_Click(object sender, EventArgs e) {
 			btn_Main.Enabled = false;
-			if (m_btnMainIsStart) { 
+			if (m_btnMainIsStart) {
 				WorkLock();
 				listBox_Log.Items.Clear();
 				if (!Program.helper.Start()) {
-					Log(Strings.LogEvent.Work_CanNotStartWork);
+					//Log(Strings.LogEvent.Work_CanNotStartWork);
 					WorkUnlock();
 					return;
 				}
@@ -166,7 +171,7 @@ namespace WinFormsGUI {
 
 		private void RadioBtn_Game_CheckedChanged(object sender, EventArgs e) {
 			Program.helper.SetChallengeForNewOrLast(radioBtn_GameNew.Checked);
-			Settings.Core.Default.Cha_PlayNew = radioBtn_GameNew.Checked;
+			Settings.Core.Default.PlayNewMatch = radioBtn_GameNew.Checked;
 		}
 
 		private void RadioBtn_Ctrl_CheckedChanged(object sender, EventArgs e) {
@@ -178,13 +183,13 @@ namespace WinFormsGUI {
 			Program.helper.SetChallengeCheckAwardOrNot(!radioBtn_AwardNo.Checked);
 			Program.helper.SetChallengePlayAwardOrNot(radioBtn_AwardPlay.Checked);
 			if (radioBtn_AwardNo.Checked) {
-				Settings.Core.Default.Cha_Award = 0;
+				Settings.Core.Default.AwardMatch = 0;
 			}
 			else if (radioBtn_AwardPlay.Checked) {
-				Settings.Core.Default.Cha_Award = 1;
+				Settings.Core.Default.AwardMatch = 1;
 			}
 			else {
-				Settings.Core.Default.Cha_Award = 2;
+				Settings.Core.Default.AwardMatch = 2;
 			}
 		}
 
@@ -267,7 +272,8 @@ namespace WinFormsGUI {
 		private void Timer_Main_Tick(object sender, EventArgs e) {
 			ReturnMessage m;
 			while ((m = Program.helper.GetMessage()) != ReturnMessage.None)
-				switch (m) {
+				;
+				/*switch (m) {
 				case ReturnMessage.CMD_EmptyLine:
 					Log();
 					break;
@@ -339,46 +345,46 @@ namespace WinFormsGUI {
 					string text = "null";
 					switch (m) {
 					case ReturnMessage.STR_Task_Challenge_NoNew:
-						text = Strings.LogStr.Task_Challenge_NoNew;
+						text = Strings.LogStr.TaskErrChaNoNew;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoLast:
-						text = Strings.LogStr.Task_Challenge_NoLast;
+						text = Strings.LogStr.TaskErrChaNoPri;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoEnter:
-						text = Strings.LogStr.Task_Challenge_NoEnter;
+						text = Strings.LogStr.TaskErrChaNoEnter;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoStart:
-						text = Strings.LogStr.Task_Challenge_NoStart;
+						text = Strings.LogStr.TaskErrChaNoStart;
 						break;
 					case ReturnMessage.STR_Task_Challenge_TimeOut:
-						text = Strings.LogStr.Task_Challenge_TimeOut;
+						text = Strings.LogStr.TaskErrChaTimeOut;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoEnd:
-						text = Strings.LogStr.Task_Challenge_NoEnd;
+						text = Strings.LogStr.TaskErrChaNoEnd;
 						break;
 					case ReturnMessage.STR_Task_Challenge_NoOver:
-						text = Strings.LogStr.Task_Challenge_NoOver;
+						text = Strings.LogStr.TaskErrChaNoOver;
 						break;
 					case ReturnMessage.STR_Task_Challenge_AddNotSup:
-						text = Strings.LogStr.Task_Challenge_AddNotSup;
+						text = Strings.LogStr.TaskErrChaAddNotSup;
 						break;
 					case ReturnMessage.STR_Task_Challenge_IgnoreAddFailed:
-						text = Strings.LogStr.Task_Challenge_IgnoreAddFailed;
+						text = Strings.LogStr.TaskErrChaIgnoreAddFailed;
 						break;
 					case ReturnMessage.STR_Task_Challenge_OpenAddFailed:
-						text = Strings.LogStr.Task_Challenge_OpenAddFailed;
+						text = Strings.LogStr.TaskErrChaOpenAddFailed;
 						break;
 					case ReturnMessage.STR_Task_FailedToLoadTemplateFile:
-						text = Strings.LogStr.Task_FailedToLoadTemplateFile;
+						text = Strings.LogStr.TaskErrFailedToLoadTemplateFile;
 						break;
 					case ReturnMessage.STR_Task_Error_NoWnd:
-						text = Strings.LogStr.Task_CanNotFindWnd;
+						text = Strings.LogStr.TaskErrNoWnd;
 						break;
 					case ReturnMessage.STR_Task_Error_FailedCapture:
-						text = Strings.LogStr.Task_CanNotCapture;
+						text = Strings.LogStr.TaskErrNoCap;
 						break;
 					default:
-						text = string.Format(Strings.LogStr.UNKNOWN, m.ToString());
+						text = string.Format(Strings.LogStr.k, m.ToString());
 						break;
 					}
 					Log(Strings.LogEvent.Task_Error + ": " + text);
@@ -422,7 +428,7 @@ namespace WinFormsGUI {
 					Log(string.Format(Strings.LogEvent.UNKNOWN, m.ToString()));
 					break;
 
-				}
+				}*/
 			return;
 		}
 

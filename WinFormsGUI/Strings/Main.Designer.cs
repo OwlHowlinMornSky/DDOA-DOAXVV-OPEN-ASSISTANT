@@ -79,6 +79,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 找不到名为 &quot;{0}&quot; 的日志字符串。 的本地化字符串。
+        /// </summary>
+        internal static string NoSuchLogString {
+            get {
+                return ResourceManager.GetString("NoSuchLogString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 核心模块初始化失败 的本地化字符串。
         /// </summary>
         internal static string ProgramCoreInitializationFailed {
@@ -111,6 +120,96 @@ namespace WinFormsGUI.Strings {
         internal static string ProgramCoreInitializationFailed_UnknownReason {
             get {
                 return ResourceManager.GetString("ProgramCoreInitializationFailed_UnknownReason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 当前仍有任务进行，确定要退出吗？ 的本地化字符串。
+        /// </summary>
+        internal static string QueryClose {
+            get {
+                return ResourceManager.GetString("QueryClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 [null] 的本地化字符串。
+        /// </summary>
+        internal static string Task000 {
+            get {
+                return ResourceManager.GetString("Task000", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 启动游戏 的本地化字符串。
+        /// </summary>
+        internal static string Task001 {
+            get {
+                return ResourceManager.GetString("Task001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 日常任务 的本地化字符串。
+        /// </summary>
+        internal static string Task002 {
+            get {
+                return ResourceManager.GetString("Task002", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 岛主房间 的本地化字符串。
+        /// </summary>
+        internal static string Task003 {
+            get {
+                return ResourceManager.GetString("Task003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 挑战赛 的本地化字符串。
+        /// </summary>
+        internal static string Task004 {
+            get {
+                return ResourceManager.GetString("Task004", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 温泉 的本地化字符串。
+        /// </summary>
+        internal static string Task005 {
+            get {
+                return ResourceManager.GetString("Task005", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 领取奖励 的本地化字符串。
+        /// </summary>
+        internal static string Task006 {
+            get {
+                return ResourceManager.GetString("Task006", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 退出游戏 的本地化字符串。
+        /// </summary>
+        internal static string Task007 {
+            get {
+                return ResourceManager.GetString("Task007", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 【旧】刷挑战赛 的本地化字符串。
+        /// </summary>
+        internal static string Task008 {
+            get {
+                return ResourceManager.GetString("Task008", resourceCulture);
             }
         }
     }

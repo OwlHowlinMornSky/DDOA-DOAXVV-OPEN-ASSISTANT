@@ -99,6 +99,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ReturnMessages.h" />
     <ClInclude Include="SystemThings.h" />
+    <ClInclude Include="TaskEnumWrap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HelperWrapper.cpp" />

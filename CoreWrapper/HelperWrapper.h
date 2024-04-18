@@ -22,23 +22,58 @@
 
 #include <IHelper.h>
 #include "ReturnMessages.h"
+#include "TaskEnumWrap.h"
 
 namespace Wrapper {
 
+/**
+ * @brief CLI套壳，向CoreDll的IHelper服务。
+ */
 public ref class HelperWrapper {
 public:
 	HelperWrapper();
 	~HelperWrapper();
 
 public:
+	/**
+	 * @brief 开始任务（IHelper::start）
+	 * @return 启动是否成功。
+	 */
 	System::Boolean Start();
+	/**
+	 * @brief 要求停止（IHelper::askForStop）
+	 */
 	System::Void AskForStop();
+	/**
+	 * @brief 是否正在运行（IHelper::isRunning）
+	 * @return 是否运行
+	 */
 	System::Boolean IsRunning();
 
+	/**
+	 * @brief 提取指令。
+	 * @return 指令枚举。
+	 */
+	ReturnCmd GetCommand();
+	/**
+	 * @brief 提取消息字符串。
+	 * @return 消息字符串枚举。
+	 */
 	ReturnMessage GetMessage();
-	System::UInt32 GetCode();
+	/**
+	 * @brief 提取数值。
+	 * @return int32。
+	 */
+	System::Int32 GetValueI();
 
+	/**
+	 * @brief 初始化。
+	 * @return 0 为 成功，非零整数为各类错误。
+	 */
 	System::Int32 Setup();
+	/**
+	 * @brief 销毁。
+	 */
 	System::Void Drop();
 
 public:
@@ -84,6 +119,12 @@ public:
 	 * @return 0 if success.
 	*/
 	System::Int32 SetChallengePlayAwardOrNot(bool play);
+	/**
+	 * @brief 设置任务列表。
+	 * @param list 任务列表。
+	 * @return 0 if success, 1 if too long.
+	 */
+	System::Int32 SetTaskList(array<System::UInt32>^ list);
 
 private:
 	ohms::IHelper* r_helper;

@@ -21,7 +21,7 @@
 #pragma once
 
 #include "API.h"
-#include "ReturnMessages.h"
+#include "ReturnMsgEnum.h"
 
 namespace ohms {
 
@@ -49,7 +49,7 @@ public:
 	 * @brief 初始化。
 	 * @return 状态代码。
 	 */
-	virtual int setup() = 0;
+	virtual int setup(bool winrtInited = true) = 0;
 	/**
 	 * @brief 尝试开始任务。任务将运行在子线程，如果已经运行则无效。
 	 * @return true为成功
@@ -68,7 +68,7 @@ public:
 	/**
 	 * @brief 弹出返回消息
 	*/
-	virtual unsigned long msgPop() = 0;
+	virtual long msgPop() = 0;
 };
 
 } // namespace ohms

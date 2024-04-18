@@ -14,8 +14,17 @@
     <Setting Name="Transparent" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="LastPosition" Type="System.Drawing.Point" Scope="User">
+    <Setting Name="WndLastPosition" Type="System.Drawing.Point" Scope="User">
       <Value Profile="(Default)">-1, -1</Value>
+    </Setting>
+    <Setting Name="ListLastSelectedSettings" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
+    <Setting Name="ListItems" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1, 2, 3, 4, 5, 6, 7, 8</Value>
+    </Setting>
+    <Setting Name="ListItemCheckList" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

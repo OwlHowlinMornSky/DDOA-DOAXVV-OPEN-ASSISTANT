@@ -22,9 +22,16 @@
 
 namespace Wrapper {
 
+/**
+ * @brief Win32套壳。
+ */
 public ref class SystemThings {
 public:
-
+	/**
+	 * @brief 设置窗口的关闭按钮的状态。
+	 * @param hwnd 窗口句柄
+	 * @param enabled 是否启用关闭按钮。
+	 */
 	static void SetCloseEnabled(System::IntPtr hwnd, System::Boolean enabled);
 
 };

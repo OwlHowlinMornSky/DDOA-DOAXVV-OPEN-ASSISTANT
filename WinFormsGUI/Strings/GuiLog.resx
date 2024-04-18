@@ -117,46 +117,117 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Task_CanNotCapture" xml:space="preserve">
-    <value>无法截图</value>
+  <data name="ChaBeginAdd_I" xml:space="preserve">
+    <value>开始奖励挑战赛 {0} 次</value>
   </data>
-  <data name="Task_CanNotFindWnd" xml:space="preserve">
-    <value>找不到游戏窗口</value>
+  <data name="ChaBegin_I" xml:space="preserve">
+    <value>开始第 {0} 次比赛</value>
   </data>
-  <data name="Task_Challenge_AddNotSup" xml:space="preserve">
+  <data name="ChaExit" xml:space="preserve">
+    <value>任务结束【挑战赛】</value>
+  </data>
+  <data name="ChaFindAdd" xml:space="preserve">
+    <value>出现奖励挑战赛</value>
+  </data>
+  <data name="ChaIgnoredAdd" xml:space="preserve">
+    <value>已忽略奖励挑战赛</value>
+  </data>
+  <data name="ChaNotFindAdd" xml:space="preserve">
+    <value>没有奖励挑战赛</value>
+  </data>
+  <data name="ChaOpenedAdd" xml:space="preserve">
+    <value>已打开奖励挑战赛</value>
+  </data>
+  <data name="ChaOver" xml:space="preserve">
+    <value>比赛结束</value>
+  </data>
+  <data name="ChaStart" xml:space="preserve">
+    <value>任务开始【挑战赛】</value>
+  </data>
+  <data name="TaskComplete" xml:space="preserve">
+    <value>任务完成</value>
+  </data>
+  <data name="TaskErr" xml:space="preserve">
+    <value>任务出错</value>
+    <comment>托盘通知使用</comment>
+  </data>
+  <data name="TaskErrChaAddNotSup" xml:space="preserve">
     <value>“上一次比赛”不支持进入“奖励挑战赛”</value>
   </data>
-  <data name="Task_Challenge_IgnoreAddFailed" xml:space="preserve">
+  <data name="TaskErrChaIgnoreAddFailed" xml:space="preserve">
     <value>忽略奖励挑战赛出错</value>
   </data>
-  <data name="Task_Challenge_NoEnd" xml:space="preserve">
+  <data name="TaskErrChaNoEnd" xml:space="preserve">
     <value>无法退出挑战</value>
   </data>
-  <data name="Task_Challenge_NoEnter" xml:space="preserve">
+  <data name="TaskErrChaNoEnter" xml:space="preserve">
     <value>无法进入比赛</value>
   </data>
-  <data name="Task_Challenge_NoLast" xml:space="preserve">
-    <value>找不到上一次比赛</value>
-  </data>
-  <data name="Task_Challenge_NoNew" xml:space="preserve">
+  <data name="TaskErrChaNoNew" xml:space="preserve">
     <value>找不到新比赛</value>
   </data>
-  <data name="Task_Challenge_NoOver" xml:space="preserve">
+  <data name="TaskErrChaNoOver" xml:space="preserve">
     <value>无法退出比赛</value>
   </data>
-  <data name="Task_Challenge_NoStart" xml:space="preserve">
+  <data name="TaskErrChaNoPri" xml:space="preserve">
+    <value>找不到上一次比赛</value>
+  </data>
+  <data name="TaskErrChaNoStart" xml:space="preserve">
     <value>无法开始挑战</value>
   </data>
-  <data name="Task_Challenge_OpenAddFailed" xml:space="preserve">
+  <data name="TaskErrChaOpenAddFailed" xml:space="preserve">
     <value>打开奖励挑战赛出错</value>
   </data>
-  <data name="Task_Challenge_TimeOut" xml:space="preserve">
+  <data name="TaskErrChaTimeOut" xml:space="preserve">
     <value>挑战超时</value>
   </data>
-  <data name="Task_FailedToLoadTemplateFile" xml:space="preserve">
+  <data name="TaskErrFailedToLoadTemplateFile" xml:space="preserve">
     <value>加载模板文件失败</value>
   </data>
-  <data name="UNKNOWN" xml:space="preserve">
-    <value>未描述的错误：{0}</value>
+  <data name="TaskErrNoCap" xml:space="preserve">
+    <value>无法截图</value>
+  </data>
+  <data name="TaskErrNoWnd" xml:space="preserve">
+    <value>找不到游戏窗口</value>
+  </data>
+  <data name="TaskErr_Format" xml:space="preserve">
+    <value>任务出错：{0}</value>
+  </data>
+  <data name="TaskException" xml:space="preserve">
+    <value>任务异常</value>
+  </data>
+  <data name="TaskStop" xml:space="preserve">
+    <value>任务中止</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>未知消息：{0}</value>
+    <comment>占位</comment>
+  </data>
+  <data name="WorkCanNotStartWork" xml:space="preserve">
+    <value>无法启动任务</value>
+    <comment>Core暂未使用，Form尝试启动时使用</comment>
+  </data>
+  <data name="WorkComplete" xml:space="preserve">
+    <value>工作完成</value>
+  </data>
+  <data name="WorkCompleteDescribtion" xml:space="preserve">
+    <value>所有任务均已完成</value>
+    <comment>托盘通知使用</comment>
+  </data>
+  <data name="WorkError" xml:space="preserve">
+    <value>工作出错</value>
+    <comment>Core暂未使用，托盘通知使用</comment>
+  </data>
+  <data name="WorkErrorInternalException" xml:space="preserve">
+    <value>工作异常</value>
+  </data>
+  <data name="WorkStartErrRunning" xml:space="preserve">
+    <value>不能重复运行任务</value>
+  </data>
+  <data name="WorkStopped" xml:space="preserve">
+    <value>已停止</value>
+  </data>
+  <data name="WorkStopping" xml:space="preserve">
+    <value>正在停止...</value>
   </data>
 </root>

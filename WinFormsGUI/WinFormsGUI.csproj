@@ -12,7 +12,7 @@
     <PackageProjectUrl>https://github.com/OwlHowlinMornSky/DDOA-DOAXVV-OPEN-ASSISTANT</PackageProjectUrl>
     <Product>$(SolutionName)-$(AssemblyName)</Product>
     <Copyright>Copyright © 2023-2024 Tyler Parret True (OHMS) </Copyright>
-    <AssemblyVersion>3.0.0</AssemblyVersion>
+    <AssemblyVersion>3.0.0.7</AssemblyVersion>
     <FileVersion>3.0.0.7</FileVersion>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <Description>DDOA</Description>
@@ -21,8 +21,10 @@
     <StartupObject>WinFormsGUI.Program</StartupObject>
     <Company>OHMS</Company>
     <Title>$(AssemblyName)</Title>
-    <Version>3.0.0</Version>
     <SupportedOSPlatformVersion>10.0.22000.0</SupportedOSPlatformVersion>
+    <Version>3.0.0</Version>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -49,10 +51,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreWrapper\Wrapper.vcxproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Compile Update="Img.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Img.resx</DependentUpon>
+    </Compile>
     <Compile Update="Settings\GUI.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
@@ -63,15 +66,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Param.settings</DependentUpon>
     </Compile>
-    <Compile Update="Strings\LogEvent.Designer.cs">
+    <Compile Update="Strings\GuiLog.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>LogEvent.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Strings\LogStr.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LogStr.resx</DependentUpon>
+      <DependentUpon>GuiLog.resx</DependentUpon>
     </Compile>
     <Compile Update="Strings\Main.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -105,18 +103,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Strings\LogEvent.resx">
+    <EmbeddedResource Update="Img.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LogEvent.Designer.cs</LastGenOutput>
+      <LastGenOutput>Img.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strings\LogStr.resx">
+    <EmbeddedResource Update="Strings\GuiLog.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LogStr.Designer.cs</LastGenOutput>
+      <LastGenOutput>GuiLog.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Strings\Main.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Main.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoreWrapper\Wrapper.vcxproj" />
   </ItemGroup>
 
 </Project>

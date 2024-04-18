@@ -26,12 +26,12 @@ namespace WinFormsGUI.Settings {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Cha_PlayNew {
+        public bool PlayNewMatch {
             get {
-                return ((bool)(this["Cha_PlayNew"]));
+                return ((bool)(this["PlayNewMatch"]));
             }
             set {
-                this["Cha_PlayNew"] = value;
+                this["PlayNewMatch"] = value;
             }
         }
         
@@ -86,12 +86,24 @@ namespace WinFormsGUI.Settings {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int Cha_Award {
+        public int AwardMatch {
             get {
-                return ((int)(this["Cha_Award"]));
+                return ((int)(this["AwardMatch"]));
             }
             set {
-                this["Cha_Award"] = value;
+                this["AwardMatch"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TaskList {
+            get {
+                return ((string)(this["TaskList"]));
+            }
+            set {
+                this["TaskList"] = value;
             }
         }
     }

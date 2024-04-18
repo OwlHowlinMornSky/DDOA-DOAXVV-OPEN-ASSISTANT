@@ -1,8 +1,29 @@
-﻿// TestOnCon.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//
+﻿/*
+*    DDOA-DOAXVV-OPEN-ASSISTANT
+*
+*     Copyright 2023-2024  Tyler Parret True
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* @Authors
+*    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
+*/
+#include "WorkRunTest.h"
 
 #include <iostream>
 #include <string>
+
+#define CppConTest
 
 #include "../CoreDll/IHelper.h"
 #include "../CoreDll/Settings.h"
@@ -22,53 +43,55 @@ void OutputLog(std::string_view str) {
 #define Log(expr) OutputLog(#expr)
 #define LogStr(expr) (#expr)
 
-int main() {
+int WorkRunTest() {
 	auto r_helper = ohms::IHelper::instance();
 	if (!r_helper) {
 		return 1;
 	}
-	r_helper->setup();
+	r_helper->setup(false);
 
-	Settings::mainSettings.Debug_ShowCapture = true;
+	Settings::WndHandler::DEFAULT.Debug_ShowCapture = true;
+	Settings::Global::DEFAULT.ClearList();
+	Settings::Global::DEFAULT.Work_TaskList[0] = TaskEnum::LegacyCha;
 
 	try {
 		r_helper->start();
 
 		while (true) {
 			unsigned long m;
-			while ((m = r_helper->msgPop()) != HelperReturnMessage::None)
+			while ((m = r_helper->msgPop()) != ReturnMsgEnum::None)
 				switch (m) {
-				case HelperReturnMessage::CMD_EmptyLine:
+				case ReturnMsgEnum::CMD_EmptyLine:
 					OutputLog();
 					break;
-				case HelperReturnMessage::CMD_Stopped:
+				case ReturnMsgEnum::CMD_Stopped:
 					Log(CMD_Stopped);
 					//WorkUnlock();
 					//timer_Main.Enabled = false;
 					break;
-				case HelperReturnMessage::CMD_BtnToStop:
+				case ReturnMsgEnum::CMD_BtnToStop:
 					Log(CMD_BtnToStop);
 					//btn_Main.Text = Strings.Main.Btn_Main_Stop;
 					//btn_Main.Enabled = true;
 					//m_btnMainIsStart = false;
 					break;
-				case HelperReturnMessage::CMD_BtnToStart:
+				case ReturnMsgEnum::CMD_BtnToStart:
 					Log(CMD_BtnToStart);
 					//btn_Main.Text = Strings.Main.Btn_Main_Start;
 					//btn_Main.Enabled = true;
 					//m_btnMainIsStart = true;
 					break;
 
-				case HelperReturnMessage::LOG_StartError_Running:
+				case ReturnMsgEnum::LOG_StartError_Running:
 					Log(Strings.LogEvent.Work_AlreadyRunning);
 					break;
-				case HelperReturnMessage::LOG_Stopping:
+				case ReturnMsgEnum::LOG_Stopping:
 					Log(Strings.LogEvent.Work_Stopping);
 					break;
-				case HelperReturnMessage::LOG_Stopped:
+				case ReturnMsgEnum::LOG_Stopped:
 					Log(Strings.LogEvent.Work_Stopped);
 					break;
-				case HelperReturnMessage::LOG_Complete:
+				case ReturnMsgEnum::LOG_Complete:
 					Log(Strings.LogEvent.Work_Complete);
 					/*if (Settings.GUI.Default.UseNotify)
 						notifyIcon_Main.ShowBalloonTip(
@@ -79,7 +102,7 @@ int main() {
 						);*/
 					break;
 
-				case HelperReturnMessage::LOG_WorkError_ExceptionInternalError:
+				case ReturnMsgEnum::LOG_WorkError_ExceptionInternalError:
 					OutputLog();
 					Log(Strings.LogEvent.Work_Exception);
 					/*if (Settings.GUI.Default.UseNotify)
@@ -91,13 +114,13 @@ int main() {
 						);*/
 					break;
 
-				case HelperReturnMessage::LOG_TaskStop:
+				case ReturnMsgEnum::LOG_TaskStop:
 					Log(Strings.LogEvent.Task_Stop);
 					break;
-				case HelperReturnMessage::LOG_TaskComplete:
+				case ReturnMsgEnum::LOG_TaskComplete:
 					Log(Strings.LogEvent.Task_Complete);
 					break;
-				case HelperReturnMessage::LOG_TaskError_Exception:
+				case ReturnMsgEnum::LOG_TaskError_Exception:
 					Log(Strings.LogEvent.Task_Exception);
 					/*if (Settings.GUI.Default.UseNotify)
 						notifyIcon_Main.ShowBalloonTip(
@@ -107,48 +130,48 @@ int main() {
 							ToolTipIcon.Error
 						);*/
 					break;
-				case HelperReturnMessage::LOG_TaskError:
+				case ReturnMsgEnum::LOG_TaskError:
 				{
 					m = r_helper->msgPop();
 					std::string text;
 					switch (m) {
-					case HelperReturnMessage::STR_Task_Challenge_NoNew:
+					case ReturnMsgEnum::STR_Task_Challenge_NoNew:
 						text = LogStr(Task_Challenge_NoNew);
 						break;
-					case HelperReturnMessage::STR_Task_Challenge_NoLast:
+					case ReturnMsgEnum::STR_Task_Challenge_NoLast:
 						text = LogStr(Task_Challenge_NoLast);
 						break;
-					case HelperReturnMessage::STR_Task_Challenge_NoEnter:
+					case ReturnMsgEnum::STR_Task_Challenge_NoEnter:
 						text = LogStr(Task_Challenge_NoEnter);
 						break;
-					case HelperReturnMessage::STR_Task_Challenge_NoStart:
+					case ReturnMsgEnum::STR_Task_Challenge_NoStart:
 						text = LogStr(Task_Challenge_NoStart);
 						break;
-					case HelperReturnMessage::STR_Task_Challenge_TimeOut:
+					case ReturnMsgEnum::STR_Task_Challenge_TimeOut:
 						text = LogStr(Task_Challenge_TimeOut);
 						break;
-					case HelperReturnMessage::STR_Task_Challenge_NoEnd:
+					case ReturnMsgEnum::STR_Task_Challenge_NoEnd:
 						text = LogStr(Task_Challenge_NoEnd);
 						break;
-					case HelperReturnMessage::STR_Task_Challenge_NoOver:
+					case ReturnMsgEnum::STR_Task_Challenge_NoOver:
 						text = LogStr(Task_Challenge_NoOver);
 						break;
-					case HelperReturnMessage::STR_Task_Challenge_AddNotSup:
+					case ReturnMsgEnum::STR_Task_Challenge_AddNotSup:
 						text = LogStr(Task_Challenge_AddNotSup);
 						break;
-					case HelperReturnMessage::STR_Task_Challenge_IgnoreAddFailed:
+					case ReturnMsgEnum::STR_Task_Challenge_IgnoreAddFailed:
 						text = LogStr(Task_Challenge_IgnoreAddFailed);
 						break;
-					case HelperReturnMessage::STR_Task_Challenge_OpenAddFailed:
+					case ReturnMsgEnum::STR_Task_Challenge_OpenAddFailed:
 						text = LogStr(Task_Challenge_OpenAddFailed);
 						break;
-					case HelperReturnMessage::STR_Task_FailedToLoadTemplateFile:
+					case ReturnMsgEnum::STR_Task_FailedToLoadTemplateFile:
 						text = LogStr(Task_FailedToLoadTemplateFile);
 						break;
-					case HelperReturnMessage::STR_Task_Error_NoWnd:
+					case ReturnMsgEnum::STR_Task_Error_NoWnd:
 						text = LogStr(Task_CanNotFindWnd);
 						break;
-					case HelperReturnMessage::STR_Task_Error_FailedCapture:
+					case ReturnMsgEnum::STR_Task_Error_FailedCapture:
 						text = LogStr(Task_CanNotCapture);
 						break;
 					default:
@@ -167,32 +190,32 @@ int main() {
 					break;
 				}
 
-				case HelperReturnMessage::LOG_Challenge_Start:
+				case ReturnMsgEnum::LOG_Challenge_Start:
 					Log(Strings.LogEvent.Challenge_Start);
 					break;
-				case HelperReturnMessage::LOG_Challenge_BeginNum: // 挑战赛开始（下跟次数！）
+				case ReturnMsgEnum::LOG_Challenge_BeginNum: // 挑战赛开始（下跟次数！）
 					//Log(string.Format(Strings.LogEvent.Challenge_BeginNum, Program.helper.GetCode()));
 					std::cout << "Strings.LogEvent.Challenge_BeginNum: " << r_helper->msgPop() << std::endl;
 					break;
-				case HelperReturnMessage::LOG_Challenge_Over:
+				case ReturnMsgEnum::LOG_Challenge_Over:
 					Log(Strings.LogEvent.Challenge_Over);
 					break;
-				case HelperReturnMessage::LOG_Challenge_Exit:
+				case ReturnMsgEnum::LOG_Challenge_Exit:
 					Log(Strings.LogEvent.Challenge_Exit);
 					break;
-				case HelperReturnMessage::LOG_Challenge_EnterAdd:
-					Log(Strings.LogEvent.Challenge_EnterAdd);
-					break;
-				case HelperReturnMessage::LOG_Challenge_IgnoredAdd:
+				//case ReturnMsgEnum::LOG_Challenge_EnterAdd:
+				//	Log(Strings.LogEvent.Challenge_EnterAdd);
+				//	break;
+				case ReturnMsgEnum::LOG_Challenge_IgnoredAdd:
 					Log(Strings.LogEvent.Challenge_IgnoredAdd);
 					break;
-				case HelperReturnMessage::LOG_Challenge_NotFindAdd:
+				case ReturnMsgEnum::LOG_Challenge_NotFindAdd:
 					Log(Strings.LogEvent.Challenge_NotFindAdd);
 					break;
-				case HelperReturnMessage::LOG_Challenge_FindAdd:
+				case ReturnMsgEnum::LOG_Challenge_FindAdd:
 					Log(Strings.LogEvent.Challenge_FindAdd);
 					break;
-				case HelperReturnMessage::LOG_Challenge_OpenedAdd:
+				case ReturnMsgEnum::LOG_Challenge_OpenedAdd:
 					Log(Strings.LogEvent.Challenge_OpenedAdd);
 					break;
 				default:

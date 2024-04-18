@@ -74,12 +74,48 @@ namespace WinFormsGUI.Settings {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("-1, -1")]
-        public global::System.Drawing.Point LastPosition {
+        public global::System.Drawing.Point WndLastPosition {
             get {
-                return ((global::System.Drawing.Point)(this["LastPosition"]));
+                return ((global::System.Drawing.Point)(this["WndLastPosition"]));
             }
             set {
-                this["LastPosition"] = value;
+                this["WndLastPosition"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int ListLastSelectedSettings {
+            get {
+                return ((int)(this["ListLastSelectedSettings"]));
+            }
+            set {
+                this["ListLastSelectedSettings"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1, 2, 3, 4, 5, 6, 7, 8")]
+        public string ListItems {
+            get {
+                return ((string)(this["ListItems"]));
+            }
+            set {
+                this["ListItems"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ListItemCheckList {
+            get {
+                return ((string)(this["ListItemCheckList"]));
+            }
+            set {
+                this["ListItemCheckList"] = value;
             }
         }
     }

@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WinFormsGUI.Settings" GeneratedClassName="Core">
   <Profiles />
   <Settings>
-    <Setting Name="Cha_PlayNew" Type="System.Boolean" Scope="User">
+    <Setting Name="PlayNewMatch" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="CtrlSendInput" Type="System.Boolean" Scope="User">
@@ -17,8 +17,11 @@
     <Setting Name="KeepScreenOn" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="Cha_Award" Type="System.Int32" Scope="User">
+    <Setting Name="AwardMatch" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="TaskList" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

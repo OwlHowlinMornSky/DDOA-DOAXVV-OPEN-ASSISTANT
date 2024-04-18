@@ -45,7 +45,9 @@ public:
 	enum class StateValue {
 		Idle = 0,
 		Launcher,
-		Game
+		Game,
+		DebuggerGame,
+		DebuggerLauncher
 	};
 
 protected:
@@ -57,7 +59,7 @@ public:
 	 * @brief 获取唯一实例。首次获取时初始化WGC并构造。
 	 * @return 指向实例的指针。
 	 */
-	static WndHandler* Instance();
+	static WndHandler* Instance(bool winrtInited = true);
 	/**
 	 * @brief 销毁实例。
 	 */
@@ -117,6 +119,39 @@ public:
 	 * @return 未使用
 	*/
 	bool MoveMouseTo(cv::Point pt);
+
+
+	/**
+	 * @brief 持续点击指定位置，直到画面出现目标。askedForStop则 throw 0
+	 * @param clkPt 指定点击位置，范围与 step_click 一致
+	 * @param _temp 目标模板
+	 * @param maxTime 超时时间（小于等于0则为永久）
+	 * @param clkTime 点击间隔（不能小于10毫秒）
+	 * @return true则已找到目标，false则为超时
+	*/
+	bool KeepClickingUntil(
+		const cv::Point clkPt, const MatchTemplate& _temp, Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f)
+	);
+
+	/**
+	 * @brief 持续点击指定位置，直到画面没有目标。askedForStop则 throw 0
+	 * @param clkPt 指定点击位置，范围与 step_click 一致
+	 * @param _temp 目标模板
+	 * @param maxTime 超时时间（小于等于0则为永久）
+	 * @param clkTime 点击间隔（不能小于10毫秒）
+	 * @return true则已排除目标，false则为超时
+	*/
+	bool KeepClickingUntilNo(
+		const cv::Point clkPt, const MatchTemplate& _temp, Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f)
+	);
+
+protected:
+	/**
+	 * @brief 设定目标窗口为DDOA调试器窗口。
+	 * @param isGame 操作重定向类型。
+	 * @return “设定”操作的状态。
+	 */
+	SetReturnValue SetForDebugger(bool isGame);
 
 protected:
 	/**

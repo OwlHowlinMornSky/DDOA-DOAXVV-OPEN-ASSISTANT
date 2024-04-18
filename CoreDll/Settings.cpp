@@ -20,26 +20,10 @@
 */
 #include "Settings.h"
 
-namespace ohms {
+namespace ohms::Settings {
 
-Settings Settings::mainSettings;
-Settings Settings::g_set;
-
-Settings::Settings() :
-	Ctrl_UseSendInput(false), // 默认发窗口消息
-	KeepAwake(true), // 默认阻止睡眠
-	KeepScreenOn(false), // 默认不保持显示
-
-	ChaGame_ForNew(false), // 默认上一次比赛
-	ChaGame_EnterAddition(true), // 默认进入奖励挑战赛
-	ChaGame_CheckAddition(false), // 默认不检查奖励挑战赛
-
-	Debug_ShowCapture(false)
-
-{}
-
-void Settings::MakeOneCopy() {
-	g_set = mainSettings;
-}
+WndHandler WndHandler::DEFAULT;
+LegacyCha LegacyCha::DEFAULT;
+Global Global::DEFAULT;
 
 }

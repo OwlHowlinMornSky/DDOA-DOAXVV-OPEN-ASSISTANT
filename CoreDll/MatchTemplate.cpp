@@ -131,6 +131,9 @@ bool MatchTemplate::Match(const cv::Mat& sample) const {
 		m_lastMatch = cv::Rect(matchLocation + m_info.rect.tl(), m_target.size()); // 保存匹配区域
 		sample(m_lastMatch).copyTo(srcImage);
 	}
+	else {
+		m_lastMatch = m_info.rect;
+	}
 
 	// 检查最佳区域是否满足阈值
 	bool res = check(srcImage, m_target, m_info.thershold / 65536.0f);
@@ -139,7 +142,13 @@ bool MatchTemplate::Match(const cv::Mat& sample) const {
 
 bool MatchTemplate::LoadMat(const std::string& file) {
 	m_target = cv::imread(file);
-	return !m_target.empty();
+	if (m_target.empty())
+		return false;
+	if (m_info.isFixed) {
+		m_info.rect.width = m_target.size().width;
+		m_info.rect.height = m_target.size().height;
+	}
+	return true;
 }
 
 const cv::Rect& MatchTemplate::GetLastMatchRect() const {

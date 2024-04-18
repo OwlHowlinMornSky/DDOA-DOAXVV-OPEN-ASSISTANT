@@ -20,33 +20,8 @@
 */
 #pragma once
 
-#include "API.h"
+#include "Settings_Global.h"
+#include "Settings_LegacyCha.h"
+#include "Settings_WndHandler.h"
 
-namespace ohms {
-
-/**
- * @brief Core部分设置内容。
- */
-struct CORE_API Settings {
-	bool Ctrl_UseSendInput; // 选择控制鼠标。
-	bool KeepAwake; // 阻止睡眠。
-	bool KeepScreenOn; // 阻止睡眠同时保持显示。
-
-	bool ChaGame_ForNew; // 选择新比赛。
-	bool ChaGame_EnterAddition; // 进入奖励挑战赛。
-	bool ChaGame_CheckAddition; // 是否检查奖励挑战赛。
-
-	bool Debug_ShowCapture;
-
-	Settings();
-
-	static Settings mainSettings; // 对外使用的设置。
-	static Settings g_set; // 内部保存的设置副本。
-
-	/**
-	 * @brief 将mainSettings复制到g_set。
-	 */
-	static void MakeOneCopy();
-};
-
-}
+// 【ToDo】 非 线程安全
