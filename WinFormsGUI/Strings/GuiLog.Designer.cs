@@ -142,6 +142,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 尚未实现 的本地化字符串。
+        /// </summary>
+        internal static string NotImplemented {
+            get {
+                return ResourceManager.GetString("NotImplemented", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 任务完成 的本地化字符串。
         /// </summary>
         internal static string TaskComplete {

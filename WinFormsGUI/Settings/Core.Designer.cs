@@ -94,17 +94,5 @@ namespace WinFormsGUI.Settings {
                 this["AwardMatch"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string TaskList {
-            get {
-                return ((string)(this["TaskList"]));
-            }
-            set {
-                this["TaskList"] = value;
-            }
-        }
     }
 }

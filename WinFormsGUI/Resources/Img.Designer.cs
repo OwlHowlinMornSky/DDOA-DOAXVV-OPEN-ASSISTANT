@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WinFormsGUI {
+namespace WinFormsGUI.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace WinFormsGUI {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WinFormsGUI.Img", typeof(Img).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WinFormsGUI.Resources.Img", typeof(Img).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

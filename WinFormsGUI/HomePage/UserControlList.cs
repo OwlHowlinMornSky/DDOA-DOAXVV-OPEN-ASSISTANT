@@ -116,7 +116,7 @@ namespace WinFormsGUI {
 					DataContext = data,
 					Width = 24,
 					Height = 24,
-					Image = Img.set0,
+					Image = Resources.Img.set0,
 					Appearance = Appearance.Button,
 				};
 				radioBtn.CheckedChanged += OnListRadioBtnChanged;

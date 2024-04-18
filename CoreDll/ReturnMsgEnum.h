@@ -111,6 +111,8 @@ enum CORE_API ReturnMessage : long {
 	TaskErrFailedToLoadTemplateFile, // 无法加载模板图片
 	TaskErrNoWnd, // 没找到游戏窗口
 	TaskErrNoCap, // 没法截图
+
+	NotImplemented, // 尚未实现
 };
 }
 }

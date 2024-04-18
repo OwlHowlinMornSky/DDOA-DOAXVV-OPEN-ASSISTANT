@@ -39,7 +39,9 @@ bool Task_StartUp::Run(Helper& h) {
 				Sleep(1000);
 			} while (r_handler->SetForLauncher() != WndHandler::SetReturnValue::OK);
 		}
-		// 点击开始。
+
+		//r_handler->ClickAt();// 点击开始。
+
 		do {
 			Sleep(1000);
 		} while (r_handler->SetForGame() != WndHandler::SetReturnValue::OK);

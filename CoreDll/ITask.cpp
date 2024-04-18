@@ -20,6 +20,7 @@
 */
 #include "ITask.h"
 
+#include "Task_StartUp.h"
 #include "Task_Challenge.h"
 #include "Task_LegacyCha.h"
 
@@ -28,7 +29,8 @@ namespace ohms {
 bool ITask::CreateTask(unsigned long type, std::unique_ptr<ITask>& outPtr) {
 	switch (type) {
 	case TaskEnum::StartUp:
-		break;
+		outPtr = std::make_unique<Task_StartUp>();
+		return true;
 	case TaskEnum::Daily:
 		break;
 	case TaskEnum::Room:
