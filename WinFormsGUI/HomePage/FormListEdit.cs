@@ -18,6 +18,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+using System.Windows.Forms;
 using Wrapper;
 
 namespace WinFormsGUI {
@@ -47,6 +48,20 @@ namespace WinFormsGUI {
 
 		public FormListEdit() {
 			InitializeComponent();
+			WorkStatusLocker.lockAction += OnWorkLockAndUnlock;
+			if (WorkStatusLocker.Locked)
+				OnWorkLockAndUnlock(true);
+		}
+
+		~FormListEdit() {
+			WorkStatusLocker.lockAction -= OnWorkLockAndUnlock;
+		}
+
+		/// <summary>
+		/// 监听工作状态改变锁定控件的事件
+		/// </summary>
+		private void OnWorkLockAndUnlock(bool isLock) {
+			button_ok.Enabled = !isLock;
 		}
 
 		/// <summary>
@@ -129,9 +144,9 @@ namespace WinFormsGUI {
 
 			listBox1.Items.RemoveAt(index);
 			m_listTasks.RemoveAt(index);
-			
+
 			// 还原旧选中位置
-			if(index >= listBox1.Items.Count)
+			if (index >= listBox1.Items.Count)
 				index = listBox1.Items.Count - 1;
 			listBox1.SelectedIndex = index;
 		}

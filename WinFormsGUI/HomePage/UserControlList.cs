@@ -52,19 +52,26 @@ namespace WinFormsGUI {
 		public UserControlList() {
 			InitializeComponent();
 			// 注册以在工作时锁定控件。
-			Program.GuiLock += OnWorkLockAndUnlock;
+			WorkStatusLocker.lockAction += OnWorkLockAndUnlock;
+			if (WorkStatusLocker.Locked)
+				OnWorkLockAndUnlock(true);
+		}
+
+		~UserControlList() {
+			WorkStatusLocker.lockAction -= OnWorkLockAndUnlock;
 		}
 
 		/// <summary>
 		/// 监听工作状态改变锁定控件的事件
 		/// </summary>
-		private void OnWorkLockAndUnlock(object sender, bool isLock) {
+		private void OnWorkLockAndUnlock(bool isLock) {
 			if (isLock) {
 				button_all.Enabled = false;
 				button_clear.Enabled = false;
 				for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
 					flowLayoutPanel1.Controls[i].Enabled = false;
 				}
+				contextMenuStrip1.Enabled = false;
 			}
 			else {
 				for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
@@ -72,6 +79,7 @@ namespace WinFormsGUI {
 				}
 				button_clear.Enabled = true;
 				button_all.Enabled = true;
+				contextMenuStrip1.Enabled = true;
 			}
 		}
 
@@ -192,6 +200,7 @@ namespace WinFormsGUI {
 			if (res == DialogResult.OK) { // 确认即修改。
 				SetList(dialog.ListTasks);
 				OnClickChooseAll(null, null);
+				SetSelectedChangedTo((uint)TaskEnumWrap.None); // 取消选择的设置项
 			}
 		}
 

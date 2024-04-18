@@ -18,9 +18,6 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-using System.Windows.Forms;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
 namespace WinFormsGUI {
 
 	internal struct LogItem {
@@ -189,6 +186,10 @@ namespace WinFormsGUI {
 			listBox1.ResumeLayout();
 			ResumeLayout();
 			listBox1.EndUpdate();
+		}
+
+		private void ToolStripMenuItem_LogClr_Click(object sender, EventArgs e) {
+			Clear();
 		}
 	}
 }

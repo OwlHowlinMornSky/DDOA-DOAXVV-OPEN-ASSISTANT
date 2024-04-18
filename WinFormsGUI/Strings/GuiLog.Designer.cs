@@ -313,6 +313,24 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 开始任务：测试 的本地化字符串。
+        /// </summary>
+        internal static string TestTaskBegin {
+            get {
+                return ResourceManager.GetString("TestTaskBegin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 完成任务：测试 的本地化字符串。
+        /// </summary>
+        internal static string TestTaskEnd {
+            get {
+                return ResourceManager.GetString("TestTaskEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 未知消息：{0} 的本地化字符串。
         /// </summary>
         internal static string Unknown {

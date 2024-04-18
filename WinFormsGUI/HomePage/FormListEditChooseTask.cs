@@ -18,6 +18,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+using System.Windows.Forms;
 using Wrapper;
 
 namespace WinFormsGUI {
@@ -50,6 +51,9 @@ namespace WinFormsGUI {
 				i < n; i++) {
 				listBox1.Items.Add(Strings.Main.ResourceManager.GetString("Task" + i.ToString("000")));
 			}
+#if DEBUG
+			listBox1.Items.Add(Strings.Main.ResourceManager.GetString("Task" + ((uint)TaskEnumWrap.TEST_TASK).ToString("000")));
+#endif
 			listBox1.EndUpdate();
 		}
 
@@ -62,6 +66,11 @@ namespace WinFormsGUI {
 				choosedTask = (uint)TaskEnumWrap.None;
 			else
 				choosedTask = (uint)listBox1.SelectedIndex - (uint)TaskEnumWrap.None + 1;
+#if DEBUG
+			if (choosedTask >= (uint)TaskEnumWrap.COUNT) {
+				choosedTask = (uint)TaskEnumWrap.TEST_TASK;
+			}
+#endif
 		}
 
 		/// <summary>

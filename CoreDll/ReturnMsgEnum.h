@@ -113,6 +113,9 @@ enum CORE_API ReturnMessage : long {
 	TaskErrNoCap, // 没法截图
 
 	NotImplemented, // 尚未实现
+
+	TestTaskBegin,
+	TestTaskEnd,
 };
 }
 }

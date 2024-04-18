@@ -22,32 +22,42 @@ namespace WinFormsGUI {
 	/// <summary>
 	/// 测试用窗口
 	/// </summary>
-	public partial class FormTest : Form {
+	public partial class FormNew : Form {
 
-		private readonly UserControlHome home; // 因为编辑器抽风没法加控件所以只能手动用代码加了。
-
-		public FormTest() {
+		public FormNew() {
 			InitializeComponent();
-
-			home = new UserControlHome {
-				MyPopNotification = PopNotification,
-				Dock = DockStyle.Fill
-			};
-			tabPage_home.Controls.Add(home);
-
 			SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
-			Program.helper.SetShowCaptureOrNot(true);
+			userControlHome1.MyPopNotification += PopNotification;
+			GlobalSetter.OnSettedWndCloseBtnDisabled += OnWndCloseBtnDisabled;
 		}
 
-		private void FormTest_Load(object sender, EventArgs e) {
+		~FormNew() {
+			GlobalSetter.OnSettedWndCloseBtnDisabled -= OnWndCloseBtnDisabled;
+			userControlHome1.MyPopNotification -= PopNotification;
+		}
+
+		private void OnWndCloseBtnDisabled(bool disabled) {
+			Wrapper.SystemThings.SetCloseEnabled(Handle, !disabled);
+		}
+
+		private void FormNew_Load(object sender, EventArgs e) {
+			OnWndCloseBtnDisabled(Settings.GUI.Default.DisableClose);
+			if (Settings.GUI.Default.WndLastPosition.X != -1 && Settings.GUI.Default.WndLastPosition.Y != -1)
+				Location = Settings.GUI.Default.WndLastPosition;
 			notifyIcon_Main.Text = Text;
+		}
+
+		private void FormNew_Deactivate(object sender, EventArgs e) {
+			if (WindowState == FormWindowState.Minimized && Settings.GUI.Default.HideToTray) {
+				Hide();
+			}
 		}
 
 		/// <summary>
 		/// 窗口试图关闭
 		/// </summary>
-		private void FormTest_FormClosing(object sender, FormClosingEventArgs e) {
+		private void FormNew_FormClosing(object sender, FormClosingEventArgs e) {
 			if (Program.helper.IsRunning()) {
 				if (e.CloseReason != CloseReason.WindowsShutDown) {
 					// 询问是否关闭
@@ -67,23 +77,27 @@ namespace WinFormsGUI {
 					Thread.Sleep(100);
 				}
 			}
-			home.OnClosing();
+			userControlHome1.OnClosing();
+			Settings.GUI.Default.WndLastPosition = Location;
 		}
 
 		/// <summary>
 		/// 窗口已关闭。
 		/// </summary>
-		private void FormTest_FormClosed(object sender, FormClosedEventArgs e) {
-			Settings.GUI.Default.Save();
-			Settings.Core.Default.Save();
-			//Settings.Param.Default.Save();
+		private void FormNew_FormClosed(object sender, FormClosedEventArgs e) {
 		}
 
-		/// <summary>
-		/// 点击托盘图标右键菜单的“退出”项。
-		/// </summary>
-		private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e) {
-			Close();
+		private void NotifyIcon_Main_MouseClick(object sender, MouseEventArgs e) {
+			switch (e.Button) {
+			case MouseButtons.Left:
+				Show();
+				WindowState = FormWindowState.Normal;
+				Activate();
+				break;
+			case MouseButtons.Right:
+				notifyIcon_Main.ContextMenuStrip?.Show();
+				break;
+			}
 		}
 
 		/// <summary>
@@ -100,6 +114,13 @@ namespace WinFormsGUI {
 					text,
 					icon
 				);
+		}
+
+		/// <summary>
+		/// 点击托盘图标右键菜单的“退出”项。
+		/// </summary>
+		private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e) {
+			Close();
 		}
 	}
 }

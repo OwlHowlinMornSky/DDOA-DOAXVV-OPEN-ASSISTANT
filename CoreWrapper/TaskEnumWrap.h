@@ -38,12 +38,10 @@ public enum class TaskEnumWrap : System::UInt32 {
 	Spring,
 	Award,
 	Exit,
-
 	LegacyCha,
-
 	COUNT,
 
-
+	TEST_TASK = 999,
 	TaskMaxNum = ohms::Settings::Global::ListLength
 };
 

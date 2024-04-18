@@ -27,10 +27,6 @@ namespace WinFormsGUI {
 		/// Helper套壳的实例。
 		/// </summary>
 		internal readonly static HelperWrapper helper = new();
-		/// <summary>
-		/// 任务状态改变时锁定与解锁GUI的事件。
-		/// </summary>
-		internal static EventHandler<bool> GuiLock;
 
 		/// <summary>
 		///  The main entry point for the application.
@@ -40,6 +36,15 @@ namespace WinFormsGUI {
 			// To customize application configuration such as set high DPI settings or default font,
 			// see https://aka.ms/applicationconfiguration.
 			ApplicationConfiguration.Initialize();
+			if (!SetupHelper())
+				return;
+			GlobalSetter.InitSettings();
+			Application.Run(new FormNew());
+			GlobalSetter.SaveSettings();
+			helper.Drop();
+		}
+
+		static bool SetupHelper() {
 			int initCode = helper.Setup();
 			if (initCode != 0) {
 				switch (initCode) {
@@ -68,11 +73,9 @@ namespace WinFormsGUI {
 					);
 					break;
 				}
-				return;
+				return false;
 			}
-			//Application.Run(new FormMain());
-			Application.Run(new FormTest());
-			helper.Drop();
+			return true;
 		}
 	}
 }

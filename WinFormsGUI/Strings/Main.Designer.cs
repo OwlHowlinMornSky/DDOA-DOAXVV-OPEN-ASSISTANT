@@ -212,5 +212,23 @@ namespace WinFormsGUI.Strings {
                 return ResourceManager.GetString("Task008", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 【测试任务】 的本地化字符串。
+        /// </summary>
+        internal static string Task999 {
+            get {
+                return ResourceManager.GetString("Task999", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 未选择任务 的本地化字符串。
+        /// </summary>
+        internal static string TaskListNotSelected {
+            get {
+                return ResourceManager.GetString("TaskListNotSelected", resourceCulture);
+            }
+        }
     }
 }

@@ -168,4 +168,10 @@
   <data name="Task008" xml:space="preserve">
     <value>【旧】刷挑战赛</value>
   </data>
+  <data name="Task999" xml:space="preserve">
+    <value>【测试任务】</value>
+  </data>
+  <data name="TaskListNotSelected" xml:space="preserve">
+    <value>未选择任务</value>
+  </data>
 </root>

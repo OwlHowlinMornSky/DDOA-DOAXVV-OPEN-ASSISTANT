@@ -18,7 +18,6 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-using System.Drawing;
 using Wrapper;
 
 namespace WinFormsGUI {
@@ -42,24 +41,31 @@ namespace WinFormsGUI {
 
 		public UserControlHome() {
 			InitializeComponent();
-
 			// 设置左侧列表“设置小按钮”选择项改变的回调。
-			userControlList.SetSelectedChangedTo = ChangeSettingCallback;
-
+			userControlList.SetSelectedChangedTo += ChangeSettingCallback;
 			// 注册以在工作时锁定控件。
-			Program.GuiLock += OnWorkLockAndUnlock;
+			WorkStatusLocker.lockAction += OnWorkLockAndUnlock;
+			if (WorkStatusLocker.Locked)
+				OnWorkLockAndUnlock(true);
+		}
+
+		~UserControlHome() {
+			WorkStatusLocker.lockAction -= OnWorkLockAndUnlock;
+			userControlList.SetSelectedChangedTo -= ChangeSettingCallback;
 		}
 
 		/// <summary>
 		/// 监听工作状态改变锁定控件的事件
 		/// </summary>
-		private void OnWorkLockAndUnlock(object sender, bool isLock) {
+		private void OnWorkLockAndUnlock(bool isLock) {
 			if (isLock) {
 				panel_Settings.Enabled = false;
-				button_Main.Text = Strings.Main.Btn_Main_Start;
+				button_Main.Enabled = false;
 			}
 			else {
 				panel_Settings.Enabled = true;
+				button_Main.Enabled = true;
+				button_Main.Text = Strings.Main.Btn_Main_Start;
 			}
 		}
 
@@ -156,12 +162,18 @@ namespace WinFormsGUI {
 		private void Button_Main_Click(object sender, EventArgs e) {
 			button_Main.Enabled = false;
 			if (m_btnMainIsStart) { // Link Start！
-				Program.GuiLock.Invoke(null, true); // 锁定GUI
-				Program.helper.SetTaskList([.. userControlList.GetEnabledList()]); // 设置所选的任务
+				WorkStatusLocker.WorkLock(); // 锁定GUI
+				uint[] list = [.. userControlList.GetEnabledList()];
 				ClearLog(); // 清空进度提示。
+				if (list.Length == 0) {
+					Log(Strings.Main.TaskListNotSelected);
+					WorkStatusLocker.WorkUnlock(); // 解锁GUI
+					return;
+				}
+				Program.helper.SetTaskList(list); // 设置所选的任务
 				if (!Program.helper.Start()) { // 启动失败
 					Log(Strings.GuiLog.WorkCanNotStartWork); // 提示。
-					Program.GuiLock.Invoke(null, false); // 解锁GUI
+					WorkStatusLocker.WorkUnlock(); // 解锁GUI
 					return;
 				}
 				timer_Main.Enabled = true; // 启动Timer获取回执信息。
@@ -202,7 +214,7 @@ namespace WinFormsGUI {
 					//Log();
 					break;
 				case ReturnCmd.CMD_Stopped:
-					Program.GuiLock.Invoke(null, false);
+					WorkStatusLocker.WorkUnlock(); // 解锁GUI
 					timer_Main.Enabled = false;
 					break;
 				case ReturnCmd.CMD_BtnToStop:
@@ -254,13 +266,9 @@ namespace WinFormsGUI {
 					string t;
 					switch (msg) {
 					case ReturnMessage.TaskErr_Format:
-						t =
-							string.Format(
-								Strings.GuiLog.TaskErr_Format,
-								GetLogStringFromResx(reason.ToString())
-							);
-						Log(t, Color.DarkRed);
-						MyPopNotification(Strings.GuiLog.TaskErr, t, ToolTipIcon.Info);
+						t = GetLogStringFromResx(reason.ToString());
+						Log(string.Format(Strings.GuiLog.TaskErr_Format, t), Color.DarkRed);
+						MyPopNotification(Strings.GuiLog.TaskErr, t, ToolTipIcon.Error);
 						break;
 					default:
 						t =

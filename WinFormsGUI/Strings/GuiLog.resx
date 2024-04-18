@@ -202,6 +202,12 @@
   <data name="TaskStop" xml:space="preserve">
     <value>任务中止</value>
   </data>
+  <data name="TestTaskBegin" xml:space="preserve">
+    <value>开始任务：测试</value>
+  </data>
+  <data name="TestTaskEnd" xml:space="preserve">
+    <value>完成任务：测试</value>
+  </data>
   <data name="Unknown" xml:space="preserve">
     <value>未知消息：{0}</value>
     <comment>占位</comment>

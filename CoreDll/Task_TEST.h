@@ -20,25 +20,18 @@
 */
 #pragma once
 
-#include "API.h"
+#include "ITask.h"
 
-namespace ohms::TaskEnum {
+namespace ohms {
 
-enum CORE_API TaskEnum : unsigned long {
-	None = 0,
+class Task_TEST :
+	public ITask {
+public:
+	Task_TEST() = default;
+	virtual ~Task_TEST() = default;
 
-	StartUp,
-	Daily,
-	Room,
-	Challenge,
-	Spring,
-	Award,
-	Exit,
-	LegacyCha,
-	COUNT,
-
-	TEST_TASK = 999,
+public:
+	virtual bool Run(Helper& h) override;
 };
-
 
 }

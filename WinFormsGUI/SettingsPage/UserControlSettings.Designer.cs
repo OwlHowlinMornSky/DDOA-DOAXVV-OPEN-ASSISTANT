@@ -30,10 +30,11 @@
 			// listBox1
 			// 
 			listBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+			listBox1.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
 			listBox1.FormattingEnabled = true;
 			listBox1.IntegralHeight = false;
-			listBox1.ItemHeight = 17;
-			listBox1.Items.AddRange(new object[] { "界面设置", "游戏设置", "控制设置" });
+			listBox1.ItemHeight = 21;
+			listBox1.Items.AddRange(new object[] { "界面设置", "任务设置", "控制设置" });
 			listBox1.Location = new Point(3, 3);
 			listBox1.Name = "listBox1";
 			listBox1.Size = new Size(185, 403);
@@ -43,6 +44,7 @@
 			// panel1
 			// 
 			panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			panel1.BorderStyle = BorderStyle.FixedSingle;
 			panel1.Location = new Point(194, 3);
 			panel1.Name = "panel1";
 			panel1.Size = new Size(377, 403);
@@ -56,6 +58,7 @@
 			Controls.Add(listBox1);
 			Name = "UserControlSettings";
 			Size = new Size(574, 409);
+			Load += UserControlSettings_Load;
 			ResumeLayout(false);
 		}
 

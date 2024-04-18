@@ -18,27 +18,25 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "Task_TEST.h"
 
-#include "API.h"
+#include "Clock.h"
+#include "AskedForStop.h"
 
-namespace ohms::TaskEnum {
+namespace ohms {
 
-enum CORE_API TaskEnum : unsigned long {
-	None = 0,
+bool Task_TEST::Run(Helper& h) {
+	h.GuiLogF(ReturnMsgEnum::TestTaskBegin);
 
-	StartUp,
-	Daily,
-	Room,
-	Challenge,
-	Spring,
-	Award,
-	Exit,
-	LegacyCha,
-	COUNT,
+	ohms::Clock clk;
+	while (clk.getElapsedTime() < seconds(12.0f)) {
+		Sleep(100);
+		if (g_askedForStop)
+			break;
+	}
 
-	TEST_TASK = 999,
-};
-
+	h.GuiLogF(ReturnMsgEnum::TestTaskEnd);
+	return true;
+}
 
 }

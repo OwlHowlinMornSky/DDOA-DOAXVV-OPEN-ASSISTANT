@@ -112,6 +112,9 @@ public enum class ReturnMessage : System::UInt32 {
 	TaskErrNoCap, // 没法截图
 
 	NotImplemented, // 尚未实现
+
+	TestTaskBegin,
+	TestTaskEnd,
 };
 
 }

@@ -28,8 +28,8 @@
 			panel_Settings = new Panel();
 			userControlLogger = new UserControlLogger();
 			panel_leftCtrl = new Panel();
-			button_Main = new Button();
 			userControlList = new UserControlList();
+			button_Main = new Button();
 			timer_Main = new System.Windows.Forms.Timer(components);
 			tableLayoutPanel_Main.SuspendLayout();
 			panel_leftCtrl.SuspendLayout();
@@ -76,14 +76,25 @@
 			// 
 			// panel_leftCtrl
 			// 
-			panel_leftCtrl.Controls.Add(button_Main);
 			panel_leftCtrl.Controls.Add(userControlList);
+			panel_leftCtrl.Controls.Add(button_Main);
 			panel_leftCtrl.Dock = DockStyle.Fill;
 			panel_leftCtrl.Location = new Point(3, 3);
 			panel_leftCtrl.Name = "panel_leftCtrl";
 			panel_leftCtrl.Size = new Size(191, 354);
 			panel_leftCtrl.TabIndex = 4;
 			panel_leftCtrl.SizeChanged += Panel_LeftCtrl_SizeChanged;
+			// 
+			// userControlList
+			// 
+			userControlList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+			userControlList.BorderStyle = BorderStyle.FixedSingle;
+			userControlList.Location = new Point(3, 3);
+			userControlList.MaximumSize = new Size(180, 0);
+			userControlList.MinimumSize = new Size(180, 42);
+			userControlList.Name = "userControlList";
+			userControlList.Size = new Size(180, 293);
+			userControlList.TabIndex = 2;
 			// 
 			// button_Main
 			// 
@@ -95,17 +106,6 @@
 			button_Main.Text = "MainButton";
 			button_Main.UseVisualStyleBackColor = true;
 			button_Main.Click += Button_Main_Click;
-			// 
-			// userControlList
-			// 
-			userControlList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-			userControlList.BorderStyle = BorderStyle.FixedSingle;
-			userControlList.Location = new Point(0, 0);
-			userControlList.MaximumSize = new Size(180, 0);
-			userControlList.MinimumSize = new Size(180, 42);
-			userControlList.Name = "userControlList";
-			userControlList.Size = new Size(180, 296);
-			userControlList.TabIndex = 0;
 			// 
 			// timer_Main
 			// 
@@ -133,7 +133,7 @@
 		private UserControlLogger userControlLogger;
 		private Panel panel_leftCtrl;
 		private Button button_Main;
-		private UserControlList userControlList;
 		private System.Windows.Forms.Timer timer_Main;
+		private UserControlList userControlList;
 	}
 }
