@@ -74,42 +74,42 @@ public enum class ReturnCmd : System::UInt32 {
 public enum class ReturnMessage : System::UInt32 {
 	None = ohms::ReturnMsgEnum::None,
 
-	WorkStartErrRunning,
-	WorkStopping,
-	WorkStopped,
-	WorkComplete,
+	WorkStartErrRunning, // 已经有工作在运行，启动失败
+	WorkStopping, // askForStop 的 正在停止
+	WorkStopped, // 工作已停止（用户操作）
+	WorkComplete, // 工作完成
 
-	WorkError,
-	WorkErrorInternalException,
+	WorkError, // 【暂未使用】
+	WorkErrorInternalException, // 工作遇到未知类型的异常
 
-	TaskStop,
-	TaskComplete,
-	TaskException,
-	TaskErr_Format,
+	TaskStop, // 任务中止（用户操作）
+	TaskComplete, // 任务完成
+	TaskException, // 任务遇到未知类型的异常
+	TaskErr_Format, // TaskError
 
-	ChaStart,
-	ChaBegin_I, // 挑战赛开始（下跟次数！）
-	ChaOver,
-	ChaExit,
+	ChaStart, // 任务开始：挑战赛
+	ChaBegin_I, // 比赛开始（下跟次数！）
+	ChaOver, // 比赛结束又回到“挑战赛”界面
+	ChaExit, // 任务结束：挑战赛
 	ChaBeginAdd_I, // 奖励挑战赛开始（下跟次数！）
-	ChaIgnoredAdd,
-	ChaNotFindAdd,
-	ChaFindAdd,
-	ChaOpenedAdd,
+	ChaIgnoredAdd, // 忽略了奖励挑战赛
+	ChaNotFindAdd, // 没有找到奖励挑战赛
+	ChaFindAdd, // 找到奖励挑战赛
+	ChaOpenedAdd, // 打开了奖励挑战赛
 
-	TaskErrChaNoNew,
-	TaskErrChaNoLast,
-	TaskErrChaNoEnter,
-	TaskErrChaNoStart,
-	TaskErrChaTimeOut,
-	TaskErrChaNoEnd,
-	TaskErrChaNoOver,
-	TaskErrChaAddNotSup,
-	TaskErrChaIgnoreAddFailed,
-	TaskErrChaOpenAddFailed,
-	TaskErrFailedToLoadTemplateFile,
-	TaskErrNoWnd,
-	TaskErrCaptureFailed,
+	TaskErrChaNoNew, // 没找到 new match
+	TaskErrChaNoPri, // 没找到 previous match
+	TaskErrChaNoEnter, // 点了关卡一直进不去
+	TaskErrChaNoStart, // 点了挑战按钮一直进不去
+	TaskErrChaTimeOut, // 比赛过程太久了
+	TaskErrChaNoEnd, // 结算画面出不去
+	TaskErrChaNoOver, // 结算完的加载画面出不去
+	TaskErrChaAddNotSup, // 不支持奖励挑战赛（只有选择新比赛才支持）
+	TaskErrChaIgnoreAddFailed, // 忽略奖励挑战赛（即点回去的过程）失败
+	TaskErrChaOpenAddFailed, // 打开奖励挑战赛失败
+	TaskErrFailedToLoadTemplateFile, // 无法加载模板图片
+	TaskErrNoWnd, // 没找到游戏窗口
+	TaskErrNoCap, // 没法截图
 };
 
 }

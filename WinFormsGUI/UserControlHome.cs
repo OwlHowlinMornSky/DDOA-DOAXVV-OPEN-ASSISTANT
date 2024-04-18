@@ -56,11 +56,9 @@ namespace WinFormsGUI {
 		private void OnWorkLockAndUnlock(object sender, bool isLock) {
 			if (isLock) {
 				panel_Settings.Enabled = false;
-				userControlList.Enabled = false;
 				button_Main.Text = Strings.Main.Btn_Main_Start;
 			}
 			else {
-				userControlList.Enabled = true;
 				panel_Settings.Enabled = true;
 			}
 		}

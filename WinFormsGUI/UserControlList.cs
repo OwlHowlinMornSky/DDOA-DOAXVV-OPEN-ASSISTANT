@@ -51,6 +51,28 @@ namespace WinFormsGUI {
 
 		public UserControlList() {
 			InitializeComponent();
+			// 注册以在工作时锁定控件。
+			Program.GuiLock += OnWorkLockAndUnlock;
+		}
+
+		/// <summary>
+		/// 监听工作状态改变锁定控件的事件
+		/// </summary>
+		private void OnWorkLockAndUnlock(object sender, bool isLock) {
+			if (isLock) {
+				button_all.Enabled = false;
+				button_clear.Enabled = false;
+				for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
+					flowLayoutPanel1.Controls[i].Enabled = false;
+				}
+			}
+			else {
+				for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
+					flowLayoutPanel1.Controls[i].Enabled = true;
+				}
+				button_clear.Enabled = true;
+				button_all.Enabled = true;
+			}
 		}
 
 		/// <summary>
@@ -130,7 +152,7 @@ namespace WinFormsGUI {
 
 		private void OnListCheckBoxLeave(object sender, EventArgs e) {
 			var ctrl = sender as Control;
-			ctrl.BackColor = Color.Transparent;
+			ctrl.BackColor = CheckBox.DefaultBackColor;
 		}
 
 		private void OnListRadioBtnEnter(object sender, EventArgs e) {
@@ -140,7 +162,7 @@ namespace WinFormsGUI {
 
 		private void OnListRadioBtnLeave(object sender, EventArgs e) {
 			var ctrl = sender as Control;
-			flowLayoutPanel1.GetNextControl(ctrl, false).BackColor = Color.Transparent;
+			flowLayoutPanel1.GetNextControl(ctrl, false).BackColor = CheckBox.DefaultBackColor;
 		}
 
 		private void OnClickChooseAll(object sender, EventArgs e) {
