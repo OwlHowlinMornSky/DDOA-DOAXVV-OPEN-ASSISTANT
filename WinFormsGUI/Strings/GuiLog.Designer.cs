@@ -322,6 +322,33 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 开始任务：启动游戏 的本地化字符串。
+        /// </summary>
+        internal static string TaskStartUpBegin {
+            get {
+                return ResourceManager.GetString("TaskStartUpBegin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 完成任务：启动游戏 的本地化字符串。
+        /// </summary>
+        internal static string TaskStartUpComplete {
+            get {
+                return ResourceManager.GetString("TaskStartUpComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 任务失败：启动游戏 的本地化字符串。
+        /// </summary>
+        internal static string TaskStartUpFailed {
+            get {
+                return ResourceManager.GetString("TaskStartUpFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 任务中止 的本地化字符串。
         /// </summary>
         internal static string TaskStop {

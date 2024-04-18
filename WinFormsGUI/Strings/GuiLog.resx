@@ -205,6 +205,15 @@
   <data name="TaskException" xml:space="preserve">
     <value>任务异常</value>
   </data>
+  <data name="TaskStartUpBegin" xml:space="preserve">
+    <value>开始任务：启动游戏</value>
+  </data>
+  <data name="TaskStartUpComplete" xml:space="preserve">
+    <value>完成任务：启动游戏</value>
+  </data>
+  <data name="TaskStartUpFailed" xml:space="preserve">
+    <value>任务失败：启动游戏</value>
+  </data>
   <data name="TaskStop" xml:space="preserve">
     <value>任务中止</value>
   </data>

@@ -128,6 +128,7 @@
     <ClInclude Include="IHelper.h" />
     <ClInclude Include="ITask.h" />
     <ClInclude Include="MatchTemplate.h" />
+    <ClInclude Include="NavigateEnum.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ReturnMsgEnum.h" />
     <ClInclude Include="Settings.h" />

@@ -119,6 +119,10 @@ enum CORE_API ReturnMessage : long {
 
 	TaskErr_F_SI,
 	TaskErrCommonTLE, 
+
+	TaskStartUpBegin,
+	TaskStartUpComplete,
+	TaskStartUpFailed,
 };
 }
 }

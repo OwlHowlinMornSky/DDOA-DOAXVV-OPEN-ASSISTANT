@@ -148,6 +148,8 @@ public:
 		const cv::Point clkPt, const MatchTemplate& _temp, Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f)
 	);
 
+	bool GetOneFrame(cv::Mat& store, Time maxTime = seconds(10.0f));
+
 protected:
 	/**
 	 * @brief 设定目标窗口为DDOA调试器窗口。

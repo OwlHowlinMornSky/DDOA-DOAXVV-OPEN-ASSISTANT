@@ -118,6 +118,10 @@ public enum class ReturnMessage : System::UInt32 {
 
 	TaskErr_F_SI,
 	TaskErrCommonTLE,
+
+	TaskStartUpBegin,
+	TaskStartUpComplete,
+	TaskStartUpFailed,
 };
 
 }

@@ -136,6 +136,9 @@
     <ClInclude Include="Task_TEST.h">
       <Filter>Tasks</Filter>
     </ClInclude>
+    <ClInclude Include="NavigateEnum.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CoreDll.rc">

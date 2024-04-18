@@ -469,6 +469,24 @@ bool WndHandler::KeepClickingUntilNo(const cv::Point clkPt, const MatchTemplate&
 	return true;
 }
 
+bool WndHandler::GetOneFrame(cv::Mat& store, Time maxTime) {
+	assert(m_state != StateValue::Idle);
+	r_capture->askForRefresh();
+	Clock clk;
+	cv::Rect trect;
+	while (!g_askedForStop) {
+		if (CopyMat())
+			break;
+		if (maxTime > Time::Zero && clk.getElapsedTime() > maxTime) // 应用超时
+			return false;
+		Sleep(20);
+	}
+	if (g_askedForStop)
+		throw TaskExceptionCode::UserStop; // throw 0 表示停止
+	m_mat.copyTo(store);
+    return true;
+}
+
 WndHandler::SetReturnValue WndHandler::SetForDebugger(bool isGame) {
 	if (m_state == StateValue::DebuggerGame || m_state == StateValue::DebuggerLauncher) {
 		m_state = isGame ? StateValue::DebuggerGame : StateValue::DebuggerLauncher;
