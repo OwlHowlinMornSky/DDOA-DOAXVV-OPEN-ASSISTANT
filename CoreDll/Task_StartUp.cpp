@@ -20,6 +20,9 @@
 */
 #include "Task_StartUp.h"
 
+#include "Clock.h"
+#include "AskedForStop.h"
+
 namespace ohms {
 
 Task_StartUp::Task_StartUp() :
@@ -32,20 +35,82 @@ bool Task_StartUp::Run(Helper& h) {
 	r_handler = WndHandler::Instance();
 	r_helper = &h;
 
-	if (r_handler->SetForGame() != WndHandler::SetReturnValue::OK) {
-		if (r_handler->SetForLauncher() != WndHandler::SetReturnValue::OK) {
+	Clock clk;
+	std::unique_ptr<MatchTemplate>
+		temp_startBtn = h.CreateTemplate("StartGameBtn"),
+		temp_titleBtn = h.CreateTemplate("startTitleTLbtn"),
+		temp_loading = h.CreateTemplate("loading"),
+		temp_homeSpec = h.CreateTemplate("homeSpec");
+	cv::Point pt;
+
+	if (!r_handler->GameWndAvailable()) {
+		if (!r_handler->LaucherAvailable()) {
 			system("start steam://rungameid/958260");
-			do {
+
+			clk.restart();
+			while (true) {
+				if (clk.getElapsedTime() > seconds(60.0f)) {
+					h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 1);
+					return false;
+				}
+				if (r_handler->LaucherAvailable()) {
+					break;
+				}
+				if (g_askedForStop) {
+					return true;
+				}
 				Sleep(1000);
-			} while (r_handler->SetForLauncher() != WndHandler::SetReturnValue::OK);
+			}
 		}
 
-		//r_handler->ClickAt();// 点击开始。
+		r_handler->SetForLauncher();
+		if (-1 == r_handler->WaitFor(*temp_startBtn, seconds(20.0f))) {
+			h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 2);
+			return false;
+		}
 
-		do {
+		pt = temp_startBtn->GetLastMatchRect().tl();
+		pt += { 120, 40 };
+
+		while (true) {
+			if (!r_handler->LaucherAvailable()) {
+				break;
+			}
+			r_handler->ClickAt(pt);// 点击开始。
+			if (g_askedForStop) {
+				return true;
+			}
+			Sleep(500);
+		}
+		r_handler->Reset();
+
+		while (true) {
+			if (clk.getElapsedTime() > seconds(60.0f)) {
+				h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 3);
+				return false;
+			}
+			if (r_handler->GameWndAvailable()) {
+				break;
+			}
+			if (g_askedForStop) {
+				return true;
+			}
 			Sleep(1000);
-		} while (r_handler->SetForGame() != WndHandler::SetReturnValue::OK);
+		}
 	}
+
+	r_handler->SetForGame();
+	if (-1 == r_handler->WaitFor(*temp_titleBtn, seconds(60.0f))) {
+		h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 4);
+		return false;
+	}
+
+	pt = { 920, 40 };
+	if (!r_handler->KeepClickingUntil(pt, *temp_loading, seconds(30.0f), seconds(0.3f))) {
+		h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 5);
+		return false;
+	}
+
 	return true;
 }
 

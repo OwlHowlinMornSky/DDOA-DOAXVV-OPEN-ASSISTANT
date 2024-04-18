@@ -166,6 +166,15 @@ void Helper::GuiLogF_I(long str, long i0) {
 	return;
 }
 
+void Helper::GuiLogF_SI(long format, long str, long val) {
+	std::lock_guard lg(m_hrm_mutex); // 上锁
+	m_hrm.push(ReturnMsgCmd::LOG_Format_SI);
+	m_hrm.push(format);
+	m_hrm.push(str);
+	m_hrm.push(val);
+	return;
+}
+
 std::unique_ptr<MatchTemplate> Helper::CreateTemplate(const std::string& name) {
 	std::unique_ptr<MatchTemplate> res = std::make_unique<MatchTemplate>(m_templateList.at(name));
 	if (!res->LoadMat((m_assets / (name + ".png")).string())) {
@@ -203,11 +212,15 @@ void Helper::Work() {
 			) {
 			if (ITask::CreateTask(m_set.Work_TaskList[flag], task)) {
 				bool res = task->Run(*this);
-				if (!res) // 返回false表示无法继续
+				if (!res || g_askedForStop) // 返回false 或者 要求停止 表示无法继续
 					break;
 			}
 			flag++;
 		}
+	}
+	catch (int e) {
+		if (e != 0)
+			GuiLogF(ReturnMsgEnum::WorkErrorInternalException);
 	}
 	catch (...) {
 		GuiLogF(ReturnMsgEnum::WorkErrorInternalException);

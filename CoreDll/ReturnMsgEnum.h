@@ -116,6 +116,9 @@ enum CORE_API ReturnMessage : long {
 
 	TestTaskBegin,
 	TestTaskEnd,
+
+	TaskErr_F_SI,
+	TaskErrCommonTLE, 
 };
 }
 }

@@ -184,6 +184,9 @@
   <data name="TaskErrChaTimeOut" xml:space="preserve">
     <value>挑战超时</value>
   </data>
+  <data name="TaskErrCommonTLE" xml:space="preserve">
+    <value>超时</value>
+  </data>
   <data name="TaskErrFailedToLoadTemplateFile" xml:space="preserve">
     <value>加载模板文件失败</value>
   </data>
@@ -195,6 +198,9 @@
   </data>
   <data name="TaskErr_Format" xml:space="preserve">
     <value>任务出错：{0}</value>
+  </data>
+  <data name="TaskErr_F_SI" xml:space="preserve">
+    <value>任务出错：{0}: {1}</value>
   </data>
   <data name="TaskException" xml:space="preserve">
     <value>任务异常</value>

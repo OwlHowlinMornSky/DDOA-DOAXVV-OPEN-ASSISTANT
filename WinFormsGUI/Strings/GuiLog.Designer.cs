@@ -169,6 +169,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 任务出错：{0}: {1} 的本地化字符串。
+        /// </summary>
+        internal static string TaskErr_F_SI {
+            get {
+                return ResourceManager.GetString("TaskErr_F_SI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 任务出错：{0} 的本地化字符串。
         /// </summary>
         internal static string TaskErr_Format {
@@ -264,6 +273,15 @@ namespace WinFormsGUI.Strings {
         internal static string TaskErrChaTimeOut {
             get {
                 return ResourceManager.GetString("TaskErrChaTimeOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 超时 的本地化字符串。
+        /// </summary>
+        internal static string TaskErrCommonTLE {
+            get {
+                return ResourceManager.GetString("TaskErrCommonTLE", resourceCulture);
             }
         }
         

@@ -81,6 +81,14 @@ bool WndHandler::Update() {
 	return r_capture != nullptr;
 }
 
+bool WndHandler::LaucherAvailable() {
+    return FindWindowW(g_findCls, g_finGWnd) != NULL; // 查找doaxvv launcher窗口
+}
+
+bool WndHandler::GameWndAvailable() {
+	return FindWindowW(g_findCls, g_findWnd) != NULL; // 查找doaxvv窗口
+}
+
 WndHandler::SetReturnValue WndHandler::SetForLauncher() {
 	if(Settings::WndHandler::DEFAULT.Debug_DebugHandler)
 		return SetForDebugger(false);

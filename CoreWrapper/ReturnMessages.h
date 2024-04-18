@@ -115,6 +115,9 @@ public enum class ReturnMessage : System::UInt32 {
 
 	TestTaskBegin,
 	TestTaskEnd,
+
+	TaskErr_F_SI,
+	TaskErrCommonTLE,
 };
 
 }

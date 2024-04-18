@@ -287,7 +287,20 @@ namespace WinFormsGUI {
 					Log(
 						string.Format(
 							GetLogStringFromResx(msg.ToString()),
-							i.ToString()
+							i
+						)
+					);
+					break;
+				}
+				case ReturnCmd.LOG_Format_SI: {
+					var msg = Program.helper.GetMessage();
+					var s = Program.helper.GetMessage();
+					var i = Program.helper.GetValueI();
+					Log(
+						string.Format(
+							GetLogStringFromResx(msg.ToString()),
+							GetLogStringFromResx(s.ToString()),
+							i
 						)
 					);
 					break;
