@@ -32,7 +32,6 @@
 
 #include "CoreLog.h"
 #include "ITask.h"
-#include "NavigateEnum.h"
 
 namespace ohms {
 
@@ -183,50 +182,6 @@ std::unique_ptr<MatchTemplate> Helper::CreateTemplate(const std::string& name) {
 		return std::unique_ptr<MatchTemplate>();
 	}
 	return std::move(res);
-}
-
-int Helper::TryToDeterminePage() {
-	if (r_handler->SetForGame() != WndHandler::SetReturnValue::OK) {
-		return NavigateEnum::None;
-	}
-
-	static std::unique_ptr<MatchTemplate>
-		temp_chaPage = CreateTemplate("default"),
-		temp_matchPage = CreateTemplate("start"),
-		temp_homePage = CreateTemplate("homeSpec"),
-		temp_resultPage = CreateTemplate("result"),
-		temp_anyOtherPageHaveReturn = CreateTemplate("back"),
-		temp_anyOtherPageHaveHome = CreateTemplate("otherHome"),
-		temp_anyOtherPageHaveHomeW = CreateTemplate("otherHomeAskew");
-
-	cv::Mat mat;
-	if (!r_handler->GetOneFrame(mat)) {
-		return NavigateEnum::None;
-	}
-
-	if (temp_homePage->Match(mat)) {
-		return NavigateEnum::Home;
-	}
-	if (temp_chaPage->Match(mat)) {
-		return NavigateEnum::Challenge;
-	}
-	if (temp_matchPage->Match(mat)) {
-		return NavigateEnum::MatchConfirm;
-	}
-	if (temp_resultPage->Match(mat)) {
-		return NavigateEnum::MatchResult;
-	}
-	if (temp_anyOtherPageHaveHomeW->Match(mat)) {
-		return NavigateEnum::AnyOtherHaveHomeBtn;
-	}
-	if (temp_anyOtherPageHaveHome->Match(mat)) {
-		return NavigateEnum::AnyOtherHaveHomeBtn;
-	}
-	if (temp_anyOtherPageHaveReturn->Match(mat)) {
-		return NavigateEnum::AnyOtherHaveReturnBtn;
-	}
-
-	return NavigateEnum::None;
 }
 
 void Helper::TaskError(long str) {

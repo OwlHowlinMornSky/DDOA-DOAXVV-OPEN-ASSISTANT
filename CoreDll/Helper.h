@@ -65,8 +65,6 @@ public:
 
 	std::unique_ptr<MatchTemplate> CreateTemplate(const std::string& name);
 
-	int TryToDeterminePage();
-
 	/**
 	 * @brief 报错（写入logger并弹窗），并 throw 0
 	 * @param str 报错信息

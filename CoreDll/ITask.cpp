@@ -24,6 +24,7 @@
 #include "Task_Challenge.h"
 #include "Task_LegacyCha.h"
 #include "Task_TEST.h"
+#include "Task_Navigate.h"
 
 namespace ohms {
 

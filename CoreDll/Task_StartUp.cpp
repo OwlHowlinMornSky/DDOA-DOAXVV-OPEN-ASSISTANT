@@ -24,6 +24,7 @@
 #include "AskedForStop.h"
 
 #include "NavigateEnum.h"
+#include "Task_Navigate.h"
 
 namespace ohms {
 
@@ -110,7 +111,7 @@ bool Task_StartUp::Run(Helper& h) {
 		}
 
 		r_handler->SetForGame();
-		if (-1 == r_handler->WaitFor(*temp_titleBtn, seconds(60.0f))) {
+		if (-1 == r_handler->WaitFor(*temp_titleBtn, seconds(300.0f))) {
 			h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 5);
 			goto FINALLY_FAILED;
 		}
@@ -124,7 +125,7 @@ bool Task_StartUp::Run(Helper& h) {
 	else { // 开始时就存在游戏窗口
 		r_handler->SetForGame();
 
-		int page = h.TryToDeterminePage();
+		int page = Task_Navigate::Instance()->TryToDeterminePage();
 
 		if (!(page > 0 && page < NavigateEnum::COUNT)) { // 不确定在哪个页面
 

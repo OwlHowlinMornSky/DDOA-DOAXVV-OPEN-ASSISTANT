@@ -65,6 +65,7 @@
     <ClCompile Include="Task_TEST.cpp">
       <Filter>Tasks</Filter>
     </ClCompile>
+    <ClCompile Include="Task_Navigate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Helper.h">
@@ -138,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="NavigateEnum.h">
       <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Task_Navigate.h">
+      <Filter>Tasks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

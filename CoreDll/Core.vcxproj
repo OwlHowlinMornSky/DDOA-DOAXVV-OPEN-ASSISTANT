@@ -113,6 +113,7 @@
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Task_Challenge.cpp" />
     <ClCompile Include="Task_LegacyCha.cpp" />
+    <ClCompile Include="Task_Navigate.cpp" />
     <ClCompile Include="Task_StartUp.cpp" />
     <ClCompile Include="Task_TEST.cpp" />
     <ClCompile Include="Time.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="TaskEnum.h" />
     <ClInclude Include="Task_Challenge.h" />
     <ClInclude Include="Task_LegacyCha.h" />
+    <ClInclude Include="Task_Navigate.h" />
     <ClInclude Include="Task_StartUp.h" />
     <ClInclude Include="Task_TEST.h" />
     <ClInclude Include="Time.h" />

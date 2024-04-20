@@ -21,6 +21,7 @@
 #include "Task_LegacyCha.h"
 #include "CoreLog.h"
 #include "TaskExceptionCode.h"
+#include "Task_Navigate.h"
 
 namespace ohms {
 
@@ -39,6 +40,8 @@ bool Task_LegacyCha::Run(Helper& h) {
 	try {
 		CoreLog() << "Task.Challenge: Start." << std::endl;
 		h.GuiLogF(ReturnMsgEnum::ChaStart);
+
+		Task_Navigate::Instance()->NavigateTo(NavigateEnum::Challenge);
 
 		const bool forNew = m_set.ForNew; // 保存设置
 
