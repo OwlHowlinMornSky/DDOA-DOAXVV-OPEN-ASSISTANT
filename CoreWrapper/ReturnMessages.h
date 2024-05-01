@@ -122,6 +122,8 @@ public enum class ReturnMessage : System::UInt32 {
 	TaskStartUpBegin,
 	TaskStartUpComplete,
 	TaskStartUpFailed,
+
+	Test_II,
 };
 
 }

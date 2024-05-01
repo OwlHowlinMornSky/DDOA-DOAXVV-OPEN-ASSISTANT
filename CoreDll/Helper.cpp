@@ -175,6 +175,15 @@ void Helper::GuiLogF_SI(long format, long str, long val) {
 	return;
 }
 
+void Helper::GuiLogF_II(long str, long i0, long i1) {
+	std::lock_guard lg(m_hrm_mutex); // 上锁
+	m_hrm.push(ReturnMsgCmd::LOG_Format_II);
+	m_hrm.push(str);
+	m_hrm.push(i0);
+	m_hrm.push(i1);
+	return;
+}
+
 std::unique_ptr<MatchTemplate> Helper::CreateTemplate(const std::string& name) {
 	std::unique_ptr<MatchTemplate> res = std::make_unique<MatchTemplate>(m_templateList.at(name));
 	if (!res->LoadMat((m_assets / (name + ".png")).string())) {

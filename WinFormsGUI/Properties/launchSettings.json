@@ -5,7 +5,8 @@
       "workingDirectory": "$(ProjectDir)",
       "environmentVariables": {
         "PATH": "$(OHMS_LIB_DIR)\\ohms\\wgc\\v2.0\\bin;$(OHMS_LIB_DIR)\\opencv\\4.8.0\\build\\x64\\vc16\\bin;$(PATH)"
-      }
+      },
+      "nativeDebugging": true
     }
   }
 }

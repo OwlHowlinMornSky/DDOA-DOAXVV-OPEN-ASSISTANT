@@ -305,6 +305,19 @@ namespace WinFormsGUI {
 					);
 					break;
 				}
+				case ReturnCmd.LOG_Format_II: {
+					var msg = Program.helper.GetMessage();
+					var i0 = Program.helper.GetValueI();
+					var i1 = Program.helper.GetValueI();
+					Log(
+						string.Format(
+							GetLogStringFromResx(msg.ToString()),
+							i0,
+							i1
+						)
+					);
+					break;
+				}
 				default:
 					break;
 				}

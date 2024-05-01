@@ -62,6 +62,7 @@ public:
 	void GuiLogF_S(long str, long s0);
 	void GuiLogF_I(long str, long i0);
 	void GuiLogF_SI(long format, long str, long val);
+	void GuiLogF_II(long str, long i0, long i1);
 
 	std::unique_ptr<MatchTemplate> CreateTemplate(const std::string& name);
 

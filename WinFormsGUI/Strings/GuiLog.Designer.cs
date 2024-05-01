@@ -358,6 +358,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 测试: {0}, {1} 的本地化字符串。
+        /// </summary>
+        internal static string Test_II {
+            get {
+                return ResourceManager.GetString("Test_II", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 开始任务：测试 的本地化字符串。
         /// </summary>
         internal static string TestTaskBegin {

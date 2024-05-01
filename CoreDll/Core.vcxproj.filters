@@ -65,7 +65,12 @@
     <ClCompile Include="Task_TEST.cpp">
       <Filter>Tasks</Filter>
     </ClCompile>
-    <ClCompile Include="Task_Navigate.cpp" />
+    <ClCompile Include="Task_Navigate.cpp">
+      <Filter>Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="Sleep.cpp">
+      <Filter>Impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Helper.h">
@@ -142,6 +147,9 @@
     </ClInclude>
     <ClInclude Include="Task_Navigate.h">
       <Filter>Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="Sleep.h">
+      <Filter>Impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

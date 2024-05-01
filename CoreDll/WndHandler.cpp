@@ -26,6 +26,7 @@
 #include "Settings.h"
 #include "AskedForStop.h"
 #include "TaskExceptionCode.h"
+#include "Sleep.h"
 
 #include <ohms/WGC.h>
 
@@ -175,7 +176,7 @@ int WndHandler::WaitFor(const MatchTemplate& _temp, Time _tlimit) {
 #endif
 		if (_tlimit > Time::Zero && clk.getElapsedTime() > _tlimit) // 应用超时
 			return -1;
-		Sleep(20);
+		sleep(milliseconds(30));
 	}
 	if (g_askedForStop)
 		throw TaskExceptionCode::UserStop; // throw 0 表示停止
@@ -228,7 +229,7 @@ int WndHandler::WaitForMultiple(std::vector<const MatchTemplate*> _temps, Time _
 		}
 		if (_tlimit > Time::Zero && clk.getElapsedTime() > _tlimit) // 应用超时
 			return -1;
-		Sleep(20);
+		sleep(milliseconds(30));
 	}
 	if (g_askedForStop)
 		throw TaskExceptionCode::UserStop; // throw 0 表示停止
@@ -285,7 +286,7 @@ bool WndHandler::ClickAt(cv::Point pt) {
 				input.mi.dx = tmp.x;
 				input.mi.dy = tmp.y;
 				SendInput(1, &input, sizeof(INPUT));
-				Sleep(9);
+				sleep(milliseconds(10));
 			}
 		}
 		POINT p{ pt.x, pt.y };
@@ -299,7 +300,7 @@ bool WndHandler::ClickAt(cv::Point pt) {
 		input.mi.dx = p.x;
 		input.mi.dy = p.y;
 		SendInput(1, &input, sizeof(INPUT));
-		Sleep(9);
+		sleep(milliseconds(10));
 		m_lastMousePoint = { pt.x, pt.y };
 
 		// 点击
@@ -309,7 +310,7 @@ bool WndHandler::ClickAt(cv::Point pt) {
 		input.mi.dy = p.y;
 		SendInput(1, &input, sizeof(INPUT));
 
-		Sleep(60);
+		sleep(milliseconds(60));
 
 		input.type = INPUT_MOUSE;
 		input.mi.dwFlags = MOUSEEVENTF_LEFTUP | MOUSEEVENTF_ABSOLUTE;
@@ -334,18 +335,19 @@ bool WndHandler::ClickAt(cv::Point pt) {
 				tmp.x += vecx * i;
 				tmp.y += vecy * i;
 				PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(tmp.x, tmp.y));
-				Sleep(9);
+				sleep(milliseconds(10));
 			}
 		}
 		// 最终移动光标到目的地
 		PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
-		Sleep(9);
+		sleep(milliseconds(10));
 		m_lastMousePoint = { pt.x, pt.y };
 		// 点击
 		PostMessageW(m_hwnd, WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(pt.x, pt.y));
-		Sleep(40);
+		sleep(milliseconds(60));
 		PostMessageW(m_hwnd, WM_LBUTTONUP, 0, MAKELPARAM(pt.x, pt.y));
 	}
+	sleep(milliseconds(10));
 	return true;
 }
 
@@ -396,7 +398,7 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 				input.mi.dx = tmp.x;
 				input.mi.dy = tmp.y;
 				SendInput(1, &input, sizeof(INPUT));
-				Sleep(9);
+				sleep(milliseconds(10));
 			}
 		}
 		POINT p{ pt.x, pt.y };
@@ -410,7 +412,7 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 		input.mi.dx = p.x;
 		input.mi.dy = p.y;
 		SendInput(1, &input, sizeof(INPUT));
-		Sleep(9);
+		sleep(milliseconds(10));
 		m_lastMousePoint = { pt.x, pt.y };
 	}
 	else {
@@ -430,14 +432,15 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 				tmp.x += vecx * i;
 				tmp.y += vecy * i;
 				PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(tmp.x, tmp.y));
-				Sleep(9);
+				sleep(milliseconds(10));
 			}
 		}
 		// 最终移动光标到目的地
 		PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
-		Sleep(9);
+		sleep(milliseconds(10));
 		m_lastMousePoint = { pt.x, pt.y };
 	}
+	sleep(milliseconds(10));
 	return true;
 }
 
@@ -479,7 +482,7 @@ bool WndHandler::GetOneFrame(cv::Mat& store, Time maxTime) {
 			break;
 		if (maxTime > Time::Zero && clk.getElapsedTime() > maxTime) // 应用超时
 			return false;
-		Sleep(20);
+		sleep(milliseconds(30));
 	}
 	if (g_askedForStop)
 		throw TaskExceptionCode::UserStop; // throw 0 表示停止

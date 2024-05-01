@@ -43,7 +43,7 @@ namespace WinFormsGUI {
 
 		private void FormNew_Load(object sender, EventArgs e) {
 			OnWndCloseBtnDisabled(Settings.GUI.Default.DisableClose);
-			if (Settings.GUI.Default.WndLastPosition.X != -1 && Settings.GUI.Default.WndLastPosition.Y != -1)
+			if (Settings.GUI.Default.WndLastPosition.Y > -1)
 				Location = Settings.GUI.Default.WndLastPosition;
 			notifyIcon_Main.Text = Text;
 		}
@@ -78,6 +78,7 @@ namespace WinFormsGUI {
 				}
 			}
 			userControlHome1.OnClosing();
+			WindowState = FormWindowState.Normal;
 			Settings.GUI.Default.WndLastPosition = Location;
 		}
 

@@ -19,6 +19,7 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "Task_Navigate.h"
+#include "Sleep.h"
 
 namespace {
 
@@ -98,6 +99,7 @@ bool Task_Navigate::NavigateTo(int dest) {
 }
 
 bool Task_Navigate::NavigateFromTo(int now, int dest) {
+	r_helper->GuiLogF_II(ReturnMsgEnum::Test_II, now, dest);
 	if (now != dest) {
 		switch (now) {
 		case NavigateEnum::Home: // 主页
@@ -123,18 +125,19 @@ bool Task_Navigate::NavigateFromTo(int now, int dest) {
 		default:
 			return false;
 		}
-	}
-	switch (dest) {
-	case NavigateEnum::Challenge:
-	{
-		cv::Point pt = temp_homeChaBtn->GetSearchRect().tl();
-		pt += { 5, 10 };
-		if (!r_handler->KeepClickingUntil(pt, *temp_chaPage)) {
-			return false;
+		switch (dest) {
+		case NavigateEnum::Challenge:
+		{
+			cv::Point pt = temp_homeChaBtn->GetSearchRect().tl();
+			pt += { 5, 10 };
+			if (!r_handler->KeepClickingUntil(pt, *temp_chaPage)) {
+				return false;
+			}
+			break;
 		}
-		break;
+		}
 	}
-	}
+	sleep(milliseconds(30));
 	return true;
 }
 

@@ -123,6 +123,8 @@ enum CORE_API ReturnMessage : long {
 	TaskStartUpBegin,
 	TaskStartUpComplete,
 	TaskStartUpFailed,
+
+	Test_II,
 };
 }
 }

@@ -223,6 +223,9 @@
   <data name="TestTaskEnd" xml:space="preserve">
     <value>完成任务：测试</value>
   </data>
+  <data name="Test_II" xml:space="preserve">
+    <value>测试: {0}, {1}</value>
+  </data>
   <data name="Unknown" xml:space="preserve">
     <value>未知消息：{0}</value>
     <comment>占位</comment>
