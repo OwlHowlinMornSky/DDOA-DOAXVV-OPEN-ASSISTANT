@@ -21,7 +21,7 @@
 #pragma once
 
 #include "Settings_Global.h"
-#include "Settings_LegacyCha.h"
+#include "Settings_Challenge.h"
 #include "Settings_WndHandler.h"
 
 // 【ToDo】 非 线程安全

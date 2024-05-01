@@ -84,8 +84,8 @@ namespace WinFormsGUI {
 				id = (uint)TaskEnumWrap.None;
 				ctrl = new UserControlSetForDefault();
 				break;
-			case TaskEnumWrap.LegacyCha:
-				ctrl = new UserControlSetForLegacyCha();
+			case TaskEnumWrap.Challenge:
+				ctrl = new UserControlSetForChallenge();
 				break;
 			}
 			ctrl.Dock = DockStyle.Fill;

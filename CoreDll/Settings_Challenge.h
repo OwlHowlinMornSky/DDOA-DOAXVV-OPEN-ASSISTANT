@@ -20,26 +20,21 @@
 */
 #pragma once
 
-#include "ITask.h"
-#include "Settings_LegacyCha.h"
-#include "WndHandler.h"
+#include "API.h"
 
-namespace ohms {
+namespace ohms::Settings {
 
-class Task_LegacyCha :
-	public ITask {
-public:
-	Task_LegacyCha();
-	virtual ~Task_LegacyCha() override;
+struct CORE_API Challenge {
+	static Challenge DEFAULT; // 本体在 Settings.cpp
+	Challenge() :
+		PlayNewMatchOrPrevious(false), // 默认上一次比赛
+		EnterAddition(true), // 默认进入奖励挑战赛
+		CheckAddition(false) // 默认不检查奖励挑战赛
+	{}
 
-public:
-	virtual bool Run(Helper& h) override;
-
-protected:
-	Settings::LegacyCha m_set; // 设置数据的副本
-	Helper* r_helper;
-	WndHandler* r_handler;
+	bool PlayNewMatchOrPrevious; // 选择新比赛。
+	bool EnterAddition; // 进入奖励挑战赛。
+	bool CheckAddition; // 是否检查奖励挑战赛。
 };
 
 }
-

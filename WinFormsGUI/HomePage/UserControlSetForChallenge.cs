@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinFormsGUI {
-	public partial class UserControlSetForLegacyCha : UserControl {
-		public UserControlSetForLegacyCha() {
+	public partial class UserControlSetForChallenge : UserControl {
+		public UserControlSetForChallenge() {
 			InitializeComponent();
 		}
 

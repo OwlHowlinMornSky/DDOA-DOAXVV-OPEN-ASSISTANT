@@ -35,16 +35,13 @@
     <ClCompile Include="ITask.cpp">
       <Filter>Tasks</Filter>
     </ClCompile>
-    <ClCompile Include="Task_Challenge.cpp">
-      <Filter>Tasks</Filter>
-    </ClCompile>
     <ClCompile Include="Settings.cpp">
       <Filter>Export\Settings</Filter>
     </ClCompile>
     <ClCompile Include="IHelper.cpp">
       <Filter>Export</Filter>
     </ClCompile>
-    <ClCompile Include="Task_LegacyCha.cpp">
+    <ClCompile Include="Task_Challenge.cpp">
       <Filter>Tasks</Filter>
     </ClCompile>
     <ClCompile Include="Task_StartUp.cpp">
@@ -97,9 +94,6 @@
     <ClInclude Include="MatchTemplate.h">
       <Filter>Helper</Filter>
     </ClInclude>
-    <ClInclude Include="TaskEnum.h">
-      <Filter>Export</Filter>
-    </ClInclude>
     <ClInclude Include="Clock.h">
       <Filter>Impl</Filter>
     </ClInclude>
@@ -112,16 +106,10 @@
     <ClInclude Include="framework.h">
       <Filter>Impl</Filter>
     </ClInclude>
-    <ClInclude Include="TaskExceptionCode.h">
-      <Filter>Impl</Filter>
-    </ClInclude>
     <ClInclude Include="ITask.h">
       <Filter>Tasks</Filter>
     </ClInclude>
-    <ClInclude Include="Task_Challenge.h">
-      <Filter>Tasks</Filter>
-    </ClInclude>
-    <ClInclude Include="Settings_LegacyCha.h">
+    <ClInclude Include="Settings_Challenge.h">
       <Filter>Export\Settings</Filter>
     </ClInclude>
     <ClInclude Include="Settings.h">
@@ -130,7 +118,7 @@
     <ClInclude Include="Settings_WndHandler.h">
       <Filter>Export\Settings</Filter>
     </ClInclude>
-    <ClInclude Include="Task_LegacyCha.h">
+    <ClInclude Include="Task_Challenge.h">
       <Filter>Tasks</Filter>
     </ClInclude>
     <ClInclude Include="Settings_Global.h">
@@ -150,6 +138,12 @@
     </ClInclude>
     <ClInclude Include="Sleep.h">
       <Filter>Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskEnum.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskExceptionCode.h">
+      <Filter>Tasks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

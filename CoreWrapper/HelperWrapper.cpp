@@ -72,7 +72,7 @@ System::Void HelperWrapper::Drop() {
 }
 
 System::Int32 HelperWrapper::SetChallengeForNewOrLast(bool forNew) {
-	ohms::Settings::LegacyCha::DEFAULT.ForNew = forNew;
+	ohms::Settings::Challenge::DEFAULT.PlayNewMatchOrPrevious = forNew;
 	return System::Int32(0);
 }
 
@@ -97,12 +97,12 @@ System::Int32 HelperWrapper::SetKeepScreenOnOrNot(bool keep) {
 }
 
 System::Int32 HelperWrapper::SetChallengeCheckAwardOrNot(bool check) {
-	ohms::Settings::LegacyCha::DEFAULT.CheckAddition = check;
+	ohms::Settings::Challenge::DEFAULT.CheckAddition = check;
 	return System::Int32(0);
 }
 
 System::Int32 HelperWrapper::SetChallengePlayAwardOrNot(bool play) {
-	ohms::Settings::LegacyCha::DEFAULT.EnterAddition = play;
+	ohms::Settings::Challenge::DEFAULT.EnterAddition = play;
 	return System::Int32(0);
 }
 

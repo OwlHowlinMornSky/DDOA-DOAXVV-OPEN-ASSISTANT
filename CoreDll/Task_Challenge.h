@@ -21,6 +21,8 @@
 #pragma once
 
 #include "ITask.h"
+#include "Settings_Challenge.h"
+#include "WndHandler.h"
 
 namespace ohms {
 
@@ -34,7 +36,9 @@ public:
 	virtual bool Run(Helper& h) override;
 
 protected:
-
+	Settings::Challenge m_set; // 设置数据的副本
+	Helper* r_helper;
+	WndHandler* r_handler;
 };
 
 }

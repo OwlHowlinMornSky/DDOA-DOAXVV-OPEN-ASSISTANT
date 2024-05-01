@@ -205,15 +205,6 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 【旧】刷挑战赛 的本地化字符串。
-        /// </summary>
-        internal static string Task008 {
-            get {
-                return ResourceManager.GetString("Task008", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 【测试任务】 的本地化字符串。
         /// </summary>
         internal static string Task999 {

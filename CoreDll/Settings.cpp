@@ -23,7 +23,7 @@
 namespace ohms::Settings {
 
 WndHandler WndHandler::DEFAULT;
-LegacyCha LegacyCha::DEFAULT;
+Challenge Challenge::DEFAULT;
 Global Global::DEFAULT;
 
 }

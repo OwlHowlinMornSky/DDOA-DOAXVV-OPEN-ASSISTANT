@@ -1,5 +1,5 @@
 ﻿namespace WinFormsGUI {
-	partial class UserControlSetForLegacyCha {
+	partial class UserControlSetForChallenge {
 		/// <summary> 
 		/// 必需的设计器变量。
 		/// </summary>

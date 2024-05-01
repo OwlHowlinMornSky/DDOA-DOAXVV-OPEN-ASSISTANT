@@ -22,7 +22,6 @@
 
 #include "Task_StartUp.h"
 #include "Task_Challenge.h"
-#include "Task_LegacyCha.h"
 #include "Task_TEST.h"
 #include "Task_Navigate.h"
 
@@ -38,16 +37,14 @@ bool ITask::CreateTask(unsigned long type, std::unique_ptr<ITask>& outPtr) {
 	case TaskEnum::Room:
 		break;
 	case TaskEnum::Challenge:
-		break;
+		outPtr = std::make_unique<Task_Challenge>();
+		return true;
 	case TaskEnum::Spring:
 		break;
 	case TaskEnum::Award:
 		break;
 	case TaskEnum::Exit:
 		break;
-	case TaskEnum::LegacyCha:
-		outPtr = std::make_unique<Task_LegacyCha>();
-		return true;
 	case TaskEnum::TEST_TASK:
 		outPtr = std::make_unique<Task_TEST>();
 		return true;

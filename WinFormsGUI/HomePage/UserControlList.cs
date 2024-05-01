@@ -212,7 +212,7 @@ namespace WinFormsGUI {
 				if (s.Length == 0)
 					continue;
 				var n = uint.Parse(s);
-				if (n > (uint)TaskEnumWrap.None)
+				if (n > (uint)TaskEnumWrap.None && n < (uint)TaskEnumWrap.COUNT)
 					tasks.Add(n);
 			}
 			return tasks;
@@ -227,13 +227,15 @@ namespace WinFormsGUI {
 				if (s.Length == 0)
 					continue;
 				var n = int.Parse(s);
-				((CheckBox)flowLayoutPanel1.Controls[n * 2]).Checked = true;
+				if (n * 2 < flowLayoutPanel1.Controls.Count)
+					((CheckBox)flowLayoutPanel1.Controls[n * 2]).Checked = true;
 			}
 
 			if (Settings.GUI.Default.ListLastSelectedSettings >= 0) {
-				(flowLayoutPanel1.Controls[
-					Settings.GUI.Default.ListLastSelectedSettings * 2 + 1
-				] as RadioButton).Checked = true;
+				var n = Settings.GUI.Default.ListLastSelectedSettings;
+				if (n * 2 + 1 < flowLayoutPanel1.Controls.Count) {
+					(flowLayoutPanel1.Controls[n * 2 + 1] as RadioButton).Checked = true;
+				}
 			}
 		}
 
@@ -279,6 +281,22 @@ namespace WinFormsGUI {
 				radioBtn.Checked = false;
 			}
 			SetSelectedChangedTo((uint)TaskEnumWrap.None);
+		}
+
+		private void OnClickInverse() {
+			foreach (var ctrl in flowLayoutPanel1.Controls) {
+				if (ctrl is CheckBox checkBox) {
+					checkBox.Checked = !checkBox.Checked;
+				}
+			}
+		}
+
+		private void FlowLayoutPanel1_DoubleClick(object sender, EventArgs e) {
+			OnClickInverse();
+		}
+
+		private void ToolStripMenuItem_Inverse_Click(object sender, EventArgs e) {
+			OnClickInverse();
 		}
 	}
 }

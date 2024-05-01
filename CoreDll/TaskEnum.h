@@ -34,7 +34,6 @@ enum CORE_API TaskEnum : unsigned long {
 	Spring,
 	Award,
 	Exit,
-	LegacyCha,
 	COUNT,
 
 	TEST_TASK = 999,
