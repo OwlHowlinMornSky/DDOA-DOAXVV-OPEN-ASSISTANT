@@ -99,7 +99,7 @@ bool Task_Navigate::NavigateTo(int dest) {
 }
 
 bool Task_Navigate::NavigateFromTo(int now, int dest) {
-	r_helper->GuiLogF_II(ReturnMsgEnum::Test_II, now, dest);
+	//r_helper->GuiLogF_II(ReturnMsgEnum::Test_II, now, dest);
 	if (now != dest) {
 		switch (now) {
 		case NavigateEnum::Home: // 主页
