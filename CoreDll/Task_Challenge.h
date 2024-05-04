@@ -39,6 +39,8 @@ protected:
 	Settings::Challenge m_set; // 设置数据的副本
 	Helper* r_helper;
 	WndHandler* r_handler;
+	std::unique_ptr<MatchTemplate> m_camFp;
+	std::unique_ptr<MatchTemplate> m_camFpComf[2];
 };
 
 }

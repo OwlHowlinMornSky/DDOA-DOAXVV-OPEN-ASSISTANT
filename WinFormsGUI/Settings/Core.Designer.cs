@@ -94,5 +94,17 @@ namespace WinFormsGUI.Settings {
                 this["AwardMatch"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoUseCamFp {
+            get {
+                return ((bool)(this["AutoUseCamFp"]));
+            }
+            set {
+                this["AutoUseCamFp"] = value;
+            }
+        }
     }
 }

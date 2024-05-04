@@ -47,6 +47,13 @@ namespace WinFormsGUI {
 				radioBtn_AwardNo.Checked = true;
 				break;
 			}
+
+			checkBox_useCamFP.Checked = Settings.Core.Default.AutoUseCamFp;
+		}
+
+		private void CheckBox_useCamFP_CheckedChanged(object sender, EventArgs e) {
+			Settings.Core.Default.AutoUseCamFp = checkBox_useCamFP.Checked;
+			Program.helper.SetUseCamFP(Settings.Core.Default.AutoUseCamFp);
 		}
 	}
 }

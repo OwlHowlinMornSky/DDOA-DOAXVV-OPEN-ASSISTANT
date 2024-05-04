@@ -65,6 +65,9 @@ bool Task_Challenge::Run(Helper& h) {
 			temp_lowFp = h.CreateTemplate("fp"),
 			temp_gameResult = h.CreateTemplate("result"),
 			temp_awardCha = h.CreateTemplate("add");
+		m_camFp = h.CreateTemplate("UseFp");
+		m_camFpComf[0] = h.CreateTemplate("UseFpComf0");
+		m_camFpComf[1] = h.CreateTemplate("UseFpComf1");
 
 		cv::Point pt;
 		unsigned long playCnt = 0; // 次数
@@ -104,6 +107,23 @@ bool Task_Challenge::Run(Helper& h) {
 					i = n;
 					break;
 				case 1:
+					if (m_set.AutoUseCamFP) { // 使用cam补充fp
+						if (0 == r_handler->WaitFor(*m_camFp)) {
+							pt = m_camFp->GetSearchRect().tl();
+							pt += { 15, 15 };
+							if (r_handler->KeepClickingUntil(pt, *(m_camFpComf[0]))) {
+								pt = m_camFpComf[0]->GetSearchRect().tl();
+								pt += { 15, 15 };
+								if (r_handler->KeepClickingUntil(pt, *(m_camFpComf[1]))) {
+									pt = m_camFpComf[1]->GetSearchRect().tl();
+									pt += { 15, 15 };
+									if (r_handler->KeepClickingUntil(pt, *temp_startGame)) {
+										break;
+									}
+								}
+							}
+						}
+					}
 					throw TaskExceptionCode::TaskComplete;
 					break;
 				}

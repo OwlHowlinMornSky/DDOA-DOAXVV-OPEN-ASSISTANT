@@ -125,6 +125,12 @@ public:
 	 * @return 0 if success, 1 if too long.
 	 */
 	System::Int32 SetTaskList(array<System::UInt32>^ list);
+	/**
+	 * @brief 设置是否自动使用每日拍摄的补充FP。
+	 * @param isSettedUse true则自动使用。
+	 * @return 0 if success.
+	 */
+	System::Int32 SetUseCamFP(System::Boolean isSettedUse);
 
 private:
 	ohms::IHelper* r_helper;

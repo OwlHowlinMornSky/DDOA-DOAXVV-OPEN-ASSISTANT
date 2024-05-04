@@ -116,4 +116,9 @@ System::Int32 HelperWrapper::SetTaskList(array<System::UInt32>^ list) {
 	return System::Int32(0);
 }
 
+System::Int32 HelperWrapper::SetUseCamFP(System::Boolean isSettedUse) {
+	ohms::Settings::Challenge::DEFAULT.AutoUseCamFP = isSettedUse;
+    return System::Int32(0);
+}
+
 }

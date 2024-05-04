@@ -36,6 +36,8 @@ namespace WinFormsGUI {
 				Program.helper.SetChallengePlayAwardOrNot(false);
 				break;
 			}
+
+			Program.helper.SetUseCamFP(Settings.Core.Default.AutoUseCamFp);
 		}
 
 		internal static void SaveSettings() {

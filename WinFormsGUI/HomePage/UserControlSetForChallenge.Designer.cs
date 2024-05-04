@@ -30,6 +30,7 @@
 			gpBox_TargetMatch = new GroupBox();
 			radioBtn_NewMatch = new RadioButton();
 			radioBtn_PreviousMatch = new RadioButton();
+			checkBox_useCamFP = new CheckBox();
 			gpBox_AwardMatch.SuspendLayout();
 			gpBox_TargetMatch.SuspendLayout();
 			SuspendLayout();
@@ -121,13 +122,25 @@
 			radioBtn_PreviousMatch.UseVisualStyleBackColor = true;
 			radioBtn_PreviousMatch.CheckedChanged += MatchSet_RadioBtn_CheckedChanged;
 			// 
-			// UserControlSetForLegacyCha
+			// checkBox_useCamFP
+			// 
+			checkBox_useCamFP.AutoSize = true;
+			checkBox_useCamFP.Location = new Point(9, 202);
+			checkBox_useCamFP.Name = "checkBox_useCamFP";
+			checkBox_useCamFP.Size = new Size(172, 21);
+			checkBox_useCamFP.TabIndex = 6;
+			checkBox_useCamFP.Text = "自动使用拍摄回复FP的机会";
+			checkBox_useCamFP.UseVisualStyleBackColor = true;
+			checkBox_useCamFP.CheckedChanged += CheckBox_useCamFP_CheckedChanged;
+			// 
+			// UserControlSetForChallenge
 			// 
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
+			Controls.Add(checkBox_useCamFP);
 			Controls.Add(gpBox_AwardMatch);
 			Controls.Add(gpBox_TargetMatch);
-			Name = "UserControlSetForLegacyCha";
+			Name = "UserControlSetForChallenge";
 			Size = new Size(210, 294);
 			Load += UserControlSetForLegacyCha_Load;
 			gpBox_AwardMatch.ResumeLayout(false);
@@ -135,6 +148,7 @@
 			gpBox_TargetMatch.ResumeLayout(false);
 			gpBox_TargetMatch.PerformLayout();
 			ResumeLayout(false);
+			PerformLayout();
 		}
 
 		#endregion
@@ -146,5 +160,6 @@
 		private GroupBox gpBox_TargetMatch;
 		private RadioButton radioBtn_NewMatch;
 		private RadioButton radioBtn_PreviousMatch;
+		private CheckBox checkBox_useCamFP;
 	}
 }
