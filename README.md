@@ -2,9 +2,9 @@
 
 ### DDOA means DDOA DOAXVV OPEN ASSISTANT
 
-DDOA is a Free/Libre Software.
+DDOA is a [Free/Libre Software](https://www.gnu.org/philosophy/free-sw.en.html).
 
-DDOA 是 自由软件。
+DDOA 是 [自由软件](https://www.gnu.org/philosophy/free-sw.html)。
 
 ## 功能 Features
 
