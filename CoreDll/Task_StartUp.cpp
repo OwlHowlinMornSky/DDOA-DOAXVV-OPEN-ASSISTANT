@@ -35,24 +35,31 @@ Task_StartUp::Task_StartUp() :
 Task_StartUp::~Task_StartUp() {}
 
 bool Task_StartUp::Run(Helper& h) {
-	r_handler = WndHandler::Instance();
-	r_helper = &h;
+	r_handler = WndHandler::Instance(); // 获取handler实例
+	r_helper = &h; // 保存Helper实例
 
 	Clock clk;
 	cv::Point pt;
 
-	h.GuiLogF(ReturnMsgEnum::TaskStartUpBegin);
+	// LOG：任务开始【启动游戏】
+	h.GuiLogF(ReturnMsgEnum::TaskStartUpBegin); 
 
+	// 检查游戏窗口是否已存在
 	if (!r_handler->GameWndAvailable()) {
+		// 检查启动器窗口是否已存在
 		if (!r_handler->LaucherAvailable()) {
+			// 游戏未运行（游戏窗口和启动器窗口都不存在）
+
+			// 令steam打开doaxvv
 			system("start steam://rungameid/958260");
 
+			// 等待启动器打开
 			clk.restart();
 			while (true) {
-				if (clk.getElapsedTime() > seconds(60.0f)) {
-					h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 1);
-					goto FINALLY_FAILED;
-				}
+				//if (clk.getElapsedTime() > seconds(60.0f)) {
+				//	h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 1);
+				//	goto FINALLY_FAILED;
+				//}
 				if (r_handler->LaucherAvailable()) {
 					break;
 				}
@@ -62,6 +69,7 @@ bool Task_StartUp::Run(Helper& h) {
 				Sleep(1000);
 			}
 		}
+		// 启动器已打开，但游戏还未打开
 
 		std::unique_ptr<MatchTemplate>
 			temp_startBtn = h.CreateTemplate("StartGameBtn"),
@@ -70,14 +78,18 @@ bool Task_StartUp::Run(Helper& h) {
 			temp_homeSpec = h.CreateTemplate("homeSpec");
 
 		r_handler->SetForLauncher();
+
+		// 寻找启动器的启动按钮
 		if (-1 == r_handler->WaitFor(*temp_startBtn, seconds(30.0f))) {
 			h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 2);
 			goto FINALLY_FAILED;
 		}
 
+		// pt 置为 点击启动器的启动按钮位置
 		pt = temp_startBtn->GetLastMatchRect().tl();
 		pt += { 120, 40 };
 
+		// 持续点击启动，直到启动器关闭
 		clk.restart();
 		while (true) {
 			if (clk.getElapsedTime() > seconds(60.0f)) {
@@ -95,6 +107,7 @@ bool Task_StartUp::Run(Helper& h) {
 		}
 		r_handler->Reset();
 
+		// 等待游戏窗口出现
 		clk.restart();
 		while (true) {
 			if (clk.getElapsedTime() > seconds(60.0f)) {
@@ -111,18 +124,22 @@ bool Task_StartUp::Run(Helper& h) {
 		}
 
 		r_handler->SetForGame();
+
+		// 等待游戏标题画面（左上角 选项按钮）
 		if (-1 == r_handler->WaitFor(*temp_titleBtn, seconds(300.0f))) {
 			h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 5);
 			goto FINALLY_FAILED;
 		}
 
+		// 持续点击知道进入主页
 		pt = { 920, 40 };
 		if (!r_handler->KeepClickingUntil(pt, *temp_homeSpec, seconds(90.0f), seconds(1.0f))) {
 			h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 6);
 			goto FINALLY_FAILED;
 		}
 	}
-	else { // 开始时就存在游戏窗口
+	else {
+		// 开始时就存在游戏窗口
 		r_handler->SetForGame();
 
 		int page = Task_Navigate::Instance()->TryToDeterminePage();
@@ -140,6 +157,7 @@ bool Task_StartUp::Run(Helper& h) {
 			}
 
 			if (temp_titlePage->Match(mat)) {
+				// 在标题界面则尝试进入主页
 				pt = { 920, 40 };
 				if (!r_handler->KeepClickingUntil(pt, *temp_homeSpec, seconds(90.0f), seconds(1.0f))) {
 					h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 7);

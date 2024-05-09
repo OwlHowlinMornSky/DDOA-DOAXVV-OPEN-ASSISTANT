@@ -143,50 +143,50 @@ void Helper::GuiLogC_BtnToStart() {
 	m_hrm.push(ReturnMsgCmd::CMD_BtnToStart);
 }
 
-void Helper::GuiLogF(long str) {
+void Helper::GuiLogF(long fmt) {
 	std::lock_guard lg(m_hrm_mutex); // 上锁
 	m_hrm.push(ReturnMsgCmd::LOG_Format);
-	m_hrm.push(str);
+	m_hrm.push(fmt);
 	return;
 }
 
-void Helper::GuiLogF_S(long str, long s0) {
+void Helper::GuiLogF_S(long fmt, long str) {
 	std::lock_guard lg(m_hrm_mutex); // 上锁
 	m_hrm.push(ReturnMsgCmd::LOG_Format_S);
+	m_hrm.push(fmt);
 	m_hrm.push(str);
-	m_hrm.push(s0);
 	return;
 }
 
-void Helper::GuiLogF_I(long str, long i0) {
+void Helper::GuiLogF_I(long fmt, long intval) {
 	std::lock_guard lg(m_hrm_mutex); // 上锁
 	m_hrm.push(ReturnMsgCmd::LOG_Format_I);
-	m_hrm.push(str);
-	m_hrm.push(i0);
+	m_hrm.push(fmt);
+	m_hrm.push(intval);
 	return;
 }
 
-void Helper::GuiLogF_SI(long format, long str, long val) {
+void Helper::GuiLogF_SI(long fmt, long str, long intval) {
 	std::lock_guard lg(m_hrm_mutex); // 上锁
 	m_hrm.push(ReturnMsgCmd::LOG_Format_SI);
-	m_hrm.push(format);
+	m_hrm.push(fmt);
 	m_hrm.push(str);
-	m_hrm.push(val);
+	m_hrm.push(intval);
 	return;
 }
 
-void Helper::GuiLogF_II(long str, long i0, long i1) {
+void Helper::GuiLogF_II(long fmt, long intval0, long intval1) {
 	std::lock_guard lg(m_hrm_mutex); // 上锁
 	m_hrm.push(ReturnMsgCmd::LOG_Format_II);
-	m_hrm.push(str);
-	m_hrm.push(i0);
-	m_hrm.push(i1);
+	m_hrm.push(fmt);
+	m_hrm.push(intval0);
+	m_hrm.push(intval1);
 	return;
 }
 
 std::unique_ptr<MatchTemplate> Helper::CreateTemplate(const std::string& name) {
 	std::unique_ptr<MatchTemplate> res = std::make_unique<MatchTemplate>(m_templateList.at(name));
-	if (!res->LoadMat((m_assets / (name + ".png")).string())) {
+	if (!res->LoadMat((m_assets / name).string())) {
 		TaskError(ReturnMsgEnum::TaskErrFailedToLoadTemplateFile);
 		return std::unique_ptr<MatchTemplate>();
 	}

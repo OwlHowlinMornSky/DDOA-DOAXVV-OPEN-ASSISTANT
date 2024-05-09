@@ -58,11 +58,11 @@ public:
 	void GuiLogC_Stopped();
 	void GuiLogC_BtnToStop();
 	void GuiLogC_BtnToStart();
-	void GuiLogF(long str);
-	void GuiLogF_S(long str, long s0);
-	void GuiLogF_I(long str, long i0);
-	void GuiLogF_SI(long format, long str, long val);
-	void GuiLogF_II(long str, long i0, long i1);
+	void GuiLogF(long fmt);
+	void GuiLogF_S(long fmt, long str);
+	void GuiLogF_I(long fmt, long intval);
+	void GuiLogF_SI(long fmt, long str, long intval);
+	void GuiLogF_II(long fmt, long intval0, long intval1);
 
 	std::unique_ptr<MatchTemplate> CreateTemplate(const std::string& name);
 
