@@ -66,4 +66,8 @@ Time microseconds(long long amount) {
 	return Time(amount);
 }
 
+Time operator"" _sec(long double x) {
+	return Time(static_cast<long long>(x * 1000000));
+}
+
 } // namespace ohms

@@ -113,6 +113,7 @@
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Sleep.cpp" />
     <ClCompile Include="Task_Challenge.cpp" />
+    <ClCompile Include="Task_Daily.cpp" />
     <ClCompile Include="Task_Navigate.cpp" />
     <ClCompile Include="Task_StartUp.cpp" />
     <ClCompile Include="Task_TEST.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="Sleep.h" />
     <ClInclude Include="TaskEnum.h" />
     <ClInclude Include="Task_Challenge.h" />
+    <ClInclude Include="Task_Daily.h" />
     <ClInclude Include="Task_Navigate.h" />
     <ClInclude Include="Task_StartUp.h" />
     <ClInclude Include="Task_TEST.h" />

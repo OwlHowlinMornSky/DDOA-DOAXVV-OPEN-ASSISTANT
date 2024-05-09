@@ -18,42 +18,35 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "ITask.h"
+#pragma once
 
-#include "Task_StartUp.h"
-#include "Task_Challenge.h"
-#include "Task_TEST.h"
-#include "Task_Navigate.h"
-#include "Task_Daily.h"
+#include "ITask.h"
+#include "WndHandler.h"
 
 namespace ohms {
 
-bool ITask::CreateTask(unsigned long type, std::unique_ptr<ITask>& outPtr) {
-	switch (type) {
-	case TaskEnum::StartUp:
-		outPtr = std::make_unique<Task_StartUp>();
-		return true;
-	case TaskEnum::Daily:
-		outPtr = std::make_unique<Task_Daily>();
-		break;
-	case TaskEnum::Room:
-		break;
-	case TaskEnum::Challenge:
-		outPtr = std::make_unique<Task_Challenge>();
-		return true;
-	case TaskEnum::Spring:
-		break;
-	case TaskEnum::Award:
-		break;
-	case TaskEnum::Exit:
-		break;
-	case TaskEnum::TEST_TASK:
-		outPtr = std::make_unique<Task_TEST>();
-		return true;
-	default:
-		break;
-	}
-	return false;
-}
+class Task_Daily :
+	public ITask {
+public:
+	Task_Daily();
+	virtual ~Task_Daily() override;
+
+public:
+	virtual bool Run(Helper& h) override;
+
+protected:
+	bool IsDailCheckDone();
+	bool OpenDailyCheckBoard();
+	bool DoDailyCheckInBoard();
+	bool CloseCheckBoard();
+
+protected:
+	Helper* r_helper;
+	WndHandler* r_handler;
+
+	std::unique_ptr<MatchTemplate> m_homeDailyBtn;
+	std::unique_ptr<MatchTemplate> m_homeDailyDot;
+	std::unique_ptr<MatchTemplate> m_checkBtn;
+};
 
 }

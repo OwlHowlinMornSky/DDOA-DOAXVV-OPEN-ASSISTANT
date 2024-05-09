@@ -70,6 +70,7 @@ protected:
 	friend Time seconds(float);
 	friend Time milliseconds(long);
 	friend Time microseconds(long long);
+	friend Time operator"" _sec(long double);
 
 	explicit Time(long long microseconds);
 
@@ -95,5 +96,8 @@ Time milliseconds(long amount);
  * @return Time
 */
 Time microseconds(long long amount);
+
+
+Time operator"" _sec(long double x);
 
 } // namespace ohms

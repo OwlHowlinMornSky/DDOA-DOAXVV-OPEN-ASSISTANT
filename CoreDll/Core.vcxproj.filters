@@ -68,6 +68,9 @@
     <ClCompile Include="Sleep.cpp">
       <Filter>Impl</Filter>
     </ClCompile>
+    <ClCompile Include="Task_Daily.cpp">
+      <Filter>Tasks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Helper.h">
@@ -143,6 +146,9 @@
       <Filter>Tasks</Filter>
     </ClInclude>
     <ClInclude Include="TaskExceptionCode.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="Task_Daily.h">
       <Filter>Tasks</Filter>
     </ClInclude>
   </ItemGroup>
