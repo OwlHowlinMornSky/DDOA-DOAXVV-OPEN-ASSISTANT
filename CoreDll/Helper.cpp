@@ -69,7 +69,18 @@ int Helper::setup(bool winrtInited) {
 		ifs >> name >> bits >> thres >> r0 >> r1 >> r2 >> r3;
 		CoreLog() << "Helper read template [" << name << "]." << std::endl;
 
-		m_templateList.emplace(name, MatchTemplateInfo(bits & 0x01, bits & 0x02, thres, { r0, r1, r2, r3 }));
+		auto temp = MatchTemplateInfo(bits & 0x01, bits & 0x02, thres, { r0, r1, r2, r3 });
+
+		size_t spPtCnt = 0;
+		ifs >> spPtCnt;
+		temp.spPts.reserve(spPtCnt);
+		for (size_t j = 0; j < spPtCnt; ++j) {
+			int px, py;
+			ifs >> px >> py;
+			temp.spPts.emplace_back(px, py);
+		}
+
+		m_templateList.emplace(name, temp);
 	}
 	CoreLog() << "Helper have read " << sz << " templates." << std::endl;
 

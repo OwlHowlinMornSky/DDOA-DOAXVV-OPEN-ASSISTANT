@@ -95,7 +95,7 @@ bool Task_Challenge::Run(Helper& h) {
 			r_handler->WaitFor(*temp_startGame);
 			CoreLog() << "Task.Challenge: Play Game." << std::endl;
 			for (int i = 0, n = 10; i < n; ++i) {
-				pt = temp_startGame->GetLastMatchRect().tl() + cv::Point2i(50, 20);
+				pt = temp_startGame->GetSpecialPointInResult(0);
 				r_handler->ClickAt(pt);
 				switch (r_handler->WaitForMultiple({ temp_loading.get(), temp_lowFp.get() }, seconds(2.0f))) {
 				default:
@@ -109,14 +109,11 @@ bool Task_Challenge::Run(Helper& h) {
 				case 1:
 					if (m_set.AutoUseCamFP) { // 使用cam补充fp
 						if (0 == r_handler->WaitFor(*m_camFp)) {
-							pt = m_camFp->GetSearchRect().tl();
-							pt += { 15, 15 };
+							pt = m_camFp->GetSpecialPointInResult(0);
 							if (r_handler->KeepClickingUntil(pt, *(m_camFpComf[0]))) {
-								pt = m_camFpComf[0]->GetSearchRect().tl();
-								pt += { 15, 15 };
+								pt = m_camFpComf[0]->GetSpecialPointInResult(0);
 								if (r_handler->KeepClickingUntil(pt, *(m_camFpComf[1]))) {
-									pt = m_camFpComf[1]->GetSearchRect().tl();
-									pt += { 15, 15 };
+									pt = m_camFpComf[1]->GetSpecialPointInResult(0);
 									if (r_handler->KeepClickingUntil(pt, *temp_startGame)) {
 										break;
 									}
@@ -145,7 +142,7 @@ bool Task_Challenge::Run(Helper& h) {
 
 			// 点击，直到进入加载画面。
 			CoreLog() << "Task.Challenge: Game End, Trying to Exit." << std::endl;
-			pt = temp_gameResult->GetLastMatchRect().tl() + cv::Point2i(100, 0);
+			pt = temp_gameResult->GetSpecialPointInResult(0);
 			if (!r_handler->KeepClickingUntil(pt, *temp_loading, seconds(60.0f), seconds(0.1f)))
 				h.TaskError(ReturnMsgEnum::TaskErrChaNoEnd);
 
@@ -161,7 +158,7 @@ bool Task_Challenge::Run(Helper& h) {
 					h.GuiLogF(ReturnMsgEnum::ChaFindAdd);
 					if (m_set.EnterAddition) { // 进入奖励挑战赛。
 						if (forNew) {
-							pt = temp_awardCha->GetLastMatchRect().tl() + cv::Point2i(30, 50);
+							pt = temp_awardCha->GetSpecialPointInResult(0);
 							if (r_handler->KeepClickingUntil(pt, *temp_newFight, seconds(10.0f), seconds(2.0f))) {
 								h.GuiLogF(ReturnMsgEnum::ChaOpenedAdd);
 								forAddThisTime = true;
@@ -177,7 +174,7 @@ bool Task_Challenge::Run(Helper& h) {
 					}
 					else { // 回到“推荐”栏。
 						if (0 == r_handler->WaitFor(*temp_chaBar, seconds(5.0f))) {
-							pt = temp_chaBar->GetLastMatchRect().tl() + cv::Point2i(40, 12);
+							pt = temp_chaBar->GetSpecialPointInResult(0);
 							if (r_handler->KeepClickingUntilNo(pt, *temp_awardCha, seconds(10.0f), seconds(0.5f))) {
 								h.GuiLogF(ReturnMsgEnum::ChaIgnoredAdd);
 							}

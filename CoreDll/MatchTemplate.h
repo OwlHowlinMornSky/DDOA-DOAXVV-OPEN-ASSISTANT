@@ -23,6 +23,7 @@
 #include <map>
 #include <opencv2/core/types.hpp>
 #include <opencv2/core/mat.hpp>
+#include <vector>
 
 namespace ohms {
 
@@ -34,6 +35,7 @@ struct MatchTemplateInfo {
 	bool isMasked; // 是否还带有一个遮罩。
 	unsigned short thershold; // 判定阈值，差异量上限。
 	cv::Rect rect; // 检查范围（固定检查时左上指定位置，大小取决于mat；范围搜索时即范围，必须比mat大）。
+	std::vector<cv::Point> spPts; // 特殊点
 
 	MatchTemplateInfo();
 	MatchTemplateInfo(bool _isFixed, bool _isMasked, unsigned short _thershold, cv::Rect&& _rect);
@@ -74,6 +76,8 @@ public:
 	const bool GetIsFixed() const;
 
 	const cv::Rect& GetSearchRect() const;
+
+	cv::Point GetSpecialPointInResult(size_t pt_id);
 
 private:
 	MatchTemplateInfo m_info; // 基本信息

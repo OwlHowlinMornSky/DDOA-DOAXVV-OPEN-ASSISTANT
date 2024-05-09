@@ -86,8 +86,7 @@ bool Task_StartUp::Run(Helper& h) {
 		}
 
 		// pt 置为 点击启动器的启动按钮位置
-		pt = temp_startBtn->GetLastMatchRect().tl();
-		pt += { 120, 40 };
+		pt = temp_startBtn->GetSpecialPointInResult(0);
 
 		// 持续点击启动，直到启动器关闭
 		clk.restart();

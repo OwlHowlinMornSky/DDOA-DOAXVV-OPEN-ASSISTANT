@@ -127,8 +127,7 @@ bool MatchTemplate::Match(const cv::Mat& sample) const {
 	if (!m_info.isFixed) {
 		// 计算match结果的大小
 		cv::Size size = srcImage.size() - m_target.size();
-		size.width += 1;
-		size.height += 1;
+		size += { 1, 1 };
 		assert(size.height > 0 && size.width > 0);
 
 		cv::Mat resultImage; // match结果
@@ -175,7 +174,9 @@ bool MatchTemplate::LoadMat(const std::string& file) {
 	}
 	if (m_info.isMasked) {
 		std::string name2 = file + "[M].png";
-		m_mask = cv::imread(name2);
+		m_mask = cv::imread(name2, cv::IMREAD_GRAYSCALE);
+		if (m_mask.empty())
+			return false;
 	}
 	return true;
 }
@@ -190,6 +191,11 @@ const bool MatchTemplate::GetIsFixed() const {
 
 const cv::Rect& MatchTemplate::GetSearchRect() const {
 	return m_info.rect;
+}
+
+cv::Point MatchTemplate::GetSpecialPointInResult(size_t pt_id) {
+	assert(pt_id < m_info.spPts.size());
+    return GetLastMatchRect().tl() + m_info.spPts[pt_id];
 }
 
 }
