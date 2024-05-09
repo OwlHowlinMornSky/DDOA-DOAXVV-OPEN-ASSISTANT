@@ -128,6 +128,9 @@ enum CORE_API ReturnMessage : long {
 
 	TaskErr_Task, // 任务出错【{任务名}】
 
+	TaskDailyBegin,
+	TaskDailyComplete,
+	TaskDailyFailed,
 
 };
 }

@@ -160,6 +160,33 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 任务开始【日常任务】 的本地化字符串。
+        /// </summary>
+        internal static string TaskDailyBegin {
+            get {
+                return ResourceManager.GetString("TaskDailyBegin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 任务完成【日常任务】 的本地化字符串。
+        /// </summary>
+        internal static string TaskDailyComplete {
+            get {
+                return ResourceManager.GetString("TaskDailyComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 任务失败【日常任务】 的本地化字符串。
+        /// </summary>
+        internal static string TaskDailyFailed {
+            get {
+                return ResourceManager.GetString("TaskDailyFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 任务出错 的本地化字符串。
         /// </summary>
         internal static string TaskErr {
@@ -331,7 +358,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 开始任务：启动游戏 的本地化字符串。
+        ///   查找类似 任务开始【启动游戏】 的本地化字符串。
         /// </summary>
         internal static string TaskStartUpBegin {
             get {
@@ -340,7 +367,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 完成任务：启动游戏 的本地化字符串。
+        ///   查找类似 任务完成【启动游戏】 的本地化字符串。
         /// </summary>
         internal static string TaskStartUpComplete {
             get {
@@ -349,7 +376,7 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 任务失败：启动游戏 的本地化字符串。
+        ///   查找类似 任务失败【启动游戏】 的本地化字符串。
         /// </summary>
         internal static string TaskStartUpFailed {
             get {

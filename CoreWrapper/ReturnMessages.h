@@ -126,6 +126,10 @@ public enum class ReturnMessage : System::UInt32 {
 	Test_II,
 
 	TaskErr_Task,
+
+	TaskDailyBegin,
+	TaskDailyComplete,
+	TaskDailyFailed,
 };
 
 }

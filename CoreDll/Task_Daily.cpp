@@ -39,13 +39,31 @@ bool Task_Daily::Run(Helper& h) {
 
 	m_set = Settings::Daily::DEFAULT;
 
-	r_handler->SetForGame();
+	try {
+		h.GuiLogF(ReturnMsgEnum::TaskDailyBegin);
 
-	if (m_set.DoCheck)
-		DoCheck();
+		switch (r_handler->SetForGame()) {
+		case WndHandler::SetReturnValue::WndNotFound:
+			//CoreLog() << "Task.Challenge: Game Window Not Found." << std::endl;
+			h.TaskError(ReturnMsgEnum::TaskErrNoWnd);
+			break;
+		case WndHandler::SetReturnValue::CaptureFailed:
+			//CoreLog() << "Task.Challenge: Game Window Cannot Capture." << std::endl;
+			h.TaskError(ReturnMsgEnum::TaskErrNoCap);
+			break;
+		}
 
-	//if (m_set.DoShot)
-	//	DoShot();
+		if (m_set.DoCheck)
+			DoCheck();
+
+		//if (m_set.DoShot)
+		//	DoShot();
+
+		h.GuiLogF(ReturnMsgEnum::TaskDailyComplete);
+	}
+	catch (...) {
+		h.GuiLogF(ReturnMsgEnum::TaskDailyFailed);
+	}
 
 	return true;
 }

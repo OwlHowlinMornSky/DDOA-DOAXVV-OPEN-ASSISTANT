@@ -150,6 +150,15 @@
   <data name="TaskComplete" xml:space="preserve">
     <value>任务完成</value>
   </data>
+  <data name="TaskDailyBegin" xml:space="preserve">
+    <value>任务开始【日常任务】</value>
+  </data>
+  <data name="TaskDailyComplete" xml:space="preserve">
+    <value>任务完成【日常任务】</value>
+  </data>
+  <data name="TaskDailyFailed" xml:space="preserve">
+    <value>任务失败【日常任务】</value>
+  </data>
   <data name="TaskErr" xml:space="preserve">
     <value>任务出错</value>
     <comment>托盘通知使用</comment>
@@ -209,13 +218,13 @@
     <value>任务异常</value>
   </data>
   <data name="TaskStartUpBegin" xml:space="preserve">
-    <value>开始任务：启动游戏</value>
+    <value>任务开始【启动游戏】</value>
   </data>
   <data name="TaskStartUpComplete" xml:space="preserve">
-    <value>完成任务：启动游戏</value>
+    <value>任务完成【启动游戏】</value>
   </data>
   <data name="TaskStartUpFailed" xml:space="preserve">
-    <value>任务失败：启动游戏</value>
+    <value>任务失败【启动游戏】</value>
   </data>
   <data name="TaskStop" xml:space="preserve">
     <value>任务中止</value>
