@@ -151,6 +151,9 @@
     <ClInclude Include="Task_Daily.h">
       <Filter>Tasks</Filter>
     </ClInclude>
+    <ClInclude Include="Settings_Daily.h">
+      <Filter>Export\Settings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CoreDll.rc">

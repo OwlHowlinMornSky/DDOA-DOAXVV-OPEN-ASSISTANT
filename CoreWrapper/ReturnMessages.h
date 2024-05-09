@@ -124,6 +124,8 @@ public enum class ReturnMessage : System::UInt32 {
 	TaskStartUpFailed,
 
 	Test_II,
+
+	TaskErr_Task,
 };
 
 }

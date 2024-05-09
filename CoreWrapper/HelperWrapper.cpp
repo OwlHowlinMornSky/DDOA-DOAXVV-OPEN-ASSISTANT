@@ -121,4 +121,14 @@ System::Int32 HelperWrapper::SetUseCamFP(System::Boolean isSettedUse) {
     return System::Int32(0);
 }
 
+void HelperWrapper::SetDoDailyCheck(bool setDo) {
+	ohms::Settings::Daily::DEFAULT.DoCheck = setDo;
+	return;
+}
+
+void HelperWrapper::SetDoDailyShot(bool setDo) {
+	ohms::Settings::Daily::DEFAULT.DoShot = setDo;
+	return;
+}
+
 }

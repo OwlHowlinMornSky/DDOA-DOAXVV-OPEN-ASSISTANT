@@ -18,13 +18,21 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Settings.h"
+#pragma once
+
+#include "API.h"
 
 namespace ohms::Settings {
 
-WndHandler WndHandler::DEFAULT;
-Challenge Challenge::DEFAULT;
-Global Global::DEFAULT;
-Daily Daily::DEFAULT;
+struct CORE_API Daily {
+	static Daily DEFAULT; // 本体在 Settings.cpp
+	Daily() :
+		DoCheck(true), // 默认进行每日签到
+		DoShot(true) // 默认进行每日拍摄
+	{}
+
+	bool DoCheck; // 选择新比赛。
+	bool DoShot; // 进入奖励挑战赛。
+};
 
 }

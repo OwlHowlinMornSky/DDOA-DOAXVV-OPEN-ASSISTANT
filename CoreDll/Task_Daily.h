@@ -22,6 +22,7 @@
 
 #include "ITask.h"
 #include "WndHandler.h"
+#include "Settings_Daily.h"
 
 namespace ohms {
 
@@ -35,14 +36,24 @@ public:
 	virtual bool Run(Helper& h) override;
 
 protected:
+	void DoCheck();
+	void DoShot();
+
 	bool IsDailCheckDone();
 	bool OpenDailyCheckBoard();
 	bool DoDailyCheckInBoard();
 	bool CloseCheckBoard();
 
+	bool IsShotDone();
+	bool OpenShotPage();
+	bool DoShotInPage();
+	bool CloseShotPage();
+
 protected:
 	Helper* r_helper;
 	WndHandler* r_handler;
+
+	Settings::Daily m_set;
 
 	std::unique_ptr<MatchTemplate> m_homeDailyBtn;
 	std::unique_ptr<MatchTemplate> m_homeDailyDot;

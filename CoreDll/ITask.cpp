@@ -35,7 +35,7 @@ bool ITask::CreateTask(unsigned long type, std::unique_ptr<ITask>& outPtr) {
 		return true;
 	case TaskEnum::Daily:
 		outPtr = std::make_unique<Task_Daily>();
-		break;
+		return true;
 	case TaskEnum::Room:
 		break;
 	case TaskEnum::Challenge:

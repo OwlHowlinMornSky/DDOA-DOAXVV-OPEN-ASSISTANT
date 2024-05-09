@@ -23,5 +23,6 @@
 #include "Settings_Global.h"
 #include "Settings_Challenge.h"
 #include "Settings_WndHandler.h"
+#include "Settings_Daily.h"
 
 // 【ToDo】 非 线程安全

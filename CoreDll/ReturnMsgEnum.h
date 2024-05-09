@@ -125,6 +125,10 @@ enum CORE_API ReturnMessage : long {
 	TaskStartUpFailed,
 
 	Test_II,
+
+	TaskErr_Task, // 任务出错【{任务名}】
+
+
 };
 }
 }

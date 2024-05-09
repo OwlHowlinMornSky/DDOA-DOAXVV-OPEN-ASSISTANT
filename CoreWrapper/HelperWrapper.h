@@ -132,6 +132,9 @@ public:
 	 */
 	System::Int32 SetUseCamFP(System::Boolean isSettedUse);
 
+	void SetDoDailyCheck(bool setDo);
+	void SetDoDailyShot(bool setDo);
+
 private:
 	ohms::IHelper* r_helper;
 };

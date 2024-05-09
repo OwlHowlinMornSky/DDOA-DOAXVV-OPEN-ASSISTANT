@@ -135,6 +135,7 @@
     <ClInclude Include="ReturnMsgEnum.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Settings_Challenge.h" />
+    <ClInclude Include="Settings_Daily.h" />
     <ClInclude Include="Settings_Global.h" />
     <ClInclude Include="Settings_WndHandler.h" />
     <ClInclude Include="Sleep.h" />

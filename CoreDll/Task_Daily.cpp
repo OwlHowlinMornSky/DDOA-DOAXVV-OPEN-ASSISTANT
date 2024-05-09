@@ -37,25 +37,59 @@ bool Task_Daily::Run(Helper& h) {
 	r_handler = WndHandler::Instance(); // 获取handler实例
 	r_helper = &h; // 保存Helper实例
 
-	m_homeDailyBtn = h.CreateTemplate("daily/checkBtn");
-	m_homeDailyDot = h.CreateTemplate("daily/checkDot");
-	m_checkBtn = h.CreateTemplate("daily/checkClk");
+	m_set = Settings::Daily::DEFAULT;
+
+	r_handler->SetForGame();
+
+	if (m_set.DoCheck)
+		DoCheck();
+
+	//if (m_set.DoShot)
+	//	DoShot();
+
+	return true;
+}
+
+void Task_Daily::DoCheck() {
+	m_homeDailyBtn = r_helper->CreateTemplate("daily/checkBtn");
+	m_homeDailyDot = r_helper->CreateTemplate("daily/checkDot");
+	m_checkBtn = r_helper->CreateTemplate("daily/checkClk");
 
 	if (IsDailCheckDone()) {
-
-		return true;
+		return;
 	}
 	if (!OpenDailyCheckBoard()) {
-
-		return true;
+		r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
+		return;
 	}
 	if (!DoDailyCheckInBoard()) {
-
+		r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 	}
 	if (!CloseCheckBoard()) {
-
+		r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 	}
-	return true;
+	return;
+}
+
+void Task_Daily::DoShot() {
+	//m_homeDailyBtn = r_helper->CreateTemplate("daily/checkBtn");
+	//m_homeDailyDot = r_helper->CreateTemplate("daily/checkDot");
+	//m_checkBtn = r_helper->CreateTemplate("daily/checkClk");
+
+	if (IsShotDone()) {
+		return;
+	}
+	if (!OpenShotPage()) {
+		r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
+		return;
+	}
+	if (!DoShotInPage()) {
+		r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
+	}
+	if (!CloseShotPage()) {
+		r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
+	}
+	return;
 }
 
 bool Task_Daily::IsDailCheckDone() {
@@ -70,7 +104,7 @@ bool Task_Daily::IsDailCheckDone() {
 	r_handler->GetOneFrame(mat);
 	bool res = m_homeDailyDot->Match(mat);
 
-	return res;
+	return !res;
 }
 
 bool Task_Daily::OpenDailyCheckBoard() {
@@ -81,11 +115,7 @@ bool Task_Daily::OpenDailyCheckBoard() {
 		return false;
 	}
 
-	cv::Point pt;
-	pt = m_homeDailyBtn->GetLastMatchRect().tl();
-	pt += { 26, 28 };
-
-	r_handler->ClickAt(pt);
+	r_handler->ClickAt(m_homeDailyBtn->GetSpecialPointInResult(0));
 	sleep(5.0_sec);
 
 	return true;
@@ -97,11 +127,7 @@ bool Task_Daily::DoDailyCheckInBoard() {
 		return false;
 	}
 
-	cv::Point pt;
-	pt = m_checkBtn->GetLastMatchRect().tl();
-	pt += { 22, 7 };
-
-	r_handler->ClickAt(pt);
+	r_handler->ClickAt(m_checkBtn->GetSpecialPointInResult(0));
 	sleep(5.0_sec);
 
 	return true;
@@ -109,6 +135,22 @@ bool Task_Daily::DoDailyCheckInBoard() {
 
 bool Task_Daily::CloseCheckBoard() {
 	return Task_Navigate::Instance()->NavigateTo(NavigateEnum::Home);
+}
+
+bool Task_Daily::IsShotDone() {
+	return false;
+}
+
+bool Task_Daily::OpenShotPage() {
+	return false;
+}
+
+bool Task_Daily::DoShotInPage() {
+	return false;
+}
+
+bool Task_Daily::CloseShotPage() {
+	return false;
 }
 
 } // namespace ohms
