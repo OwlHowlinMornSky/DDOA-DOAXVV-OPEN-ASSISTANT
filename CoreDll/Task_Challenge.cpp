@@ -22,6 +22,7 @@
 #include "CoreLog.h"
 #include "TaskExceptionCode.h"
 #include "Task_Navigate.h"
+#include "Sleep.h"
 
 namespace ohms {
 
@@ -54,8 +55,6 @@ bool Task_Challenge::Run(Helper& h) {
 			break;
 		}
 
-		Task_Navigate::Instance()->NavigateTo(NavigateEnum::Challenge);
-
 		std::unique_ptr<MatchTemplate>
 			temp_chaBar = h.CreateTemplate("default"),
 			temp_lastFight = h.CreateTemplate("lastFight"),
@@ -75,7 +74,34 @@ bool Task_Challenge::Run(Helper& h) {
 		unsigned long playAwardCnt = 0; // 奖励挑战赛次数
 
 		while (true) {
-			// 查找目标比赛按钮。
+			// 检查导航位置
+			switch (Task_Navigate::Instance()->TryToDeterminePage()) {
+			case NavigateEnum::Challenge:
+				if (-1 == r_handler->WaitFor(*temp_chaBar)) {
+					throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
+				}
+				r_handler->ClickAt(temp_chaBar->GetSpecialPointInResult(0));
+				sleep(500_msec);
+				break;
+			case NavigateEnum::MatchConfirm:
+				goto MatchComfirm;
+				break;
+			case NavigateEnum::MatchResult:
+				goto MatchEnd;
+				break;
+			default:
+				if (!Task_Navigate::Instance()->NavigateTo(NavigateEnum::Challenge)) {
+					throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
+				}
+				if (-1 == r_handler->WaitFor(*temp_chaBar)) {
+					throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
+				}
+				r_handler->ClickAt(temp_chaBar->GetSpecialPointInResult(0));
+				sleep(500_msec);
+				break;
+			}
+
+				// 查找目标比赛按钮。
 			if (-1 == r_handler->WaitFor(forNew ? *temp_newFight : *temp_lastFight))
 				h.TaskError(
 					forNew ?
@@ -90,6 +116,8 @@ bool Task_Challenge::Run(Helper& h) {
 				h.TaskError(ReturnMsgEnum::TaskErrChaNoEnter);
 
 			forAddThisTime = false;
+
+		MatchComfirm:
 
 			// 查找“挑战”按钮。
 			r_handler->WaitFor(*temp_startGame);
@@ -134,6 +162,8 @@ bool Task_Challenge::Run(Helper& h) {
 				++playCnt;
 				h.GuiLogF_I(ReturnMsgEnum::ChaBegin_I, playCnt);
 			}
+
+		MatchEnd:
 
 			// 等待结束。
 			CoreLog() << "Task.Challenge: In Game, Waitting for End." << std::endl;
