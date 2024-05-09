@@ -23,7 +23,7 @@
 namespace ohms {
 
 namespace NavigateEnum {
-enum Pape : int {
+enum Page : int {
 	None,
 
 	Home, // 主页
