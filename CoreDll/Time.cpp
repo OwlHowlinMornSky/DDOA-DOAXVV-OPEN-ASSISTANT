@@ -70,4 +70,12 @@ Time operator"" _sec(long double x) {
 	return Time(static_cast<long long>(x * 1000000));
 }
 
+Time operator""_msec(unsigned long long x) {
+    return Time(static_cast<long long>(x) * 1000);
+}
+
+Time operator""_usec(unsigned long long x) {
+	return Time(x);
+}
+
 } // namespace ohms

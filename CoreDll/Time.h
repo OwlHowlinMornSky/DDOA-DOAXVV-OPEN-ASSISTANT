@@ -71,6 +71,8 @@ protected:
 	friend Time milliseconds(long);
 	friend Time microseconds(long long);
 	friend Time operator"" _sec(long double);
+	friend Time operator"" _msec(unsigned long long);
+	friend Time operator"" _usec(unsigned long long);
 
 	explicit Time(long long microseconds);
 
@@ -99,5 +101,7 @@ Time microseconds(long long amount);
 
 
 Time operator"" _sec(long double x);
+Time operator"" _msec(unsigned long long x);
+Time operator"" _usec(unsigned long long x);
 
 } // namespace ohms
