@@ -187,6 +187,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 任务出错【{0}】 的本地化字符串。
+        /// </summary>
+        internal static string TaskErr_Task {
+            get {
+                return ResourceManager.GetString("TaskErr_Task", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 “上一次比赛”不支持进入“奖励挑战赛” 的本地化字符串。
         /// </summary>
         internal static string TaskErrChaAddNotSup {

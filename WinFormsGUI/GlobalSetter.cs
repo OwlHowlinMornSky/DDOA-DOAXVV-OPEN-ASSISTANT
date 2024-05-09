@@ -38,6 +38,9 @@ namespace WinFormsGUI {
 			}
 
 			Program.helper.SetUseCamFP(Settings.Core.Default.AutoUseCamFp);
+
+			Program.helper.SetDoDailyCheck(Settings.Core.Default.DoDailyCheck);
+			Program.helper.SetDoDailyShot(Settings.Core.Default.DoDailyShot);
 		}
 
 		internal static void SaveSettings() {

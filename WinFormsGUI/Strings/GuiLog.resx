@@ -202,6 +202,9 @@
   <data name="TaskErr_F_SI" xml:space="preserve">
     <value>任务出错：{0}: {1}</value>
   </data>
+  <data name="TaskErr_Task" xml:space="preserve">
+    <value>任务出错【{0}】</value>
+  </data>
   <data name="TaskException" xml:space="preserve">
     <value>任务异常</value>
   </data>

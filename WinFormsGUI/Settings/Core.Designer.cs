@@ -106,5 +106,29 @@ namespace WinFormsGUI.Settings {
                 this["AutoUseCamFp"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DoDailyCheck {
+            get {
+                return ((bool)(this["DoDailyCheck"]));
+            }
+            set {
+                this["DoDailyCheck"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DoDailyShot {
+            get {
+                return ((bool)(this["DoDailyShot"]));
+            }
+            set {
+                this["DoDailyShot"] = value;
+            }
+        }
     }
 }

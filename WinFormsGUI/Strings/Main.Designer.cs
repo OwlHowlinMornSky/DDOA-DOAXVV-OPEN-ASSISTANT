@@ -88,6 +88,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 找不到编号为 {0} 的任务之名称。 的本地化字符串。
+        /// </summary>
+        internal static string NoSuchTaskStr {
+            get {
+                return ResourceManager.GetString("NoSuchTaskStr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 核心模块初始化失败 的本地化字符串。
         /// </summary>
         internal static string ProgramCoreInitializationFailed {

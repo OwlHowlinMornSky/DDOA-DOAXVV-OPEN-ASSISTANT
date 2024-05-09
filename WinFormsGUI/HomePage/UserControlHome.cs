@@ -84,6 +84,11 @@ namespace WinFormsGUI {
 				id = (uint)TaskEnumWrap.None;
 				ctrl = new UserControlSetForDefault();
 				break;
+			//case TaskEnumWrap.StartUp:
+			//	break;
+			case TaskEnumWrap.Daily:
+				ctrl = new UserControlSetForDaily();
+				break;
 			case TaskEnumWrap.Challenge:
 				ctrl = new UserControlSetForChallenge();
 				break;
@@ -197,6 +202,20 @@ namespace WinFormsGUI {
 			return res;
 		}
 
+		private string GetTaskNameFromResx(int i) {
+			string res = Strings.Main.ResourceManager.GetString("Task" + i.ToString("000"));
+			if (res == null) {
+				res = $"#{i}";
+				MessageBox.Show(
+					string.Format(Strings.Main.NoSuchTaskStr, res),
+					Text,
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
+			}
+			return res;
+		}
+
 		/// <summary>
 		/// Timer读取回执信息。
 		/// </summary>
@@ -284,12 +303,23 @@ namespace WinFormsGUI {
 				case ReturnCmd.LOG_Format_I: {
 					var msg = Program.helper.GetMessage();
 					var i = Program.helper.GetValueI();
-					Log(
-						string.Format(
-							GetLogStringFromResx(msg.ToString()),
-							i
-						)
-					);
+					switch (msg) {
+					case ReturnMessage.TaskErr_Task: {
+						string t = GetTaskNameFromResx(i);
+						Log(string.Format(Strings.GuiLog.TaskErr_Task, t), Color.DarkRed);
+						MyPopNotification(Strings.GuiLog.TaskErr, t, ToolTipIcon.Error);
+						break;
+					}
+					default: {
+						Log(
+							string.Format(
+								GetLogStringFromResx(msg.ToString()),
+								i
+							)
+						);
+						break;
+					}
+					}
 					break;
 				}
 				case ReturnCmd.LOG_Format_SI: {
