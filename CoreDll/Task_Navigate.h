@@ -41,6 +41,7 @@ public:
 	int TryToDeterminePage();
 	bool NavigateTo(int dest);
 	bool NavigateFromTo(int now, int dest);
+	void ShakeCursor();
 
 protected:
 	WndHandler* r_handler;

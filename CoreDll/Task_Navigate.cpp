@@ -141,5 +141,10 @@ bool Task_Navigate::NavigateFromTo(int now, int dest) {
 	return true;
 }
 
+void Task_Navigate::ShakeCursor() {
+	r_handler->MoveMouseTo({ 0, 0 });
+	r_handler->MoveMouseTo({ 960, 540 });
+}
+
 
 }

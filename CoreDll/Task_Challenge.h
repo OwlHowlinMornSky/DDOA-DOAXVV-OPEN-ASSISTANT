@@ -40,6 +40,7 @@ protected:
 	Helper* r_helper;
 	WndHandler* r_handler;
 	std::unique_ptr<MatchTemplate> m_camFp;
+	std::unique_ptr<MatchTemplate> m_camFpNo;
 	std::unique_ptr<MatchTemplate> m_camFpComf[2];
 };
 

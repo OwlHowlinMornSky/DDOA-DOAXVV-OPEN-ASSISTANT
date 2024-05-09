@@ -65,6 +65,7 @@ bool Task_Challenge::Run(Helper& h) {
 			temp_gameResult = h.CreateTemplate("result"),
 			temp_awardCha = h.CreateTemplate("add");
 		m_camFp = h.CreateTemplate("UseFp");
+		m_camFpNo = h.CreateTemplate("cha/shotFpNo");
 		m_camFpComf[0] = h.CreateTemplate("UseFpComf0");
 		m_camFpComf[1] = h.CreateTemplate("UseFpComf1");
 
@@ -72,6 +73,8 @@ bool Task_Challenge::Run(Helper& h) {
 		unsigned long playCnt = 0; // 次数
 		bool forAddThisTime = false; // 是否已经进入奖励挑战赛
 		unsigned long playAwardCnt = 0; // 奖励挑战赛次数
+
+		Task_Navigate::Instance()->ShakeCursor();
 
 		while (true) {
 			// 检查导航位置
@@ -93,6 +96,7 @@ bool Task_Challenge::Run(Helper& h) {
 				if (!Task_Navigate::Instance()->NavigateTo(NavigateEnum::Challenge)) {
 					throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
 				}
+				sleep(2.0_sec);
 				if (-1 == r_handler->WaitFor(*temp_chaBar)) {
 					throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
 				}
@@ -136,7 +140,9 @@ bool Task_Challenge::Run(Helper& h) {
 					break;
 				case 1:
 					if (m_set.AutoUseCamFP) { // 使用cam补充fp
-						if (0 == r_handler->WaitFor(*m_camFp)) {
+						switch (r_handler->WaitForMultiple({ m_camFp.get(), m_camFpNo.get() }, 2.0_sec)) {
+						case 0:
+						{
 							pt = m_camFp->GetSpecialPointInResult(0);
 							if (r_handler->KeepClickingUntil(pt, *(m_camFpComf[0]))) {
 								pt = m_camFpComf[0]->GetSpecialPointInResult(0);
@@ -147,9 +153,12 @@ bool Task_Challenge::Run(Helper& h) {
 									}
 								}
 							}
+							break;
+						}
+						default:
+							throw TaskExceptionCode::TaskComplete;
 						}
 					}
-					throw TaskExceptionCode::TaskComplete;
 					break;
 				}
 			}
