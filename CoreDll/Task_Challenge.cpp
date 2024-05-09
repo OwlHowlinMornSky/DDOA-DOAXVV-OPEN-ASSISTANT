@@ -159,6 +159,9 @@ bool Task_Challenge::Run(Helper& h) {
 							throw TaskExceptionCode::TaskComplete;
 						}
 					}
+					else {
+						throw TaskExceptionCode::TaskComplete;
+					}
 					break;
 				}
 			}
