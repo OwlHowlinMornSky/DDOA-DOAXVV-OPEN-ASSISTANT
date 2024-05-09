@@ -56,8 +56,8 @@ bool Task_Daily::Run(Helper& h) {
 		if (m_set.DoCheck)
 			DoCheck();
 
-		//if (m_set.DoShot)
-		//	DoShot();
+		if (m_set.DoShot)
+			DoShot();
 
 		h.GuiLogF(ReturnMsgEnum::TaskDailyComplete);
 	}
@@ -72,6 +72,8 @@ void Task_Daily::DoCheck() {
 	m_homeDailyBtn = r_helper->CreateTemplate("daily/checkBtn");
 	m_homeDailyDot = r_helper->CreateTemplate("daily/checkDot");
 	m_checkBtn = r_helper->CreateTemplate("daily/checkClk");
+	m_checkBdTitle = r_helper->CreateTemplate("daily/chkBdTitle");
+	m_checkOk = r_helper->CreateTemplate("daily/checkOK");
 
 	if (IsDailCheckDone()) {
 		return;
@@ -90,9 +92,10 @@ void Task_Daily::DoCheck() {
 }
 
 void Task_Daily::DoShot() {
-	//m_homeDailyBtn = r_helper->CreateTemplate("daily/checkBtn");
-	//m_homeDailyDot = r_helper->CreateTemplate("daily/checkDot");
-	//m_checkBtn = r_helper->CreateTemplate("daily/checkClk");
+	m_shotEntrance = r_helper->CreateTemplate("daily/shotEntrance");
+	m_shotDot = r_helper->CreateTemplate("daily/shotDot");
+	m_shotBack = r_helper->CreateTemplate("daily/shotBack");
+	m_shot = r_helper->CreateTemplate("daily/shotShot");
 
 	if (IsShotDone()) {
 		return;
@@ -133,8 +136,11 @@ bool Task_Daily::OpenDailyCheckBoard() {
 		return false;
 	}
 
-	r_handler->ClickAt(m_homeDailyBtn->GetSpecialPointInResult(0));
-	sleep(5.0_sec);
+	r_handler->KeepClickingUntil(
+		m_homeDailyBtn->GetSpecialPointInResult(0),
+		*m_checkBdTitle
+	);
+	sleep(1.0_sec);
 
 	return true;
 }
@@ -145,8 +151,15 @@ bool Task_Daily::DoDailyCheckInBoard() {
 		return false;
 	}
 
-	r_handler->ClickAt(m_checkBtn->GetSpecialPointInResult(0));
-	sleep(5.0_sec);
+	r_handler->KeepClickingUntil(
+		m_checkBtn->GetSpecialPointInResult(0),
+		*m_checkOk
+	);
+	r_handler->KeepClickingUntil(
+		m_checkOk->GetSpecialPointInResult(0),
+		*m_checkBdTitle
+	);
+	sleep(1.0_sec);
 
 	return true;
 }
@@ -156,19 +169,56 @@ bool Task_Daily::CloseCheckBoard() {
 }
 
 bool Task_Daily::IsShotDone() {
-	return false;
+	Task_Navigate::Instance()->NavigateTo(NavigateEnum::Home);
+
+	if (-1 == r_handler->WaitFor(*m_shotEntrance)) {
+		// 超时
+		return false;
+	}
+
+	cv::Mat mat;
+	r_handler->GetOneFrame(mat);
+	bool res = m_shotDot->Match(mat);
+
+	return !res;
 }
 
 bool Task_Daily::OpenShotPage() {
-	return false;
+	Task_Navigate::Instance()->NavigateTo(NavigateEnum::Home);
+
+	if (-1 == r_handler->WaitFor(*m_shotEntrance)) {
+		// 超时
+		return false;
+	}
+
+	r_handler->ClickAt(m_shotEntrance->GetSpecialPointInResult(0));
+	sleep(5.0_sec);
+
+	return true;
 }
 
 bool Task_Daily::DoShotInPage() {
-	return false;
+	if (-1 == r_handler->WaitFor(*m_shot)) {
+		// 超时
+		return false;
+	}
+
+	r_handler->ClickAt(m_shot->GetSpecialPointInResult(0));
+	sleep(5.0_sec);
+
+	return true;
 }
 
 bool Task_Daily::CloseShotPage() {
-	return false;
+	if (-1 == r_handler->WaitFor(*m_shotBack)) {
+		// 超时
+		return false;
+	}
+
+	r_handler->ClickAt(m_shotBack->GetSpecialPointInResult(0));
+	sleep(5.0_sec);
+
+	return true;
 }
 
 } // namespace ohms

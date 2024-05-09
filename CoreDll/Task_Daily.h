@@ -58,6 +58,13 @@ protected:
 	std::unique_ptr<MatchTemplate> m_homeDailyBtn;
 	std::unique_ptr<MatchTemplate> m_homeDailyDot;
 	std::unique_ptr<MatchTemplate> m_checkBtn;
+	std::unique_ptr<MatchTemplate> m_checkBdTitle;
+	std::unique_ptr<MatchTemplate> m_checkOk;
+
+	std::unique_ptr<MatchTemplate> m_shotEntrance;
+	std::unique_ptr<MatchTemplate> m_shotDot;
+	std::unique_ptr<MatchTemplate> m_shotBack;
+	std::unique_ptr<MatchTemplate> m_shot;
 };
 
 }
