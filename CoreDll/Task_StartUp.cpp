@@ -64,7 +64,7 @@ bool Task_StartUp::Run(Helper& h) {
 					break;
 				}
 				if (g_askedForStop) {
-					goto FINALLY_FAILED;
+					goto USER_STOP;
 				}
 				Sleep(1000);
 			}
@@ -100,7 +100,7 @@ bool Task_StartUp::Run(Helper& h) {
 			}
 			r_handler->ClickAt(pt);// 点击开始。
 			if (g_askedForStop) {
-				goto FINALLY_FAILED;
+				goto USER_STOP;
 			}
 			Sleep(500);
 		}
@@ -117,7 +117,7 @@ bool Task_StartUp::Run(Helper& h) {
 				break;
 			}
 			if (g_askedForStop) {
-				goto FINALLY_FAILED;
+				goto USER_STOP;
 			}
 			Sleep(1000);
 		}
@@ -130,7 +130,7 @@ bool Task_StartUp::Run(Helper& h) {
 			goto FINALLY_FAILED;
 		}
 
-		// 持续点击知道进入主页
+		// 持续点击直到进入主页
 		pt = { 920, 40 };
 		if (!r_handler->KeepClickingUntil(pt, *temp_homeSpec, seconds(90.0f), seconds(1.0f))) {
 			h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 6);
@@ -170,8 +170,8 @@ bool Task_StartUp::Run(Helper& h) {
 		}
 	}
 
-FINALLY_SUCCESS:
 	h.GuiLogF(ReturnMsgEnum::TaskStartUpComplete);
+USER_STOP:
 	return true;
 
 FINALLY_FAILED:
