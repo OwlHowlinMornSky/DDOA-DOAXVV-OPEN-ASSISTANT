@@ -76,6 +76,7 @@
 			MinimizeBox = false;
 			MinimumSize = new Size(360, 340);
 			Name = "FormListEditChooseTask";
+			ShowInTaskbar = false;
 			StartPosition = FormStartPosition.CenterParent;
 			Text = "选择任务：";
 			Load += FormListEditChooseTask_Load;
