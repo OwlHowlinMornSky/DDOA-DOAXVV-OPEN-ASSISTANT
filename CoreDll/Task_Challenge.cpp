@@ -93,9 +93,9 @@ bool Task_Challenge::Run(Helper& h) {
 
 			// 查找“挑战”按钮。
 			r_handler->WaitFor(*temp_startGame);
-			pt = temp_startGame->GetLastMatchRect().tl() + cv::Point2i(50, 20);
 			CoreLog() << "Task.Challenge: Play Game." << std::endl;
 			for (int i = 0, n = 10; i < n; ++i) {
+				pt = temp_startGame->GetLastMatchRect().tl() + cv::Point2i(50, 20);
 				r_handler->ClickAt(pt);
 				switch (r_handler->WaitForMultiple({ temp_loading.get(), temp_lowFp.get() }, seconds(2.0f))) {
 				default:
