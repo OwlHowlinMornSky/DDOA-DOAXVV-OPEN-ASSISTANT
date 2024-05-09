@@ -71,6 +71,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>GuiLog.resx</DependentUpon>
     </Compile>
+    <Compile Update="Strings\GuiLogClr.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GuiLogClr.resx</DependentUpon>
+    </Compile>
     <Compile Update="Strings\Main.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -110,6 +115,10 @@
     <EmbeddedResource Update="Strings\GuiLog.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>GuiLog.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Strings\GuiLogClr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GuiLogClr.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Strings\Main.resx">
       <Generator>ResXFileCodeGenerator</Generator>

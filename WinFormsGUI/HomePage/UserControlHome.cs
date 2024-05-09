@@ -192,26 +192,36 @@ namespace WinFormsGUI {
 			string res = Strings.GuiLog.ResourceManager.GetString(name);
 			if (res == null) {
 				res = name;
-				MessageBox.Show(
+				/*MessageBox.Show(
 					string.Format(Strings.Main.NoSuchLogString, name),
 					Text,
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
-				);
+				);*/
 			}
 			return res;
+		}
+
+		private bool GetLogColorFromResx(string name, out Color clr) {
+			string res = Strings.GuiLogClr.ResourceManager.GetString(name);
+			if (res == null) {
+				clr = Color.White;
+				return false;
+			}
+			clr = Color.FromArgb(Convert.ToInt32(res, 16));
+			return true;
 		}
 
 		private string GetTaskNameFromResx(int i) {
 			string res = Strings.Main.ResourceManager.GetString("Task" + i.ToString("000"));
 			if (res == null) {
 				res = $"#{i}";
-				MessageBox.Show(
+				/*MessageBox.Show(
 					string.Format(Strings.Main.NoSuchTaskStr, res),
 					Text,
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
-				);
+				);*/
 			}
 			return res;
 		}
@@ -274,7 +284,10 @@ namespace WinFormsGUI {
 						);
 						break;
 					default:
-						Log(GetLogStringFromResx(msg.ToString()));
+						if (GetLogColorFromResx(msg.ToString(), out var color))
+							Log(GetLogStringFromResx(msg.ToString()), color);
+						else
+							Log(GetLogStringFromResx(msg.ToString()));
 						break;
 					}
 					break;
@@ -295,7 +308,10 @@ namespace WinFormsGUI {
 								GetLogStringFromResx(msg.ToString()),
 								GetLogStringFromResx(reason.ToString())
 							);
-						Log(t);
+						if (GetLogColorFromResx(msg.ToString(), out var color))
+							Log(t, color);
+						else
+							Log(t);
 						break;
 					}
 					break;
@@ -303,20 +319,23 @@ namespace WinFormsGUI {
 				case ReturnCmd.LOG_Format_I: {
 					var msg = Program.helper.GetMessage();
 					var i = Program.helper.GetValueI();
+					string t;
 					switch (msg) {
 					case ReturnMessage.TaskErr_Task: {
-						string t = GetTaskNameFromResx(i);
+						t = GetTaskNameFromResx(i);
 						Log(string.Format(Strings.GuiLog.TaskErr_Task, t), Color.DarkRed);
 						MyPopNotification(Strings.GuiLog.TaskErr, t, ToolTipIcon.Error);
 						break;
 					}
 					default: {
-						Log(
-							string.Format(
-								GetLogStringFromResx(msg.ToString()),
-								i
-							)
+						t = string.Format(
+							GetLogStringFromResx(msg.ToString()),
+							i
 						);
+						if (GetLogColorFromResx(msg.ToString(), out var color))
+							Log(t, color);
+						else
+							Log(t);
 						break;
 					}
 					}
@@ -326,26 +345,32 @@ namespace WinFormsGUI {
 					var msg = Program.helper.GetMessage();
 					var s = Program.helper.GetMessage();
 					var i = Program.helper.GetValueI();
-					Log(
+					string t =
 						string.Format(
 							GetLogStringFromResx(msg.ToString()),
 							GetLogStringFromResx(s.ToString()),
 							i
-						)
-					);
+						);
+					if (GetLogColorFromResx(msg.ToString(), out var color))
+						Log(t, color);
+					else
+						Log(t);
 					break;
 				}
 				case ReturnCmd.LOG_Format_II: {
 					var msg = Program.helper.GetMessage();
 					var i0 = Program.helper.GetValueI();
 					var i1 = Program.helper.GetValueI();
-					Log(
+					string t =
 						string.Format(
 							GetLogStringFromResx(msg.ToString()),
 							i0,
 							i1
-						)
-					);
+						);
+					if (GetLogColorFromResx(msg.ToString(), out var color))
+						Log(t, color);
+					else
+						Log(t);
 					break;
 				}
 				default:
