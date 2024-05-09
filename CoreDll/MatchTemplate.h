@@ -31,11 +31,12 @@ namespace ohms {
  */
 struct MatchTemplateInfo {
 	bool isFixed; // 是否为固定区域检查（true则为固定区域检查，false则为广阔范围搜索）。
+	bool isMasked; // 是否还带有一个遮罩。
 	unsigned short thershold; // 判定阈值，差异量上限。
 	cv::Rect rect; // 检查范围（固定检查时左上指定位置，大小取决于mat；范围搜索时即范围，必须比mat大）。
 
 	MatchTemplateInfo();
-	MatchTemplateInfo(bool _isFixed, unsigned short _thershold, cv::Rect&& _rect);
+	MatchTemplateInfo(bool _isFixed, bool _isMasked, unsigned short _thershold, cv::Rect&& _rect);
 };
 
 typedef std::map<std::string, MatchTemplateInfo> TemplateListType;
@@ -78,6 +79,7 @@ private:
 	MatchTemplateInfo m_info; // 基本信息
 	mutable cv::Rect m_lastMatch; // 上次匹配区域。
 	cv::Mat m_target; // 匹配图。
+	cv::Mat m_mask;
 };
 
 }

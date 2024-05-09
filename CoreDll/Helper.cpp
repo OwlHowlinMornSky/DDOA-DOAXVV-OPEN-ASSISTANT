@@ -63,13 +63,13 @@ int Helper::setup(bool winrtInited) {
 	ifs >> sz;
 	for (size_t i = 0; i < sz; ++i) {
 		std::string name;
-		bool fix;
+		unsigned short bits;
 		unsigned short thres;
 		int r0, r1, r2, r3;
-		ifs >> name >> fix >> thres >> r0 >> r1 >> r2 >> r3;
+		ifs >> name >> bits >> thres >> r0 >> r1 >> r2 >> r3;
 		CoreLog() << "Helper read template [" << name << "]." << std::endl;
 
-		m_templateList.emplace(name, MatchTemplateInfo(fix, thres, { r0, r1, r2, r3 }));
+		m_templateList.emplace(name, MatchTemplateInfo(bits & 0x01, bits & 0x02, thres, { r0, r1, r2, r3 }));
 	}
 	CoreLog() << "Helper have read " << sz << " templates." << std::endl;
 
