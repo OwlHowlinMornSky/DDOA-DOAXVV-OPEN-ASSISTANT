@@ -20,6 +20,9 @@
 */
 #include "ITask.h"
 
+#include "Sleep.h"
+#include "Clock.h"
+#include "AskedForStop.h"
 #include "Task_StartUp.h"
 #include "Task_Challenge.h"
 #include "Task_TEST.h"
@@ -27,6 +30,26 @@
 #include "Task_Daily.h"
 
 namespace ohms {
+
+void ITask::TaskSleep(Time time) {
+	Clock clk;
+	while (true) {
+		if (g_askedForStop) {
+			throw 0;
+		}
+		if (time > 60_msec) {
+			sleep(60_msec);
+			time = time - clk.restart();
+		}
+		else if(time > Time::Zero) {
+			sleep(time);
+			break;
+		}
+		else {
+			break;
+		}
+	}
+}
 
 bool ITask::CreateTask(unsigned long type, std::unique_ptr<ITask>& outPtr) {
 	switch (type) {

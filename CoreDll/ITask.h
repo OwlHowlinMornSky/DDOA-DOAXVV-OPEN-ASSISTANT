@@ -40,6 +40,9 @@ public:
 	virtual bool Run(Helper& h) = 0;
 
 protected:
+	static void TaskSleep(Time time);
+
+protected:
 	unsigned long m_taskType;
 
 public:

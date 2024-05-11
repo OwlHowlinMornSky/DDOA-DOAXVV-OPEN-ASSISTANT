@@ -191,8 +191,13 @@ bool Task_Daily::OpenShotPage() {
 		return false;
 	}
 
-	r_handler->ClickAt(m_shotEntrance->GetSpecialPointInResult(0));
-	sleep(5.0_sec);
+	r_handler->KeepClickingUntil(
+		m_shotEntrance->GetSpecialPointInResult(0),
+		*m_shot,
+		20.0_sec,
+		3.0_sec
+	);
+	sleep(2.0_sec);
 
 	return true;
 }
@@ -204,7 +209,7 @@ bool Task_Daily::DoShotInPage() {
 	}
 
 	r_handler->ClickAt(m_shot->GetSpecialPointInResult(0));
-	sleep(5.0_sec);
+	sleep(2.0_sec);
 
 	return true;
 }

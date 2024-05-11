@@ -74,12 +74,13 @@ bool Task_Challenge::Run(Helper& h) {
 		bool forAddThisTime = false; // 是否已经进入奖励挑战赛
 		unsigned long playAwardCnt = 0; // 奖励挑战赛次数
 
-		Task_Navigate::Instance()->ShakeCursor();
+		//Task_Navigate::Instance()->ShakeCursor();
 
 		while (true) {
 			// 检查导航位置
 			switch (Task_Navigate::Instance()->TryToDeterminePage()) {
 			case NavigateEnum::Challenge:
+				sleep(2.0_sec);
 				if (-1 == r_handler->WaitFor(*temp_chaBar)) {
 					throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
 				}
@@ -139,27 +140,34 @@ bool Task_Challenge::Run(Helper& h) {
 					i = n;
 					break;
 				case 1:
-					if (m_set.AutoUseCamFP) { // 使用cam补充fp
-						switch (r_handler->WaitForMultiple({ m_camFp.get(), m_camFpNo.get() }, 2.0_sec)) {
-						case 0:
-						{
-							pt = m_camFp->GetSpecialPointInResult(0);
-							if (r_handler->KeepClickingUntil(pt, *(m_camFpComf[0]))) {
-								pt = m_camFpComf[0]->GetSpecialPointInResult(0);
-								if (r_handler->KeepClickingUntil(pt, *(m_camFpComf[1]))) {
-									pt = m_camFpComf[1]->GetSpecialPointInResult(0);
-									if (r_handler->KeepClickingUntil(pt, *temp_startGame)) {
-										break;
-									}
-								}
-							}
-							break;
-						}
-						default:
+					if (!m_set.AutoUseCamFP) { // 使用cam补充fp
+						throw TaskExceptionCode::TaskComplete;
+					}
+					switch (r_handler->WaitForMultiple({ m_camFp.get(), m_camFpNo.get() }, 2.0_sec)) {
+					case 0:
+					{
+						pt = m_camFp->GetSpecialPointInResult(0);
+
+						r_handler->ClickAt(pt);
+						sleep(1.0_sec);
+
+						if (-1 == r_handler->WaitFor(*(m_camFpComf[0]))) {
 							throw TaskExceptionCode::TaskComplete;
 						}
+						pt = m_camFpComf[0]->GetSpecialPointInResult(0);
+						if (!r_handler->KeepClickingUntil(pt, *(m_camFpComf[1]), 10.0_sec, 2.0_sec)) {
+							throw TaskExceptionCode::TaskComplete;
+						}
+						pt = m_camFpComf[1]->GetSpecialPointInResult(0);
+
+						r_handler->ClickAt(pt);
+						sleep(1.0_sec);
+						if (-1 == r_handler->WaitFor(*temp_startGame)) {
+							throw TaskExceptionCode::TaskComplete;
+						}
+						break;
 					}
-					else {
+					default:
 						throw TaskExceptionCode::TaskComplete;
 					}
 					break;
