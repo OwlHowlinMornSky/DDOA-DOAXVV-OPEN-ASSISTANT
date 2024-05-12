@@ -120,7 +120,6 @@
 			MinimumSize = new Size(800, 560);
 			Name = "FormNew";
 			Text = "DDOA";
-			Deactivate += FormNew_Deactivate;
 			FormClosing += FormNew_FormClosing;
 			FormClosed += FormNew_FormClosed;
 			Load += FormNew_Load;

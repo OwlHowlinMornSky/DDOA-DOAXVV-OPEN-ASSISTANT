@@ -48,12 +48,6 @@ namespace WinFormsGUI {
 			notifyIcon_Main.Text = Text;
 		}
 
-		private void FormNew_Deactivate(object sender, EventArgs e) {
-			if (WindowState == FormWindowState.Minimized && Settings.GUI.Default.HideToTray) {
-				Hide();
-			}
-		}
-
 		/// <summary>
 		/// 窗口试图关闭
 		/// </summary>
@@ -94,6 +88,8 @@ namespace WinFormsGUI {
 				Show();
 				WindowState = FormWindowState.Normal;
 				Activate();
+				if (Settings.GUI.Default.DisableClose)
+					Wrapper.SystemThings.SetCloseEnabled(Handle, false);
 				break;
 			case MouseButtons.Right:
 				notifyIcon_Main.ContextMenuStrip?.Show();
@@ -122,6 +118,27 @@ namespace WinFormsGUI {
 		/// </summary>
 		private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e) {
 			Close();
+		}
+
+		private const int WM_SYSCOMMAND = 0x112;
+		private const int SC_CLOSE = 0xF060;
+		private const int SC_MINIMIZE = 0xF020;
+		private const int SC_MAXIMIZE = 0xF030;
+		private const int SC_RESTORE = 61728;
+		protected override void WndProc(ref Message m) {
+			base.WndProc(ref m);
+			if (m.Msg == WM_SYSCOMMAND) {
+				switch (m.WParam.ToInt32() & 0xFFF0) {
+				case SC_MINIMIZE:
+					if (Settings.GUI.Default.HideToTray)
+						Hide();
+					break;
+				case SC_RESTORE:
+					if (Settings.GUI.Default.DisableClose)
+						Wrapper.SystemThings.SetCloseEnabled(Handle, false);
+					break;
+				}
+			}
 		}
 	}
 }
