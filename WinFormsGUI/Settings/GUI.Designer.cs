@@ -97,7 +97,7 @@ namespace WinFormsGUI.Settings {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1, 2, 3, 4, 5, 6, 7")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1, 2, 4")]
         public string ListItems {
             get {
                 return ((string)(this["ListItems"]));

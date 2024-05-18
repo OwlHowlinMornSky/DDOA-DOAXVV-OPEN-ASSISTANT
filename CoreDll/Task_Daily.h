@@ -61,6 +61,7 @@ protected:
 	std::unique_ptr<MatchTemplate> m_checkBdTitle;
 	std::unique_ptr<MatchTemplate> m_checkOk;
 
+	std::unique_ptr<MatchTemplate> m_homePage;
 	std::unique_ptr<MatchTemplate> m_shotEntrance;
 	std::unique_ptr<MatchTemplate> m_shotDot;
 	std::unique_ptr<MatchTemplate> m_shotBack;

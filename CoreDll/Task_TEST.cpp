@@ -28,12 +28,7 @@ namespace ohms {
 bool Task_TEST::Run(Helper& h) {
 	h.GuiLogF(ReturnMsgEnum::TestTaskBegin);
 
-	ohms::Clock clk;
-	while (clk.getElapsedTime() < seconds(12.0f)) {
-		Sleep(100);
-		if (g_askedForStop)
-			break;
-	}
+	TaskSleep(12.0_sec);
 
 	h.GuiLogF(ReturnMsgEnum::TestTaskEnd);
 	return true;

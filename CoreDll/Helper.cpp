@@ -114,6 +114,7 @@ bool Helper::start() {
 
 void Helper::askForStop() {
 	if (m_running) { // 运行的时候才有意义
+		CoreLog() << "Helper: AskForStop." << std::endl;
 		GuiLogF(ReturnMsgEnum::WorkStopping);
 		g_askedForStop = true;
 	}
@@ -198,6 +199,7 @@ void Helper::GuiLogF_II(long fmt, long intval0, long intval1) {
 std::unique_ptr<MatchTemplate> Helper::CreateTemplate(const std::string& name) {
 	std::unique_ptr<MatchTemplate> res = std::make_unique<MatchTemplate>(m_templateList.at(name));
 	if (!res->LoadMat((m_assets / name).string())) {
+		CoreLog() << "Helper: Load Template Failed: " << name << std::endl;
 		TaskError(ReturnMsgEnum::TaskErrFailedToLoadTemplateFile);
 		return std::unique_ptr<MatchTemplate>();
 	}
@@ -205,11 +207,13 @@ std::unique_ptr<MatchTemplate> Helper::CreateTemplate(const std::string& name) {
 }
 
 void Helper::TaskError(long str) {
+	CoreLog() << "TaskError: Code: " << str << std::endl;
 	GuiLogF_S(ReturnMsgEnum::TaskErr_Format, str);
 	throw TaskExceptionCode::KnownErrorButNotCritical; // 要求停止
 }
 
 void Helper::Work() {
+	CoreLog() << "Helper: Work Start." << std::endl;
 	m_running = true; // 设置标记（return前要清除）
 	GuiLogC_BtnToStop(); // 让主按钮变为stop
 
@@ -231,6 +235,7 @@ void Helper::Work() {
 			m_set.Work_TaskList[flag] != TaskEnum::None
 			) {
 			if (ITask::CreateTask(m_set.Work_TaskList[flag], task)) {
+				CoreLog() << "Helper: Next Task." << std::endl;
 				bool res = task->Run(*this);
 				if (!res || g_askedForStop) // 返回false 或者 要求停止 表示无法继续
 					break;
@@ -260,6 +265,7 @@ void Helper::Work() {
 	GuiLogC_BtnToStart(); // 让主按钮变成start
 	GuiLogC_Stopped(); // 通知已完全停止
 
+	CoreLog() << "Helper: Work Over." << std::endl;
 	cv::destroyAllWindows();
 	return;
 }

@@ -28,10 +28,12 @@
 #include "Task_TEST.h"
 #include "Task_Navigate.h"
 #include "Task_Daily.h"
+#include "CoreLog.h"
 
 namespace ohms {
 
 void ITask::TaskSleep(Time time) {
+	CoreLog() << "Task slept for " << time.asMicroseconds() << "us." << std::endl;
 	Clock clk;
 	while (true) {
 		if (g_askedForStop) {
@@ -54,28 +56,37 @@ void ITask::TaskSleep(Time time) {
 bool ITask::CreateTask(unsigned long type, std::unique_ptr<ITask>& outPtr) {
 	switch (type) {
 	case TaskEnum::StartUp:
+		CoreLog() << "Create task: Task_StartUp" << std::endl;
 		outPtr = std::make_unique<Task_StartUp>();
 		return true;
 	case TaskEnum::Daily:
+		CoreLog() << "Create task: Task_Daily" << std::endl;
 		outPtr = std::make_unique<Task_Daily>();
 		return true;
 	case TaskEnum::Room:
+		CoreLog() << "Create task: Task_Room" << std::endl;
 		break;
 	case TaskEnum::Challenge:
+		CoreLog() << "Create task: Task_Challenge" << std::endl;
 		outPtr = std::make_unique<Task_Challenge>();
 		return true;
 	case TaskEnum::Spring:
+		CoreLog() << "Create task: Task_Spring" << std::endl;
 		break;
 	case TaskEnum::Award:
+		CoreLog() << "Create task: Task_Award" << std::endl;
 		break;
 	case TaskEnum::Exit:
+		CoreLog() << "Create task: Task_Exit" << std::endl;
 		break;
 	case TaskEnum::TEST_TASK:
+		CoreLog() << "Create task: Task_TEST" << std::endl;
 		outPtr = std::make_unique<Task_TEST>();
 		return true;
 	default:
 		break;
 	}
+	CoreLog() << "Create task [Not implement]" << std::endl;
 	return false;
 }
 

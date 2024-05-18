@@ -20,6 +20,7 @@
 */
 #include "Task_Navigate.h"
 #include "Sleep.h"
+#include "CoreLog.h"
 
 namespace {
 
@@ -33,6 +34,9 @@ Task_Navigate::Task_Navigate() {
 	r_handler = WndHandler::Instance();
 	r_helper = (Helper*)Helper::instance();
 	Helper& h = *r_helper;
+
+	CoreLog() << "Task_Navigate: Begin Load Templates." << std::endl;
+
 	temp_chaPage = h.CreateTemplate("default");
 	temp_matchPage = h.CreateTemplate("start");
 	temp_homePage = h.CreateTemplate("homeSpec");
@@ -41,6 +45,8 @@ Task_Navigate::Task_Navigate() {
 	temp_anyOtherPageHaveHome = h.CreateTemplate("otherHome");
 	temp_anyOtherPageHaveHomeW = h.CreateTemplate("otherHomeAskew");
 	temp_homeChaBtn = h.CreateTemplate("homeChaBtn");
+
+	CoreLog() << "Task_Navigate: Finish Load Templates." << std::endl;
 }
 
 Task_Navigate* Task_Navigate::Instance() {
@@ -61,35 +67,45 @@ bool Task_Navigate::Run(Helper& h) {
 
 int Task_Navigate::TryToDeterminePage() {
 	if (r_handler->SetForGame() != WndHandler::SetReturnValue::OK) {
+		CoreLog() << "Task_Navigate: Window Handler Set Failed." << std::endl;
 		return NavigateEnum::None;
 	}
 
 	cv::Mat mat;
 	if (!r_handler->GetOneFrame(mat)) {
+		CoreLog() << "Task_Navigate: Window Handler GetOneFrame Failed." << std::endl;
 		return NavigateEnum::None;
 	}
 
 	if (temp_homePage->Match(mat)) {
+		CoreLog() << "Task_Navigate: Matched: home." << std::endl;
 		return NavigateEnum::Home;
 	}
 	if (temp_chaPage->Match(mat)) {
+		CoreLog() << "Task_Navigate: Matched: cha." << std::endl;
 		return NavigateEnum::Challenge;
 	}
 	if (temp_matchPage->Match(mat)) {
+		CoreLog() << "Task_Navigate: Matched: match comfirm." << std::endl;
 		return NavigateEnum::MatchConfirm;
 	}
 	if (temp_resultPage->Match(mat)) {
+		CoreLog() << "Task_Navigate: Matched: match result." << std::endl;
 		return NavigateEnum::MatchResult;
 	}
 	if (temp_anyOtherPageHaveHomeW->Match(mat)) {
+		CoreLog() << "Task_Navigate: Matched: AnyOtherHaveHomeBtn." << std::endl;
 		return NavigateEnum::AnyOtherHaveHomeBtn;
 	}
 	if (temp_anyOtherPageHaveHome->Match(mat)) {
+		CoreLog() << "Task_Navigate: Matched: AnyOtherHaveHomeBtn." << std::endl;
 		return NavigateEnum::AnyOtherHaveHomeBtn;
 	}
 	if (temp_anyOtherPageHaveReturn->Match(mat)) {
+		CoreLog() << "Task_Navigate: Matched: AnyOtherHaveReturnBtn." << std::endl;
 		return NavigateEnum::AnyOtherHaveReturnBtn;
 	}
+	CoreLog() << "Task_Navigate: Matche Failed." << std::endl;
 
 	return NavigateEnum::None;
 }
@@ -99,6 +115,7 @@ bool Task_Navigate::NavigateTo(int dest) {
 }
 
 bool Task_Navigate::NavigateFromTo(int now, int dest) {
+	CoreLog() << "Task_Navigate: From " << now << " to " << dest << "." << std::endl;
 	//r_helper->GuiLogF_II(ReturnMsgEnum::Test_II, now, dest);
 	if (now != dest) {
 		switch (now) {
@@ -137,11 +154,13 @@ bool Task_Navigate::NavigateFromTo(int now, int dest) {
 		}
 		}
 	}
+	CoreLog() << "Task_Navigate: Success." << std::endl;
 	sleep(milliseconds(30));
 	return true;
 }
 
 void Task_Navigate::ShakeCursor() {
+	CoreLog() << "Task_Navigate: ShakeCursor." << std::endl;
 	r_handler->MoveMouseTo({ 0, 0 });
 	r_handler->MoveMouseTo({ 960, 540 });
 }

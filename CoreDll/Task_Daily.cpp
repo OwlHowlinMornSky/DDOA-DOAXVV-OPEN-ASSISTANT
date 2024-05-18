@@ -22,7 +22,6 @@
 
 #include "Clock.h"
 #include "AskedForStop.h"
-#include "Sleep.h"
 #include "Task_Navigate.h"
 
 namespace ohms {
@@ -96,6 +95,7 @@ void Task_Daily::DoShot() {
 	m_shotDot = r_helper->CreateTemplate("daily/shotDot");
 	m_shotBack = r_helper->CreateTemplate("daily/shotBack");
 	m_shot = r_helper->CreateTemplate("daily/shotShot");
+	m_homePage = r_helper->CreateTemplate("homeSpec");
 
 	if (IsShotDone()) {
 		return;
@@ -140,7 +140,7 @@ bool Task_Daily::OpenDailyCheckBoard() {
 		m_homeDailyBtn->GetSpecialPointInResult(0),
 		*m_checkBdTitle
 	);
-	sleep(1.0_sec);
+	TaskSleep(1.0_sec);
 
 	return true;
 }
@@ -159,7 +159,7 @@ bool Task_Daily::DoDailyCheckInBoard() {
 		m_checkOk->GetSpecialPointInResult(0),
 		*m_checkBdTitle
 	);
-	sleep(1.0_sec);
+	TaskSleep(1.0_sec);
 
 	return true;
 }
@@ -197,7 +197,7 @@ bool Task_Daily::OpenShotPage() {
 		20.0_sec,
 		3.0_sec
 	);
-	sleep(2.0_sec);
+	TaskSleep(2.0_sec);
 
 	return true;
 }
@@ -209,7 +209,7 @@ bool Task_Daily::DoShotInPage() {
 	}
 
 	r_handler->ClickAt(m_shot->GetSpecialPointInResult(0));
-	sleep(2.0_sec);
+	TaskSleep(2.0_sec);
 
 	return true;
 }
@@ -220,8 +220,11 @@ bool Task_Daily::CloseShotPage() {
 		return false;
 	}
 
-	r_handler->ClickAt(m_shotBack->GetSpecialPointInResult(0));
-	sleep(5.0_sec);
+	r_handler->KeepClickingUntil(
+		m_shotBack->GetSpecialPointInResult(0),
+		*m_homePage
+	);
+	TaskSleep(1.0_sec);
 
 	return true;
 }

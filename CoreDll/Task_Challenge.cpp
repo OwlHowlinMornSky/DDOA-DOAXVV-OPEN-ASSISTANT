@@ -22,7 +22,6 @@
 #include "CoreLog.h"
 #include "TaskExceptionCode.h"
 #include "Task_Navigate.h"
-#include "Sleep.h"
 
 namespace ohms {
 
@@ -54,7 +53,9 @@ bool Task_Challenge::Run(Helper& h) {
 			h.TaskError(ReturnMsgEnum::TaskErrNoCap);
 			break;
 		}
+		CoreLog() << "Task.Challenge: Window Handler Setted." << std::endl;
 
+		CoreLog() << "Task.Challenge: Begin Load Templates." << std::endl;
 		std::unique_ptr<MatchTemplate>
 			temp_chaBar = h.CreateTemplate("default"),
 			temp_lastFight = h.CreateTemplate("lastFight"),
@@ -68,6 +69,7 @@ bool Task_Challenge::Run(Helper& h) {
 		m_camFpNo = h.CreateTemplate("cha/shotFpNo");
 		m_camFpComf[0] = h.CreateTemplate("UseFpComf0");
 		m_camFpComf[1] = h.CreateTemplate("UseFpComf1");
+		CoreLog() << "Task.Challenge: Finish Load Templates." << std::endl;
 
 		cv::Point pt;
 		unsigned long playCnt = 0; // 次数
@@ -77,36 +79,46 @@ bool Task_Challenge::Run(Helper& h) {
 		//Task_Navigate::Instance()->ShakeCursor();
 
 		while (true) {
+			CoreLog() << "Task.Challenge: Loop Begin." << std::endl;
 			// 检查导航位置
 			switch (Task_Navigate::Instance()->TryToDeterminePage()) {
 			case NavigateEnum::Challenge:
-				sleep(2.0_sec);
+				CoreLog() << "Task.Challenge: Navigate Detected: Challenge." << std::endl;
+				TaskSleep(2.0_sec);
 				if (-1 == r_handler->WaitFor(*temp_chaBar)) {
+					CoreLog() << "Task.Challenge: Navigate Failed: No ChaBar." << std::endl;
 					throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
 				}
 				r_handler->ClickAt(temp_chaBar->GetSpecialPointInResult(0));
-				sleep(500_msec);
+				TaskSleep(500_msec);
 				break;
 			case NavigateEnum::MatchConfirm:
+				CoreLog() << "Task.Challenge: Navigate Detected: Match Confirm." << std::endl;
 				goto MatchComfirm;
 				break;
 			case NavigateEnum::MatchResult:
+				CoreLog() << "Task.Challenge: Navigate Detected: Match Result." << std::endl;
 				goto MatchEnd;
 				break;
 			default:
+				CoreLog() << "Task.Challenge: Navigate Detected: Others." << std::endl;
 				if (!Task_Navigate::Instance()->NavigateTo(NavigateEnum::Challenge)) {
+					CoreLog() << "Task.Challenge: Navigate Failed." << std::endl;
 					throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
 				}
-				sleep(2.0_sec);
+				TaskSleep(2.0_sec);
 				if (-1 == r_handler->WaitFor(*temp_chaBar)) {
+					CoreLog() << "Task.Challenge: Navigate Failed: No ChaBar." << std::endl;
 					throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
 				}
 				r_handler->ClickAt(temp_chaBar->GetSpecialPointInResult(0));
-				sleep(500_msec);
+				TaskSleep(500_msec);
 				break;
 			}
+			CoreLog() << "Task.Challenge: Navigate Over." << std::endl;
 
-				// 查找目标比赛按钮。
+			CoreLog() << "Task.Challenge: Search for Target Match Enter Button." << std::endl;
+			// 查找目标比赛按钮。
 			if (-1 == r_handler->WaitFor(forNew ? *temp_newFight : *temp_lastFight))
 				h.TaskError(
 					forNew ?
@@ -123,93 +135,110 @@ bool Task_Challenge::Run(Helper& h) {
 			forAddThisTime = false;
 
 		MatchComfirm:
-
+			CoreLog() << "Task.Challenge: Search for Match Start Button." << std::endl;
 			// 查找“挑战”按钮。
 			r_handler->WaitFor(*temp_startGame);
 			CoreLog() << "Task.Challenge: Play Game." << std::endl;
 			for (int i = 0, n = 10; i < n; ++i) {
+				CoreLog() << "Task.Challenge: Start Match Loop: " << i << "." << std::endl;
 				pt = temp_startGame->GetSpecialPointInResult(0);
 				r_handler->ClickAt(pt);
-				switch (r_handler->WaitForMultiple({ temp_loading.get(), temp_lowFp.get() }, seconds(2.0f))) {
+				switch (r_handler->WaitForMultiple({ temp_loading.get(), temp_lowFp.get() }, 2.0_sec)) {
 				default:
 				case -1:
-					if (i == n - 1)
+					CoreLog() << "Task.Challenge: Start Match Loop: Not Found." << std::endl;
+					if (i == n - 1) {
+						CoreLog() << "Task.Challenge: Failed to Start Match." << std::endl;
 						h.TaskError(ReturnMsgEnum::TaskErrChaNoStart);
+					}
 					break;
 				case 0:
 					i = n;
+					CoreLog() << "Task.Challenge: Start Match Loop: OK." << std::endl;
 					break;
 				case 1:
+					CoreLog() << "Task.Challenge: Start Match Loop: Low FP." << std::endl;
 					if (!m_set.AutoUseCamFP) { // 使用cam补充fp
+						CoreLog() << "Task.Challenge: Task Over: Setted No Use FP." << std::endl;
 						throw TaskExceptionCode::TaskComplete;
 					}
 					switch (r_handler->WaitForMultiple({ m_camFp.get(), m_camFpNo.get() }, 2.0_sec)) {
 					case 0:
 					{
+						CoreLog() << "Task.Challenge: Try to Use FP: Available." << std::endl;
 						pt = m_camFp->GetSpecialPointInResult(0);
 
 						r_handler->ClickAt(pt);
-						sleep(1.0_sec);
+						TaskSleep(1.0_sec);
 
 						if (-1 == r_handler->WaitFor(*(m_camFpComf[0]))) {
+							CoreLog() << "Task.Challenge: Task Over: Try to Use FP: No 1st." << std::endl;
 							throw TaskExceptionCode::TaskComplete;
 						}
 						pt = m_camFpComf[0]->GetSpecialPointInResult(0);
 						if (!r_handler->KeepClickingUntil(pt, *(m_camFpComf[1]), 10.0_sec, 2.0_sec)) {
+							CoreLog() << "Task.Challenge: Task Over: Try to Use FP: No 2st." << std::endl;
 							throw TaskExceptionCode::TaskComplete;
 						}
 						pt = m_camFpComf[1]->GetSpecialPointInResult(0);
 
 						r_handler->ClickAt(pt);
-						sleep(1.0_sec);
+						TaskSleep(1.0_sec);
 						if (-1 == r_handler->WaitFor(*temp_startGame)) {
+							CoreLog() << "Task.Challenge: Task Over: Try to Use FP: No Close." << std::endl;
 							throw TaskExceptionCode::TaskComplete;
 						}
+						CoreLog() << "Task.Challenge: Try to Use FP: OK." << std::endl;
 						break;
 					}
 					default:
+						CoreLog() << "Task.Challenge: Task Over: No FP." << std::endl;
 						throw TaskExceptionCode::TaskComplete;
 					}
 					break;
 				}
 			}
+			CoreLog() << "Task.Challenge: Match Started." << std::endl;
 
 			if (forAddThisTime) {
 				++playAwardCnt;
 				h.GuiLogF_I(ReturnMsgEnum::ChaBeginAdd_I, playAwardCnt);
+				CoreLog() << "Task.Challenge: Match Award " << playAwardCnt << "." << std::endl;
 			}
 			else {
 				++playCnt;
 				h.GuiLogF_I(ReturnMsgEnum::ChaBegin_I, playCnt);
+				CoreLog() << "Task.Challenge: Match " << playCnt << "." << std::endl;
 			}
 
 		MatchEnd:
 
 			// 等待结束。
 			CoreLog() << "Task.Challenge: In Game, Waitting for End." << std::endl;
-			if (-1 == r_handler->WaitFor(*temp_gameResult, seconds(5 * 60.0f)))
+			if (-1 == r_handler->WaitFor(*temp_gameResult, 300.0_sec))
 				h.TaskError(ReturnMsgEnum::TaskErrChaTimeOut);
 
 			// 点击，直到进入加载画面。
 			CoreLog() << "Task.Challenge: Game End, Trying to Exit." << std::endl;
 			pt = temp_gameResult->GetSpecialPointInResult(0);
-			if (!r_handler->KeepClickingUntil(pt, *temp_loading, seconds(60.0f), seconds(0.1f)))
+			if (!r_handler->KeepClickingUntil(pt, *temp_loading, 60.0_sec, 0.1_sec))
 				h.TaskError(ReturnMsgEnum::TaskErrChaNoEnd);
 
 			// 等待到挑战赛标签页出现。
 			CoreLog() << "Task.Challenge: Game Exit, Waitting for Challenge Page." << std::endl;
-			if (-1 == r_handler->WaitFor(*temp_chaBar, seconds(60.0f)))
+			if (-1 == r_handler->WaitFor(*temp_chaBar, 60.0_sec))
 				h.TaskError(ReturnMsgEnum::TaskErrChaNoOver);
 			h.GuiLogF(ReturnMsgEnum::ChaOver);
 
 			// 检查是否有奖励挑战赛。
 			if (m_set.CheckAddition) {
-				if (0 == r_handler->WaitFor(*temp_awardCha, seconds(2.0f))) {
+				if (0 == r_handler->WaitFor(*temp_awardCha, 2.0_sec)) {
+					CoreLog() << "Task.Challenge: Find Award." << std::endl;
 					h.GuiLogF(ReturnMsgEnum::ChaFindAdd);
 					if (m_set.EnterAddition) { // 进入奖励挑战赛。
 						if (forNew) {
 							pt = temp_awardCha->GetSpecialPointInResult(0);
-							if (r_handler->KeepClickingUntil(pt, *temp_newFight, seconds(10.0f), seconds(2.0f))) {
+							if (r_handler->KeepClickingUntil(pt, *temp_newFight, 10.0_sec, 2.0_sec)) {
 								h.GuiLogF(ReturnMsgEnum::ChaOpenedAdd);
 								forAddThisTime = true;
 								playAwardCnt = 0;
@@ -223,9 +252,9 @@ bool Task_Challenge::Run(Helper& h) {
 						}
 					}
 					else { // 回到“推荐”栏。
-						if (0 == r_handler->WaitFor(*temp_chaBar, seconds(5.0f))) {
+						if (0 == r_handler->WaitFor(*temp_chaBar, 5.0_sec)) {
 							pt = temp_chaBar->GetSpecialPointInResult(0);
-							if (r_handler->KeepClickingUntilNo(pt, *temp_awardCha, seconds(10.0f), seconds(0.5f))) {
+							if (r_handler->KeepClickingUntilNo(pt, *temp_awardCha, 10.0_sec, 0.5_sec)) {
 								h.GuiLogF(ReturnMsgEnum::ChaIgnoredAdd);
 							}
 							else {
@@ -235,9 +264,14 @@ bool Task_Challenge::Run(Helper& h) {
 					}
 				}
 				else {
+					CoreLog() << "Task.Challenge: Not Find Award." << std::endl;
 					h.GuiLogF(ReturnMsgEnum::ChaNotFindAdd);
 				}
 			}
+
+			CoreLog() << "Task.Challenge: Loop End." << std::endl;
+
+			TaskSleep(1.0_sec);
 		}
 	}
 	catch (int err) {

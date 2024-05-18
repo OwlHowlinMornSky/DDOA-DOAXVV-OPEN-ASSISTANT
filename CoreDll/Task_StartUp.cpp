@@ -66,7 +66,7 @@ bool Task_StartUp::Run(Helper& h) {
 				if (g_askedForStop) {
 					goto USER_STOP;
 				}
-				Sleep(1000);
+				TaskSleep(1000_msec);
 			}
 		}
 		// 启动器已打开，但游戏还未打开
@@ -102,7 +102,7 @@ bool Task_StartUp::Run(Helper& h) {
 			if (g_askedForStop) {
 				goto USER_STOP;
 			}
-			Sleep(500);
+			TaskSleep(500_msec);
 		}
 		r_handler->Reset();
 
@@ -119,7 +119,7 @@ bool Task_StartUp::Run(Helper& h) {
 			if (g_askedForStop) {
 				goto USER_STOP;
 			}
-			Sleep(1000);
+			TaskSleep(1000_msec);
 		}
 
 		r_handler->SetForGame();
