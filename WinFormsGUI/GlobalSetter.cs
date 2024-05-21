@@ -41,6 +41,8 @@ namespace WinFormsGUI {
 
 			Program.helper.SetDoDailyCheck(Settings.Core.Default.DoDailyCheck);
 			Program.helper.SetDoDailyShot(Settings.Core.Default.DoDailyShot);
+
+			Program.helper.SetUseHook(Settings.Core.Default.UseHook);
 		}
 
 		internal static void SaveSettings() {

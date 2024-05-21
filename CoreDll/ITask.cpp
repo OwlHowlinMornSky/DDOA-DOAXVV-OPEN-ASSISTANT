@@ -33,7 +33,7 @@
 namespace ohms {
 
 void ITask::TaskSleep(Time time) {
-	CoreLog() << "Task slept for " << time.asMicroseconds() << "us." << std::endl;
+	//CoreLog() << "Task slept for " << time.asMicroseconds() << "us." << std::endl;
 	Clock clk;
 	while (true) {
 		if (g_askedForStop) {

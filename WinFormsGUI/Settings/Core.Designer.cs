@@ -130,5 +130,17 @@ namespace WinFormsGUI.Settings {
                 this["DoDailyShot"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseHook {
+            get {
+                return ((bool)(this["UseHook"]));
+            }
+            set {
+                this["UseHook"] = value;
+            }
+        }
     }
 }

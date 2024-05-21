@@ -61,6 +61,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 0000FFFF 的本地化字符串。
+        /// </summary>
+        internal static string HookFailed {
+            get {
+                return ResourceManager.GetString("HookFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 FFFF0000 的本地化字符串。
         /// </summary>
         internal static string TaskDailyFailed {

@@ -135,6 +135,8 @@ public:
 	void SetDoDailyCheck(bool setDo);
 	void SetDoDailyShot(bool setDo);
 
+	void SetUseHook(bool use);
+
 private:
 	ohms::IHelper* r_helper;
 };

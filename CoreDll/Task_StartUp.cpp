@@ -81,7 +81,7 @@ bool Task_StartUp::Run(Helper& h) {
 
 		// 寻找启动器的启动按钮
 		if (-1 == r_handler->WaitFor(*temp_startBtn, seconds(30.0f))) {
-			h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 2);
+			//h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 2);
 			goto FINALLY_FAILED;
 		}
 
@@ -92,7 +92,7 @@ bool Task_StartUp::Run(Helper& h) {
 		clk.restart();
 		while (true) {
 			if (clk.getElapsedTime() > seconds(60.0f)) {
-				h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 3);
+				//h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 3);
 				goto FINALLY_FAILED;
 			}
 			if (!r_handler->LaucherAvailable()) {
@@ -110,7 +110,7 @@ bool Task_StartUp::Run(Helper& h) {
 		clk.restart();
 		while (true) {
 			if (clk.getElapsedTime() > seconds(60.0f)) {
-				h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 4);
+				//h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 4);
 				goto FINALLY_FAILED;
 			}
 			if (r_handler->GameWndAvailable()) {
@@ -126,14 +126,14 @@ bool Task_StartUp::Run(Helper& h) {
 
 		// 等待游戏标题画面（左上角 选项按钮）
 		if (-1 == r_handler->WaitFor(*temp_titleBtn, seconds(300.0f))) {
-			h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 5);
+			//h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 5);
 			goto FINALLY_FAILED;
 		}
 
 		// 持续点击直到进入主页
 		pt = { 920, 40 };
 		if (!r_handler->KeepClickingUntil(pt, *temp_homeSpec, seconds(90.0f), seconds(1.0f))) {
-			h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 6);
+			//h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 6);
 			goto FINALLY_FAILED;
 		}
 	}
@@ -159,12 +159,12 @@ bool Task_StartUp::Run(Helper& h) {
 				// 在标题界面则尝试进入主页
 				pt = { 920, 40 };
 				if (!r_handler->KeepClickingUntil(pt, *temp_homeSpec, seconds(90.0f), seconds(1.0f))) {
-					h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 7);
+					//h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 7);
 					goto FINALLY_FAILED;
 				}
 			}
 			else {
-				h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 8);
+				//h.GuiLogF_SI(ReturnMsgEnum::TaskErr_F_SI, ReturnMsgEnum::TaskErrCommonTLE, 8);
 				goto FINALLY_FAILED;
 			}
 		}

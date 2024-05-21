@@ -20,23 +20,18 @@
 */
 #pragma once
 
-#include "API.h"
+#include "framework.h"
 
-namespace ohms::Settings {
+#ifdef __cplusplus    // If used by C++ code, 
+extern "C" {          // we need to export the C interface
+#endif
 
-struct CORE_API WndHandler {
-	static WndHandler DEFAULT; // 本体在 Settings.cpp
-	WndHandler() :
-		UseSendInput(false), // 默认发窗口消息
-		UseHook(false),
-		Debug_ShowCapture(false),
-		Debug_DebugHandler(false) {}
+	DLL_API LRESULT CALLBACK DdoaHookProc(
+		_In_ int    code,
+		_In_ WPARAM wParam,
+		_In_ LPARAM lParam
+	);
 
-	bool UseSendInput; // 选择控制鼠标。
-	bool UseHook;
-
-	bool Debug_ShowCapture; // [调试] 是否显示截取到的帧。
-	bool Debug_DebugHandler; // [调试] 是否以DDOA调试器为目标。
-};
-
+#ifdef __cplusplus
 }
+#endif

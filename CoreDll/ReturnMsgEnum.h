@@ -132,6 +132,8 @@ enum CORE_API ReturnMessage : long {
 	TaskDailyComplete,
 	TaskDailyFailed,
 
+	HookFailed,
+
 };
 }
 }

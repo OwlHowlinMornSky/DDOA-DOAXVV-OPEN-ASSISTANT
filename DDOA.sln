@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsGUI", "WinFormsGUI\WinFormsGUI.csproj", "{C3B1482B-7893-4282-96E5-FD90E1CEFA37}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreDll", "CoreDll\Core.vcxproj", "{5B1AC077-895F-43C4-8F56-8A5ADCDCC53D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C31AFE6A-8174-4515-BB0D-CB2E8A26A084} = {C31AFE6A-8174-4515-BB0D-CB2E8A26A084}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreWrapper", "CoreWrapper\Wrapper.vcxproj", "{F5EA4876-3557-449B-A371-ED560953A615}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -13,6 +16,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreWrapper", "CoreWrapper\
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MakeTool", "MakeTool\MakeTool.vcxproj", "{89852A22-0562-4623-86B3-62AEFDF5091D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HookDll", "HookDll\HookDll.vcxproj", "{C31AFE6A-8174-4515-BB0D-CB2E8A26A084}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +59,12 @@ Global
 		{89852A22-0562-4623-86B3-62AEFDF5091D}.Release|x64.Build.0 = Release|x64
 		{89852A22-0562-4623-86B3-62AEFDF5091D}.Release|x86.ActiveCfg = Release|Win32
 		{89852A22-0562-4623-86B3-62AEFDF5091D}.Release|x86.Build.0 = Release|Win32
+		{C31AFE6A-8174-4515-BB0D-CB2E8A26A084}.Debug|x64.ActiveCfg = Debug|x64
+		{C31AFE6A-8174-4515-BB0D-CB2E8A26A084}.Debug|x64.Build.0 = Debug|x64
+		{C31AFE6A-8174-4515-BB0D-CB2E8A26A084}.Debug|x86.ActiveCfg = Debug|x64
+		{C31AFE6A-8174-4515-BB0D-CB2E8A26A084}.Release|x64.ActiveCfg = Release|x64
+		{C31AFE6A-8174-4515-BB0D-CB2E8A26A084}.Release|x64.Build.0 = Release|x64
+		{C31AFE6A-8174-4515-BB0D-CB2E8A26A084}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

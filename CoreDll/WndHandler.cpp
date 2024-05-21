@@ -27,6 +27,9 @@
 #include "AskedForStop.h"
 #include "TaskExceptionCode.h"
 #include "Sleep.h"
+#include "IHelper.h"
+#include "CoreLog.h"
+#include "WinCheck.h"
 
 #include <ohms/WGC.h>
 
@@ -45,14 +48,20 @@ ohms::WndHandler* g_wndh;
 namespace ohms {
 
 WndHandler::WndHandler() :
+	m_hmod(NULL),
+	m_hhook(NULL),
+
 	m_hwnd(NULL),
 	m_lastMousePoint(),
 	m_screenSize(),
 	m_state(StateValue::Idle),
-	m_workArea() {}
+	m_workArea() {
+	LoadHookInfo();
+}
 
 WndHandler::~WndHandler() {
 	Reset();
+	ClearHookInfo();
 }
 
 WndHandler* WndHandler::Instance(bool winrtInited) {
@@ -83,7 +92,7 @@ bool WndHandler::Update() {
 }
 
 bool WndHandler::LaucherAvailable() {
-    return FindWindowW(g_findCls, g_finGWnd) != NULL; // 查找doaxvv launcher窗口
+	return FindWindowW(g_findCls, g_finGWnd) != NULL; // 查找doaxvv launcher窗口
 }
 
 bool WndHandler::GameWndAvailable() {
@@ -91,7 +100,7 @@ bool WndHandler::GameWndAvailable() {
 }
 
 WndHandler::SetReturnValue WndHandler::SetForLauncher() {
-	if(Settings::WndHandler::DEFAULT.Debug_DebugHandler)
+	if (Settings::WndHandler::DEFAULT.Debug_DebugHandler)
 		return SetForDebugger(false);
 	if (m_state == StateValue::Launcher)
 		return SetReturnValue::OK;
@@ -104,6 +113,9 @@ WndHandler::SetReturnValue WndHandler::SetForLauncher() {
 		return SetReturnValue::CaptureFailed;
 	}
 	r_capture->setClipToClientArea(true);
+	if (Settings::WndHandler::DEFAULT.UseHook && !Settings::WndHandler::DEFAULT.UseSendInput)
+		if (!TryHook())
+			IHelper::instance()->GuiLogF(ReturnMsgEnum::HookFailed);
 	m_state = StateValue::Launcher;
 	return SetReturnValue::OK;
 }
@@ -122,6 +134,9 @@ WndHandler::SetReturnValue WndHandler::SetForGame() {
 		return SetReturnValue::CaptureFailed;
 	}
 	r_capture->setClipToClientArea(true);
+	if (Settings::WndHandler::DEFAULT.UseHook && !Settings::WndHandler::DEFAULT.UseSendInput)
+		if (!TryHook())
+			IHelper::instance()->GuiLogF(ReturnMsgEnum::HookFailed);
 	m_state = StateValue::Game;
 	return SetReturnValue::OK;
 }
@@ -129,6 +144,7 @@ WndHandler::SetReturnValue WndHandler::SetForGame() {
 void WndHandler::Reset() {
 	m_state = StateValue::Idle;
 	m_hwnd = NULL;
+	DropHook();
 	if (r_capture) // 停止截图
 		r_capture->stopCapture();
 	return;
@@ -334,16 +350,16 @@ bool WndHandler::ClickAt(cv::Point pt) {
 				tmp = m_lastMousePoint;
 				tmp.x += vecx * i;
 				tmp.y += vecy * i;
-				PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(tmp.x, tmp.y));
+				PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(tmp.x, tmp.y));
 				sleep(milliseconds(10));
 			}
 		}
 		// 最终移动光标到目的地
-		PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
+		PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(pt.x, pt.y));
 		sleep(milliseconds(10));
 		m_lastMousePoint = { pt.x, pt.y };
 		// 点击
-		PostMessageW(m_hwnd, WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(pt.x, pt.y));
+		PostMessageW(m_hwnd, WM_LBUTTONDOWN, MK_LBUTTON | MK_CONTROL, MAKELPARAM(pt.x, pt.y));
 		sleep(milliseconds(60));
 		PostMessageW(m_hwnd, WM_LBUTTONUP, 0, MAKELPARAM(pt.x, pt.y));
 	}
@@ -431,12 +447,12 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 				tmp = m_lastMousePoint;
 				tmp.x += vecx * i;
 				tmp.y += vecy * i;
-				PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(tmp.x, tmp.y));
+				PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(tmp.x, tmp.y));
 				sleep(milliseconds(10));
 			}
 		}
 		// 最终移动光标到目的地
-		PostMessageW(m_hwnd, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
+		PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(pt.x, pt.y));
 		sleep(milliseconds(10));
 		m_lastMousePoint = { pt.x, pt.y };
 	}
@@ -487,7 +503,7 @@ bool WndHandler::GetOneFrame(cv::Mat& store, Time maxTime) {
 	if (g_askedForStop)
 		throw TaskExceptionCode::UserStop; // throw 0 表示停止
 	m_mat.copyTo(store);
-    return true;
+	return true;
 }
 
 WndHandler::SetReturnValue WndHandler::SetForDebugger(bool isGame) {
@@ -523,6 +539,64 @@ bool WndHandler::CopyMat() {
 		}
 	}
 	return false;
+}
+
+bool WndHandler::LoadHookInfo() {
+	m_hmod = LoadLibraryW(L"HookDll.dll");
+	if (m_hmod == NULL) {
+		CoreLog() << "Failed to Load Lobrary: " << ParseWin32Error() << std::endl;
+		return false;
+	}
+
+	m_hookproc = GetProcAddress(m_hmod, "DdoaHookProc");
+	if (m_hookproc == NULL) {
+		CoreLog() << "Failed to Get Procedure Address: " << ParseWin32Error() << std::endl;
+		ClearHookInfo();
+		return false;
+	}
+	return true;
+}
+
+bool WndHandler::TryHook() {
+	if (m_hookproc == NULL) {
+		return false;
+	}
+	if (m_hwnd == NULL) {
+		CoreLog() << "Window Not Found: " << ParseWin32Error() << std::endl;
+		return false;
+	}
+
+	DWORD pid = NULL;
+	DWORD tid = GetWindowThreadProcessId(m_hwnd, &pid);
+	if (tid == 0) {
+		CoreLog() << "Failed to Get Thread Id: " << ParseWin32Error() << std::endl;
+		return false;
+	}
+
+	HHOOK hhook = SetWindowsHookExA(
+		WH_GETMESSAGE,
+		(HOOKPROC)m_hookproc,
+		m_hmod,
+		tid
+	);
+	if (hhook == NULL) {
+		CoreLog() << "Failed to Set Hook: " << ParseWin32Error() << std::endl;
+		return false;
+	}
+	return true;
+}
+
+void WndHandler::DropHook() {
+	if (m_hhook != NULL)
+		UnhookWindowsHookEx(m_hhook);
+	m_hhook = NULL;
+}
+
+void WndHandler::ClearHookInfo() {
+	m_hookproc = NULL;
+	if (m_hmod != NULL)
+		FreeLibrary(m_hmod);
+	m_hmod = NULL;
 }
 
 }

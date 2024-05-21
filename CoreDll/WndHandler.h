@@ -165,6 +165,11 @@ protected:
 	*/
 	bool CopyMat();
 
+	bool LoadHookInfo();
+	bool TryHook();
+	void DropHook();
+	void ClearHookInfo();
+
 private:
 	HWND m_hwnd; // 窗口句柄
 	StateValue m_state; // 目标状态。
@@ -172,6 +177,10 @@ private:
 	POINT m_lastMousePoint; // 鼠标位置记录。
 	RECT m_workArea; // 工作区域（即除去任务栏）。
 	cv::Mat m_mat; // 截取到的帧的存储位置。
+
+	HMODULE m_hmod;
+	HHOOK m_hhook;
+	FARPROC m_hookproc;
 };
 
 }

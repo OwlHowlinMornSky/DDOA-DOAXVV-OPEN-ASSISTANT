@@ -131,4 +131,9 @@ void HelperWrapper::SetDoDailyShot(bool setDo) {
 	return;
 }
 
+void HelperWrapper::SetUseHook(bool use) {
+	ohms::Settings::WndHandler::DEFAULT.UseHook = use;
+	return;
+}
+
 }

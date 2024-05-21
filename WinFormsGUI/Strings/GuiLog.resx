@@ -144,6 +144,9 @@
   <data name="ChaStart" xml:space="preserve">
     <value>任务开始【挑战赛】</value>
   </data>
+  <data name="HookFailed" xml:space="preserve">
+    <value>创建挂钩失败</value>
+  </data>
   <data name="NotImplemented" xml:space="preserve">
     <value>尚未实现</value>
   </data>

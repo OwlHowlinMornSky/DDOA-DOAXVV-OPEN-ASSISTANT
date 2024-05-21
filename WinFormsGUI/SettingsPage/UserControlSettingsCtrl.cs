@@ -42,6 +42,7 @@ namespace WinFormsGUI.SettingsPage {
 
 		private void UserControlSettingsCtrl_Load(object sender, EventArgs e) {
 			radioBtn_CtrlInput.Checked = Settings.Core.Default.CtrlSendInput;
+			checkBox_Hook.Checked = Settings.Core.Default.UseHook;
 		}
 
 		private void RadioBtn_CtrlMsg_CheckedChanged(object sender, EventArgs e) {
@@ -52,6 +53,11 @@ namespace WinFormsGUI.SettingsPage {
 		private void RadioBtn_CtrlInput_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.CtrlSendInput = true;
 			Program.helper.SetMouseSendInputOrSendMessage(true);
+		}
+
+		private void CheckBox_Hook_CheckedChanged(object sender, EventArgs e) {
+			Settings.Core.Default.UseHook = checkBox_Hook.Checked;
+			Program.helper.SetUseHook(checkBox_Hook.Checked);
 		}
 	}
 }

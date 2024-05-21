@@ -71,6 +71,9 @@
     <ClCompile Include="Task_Daily.cpp">
       <Filter>Tasks</Filter>
     </ClCompile>
+    <ClCompile Include="WinCheck.cpp">
+      <Filter>Impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Helper.h">
@@ -153,6 +156,9 @@
     </ClInclude>
     <ClInclude Include="Settings_Daily.h">
       <Filter>Export\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="WinCheck.h">
+      <Filter>Impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

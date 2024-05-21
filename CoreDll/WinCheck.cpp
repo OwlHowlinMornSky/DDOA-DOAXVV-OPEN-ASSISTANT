@@ -18,25 +18,28 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "WinCheck.h"
+#include "framework.h"
 
-#include "API.h"
 
-namespace ohms::Settings {
+namespace {
 
-struct CORE_API WndHandler {
-	static WndHandler DEFAULT; // 本体在 Settings.cpp
-	WndHandler() :
-		UseSendInput(false), // 默认发窗口消息
-		UseHook(false),
-		Debug_ShowCapture(false),
-		Debug_DebugHandler(false) {}
+std::string ParseErrorCode(long code) {
+	DWORD lasterrcode = code;
+	LPSTR pBuffer = NULL;
+	std::string msgstr_en;// , msgstr_user;
+	FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+		NULL, lasterrcode, MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US), (LPSTR)&pBuffer, 0, NULL);
+	if (pBuffer) {
+		pBuffer[lstrlenA(pBuffer) - 1] = '\0';
+		msgstr_en.append(pBuffer);
+		LocalFree(pBuffer);
+	}
+	return msgstr_en;
+}
 
-	bool UseSendInput; // 选择控制鼠标。
-	bool UseHook;
+}
 
-	bool Debug_ShowCapture; // [调试] 是否显示截取到的帧。
-	bool Debug_DebugHandler; // [调试] 是否以DDOA调试器为目标。
-};
-
+std::string ParseWin32Error() {
+	return ::ParseErrorCode(GetLastError());
 }

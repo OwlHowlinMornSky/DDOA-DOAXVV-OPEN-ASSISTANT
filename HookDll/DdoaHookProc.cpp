@@ -18,25 +18,41 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "DdoaHookProc.h"
 
-#include "API.h"
+#ifdef __cplusplus    // If used by C++ code, 
+extern "C" {          // we need to export the C interface
+#endif
 
-namespace ohms::Settings {
+	DLL_API LRESULT CALLBACK DdoaHookProc(
+		_In_ int    code,
+		_In_ WPARAM wParam,
+		_In_ LPARAM lParam
+	) {
+		if (code < 0) {
+			return CallNextHookEx(NULL, code, wParam, lParam);
+		}
+		LPMSG msg = (LPMSG)lParam;
+		switch (msg->message) {
+		case WM_MOUSEMOVE:
+		{
+			POINTS pt = MAKEPOINTS(msg->lParam);
+			if (pt.y < 0)
+				break;
+			if (!(msg->wParam & MK_CONTROL))
+				msg->message = WM_NULL;
+			break;
+		}
+		case WM_LBUTTONDOWN:
+		{
+			if (!(msg->wParam & MK_CONTROL))
+				msg->message = NULL;
+			break;
+		}
+		}
+		return CallNextHookEx(NULL, code, wParam, lParam);
+	}
 
-struct CORE_API WndHandler {
-	static WndHandler DEFAULT; // 本体在 Settings.cpp
-	WndHandler() :
-		UseSendInput(false), // 默认发窗口消息
-		UseHook(false),
-		Debug_ShowCapture(false),
-		Debug_DebugHandler(false) {}
-
-	bool UseSendInput; // 选择控制鼠标。
-	bool UseHook;
-
-	bool Debug_ShowCapture; // [调试] 是否显示截取到的帧。
-	bool Debug_DebugHandler; // [调试] 是否以DDOA调试器为目标。
-};
-
+#ifdef __cplusplus
 }
+#endif

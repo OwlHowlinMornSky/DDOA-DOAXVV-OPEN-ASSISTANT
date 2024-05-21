@@ -26,6 +26,7 @@
 			gpBox_CtrlSet = new GroupBox();
 			radioBtn_CtrlInput = new RadioButton();
 			radioBtn_CtrlMsg = new RadioButton();
+			checkBox_Hook = new CheckBox();
 			gpBox_CtrlSet.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -67,10 +68,22 @@
 			radioBtn_CtrlMsg.UseVisualStyleBackColor = true;
 			radioBtn_CtrlMsg.CheckedChanged += RadioBtn_CtrlMsg_CheckedChanged;
 			// 
+			// checkBox_Hook
+			// 
+			checkBox_Hook.AutoSize = true;
+			checkBox_Hook.Location = new Point(3, 89);
+			checkBox_Hook.Name = "checkBox_Hook";
+			checkBox_Hook.Size = new Size(248, 21);
+			checkBox_Hook.TabIndex = 13;
+			checkBox_Hook.Text = "拦截用户的光标消息（按住CTRL时免除）";
+			checkBox_Hook.UseVisualStyleBackColor = true;
+			checkBox_Hook.CheckedChanged += CheckBox_Hook_CheckedChanged;
+			// 
 			// UserControlSettingsCtrl
 			// 
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
+			Controls.Add(checkBox_Hook);
 			Controls.Add(gpBox_CtrlSet);
 			Name = "UserControlSettingsCtrl";
 			Size = new Size(267, 376);
@@ -78,11 +91,13 @@
 			gpBox_CtrlSet.ResumeLayout(false);
 			gpBox_CtrlSet.PerformLayout();
 			ResumeLayout(false);
+			PerformLayout();
 		}
 
 		#endregion
 		private GroupBox gpBox_CtrlSet;
 		private RadioButton radioBtn_CtrlInput;
 		private RadioButton radioBtn_CtrlMsg;
+		private CheckBox checkBox_Hook;
 	}
 }

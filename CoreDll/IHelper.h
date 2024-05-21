@@ -69,6 +69,9 @@ public:
 	 * @brief 弹出返回消息
 	*/
 	virtual long msgPop() = 0;
+
+
+	virtual void GuiLogF(long fmt) = 0;
 };
 
 } // namespace ohms

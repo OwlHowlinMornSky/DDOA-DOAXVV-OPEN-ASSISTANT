@@ -58,7 +58,7 @@ public:
 	void GuiLogC_Stopped();
 	void GuiLogC_BtnToStop();
 	void GuiLogC_BtnToStart();
-	void GuiLogF(long fmt);
+	virtual void GuiLogF(long fmt) override;
 	void GuiLogF_S(long fmt, long str);
 	void GuiLogF_I(long fmt, long intval);
 	void GuiLogF_SI(long fmt, long str, long intval);

@@ -130,6 +130,8 @@ public enum class ReturnMessage : System::UInt32 {
 	TaskDailyBegin,
 	TaskDailyComplete,
 	TaskDailyFailed,
+
+	HookFailed,
 };
 
 }

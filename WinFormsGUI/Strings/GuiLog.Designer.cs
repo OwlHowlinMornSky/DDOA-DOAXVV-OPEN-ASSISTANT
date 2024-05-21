@@ -142,6 +142,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 创建挂钩失败 的本地化字符串。
+        /// </summary>
+        internal static string HookFailed {
+            get {
+                return ResourceManager.GetString("HookFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 尚未实现 的本地化字符串。
         /// </summary>
         internal static string NotImplemented {
