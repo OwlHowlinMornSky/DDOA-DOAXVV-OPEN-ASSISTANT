@@ -47,6 +47,7 @@ public:
 	virtual int setup(bool winrtInited = true) override;
 	virtual bool start() override;
 	virtual void askForStop() override;
+	virtual void resume() override;
 	virtual bool isRunning() override;
 	virtual long msgPop() override;
 
@@ -58,6 +59,7 @@ public:
 	void GuiLogC_Stopped();
 	void GuiLogC_BtnToStop();
 	void GuiLogC_BtnToStart();
+	void GuiLogC_Pause_S(long str);
 	virtual void GuiLogF(long fmt) override;
 	void GuiLogF_S(long fmt, long str);
 	void GuiLogF_I(long fmt, long intval);
@@ -72,6 +74,8 @@ public:
 	*/
 	void TaskError(long str);
 
+	void TaskWaitForResume(long str);
+
 // 内部的，具体实现。
 protected:
 	/**
@@ -82,6 +86,7 @@ protected:
 // 成员变量
 protected:
 	std::atomic_bool m_running; // 正在运行的标记。true为正在运行
+	std::atomic_bool m_paused;
 
 	std::queue<long> m_hrm; // 返回消息的队列
 	std::mutex m_hrm_mutex; // 返回消息的互斥体

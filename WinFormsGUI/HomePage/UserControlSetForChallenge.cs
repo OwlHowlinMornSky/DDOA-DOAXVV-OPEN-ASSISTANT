@@ -49,11 +49,17 @@ namespace WinFormsGUI {
 			}
 
 			checkBox_useCamFP.Checked = Settings.Core.Default.AutoUseCamFp;
+			checkBox_PauseForMannual.Checked = Settings.Core.Default.ChaPauseAndAskForManual;
 		}
 
 		private void CheckBox_useCamFP_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.AutoUseCamFp = checkBox_useCamFP.Checked;
 			Program.helper.SetUseCamFP(Settings.Core.Default.AutoUseCamFp);
+		}
+
+		private void CheckBox_PauseForMannual_CheckedChanged(object sender, EventArgs e) {
+			Settings.Core.Default.ChaPauseAndAskForManual = checkBox_PauseForMannual.Checked;
+			Program.helper.SetChaAskForManual(Settings.Core.Default.ChaPauseAndAskForManual);
 		}
 	}
 }

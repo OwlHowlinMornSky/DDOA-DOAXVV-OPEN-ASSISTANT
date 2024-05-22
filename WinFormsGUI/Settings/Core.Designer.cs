@@ -12,7 +12,7 @@ namespace WinFormsGUI.Settings {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.9.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.10.0.0")]
     internal sealed partial class Core : global::System.Configuration.ApplicationSettingsBase {
         
         private static Core defaultInstance = ((Core)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Core())));
@@ -140,6 +140,18 @@ namespace WinFormsGUI.Settings {
             }
             set {
                 this["UseHook"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ChaPauseAndAskForManual {
+            get {
+                return ((bool)(this["ChaPauseAndAskForManual"]));
+            }
+            set {
+                this["ChaPauseAndAskForManual"] = value;
             }
         }
     }

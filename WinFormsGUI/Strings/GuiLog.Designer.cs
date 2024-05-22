@@ -151,11 +151,29 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 请手动导航到比赛 的本地化字符串。
+        /// </summary>
+        internal static string ManualNavigateToChallengePage {
+            get {
+                return ResourceManager.GetString("ManualNavigateToChallengePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 尚未实现 的本地化字符串。
         /// </summary>
         internal static string NotImplemented {
             get {
                 return ResourceManager.GetString("NotImplemented", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 已暂停：{0} 的本地化字符串。
+        /// </summary>
+        internal static string Paused {
+            get {
+                return ResourceManager.GetString("Paused", resourceCulture);
             }
         }
         
@@ -480,6 +498,15 @@ namespace WinFormsGUI.Strings {
         internal static string WorkErrorInternalException {
             get {
                 return ResourceManager.GetString("WorkErrorInternalException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 任务继续 的本地化字符串。
+        /// </summary>
+        internal static string WorkResumed {
+            get {
+                return ResourceManager.GetString("WorkResumed", resourceCulture);
             }
         }
         

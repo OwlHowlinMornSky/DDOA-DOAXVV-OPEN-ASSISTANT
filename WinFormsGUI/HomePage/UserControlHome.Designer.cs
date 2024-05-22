@@ -28,6 +28,7 @@
 			panel_Settings = new Panel();
 			userControlLogger = new UserControlLogger();
 			panel_leftCtrl = new Panel();
+			button_Resume = new Button();
 			userControlList = new UserControlList();
 			button_Main = new Button();
 			timer_Main = new System.Windows.Forms.Timer(components);
@@ -76,6 +77,7 @@
 			// 
 			// panel_leftCtrl
 			// 
+			panel_leftCtrl.Controls.Add(button_Resume);
 			panel_leftCtrl.Controls.Add(userControlList);
 			panel_leftCtrl.Controls.Add(button_Main);
 			panel_leftCtrl.Dock = DockStyle.Fill;
@@ -84,6 +86,17 @@
 			panel_leftCtrl.Size = new Size(191, 354);
 			panel_leftCtrl.TabIndex = 4;
 			panel_leftCtrl.SizeChanged += Panel_LeftCtrl_SizeChanged;
+			// 
+			// button_Resume
+			// 
+			button_Resume.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+			button_Resume.Location = new Point(96, 302);
+			button_Resume.Name = "button_Resume";
+			button_Resume.Size = new Size(92, 49);
+			button_Resume.TabIndex = 3;
+			button_Resume.Text = "继续";
+			button_Resume.UseVisualStyleBackColor = true;
+			button_Resume.Click += Button_Resume_Click;
 			// 
 			// userControlList
 			// 
@@ -135,5 +148,6 @@
 		private Button button_Main;
 		private System.Windows.Forms.Timer timer_Main;
 		private UserControlList userControlList;
+		private Button button_Resume;
 	}
 }

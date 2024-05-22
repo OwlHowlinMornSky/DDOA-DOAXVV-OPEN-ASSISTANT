@@ -29,7 +29,13 @@ namespace WinFormsGUI {
 		/// <summary>
 		/// 当前主按钮状态
 		/// </summary>
-		private bool m_btnMainIsStart = true;
+		//private bool m_btnMainIsStart = true;
+		internal enum BtmMainStatus {
+			Start = 0,
+			Stop
+		};
+		private BtmMainStatus m_btnMainStatus = BtmMainStatus.Start;
+
 		/// <summary>
 		/// 发托盘消息的回调，应由根窗口设置。
 		/// </summary>
@@ -135,6 +141,7 @@ namespace WinFormsGUI {
 		/// 控件加载时
 		/// </summary>
 		private void UserControlHome_Load(object sender, EventArgs e) {
+			button_Resume.Visible = false;
 			SetListMiddle();
 			button_Main.Text = Strings.Main.Btn_Main_Start;
 		}
@@ -151,7 +158,13 @@ namespace WinFormsGUI {
 		/// </summary>
 		private void SetListMiddle() {
 			userControlList.Left = (panel_leftCtrl.Width - userControlList.Width) / 2;
-			button_Main.Left = (panel_leftCtrl.Width - button_Main.Width) / 2;
+			if (button_Resume.Visible) {
+				button_Main.Left = panel_leftCtrl.Width / 2 - button_Main.Width - 2;
+				button_Resume.Left = panel_leftCtrl.Width / 2 + 2;
+			}
+			else {
+				button_Main.Left = (panel_leftCtrl.Width - button_Main.Width) / 2;
+			}
 		}
 
 		/// <summary>
@@ -166,7 +179,8 @@ namespace WinFormsGUI {
 		/// </summary>
 		private void Button_Main_Click(object sender, EventArgs e) {
 			button_Main.Enabled = false;
-			if (m_btnMainIsStart) { // Link Start！
+			switch (m_btnMainStatus) {
+			case BtmMainStatus.Start: {
 				WorkStatusLocker.WorkLock(); // 锁定GUI
 				uint[] list = [.. userControlList.GetEnabledList()];
 				ClearLog(); // 清空进度提示。
@@ -182,27 +196,24 @@ namespace WinFormsGUI {
 					return;
 				}
 				timer_Main.Enabled = true; // 启动Timer获取回执信息。
+				break;
 			}
-			else { // 要求停止
+			case BtmMainStatus.Stop: { // 要求停止
 				Program.helper.AskForStop();
+				break;
+			}
 			}
 		}
 
-		private string GetLogStringFromResx(string name) {
-			string res = Strings.GuiLog.ResourceManager.GetString(name);
-			if (res == null) {
-				res = name;
-				/*MessageBox.Show(
-					string.Format(Strings.Main.NoSuchLogString, name),
-					Text,
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error
-				);*/
-			}
-			return res;
+		private void Button_Resume_Click(object sender, EventArgs e) {
+			Program.helper.Resume();
 		}
 
-		private bool GetLogColorFromResx(string name, out Color clr) {
+		private static string GetLogStringFromResx(string name) {
+			return Strings.GuiLog.ResourceManager.GetString(name) ?? name;
+		}
+
+		private static bool GetLogColorFromResx(string name, out Color clr) {
 			string res = Strings.GuiLogClr.ResourceManager.GetString(name);
 			if (res == null) {
 				clr = Color.White;
@@ -212,18 +223,8 @@ namespace WinFormsGUI {
 			return true;
 		}
 
-		private string GetTaskNameFromResx(int i) {
-			string res = Strings.Main.ResourceManager.GetString("Task" + i.ToString("000"));
-			if (res == null) {
-				res = $"#{i}";
-				/*MessageBox.Show(
-					string.Format(Strings.Main.NoSuchTaskStr, res),
-					Text,
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error
-				);*/
-			}
-			return res;
+		private static string GetTaskNameFromResx(int i) {
+			return Strings.Main.ResourceManager.GetString("Task" + i.ToString("000")) ?? $"#{i}";
 		}
 
 		/// <summary>
@@ -249,13 +250,30 @@ namespace WinFormsGUI {
 				case ReturnCmd.CMD_BtnToStop:
 					button_Main.Text = Strings.Main.Btn_Main_Stop;
 					button_Main.Enabled = true;
-					m_btnMainIsStart = false;
+					m_btnMainStatus = BtmMainStatus.Stop;
+					button_Resume.Visible = false;
+					SetListMiddle();
 					break;
 				case ReturnCmd.CMD_BtnToStart:
 					button_Main.Text = Strings.Main.Btn_Main_Start;
 					button_Main.Enabled = true;
-					m_btnMainIsStart = true;
+					m_btnMainStatus = BtmMainStatus.Start;
+					button_Resume.Visible = false;
+					SetListMiddle();
 					break;
+				case ReturnCmd.CMD_Pause_F: {
+					button_Resume.Visible = true;
+					SetListMiddle();
+					var msg = Program.helper.GetMessage();
+					string description = GetLogStringFromResx(msg.ToString());
+					string t = string.Format(Strings.GuiLog.Paused, description);
+					if (GetLogColorFromResx(msg.ToString(), out var color))
+						Log(t, color);
+					else
+						Log(t);
+					MyPopNotification(Strings.Main.TaskPaused, description, ToolTipIcon.Info);
+					break;
+				}
 				case ReturnCmd.LOG_Format: {
 					var msg = Program.helper.GetMessage();
 					switch (msg) {
@@ -381,6 +399,5 @@ namespace WinFormsGUI {
 				userControlLogger.LogProcessStatusChange(false);
 			return;
 		}
-
 	}
 }

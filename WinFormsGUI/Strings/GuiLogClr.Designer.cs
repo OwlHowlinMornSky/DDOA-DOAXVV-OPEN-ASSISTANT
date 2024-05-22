@@ -61,7 +61,16 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
-        ///   查找类似 0000FFFF 的本地化字符串。
+        ///   查找类似 ARGB 的本地化字符串。
+        /// </summary>
+        internal static string a000 {
+            get {
+                return ResourceManager.GetString("a000", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 FFFF0000 的本地化字符串。
         /// </summary>
         internal static string HookFailed {
             get {
@@ -75,6 +84,15 @@ namespace WinFormsGUI.Strings {
         internal static string TaskDailyFailed {
             get {
                 return ResourceManager.GetString("TaskDailyFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 FF226611 的本地化字符串。
+        /// </summary>
+        internal static string WorkResumed {
+            get {
+                return ResourceManager.GetString("WorkResumed", resourceCulture);
             }
         }
         

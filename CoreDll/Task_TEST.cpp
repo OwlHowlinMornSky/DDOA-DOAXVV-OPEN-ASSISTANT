@@ -28,6 +28,8 @@ namespace ohms {
 bool Task_TEST::Run(Helper& h) {
 	h.GuiLogF(ReturnMsgEnum::TestTaskBegin);
 
+	h.TaskWaitForResume(ReturnMsgEnum::ManualNavigateToChallengePage);
+
 	TaskSleep(12.0_sec);
 
 	h.GuiLogF(ReturnMsgEnum::TestTaskEnd);

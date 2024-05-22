@@ -31,6 +31,7 @@ public enum class ReturnCmd : System::UInt32 {
 	CMD_Stopped,    // 任务已停止。
 	CMD_BtnToStop,  // 按钮切换为 “停止”。
 	CMD_BtnToStart, // 按钮切换为 “开始”。
+	CMD_Pause_F,    // 暂停并提示
 
 	LOG_Format,
 	LOG_Format_S,
@@ -78,6 +79,7 @@ public enum class ReturnMessage : System::UInt32 {
 	WorkStopping, // askForStop 的 正在停止
 	WorkStopped, // 工作已停止（用户操作）
 	WorkComplete, // 工作完成
+	WorkResumed,
 
 	WorkError, // 【暂未使用】
 	WorkErrorInternalException, // 工作遇到未知类型的异常
@@ -132,6 +134,9 @@ public enum class ReturnMessage : System::UInt32 {
 	TaskDailyFailed,
 
 	HookFailed,
+
+	ManualNavigateToChallengePage
+
 };
 
 }

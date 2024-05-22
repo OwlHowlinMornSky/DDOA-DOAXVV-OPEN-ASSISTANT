@@ -32,6 +32,7 @@
 
 #include "CoreLog.h"
 #include "ITask.h"
+#include "Sleep.h"
 
 namespace ohms {
 
@@ -121,6 +122,10 @@ void Helper::askForStop() {
 	return;
 }
 
+void Helper::resume() {
+	m_paused = false;
+}
+
 bool Helper::isRunning() {
 	return m_running;
 }
@@ -153,6 +158,13 @@ void Helper::GuiLogC_BtnToStop() {
 void Helper::GuiLogC_BtnToStart() {
 	std::lock_guard lg(m_hrm_mutex); // 上锁
 	m_hrm.push(ReturnMsgCmd::CMD_BtnToStart);
+}
+
+void Helper::GuiLogC_Pause_S(long str) {
+	std::lock_guard lg(m_hrm_mutex); // 上锁
+	m_hrm.push(ReturnMsgCmd::CMD_Pause_F);
+	m_hrm.push(str);
+	return;
 }
 
 void Helper::GuiLogF(long fmt) {
@@ -210,6 +222,20 @@ void Helper::TaskError(long str) {
 	CoreLog() << "TaskError: Code: " << str << std::endl;
 	GuiLogF_S(ReturnMsgEnum::TaskErr_Format, str);
 	throw TaskExceptionCode::KnownErrorButNotCritical; // 要求停止
+}
+
+void Helper::TaskWaitForResume(long str) {
+	m_paused = true;
+	GuiLogC_Pause_S(str);
+	while (m_paused) {
+		sleep(50_msec);
+		if (g_askedForStop) {
+			throw 0;
+		}
+	}
+	GuiLogF(ReturnMsgEnum::WorkResumed);
+	GuiLogC_BtnToStop(); // 让主按钮变为stop
+	return;
 }
 
 void Helper::Work() {

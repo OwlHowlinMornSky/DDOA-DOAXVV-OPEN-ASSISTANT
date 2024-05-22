@@ -147,8 +147,14 @@
   <data name="HookFailed" xml:space="preserve">
     <value>创建挂钩失败</value>
   </data>
+  <data name="ManualNavigateToChallengePage" xml:space="preserve">
+    <value>请手动导航到比赛</value>
+  </data>
   <data name="NotImplemented" xml:space="preserve">
     <value>尚未实现</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>已暂停：{0}</value>
   </data>
   <data name="TaskComplete" xml:space="preserve">
     <value>任务完成</value>
@@ -262,6 +268,9 @@
   </data>
   <data name="WorkErrorInternalException" xml:space="preserve">
     <value>工作异常</value>
+  </data>
+  <data name="WorkResumed" xml:space="preserve">
+    <value>任务继续</value>
   </data>
   <data name="WorkStartErrRunning" xml:space="preserve">
     <value>不能重复运行任务</value>

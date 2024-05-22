@@ -174,4 +174,7 @@
   <data name="TaskListNotSelected" xml:space="preserve">
     <value>未选择任务</value>
   </data>
+  <data name="TaskPaused" xml:space="preserve">
+    <value>任务暂停</value>
+  </data>
 </root>

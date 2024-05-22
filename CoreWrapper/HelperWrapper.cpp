@@ -43,6 +43,10 @@ System::Void HelperWrapper::AskForStop() {
 	r_helper->askForStop();
 }
 
+System::Void HelperWrapper::Resume() {
+	r_helper->resume();
+}
+
 System::Boolean HelperWrapper::IsRunning() {
 	return r_helper->isRunning();
 }
@@ -133,6 +137,11 @@ void HelperWrapper::SetDoDailyShot(bool setDo) {
 
 void HelperWrapper::SetUseHook(bool use) {
 	ohms::Settings::WndHandler::DEFAULT.UseHook = use;
+	return;
+}
+
+void HelperWrapper::SetChaAskForManual(bool ask) {
+	ohms::Settings::Challenge::DEFAULT.AskForManual = ask;
 	return;
 }
 

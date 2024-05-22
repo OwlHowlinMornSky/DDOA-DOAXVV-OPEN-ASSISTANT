@@ -77,6 +77,11 @@ bool Task_Challenge::Run(Helper& h) {
 		unsigned long playAwardCnt = 0; // 奖励挑战赛次数
 
 		//Task_Navigate::Instance()->ShakeCursor();
+		if (Settings::Challenge::DEFAULT.AskForManual) {
+			r_handler->Reset();
+			h.TaskWaitForResume(ReturnMsgEnum::ManualNavigateToChallengePage);
+			r_handler->SetForGame();
+		}
 
 		while (true) {
 			CoreLog() << "Task.Challenge: Loop Begin." << std::endl;

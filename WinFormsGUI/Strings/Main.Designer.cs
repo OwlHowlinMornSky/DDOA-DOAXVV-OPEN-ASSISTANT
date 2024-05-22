@@ -230,5 +230,14 @@ namespace WinFormsGUI.Strings {
                 return ResourceManager.GetString("TaskListNotSelected", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 任务暂停 的本地化字符串。
+        /// </summary>
+        internal static string TaskPaused {
+            get {
+                return ResourceManager.GetString("TaskPaused", resourceCulture);
+            }
+        }
     }
 }

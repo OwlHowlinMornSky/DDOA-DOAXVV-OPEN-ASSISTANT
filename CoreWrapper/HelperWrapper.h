@@ -44,6 +44,7 @@ public:
 	 * @brief 要求停止（IHelper::askForStop）
 	 */
 	System::Void AskForStop();
+	System::Void Resume();
 	/**
 	 * @brief 是否正在运行（IHelper::isRunning）
 	 * @return 是否运行
@@ -136,6 +137,8 @@ public:
 	void SetDoDailyShot(bool setDo);
 
 	void SetUseHook(bool use);
+
+	void SetChaAskForManual(bool ask);
 
 private:
 	ohms::IHelper* r_helper;

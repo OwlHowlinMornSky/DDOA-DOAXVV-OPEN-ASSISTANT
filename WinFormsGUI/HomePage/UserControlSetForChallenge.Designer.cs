@@ -31,6 +31,7 @@
 			radioBtn_NewMatch = new RadioButton();
 			radioBtn_PreviousMatch = new RadioButton();
 			checkBox_useCamFP = new CheckBox();
+			checkBox_PauseForMannual = new CheckBox();
 			gpBox_AwardMatch.SuspendLayout();
 			gpBox_TargetMatch.SuspendLayout();
 			SuspendLayout();
@@ -133,10 +134,22 @@
 			checkBox_useCamFP.UseVisualStyleBackColor = true;
 			checkBox_useCamFP.CheckedChanged += CheckBox_useCamFP_CheckedChanged;
 			// 
+			// checkBox_PauseForMannual
+			// 
+			checkBox_PauseForMannual.AutoSize = true;
+			checkBox_PauseForMannual.Location = new Point(9, 229);
+			checkBox_PauseForMannual.Name = "checkBox_PauseForMannual";
+			checkBox_PauseForMannual.Size = new Size(195, 21);
+			checkBox_PauseForMannual.TabIndex = 7;
+			checkBox_PauseForMannual.Text = "开始任务时暂停并请求手动导航";
+			checkBox_PauseForMannual.UseVisualStyleBackColor = true;
+			checkBox_PauseForMannual.CheckedChanged += CheckBox_PauseForMannual_CheckedChanged;
+			// 
 			// UserControlSetForChallenge
 			// 
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
+			Controls.Add(checkBox_PauseForMannual);
 			Controls.Add(checkBox_useCamFP);
 			Controls.Add(gpBox_AwardMatch);
 			Controls.Add(gpBox_TargetMatch);
@@ -161,5 +174,6 @@
 		private RadioButton radioBtn_NewMatch;
 		private RadioButton radioBtn_PreviousMatch;
 		private CheckBox checkBox_useCamFP;
+		private CheckBox checkBox_PauseForMannual;
 	}
 }

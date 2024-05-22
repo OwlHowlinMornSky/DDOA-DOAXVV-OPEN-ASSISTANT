@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="a000" xml:space="preserve">
+    <value>ARGB</value>
+  </data>
   <data name="HookFailed" xml:space="preserve">
-    <value>0000FFFF</value>
+    <value>FFFF0000</value>
   </data>
   <data name="TaskDailyFailed" xml:space="preserve">
     <value>FFFF0000</value>
+  </data>
+  <data name="WorkResumed" xml:space="preserve">
+    <value>FF226611</value>
   </data>
   <data name="WorkStopped" xml:space="preserve">
     <value>FF0000FF</value>

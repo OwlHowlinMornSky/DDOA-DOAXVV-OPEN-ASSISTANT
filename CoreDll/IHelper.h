@@ -59,6 +59,9 @@ public:
 	 * @brief 请求停止
 	*/
 	virtual void askForStop() = 0;
+
+	virtual void resume() = 0;
+
 	/**
 	 * @brief 是否正在运行任务
 	 * @return true则正在运行
