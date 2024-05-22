@@ -573,13 +573,13 @@ bool WndHandler::TryHook() {
 		return false;
 	}
 
-	HHOOK hhook = SetWindowsHookExA(
+	m_hhook = SetWindowsHookExA(
 		WH_GETMESSAGE,
 		(HOOKPROC)m_hookproc,
 		m_hmod,
 		tid
 	);
-	if (hhook == NULL) {
+	if (m_hhook == NULL) {
 		CoreLog() << "Failed to Set Hook: " << ParseWin32Error() << std::endl;
 		return false;
 	}
