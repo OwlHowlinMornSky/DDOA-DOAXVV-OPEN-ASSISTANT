@@ -80,7 +80,7 @@ enum CORE_API ReturnMessage : long {
 	WorkStopping, // askForStop 的 正在停止
 	WorkStopped, // 工作已停止（用户操作）
 	WorkComplete, // 工作完成
-	WorkResumed,
+	WorkResumed, // 工作继续
 
 	WorkError, // 【暂未使用】
 	WorkErrorInternalException, // 工作遇到未知类型的异常
@@ -88,7 +88,7 @@ enum CORE_API ReturnMessage : long {
 	TaskStop, // 任务中止（用户操作）
 	TaskComplete, // 任务完成
 	TaskException, // 任务遇到未知类型的异常
-	TaskErr_Format, // TaskError
+	TaskErr_Format, // TaskError + 描述
 
 	ChaStart, // 任务开始：挑战赛
 	ChaBegin_I, // 比赛开始（下跟次数！）
@@ -116,27 +116,27 @@ enum CORE_API ReturnMessage : long {
 
 	NotImplemented, // 尚未实现
 
-	TestTaskBegin,
-	TestTaskEnd,
+	TestTaskBegin, // 测试任务开始
+	TestTaskEnd, // 测试任务结束
 
-	TaskErr_F_SI,
-	TaskErrCommonTLE, 
+	TaskErr_F_SI, // 任务出错 + 文本 + 数字
+	TaskErrCommonTLE, // 【描述】一般超时
 
-	TaskStartUpBegin,
-	TaskStartUpComplete,
-	TaskStartUpFailed,
+	TaskStartUpBegin, // 启动游戏任务开始
+	TaskStartUpComplete, // 启动游戏任务完成
+	TaskStartUpFailed, // 启动游戏任务失败
 
-	Test_II,
+	Test_II, // 测试 + 两个数字
 
 	TaskErr_Task, // 任务出错【{任务名}】
 
-	TaskDailyBegin,
-	TaskDailyComplete,
-	TaskDailyFailed,
+	TaskDailyBegin, // 日常任务开始
+	TaskDailyComplete, // 日常任务完成
+	TaskDailyFailed, // 日常任务失败
 
-	HookFailed,
+	HookFailed, // 挂钩失败
 
-	ManualNavigateToChallengePage,
+	ManualNavigateToChallengePage, // 【描述】【暂停】请求手动导航【挑战赛】
 
 };
 }

@@ -72,7 +72,15 @@ public:
 	 */
 	bool Update();
 
+	/**
+	 * @brief 检查启动器窗口是否存在。
+	 * @return true 则存在。
+	 */
 	bool LaucherAvailable();
+	/**
+	 * @brief 检查游戏窗口是否存在。
+	 * @return true 则存在。
+	 */
 	bool GameWndAvailable();
 
 	/**
@@ -123,7 +131,6 @@ public:
 	*/
 	bool MoveMouseTo(cv::Point pt);
 
-
 	/**
 	 * @brief 持续点击指定位置，直到画面出现目标。askedForStop则 throw 0
 	 * @param clkPt 指定点击位置，范围与 step_click 一致
@@ -135,7 +142,6 @@ public:
 	bool KeepClickingUntil(
 		const cv::Point clkPt, const MatchTemplate& _temp, Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f)
 	);
-
 	/**
 	 * @brief 持续点击指定位置，直到画面没有目标。askedForStop则 throw 0
 	 * @param clkPt 指定点击位置，范围与 step_click 一致
@@ -148,6 +154,12 @@ public:
 		const cv::Point clkPt, const MatchTemplate& _temp, Time maxTime = seconds(10.0f), Time clkTime = seconds(1.0f)
 	);
 
+	/**
+	 * @brief 对目前设定窗口截取一帧。
+	 * @param store 保存这一帧的地方。
+	 * @param maxTime 最大等待时间。
+	 * @return true 则已获取，否则超时。
+	 */
 	bool GetOneFrame(cv::Mat& store, Time maxTime = seconds(10.0f));
 
 protected:
@@ -165,9 +177,23 @@ protected:
 	*/
 	bool CopyMat();
 
+	/**
+	 * @brief 加载挂钩模块，并从中获取挂钩过程。
+	 * @return 是否成功。
+	 */
 	bool LoadHookInfo();
+	/**
+	 * @brief 尝试给当前目标挂钩。
+	 * @return 是否成功。
+	 */
 	bool TryHook();
+	/**
+	 * @brief 注销挂钩。
+	 */
 	void DropHook();
+	/**
+	 * @brief 释放挂钩模块。
+	 */
 	void ClearHookInfo();
 
 private:
@@ -178,9 +204,9 @@ private:
 	RECT m_workArea; // 工作区域（即除去任务栏）。
 	cv::Mat m_mat; // 截取到的帧的存储位置。
 
-	HMODULE m_hmod;
-	HHOOK m_hhook;
-	FARPROC m_hookproc;
+	HMODULE m_hmod; // 挂钩模块。
+	FARPROC m_hookproc; // 挂钩过程。
+	HHOOK m_hhook; // 挂钩。
 };
 
 }

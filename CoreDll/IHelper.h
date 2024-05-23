@@ -59,7 +59,9 @@ public:
 	 * @brief 请求停止
 	*/
 	virtual void askForStop() = 0;
-
+	/**
+	 * @brief 继续任务。
+	 */
 	virtual void resume() = 0;
 
 	/**
@@ -73,7 +75,10 @@ public:
 	*/
 	virtual long msgPop() = 0;
 
-
+	/**
+	 * @brief 向主界面日志添加一条文本。
+	 * @param fmt 文本编号。
+	 */
 	virtual void GuiLogF(long fmt) = 0;
 };
 

@@ -31,14 +31,14 @@ struct CORE_API Challenge {
 		EnterAddition(true), // 默认进入奖励挑战赛
 		CheckAddition(false), // 默认不检查奖励挑战赛
 		AutoUseCamFP(false), // 默认不使用拍摄补充FP。
-		AskForManual(false)
+		AskForManual(false) // 默认不暂停
 	{}
 
 	bool PlayNewMatchOrPrevious; // 选择新比赛。
 	bool EnterAddition; // 进入奖励挑战赛。
 	bool CheckAddition; // 是否检查奖励挑战赛。
 	bool AutoUseCamFP; // 是否自动使用每日拍摄的补充FP。
-	bool AskForManual;
+	bool AskForManual; // 是否在开始时请求手动导航。
 };
 
 }

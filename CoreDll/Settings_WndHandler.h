@@ -28,12 +28,12 @@ struct CORE_API WndHandler {
 	static WndHandler DEFAULT; // 本体在 Settings.cpp
 	WndHandler() :
 		UseSendInput(false), // 默认发窗口消息
-		UseHook(false),
+		UseHook(false), // 默认不使用挂钩
 		Debug_ShowCapture(false),
 		Debug_DebugHandler(false) {}
 
 	bool UseSendInput; // 选择控制鼠标。
-	bool UseHook;
+	bool UseHook; // 是否使用挂钩。
 
 	bool Debug_ShowCapture; // [调试] 是否显示截取到的帧。
 	bool Debug_DebugHandler; // [调试] 是否以DDOA调试器为目标。

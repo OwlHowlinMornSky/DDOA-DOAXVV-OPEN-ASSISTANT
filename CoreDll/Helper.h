@@ -66,6 +66,11 @@ public:
 	void GuiLogF_SI(long fmt, long str, long intval);
 	void GuiLogF_II(long fmt, long intval0, long intval1);
 
+	/**
+	 * @brief 从模板列表读取模板创建，并读取图片文件。
+	 * @param name 模板名称。
+	 * @return 创建结果，为nullptr说明出错。
+	 */
 	std::unique_ptr<MatchTemplate> CreateTemplate(const std::string& name);
 
 	/**
@@ -74,6 +79,10 @@ public:
 	*/
 	void TaskError(long str);
 
+	/**
+	 * @brief 发送等待日志并暂停，直到手动恢复。
+	 * @param str 暂停原因描述。
+	 */
 	void TaskWaitForResume(long str);
 
 // 内部的，具体实现。
@@ -86,7 +95,7 @@ protected:
 // 成员变量
 protected:
 	std::atomic_bool m_running; // 正在运行的标记。true为正在运行
-	std::atomic_bool m_paused;
+	std::atomic_bool m_paused; // 是否已暂停。
 
 	std::queue<long> m_hrm; // 返回消息的队列
 	std::mutex m_hrm_mutex; // 返回消息的互斥体
@@ -99,7 +108,7 @@ protected:
 /*
 * note:
 * 
-* throw 0 的原因：subwork通过catch到0判断任务停止。
+* throw 0 的原因：task/work通过catch到0判断任务停止。
 * 
 */
 
