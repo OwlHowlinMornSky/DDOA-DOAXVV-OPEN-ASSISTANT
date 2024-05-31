@@ -145,4 +145,9 @@ void HelperWrapper::SetChaAskForManual(bool ask) {
 	return;
 }
 
+void HelperWrapper::SetChaAutoUseDrink(bool use) {
+	ohms::Settings::Challenge::DEFAULT.AutoUseDrink = use;
+	return;
+}
+
 }

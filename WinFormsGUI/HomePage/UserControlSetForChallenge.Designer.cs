@@ -32,6 +32,7 @@
 			radioBtn_PreviousMatch = new RadioButton();
 			checkBox_useCamFP = new CheckBox();
 			checkBox_PauseForMannual = new CheckBox();
+			checkBox_autoUseDrink = new CheckBox();
 			gpBox_AwardMatch.SuspendLayout();
 			gpBox_TargetMatch.SuspendLayout();
 			SuspendLayout();
@@ -130,14 +131,14 @@
 			checkBox_useCamFP.Name = "checkBox_useCamFP";
 			checkBox_useCamFP.Size = new Size(172, 21);
 			checkBox_useCamFP.TabIndex = 6;
-			checkBox_useCamFP.Text = "自动使用拍摄回复FP的机会";
+			checkBox_useCamFP.Text = "自动使用拍摄恢复FP的机会";
 			checkBox_useCamFP.UseVisualStyleBackColor = true;
 			checkBox_useCamFP.CheckedChanged += CheckBox_useCamFP_CheckedChanged;
 			// 
 			// checkBox_PauseForMannual
 			// 
 			checkBox_PauseForMannual.AutoSize = true;
-			checkBox_PauseForMannual.Location = new Point(9, 229);
+			checkBox_PauseForMannual.Location = new Point(9, 256);
 			checkBox_PauseForMannual.Name = "checkBox_PauseForMannual";
 			checkBox_PauseForMannual.Size = new Size(195, 21);
 			checkBox_PauseForMannual.TabIndex = 7;
@@ -145,10 +146,22 @@
 			checkBox_PauseForMannual.UseVisualStyleBackColor = true;
 			checkBox_PauseForMannual.CheckedChanged += CheckBox_PauseForMannual_CheckedChanged;
 			// 
+			// checkBox_autoUseDrink
+			// 
+			checkBox_autoUseDrink.AutoSize = true;
+			checkBox_autoUseDrink.Location = new Point(9, 229);
+			checkBox_autoUseDrink.Name = "checkBox_autoUseDrink";
+			checkBox_autoUseDrink.Size = new Size(136, 21);
+			checkBox_autoUseDrink.TabIndex = 8;
+			checkBox_autoUseDrink.Text = "自动使用FP恢复饮料";
+			checkBox_autoUseDrink.UseVisualStyleBackColor = true;
+			checkBox_autoUseDrink.CheckedChanged += CheckBox_autoUseDrink_CheckedChanged;
+			// 
 			// UserControlSetForChallenge
 			// 
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
+			Controls.Add(checkBox_autoUseDrink);
 			Controls.Add(checkBox_PauseForMannual);
 			Controls.Add(checkBox_useCamFP);
 			Controls.Add(gpBox_AwardMatch);
@@ -175,5 +188,6 @@
 		private RadioButton radioBtn_PreviousMatch;
 		private CheckBox checkBox_useCamFP;
 		private CheckBox checkBox_PauseForMannual;
+		private CheckBox checkBox_autoUseDrink;
 	}
 }

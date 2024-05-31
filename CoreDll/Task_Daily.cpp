@@ -60,6 +60,10 @@ bool Task_Daily::Run(Helper& h) {
 
 		h.GuiLogF(ReturnMsgEnum::TaskDailyComplete);
 	}
+	catch (int e) {
+		if (e != 0)
+			h.GuiLogF(ReturnMsgEnum::TaskDailyFailed);
+	}
 	catch (...) {
 		h.GuiLogF(ReturnMsgEnum::TaskDailyFailed);
 	}

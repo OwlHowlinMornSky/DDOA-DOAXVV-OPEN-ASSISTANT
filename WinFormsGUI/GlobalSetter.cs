@@ -45,6 +45,8 @@ namespace WinFormsGUI {
 			Program.helper.SetUseHook(Settings.Core.Default.UseHook);
 
 			Program.helper.SetChaAskForManual(Settings.Core.Default.ChaPauseAndAskForManual);
+
+			Program.helper.SetChaAutoUseDrink(Settings.Core.Default.AutoUseDrink);
 		}
 
 		internal static void SaveSettings() {

@@ -69,6 +69,8 @@ bool Task_Challenge::Run(Helper& h) {
 		m_camFpNo = h.CreateTemplate("cha/shotFpNo");
 		m_camFpComf[0] = h.CreateTemplate("UseFpComf0");
 		m_camFpComf[1] = h.CreateTemplate("UseFpComf1");
+		m_camFpDrink = h.CreateTemplate("cha/drink");
+		m_camFpDrinkComf = h.CreateTemplate("cha/drinkComf");
 		CoreLog() << "Task.Challenge: Finish Load Templates." << std::endl;
 
 		cv::Point pt;
@@ -84,6 +86,7 @@ bool Task_Challenge::Run(Helper& h) {
 		}
 
 		while (true) {
+			bool triedUseDrink = false;
 			CoreLog() << "Task.Challenge: Loop Begin." << std::endl;
 			// 检查导航位置
 			switch (Task_Navigate::Instance()->TryToDeterminePage()) {
@@ -163,7 +166,7 @@ bool Task_Challenge::Run(Helper& h) {
 					break;
 				case 1:
 					CoreLog() << "Task.Challenge: Start Match Loop: Low FP." << std::endl;
-					if (!m_set.AutoUseCamFP) { // 使用cam补充fp
+					if (!m_set.AutoUseCamFP && !m_set.AutoUseDrink) { // 使用cam补充fp
 						CoreLog() << "Task.Challenge: Task Over: Setted No Use FP." << std::endl;
 						throw TaskExceptionCode::TaskComplete;
 					}
@@ -197,8 +200,29 @@ bool Task_Challenge::Run(Helper& h) {
 						break;
 					}
 					default:
-						CoreLog() << "Task.Challenge: Task Over: No FP." << std::endl;
-						throw TaskExceptionCode::TaskComplete;
+						CoreLog() << "Task.Challenge: No FP." << std::endl;
+						if (!m_set.AutoUseDrink || r_handler->WaitFor(*m_camFpDrink, 2.0_sec) == -1) {
+							CoreLog() << "Task.Challenge: Task Over: No Use Drink." << std::endl;
+							throw TaskExceptionCode::TaskComplete;
+						}
+						if (triedUseDrink) {
+							CoreLog() << "Task.Challenge: Task Over: No Drink." << std::endl;
+							throw TaskExceptionCode::TaskComplete;
+						}
+						r_handler->ClickAt(m_camFpDrink->GetSpecialPointInResult(0));
+						TaskSleep(500_msec);
+						r_handler->ClickAt(m_camFpDrink->GetSpecialPointInResult(1));
+						TaskSleep(500_msec);
+						if (r_handler->WaitFor(*m_camFpDrinkComf, 2.0_sec) == -1) {
+							CoreLog() << "Task.Challenge: Task Over: Drink No Ok." << std::endl;
+							throw TaskExceptionCode::TaskComplete;
+						}
+						if (!r_handler->KeepClickingUntil(m_camFpDrinkComf->GetSpecialPointInResult(0), *temp_startGame)) {
+							CoreLog() << "Task.Challenge: Task Over: Try to Use Drink: No Close." << std::endl;
+							throw TaskExceptionCode::TaskComplete;
+						}
+						CoreLog() << "Task.Challenge: Try to Use Drink: OK." << std::endl;
+						triedUseDrink = true;
 					}
 					break;
 				}

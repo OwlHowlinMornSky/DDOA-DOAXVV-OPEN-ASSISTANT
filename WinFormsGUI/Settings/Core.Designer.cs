@@ -154,5 +154,17 @@ namespace WinFormsGUI.Settings {
                 this["ChaPauseAndAskForManual"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoUseDrink {
+            get {
+                return ((bool)(this["AutoUseDrink"]));
+            }
+            set {
+                this["AutoUseDrink"] = value;
+            }
+        }
     }
 }

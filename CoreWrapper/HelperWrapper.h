@@ -139,6 +139,7 @@ public:
 	void SetUseHook(bool use);
 
 	void SetChaAskForManual(bool ask);
+	void SetChaAutoUseDrink(bool use);
 
 private:
 	ohms::IHelper* r_helper;

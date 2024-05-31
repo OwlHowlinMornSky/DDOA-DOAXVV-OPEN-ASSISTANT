@@ -50,6 +50,7 @@ namespace WinFormsGUI {
 
 			checkBox_useCamFP.Checked = Settings.Core.Default.AutoUseCamFp;
 			checkBox_PauseForMannual.Checked = Settings.Core.Default.ChaPauseAndAskForManual;
+			checkBox_autoUseDrink.Checked = Settings.Core.Default.AutoUseDrink;
 		}
 
 		private void CheckBox_useCamFP_CheckedChanged(object sender, EventArgs e) {
@@ -60,6 +61,11 @@ namespace WinFormsGUI {
 		private void CheckBox_PauseForMannual_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.ChaPauseAndAskForManual = checkBox_PauseForMannual.Checked;
 			Program.helper.SetChaAskForManual(Settings.Core.Default.ChaPauseAndAskForManual);
+		}
+
+		private void CheckBox_autoUseDrink_CheckedChanged(object sender, EventArgs e) {
+			Settings.Core.Default.AutoUseDrink = checkBox_autoUseDrink.Checked;
+			Program.helper.SetChaAutoUseDrink(Settings.Core.Default.AutoUseDrink);
 		}
 	}
 }
