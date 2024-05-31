@@ -72,7 +72,9 @@ namespace WinFormsGUI {
 				}
 			}
 			userControlHome1.OnClosing();
+			Show();
 			WindowState = FormWindowState.Normal;
+			Activate();
 			Settings.GUI.Default.WndLastPosition = Location;
 		}
 
