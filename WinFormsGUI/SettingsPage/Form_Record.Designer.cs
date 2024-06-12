@@ -51,6 +51,11 @@
 			// 
 			// saveFileDialog1
 			// 
+			saveFileDialog1.DefaultExt = "ddoa";
+			saveFileDialog1.FileName = "record";
+			saveFileDialog1.Filter = "DDOA录制文件|*.ddoa|所有文件|*.*";
+			saveFileDialog1.InitialDirectory = "records";
+			saveFileDialog1.RestoreDirectory = true;
 			saveFileDialog1.FileOk += saveFileDialog1_FileOk;
 			// 
 			// Form_Record

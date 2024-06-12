@@ -46,8 +46,7 @@ namespace WinFormsGUI.SettingsPage {
 			m_fs.Close();
 
 			if (code == 0) {
-				saveFileDialog1.InitialDirectory = "records";
-				saveFileDialog1.DefaultExt = "ddoa";
+				saveFileDialog1.InitialDirectory = Path.Combine(Directory.GetCurrentDirectory(), "records");
 				saveFileDialog1.ShowDialog(this);
 			}
 		}
