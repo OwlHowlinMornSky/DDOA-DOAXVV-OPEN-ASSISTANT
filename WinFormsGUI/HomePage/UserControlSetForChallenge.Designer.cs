@@ -28,12 +28,12 @@
 			radioBtn_AwardPlay = new RadioButton();
 			radioBtn_AwardNo = new RadioButton();
 			gpBox_TargetMatch = new GroupBox();
+			radioButton_recordMatch = new RadioButton();
 			radioBtn_NewMatch = new RadioButton();
 			radioBtn_PreviousMatch = new RadioButton();
 			checkBox_useCamFP = new CheckBox();
 			checkBox_PauseForMannual = new CheckBox();
 			checkBox_autoUseDrink = new CheckBox();
-			radioButton_recordMatch = new RadioButton();
 			gpBox_AwardMatch.SuspendLayout();
 			gpBox_TargetMatch.SuspendLayout();
 			SuspendLayout();
@@ -100,6 +100,18 @@
 			gpBox_TargetMatch.TabStop = false;
 			gpBox_TargetMatch.Text = "游戏选项";
 			// 
+			// radioButton_recordMatch
+			// 
+			radioButton_recordMatch.AutoSize = true;
+			radioButton_recordMatch.Location = new Point(6, 75);
+			radioButton_recordMatch.Name = "radioButton_recordMatch";
+			radioButton_recordMatch.Size = new Size(110, 21);
+			radioButton_recordMatch.TabIndex = 2;
+			radioButton_recordMatch.TabStop = true;
+			radioButton_recordMatch.Text = "录制指定的比赛";
+			radioButton_recordMatch.UseVisualStyleBackColor = true;
+			radioButton_recordMatch.CheckedChanged += MatchSet_RadioBtn_CheckedChanged;
+			// 
 			// radioBtn_NewMatch
 			// 
 			radioBtn_NewMatch.AutoSize = true;
@@ -119,10 +131,10 @@
 			radioBtn_PreviousMatch.ImeMode = ImeMode.NoControl;
 			radioBtn_PreviousMatch.Location = new Point(6, 22);
 			radioBtn_PreviousMatch.Name = "radioBtn_PreviousMatch";
-			radioBtn_PreviousMatch.Size = new Size(86, 21);
+			radioBtn_PreviousMatch.Size = new Size(79, 21);
 			radioBtn_PreviousMatch.TabIndex = 0;
 			radioBtn_PreviousMatch.TabStop = true;
-			radioBtn_PreviousMatch.Text = "上一次比赛";
+			radioBtn_PreviousMatch.Text = "当前/上次";
 			radioBtn_PreviousMatch.UseVisualStyleBackColor = true;
 			radioBtn_PreviousMatch.CheckedChanged += MatchSet_RadioBtn_CheckedChanged;
 			// 
@@ -158,18 +170,6 @@
 			checkBox_autoUseDrink.Text = "自动使用FP恢复饮料";
 			checkBox_autoUseDrink.UseVisualStyleBackColor = true;
 			checkBox_autoUseDrink.CheckedChanged += CheckBox_autoUseDrink_CheckedChanged;
-			// 
-			// radioButton_recordMatch
-			// 
-			radioButton_recordMatch.AutoSize = true;
-			radioButton_recordMatch.Location = new Point(6, 75);
-			radioButton_recordMatch.Name = "radioButton_recordMatch";
-			radioButton_recordMatch.Size = new Size(110, 21);
-			radioButton_recordMatch.TabIndex = 2;
-			radioButton_recordMatch.TabStop = true;
-			radioButton_recordMatch.Text = "录制指定的比赛";
-			radioButton_recordMatch.UseVisualStyleBackColor = true;
-			radioButton_recordMatch.CheckedChanged += MatchSet_RadioBtn_CheckedChanged;
 			// 
 			// UserControlSetForChallenge
 			// 
