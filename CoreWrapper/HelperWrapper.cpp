@@ -21,6 +21,8 @@
 #include "HelperWrapper.h"
 
 #include <Settings.h>
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
 
 namespace Wrapper {
 
@@ -155,8 +157,8 @@ void HelperWrapper::SetChaAutoUseDrink(bool use) {
 	return;
 }
 
-int HelperWrapper::StartRecord() {
-	return ohms::IHelper::instance()->StartRecord();
+int HelperWrapper::StartRecord(System::IntPtr hwnd) {
+	return ohms::IHelper::instance()->StartRecord((HWND)(void*)hwnd);
 }
 
 int HelperWrapper::StopRecord() {

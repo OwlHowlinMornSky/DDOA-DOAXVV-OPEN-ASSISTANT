@@ -49,7 +49,7 @@ bool Task_Record::Run(Helper& h) {
 	return true;
 }
 
-int Task_Record::start() {
+int Task_Record::start(void* hwnd) {
 	m_started = false;
 
 	auto handler = WndHandler::Instance();
@@ -63,7 +63,7 @@ int Task_Record::start() {
 		return 3;
 	}
 
-	int res = Hook::StartRecord();
+	int res = Hook::StartRecord(hwnd);
 	if (res != 0) {
 		stop();
 		return res;

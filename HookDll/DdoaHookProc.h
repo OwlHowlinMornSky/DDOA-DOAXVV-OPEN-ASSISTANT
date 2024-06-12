@@ -22,13 +22,6 @@
 
 #include "framework.h"
 
-namespace Hook {
-
-DLL_API int StartRecord();
-DLL_API int StopRecord();
-
-}
-
 #ifdef __cplusplus    // If used by C++ code, 
 extern "C" {          // we need to export the C interface
 #endif
@@ -48,3 +41,10 @@ extern "C" {          // we need to export the C interface
 #ifdef __cplusplus
 }
 #endif
+
+namespace Hook {
+
+DLL_API int StartRecord(void* hwnd);
+DLL_API int StopRecord();
+
+}

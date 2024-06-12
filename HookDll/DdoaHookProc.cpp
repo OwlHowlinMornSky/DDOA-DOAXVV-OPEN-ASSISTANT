@@ -20,47 +20,19 @@
 */
 #include "DdoaHookProc.h"
 
-#include <fstream>
-#include <filesystem>
-#include <queue>
+//#include <fstream>
+//#include <filesystem>
+//#include <queue>
 
-namespace fs = std::filesystem;
+//namespace fs = std::filesystem;
+
+#pragma data_seg("DDOAHOOK")
+HWND ___OHMS_DDOA_SOURCEWND = 0;
+#pragma data_seg()
+// R: Read, W: Write, S: Shared.
+#pragma comment(linker, "/SECTION:DDOAHOOK,RWS")
 
 namespace {
-
-struct CommandData {
-	enum Type {
-		stop = -1,
-		start = 0,
-		sleep,
-		move,
-		click,
-		wheel
-	} type;
-
-	struct SleepData {
-		long long duration;
-	};
-	struct MoveData {
-		float x;
-		float y;
-	};
-	struct WheelData {
-		int delta;
-	};
-
-	union Data {
-		SleepData sleep;
-		MoveData move;
-		WheelData wheel;
-	} data;
-};
-
-std::ofstream g_ofstream;
-
-static std::queue<CommandData> g_cmds;
-
-static const fs::path p("records");
 
 /**
  * @brief 获取内核速度
@@ -139,17 +111,14 @@ DLL_API LRESULT RecordHookProc(
 		if (GetClientRect(msg->hwnd, &rect) == 0)
 			break;
 		long long t = ::getCurrentTime();
-		CommandData data;
-		data.type = CommandData::Type::sleep;
-		data.data.sleep.duration = t - ::g_lastTime;
+		PostMessageW(___OHMS_DDOA_SOURCEWND, WM_APP + 0x0233, 1, t - ::g_lastTime);
 		::g_lastTime = t;
-		g_cmds.push(data);
-		data.type = CommandData::Type::move;
-		data.data.move.x = 1.0f * pt.x / (rect.right - rect.left);
-		data.data.move.y = 1.0f * pt.y / (rect.bottom - rect.top);
-		g_cmds.push(data);
-		data.type = CommandData::Type::click;
-		g_cmds.push(data);
+		PostMessageW(
+			___OHMS_DDOA_SOURCEWND,
+			WM_APP + 0x0233, 2,
+			MAKELPARAM(pt.x * 960 / (rect.right - rect.left), pt.y * 540 / (rect.bottom - rect.top))
+		);
+		PostMessageW(___OHMS_DDOA_SOURCEWND, WM_APP + 0x0233, 3, 0);
 		break;
 	}
 	case WM_MOUSEWHEEL:
@@ -159,18 +128,14 @@ DLL_API LRESULT RecordHookProc(
 		if (GetClientRect(msg->hwnd, &rect) == 0)
 			break;
 		long long t = ::getCurrentTime();
-		CommandData data;
-		data.type = CommandData::Type::sleep;
-		data.data.sleep.duration = t - ::g_lastTime;
+		PostMessageW(___OHMS_DDOA_SOURCEWND, WM_APP + 0x0233, 1, t - ::g_lastTime);
 		::g_lastTime = t;
-		g_cmds.push(data);
-		data.type = CommandData::Type::move;
-		data.data.move.x = 1.0f * pt.x / (rect.right - rect.left);
-		data.data.move.y = 1.0f * pt.y / (rect.bottom - rect.top);
-		g_cmds.push(data);
-		data.type = CommandData::Type::wheel;
-		data.data.wheel.delta = GET_WHEEL_DELTA_WPARAM(msg->wParam);
-		g_cmds.push(data);
+		PostMessageW(
+			___OHMS_DDOA_SOURCEWND,
+			WM_APP + 0x0233, 2,
+			MAKELPARAM(pt.x * 960 / (rect.right - rect.left), pt.y * 540 / (rect.bottom - rect.top))
+		);
+		PostMessageW(___OHMS_DDOA_SOURCEWND, WM_APP + 0x0233, 4, GET_WHEEL_DELTA_WPARAM(msg->wParam));
 		break;
 	}
 	}
@@ -179,12 +144,13 @@ DLL_API LRESULT RecordHookProc(
 
 namespace Hook {
 
-int StartRecord() {
+int StartRecord(void* hwnd) {
+	___OHMS_DDOA_SOURCEWND = (HWND)hwnd;
 	return 0;
 }
 
 int StopRecord() {
-	if (!fs::exists(::p)) {
+	/*if (!fs::exists(::p)) {
 		fs::create_directory(::p);
 	}
 	else if (!fs::is_directory(::p)) {
@@ -227,7 +193,7 @@ int StopRecord() {
 		}
 	}
 	g_ofstream << "stop" << std::endl;
-	g_ofstream.close();
+	g_ofstream.close();*/
 	return 0;
 }
 

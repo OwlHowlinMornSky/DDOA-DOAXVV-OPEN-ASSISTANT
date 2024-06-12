@@ -35,7 +35,7 @@ public:
 
 public:
 	virtual bool Run(Helper& h) override;
-	virtual int start();
+	virtual int start(void* hwnd);
 	virtual int stop();
 
 protected:

@@ -142,7 +142,7 @@ public:
 	void SetChaAskForManual(bool ask);
 	void SetChaAutoUseDrink(bool use);
 
-	int StartRecord();
+	int StartRecord(System::IntPtr hwnd);
 	int StopRecord();
 
 private:

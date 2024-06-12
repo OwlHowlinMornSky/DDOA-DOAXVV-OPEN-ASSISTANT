@@ -51,7 +51,7 @@ public:
 	virtual bool isRunning() override;
 	virtual long msgPop() override;
 
-	virtual int StartRecord() override;
+	virtual int StartRecord(void* hwnd) override;
 	virtual int StopRecord() override;
 
 public:

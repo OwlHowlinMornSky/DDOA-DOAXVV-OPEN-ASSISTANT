@@ -142,8 +142,8 @@ long Helper::msgPop() {
 	return res;
 }
 
-int Helper::StartRecord() {
-    return Task_Record::Instance()->start();
+int Helper::StartRecord(void* hwnd) {
+    return Task_Record::Instance()->start(hwnd);
 }
 
 int Helper::StopRecord() {
