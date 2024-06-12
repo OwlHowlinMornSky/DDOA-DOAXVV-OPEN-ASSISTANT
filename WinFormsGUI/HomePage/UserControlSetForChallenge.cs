@@ -17,6 +17,8 @@ namespace WinFormsGUI {
 		private void MatchSet_RadioBtn_CheckedChanged(object sender, EventArgs e) {
 			Program.helper.SetChallengeForNewOrLast(radioBtn_NewMatch.Checked);
 			Settings.Core.Default.PlayNewMatch = radioBtn_NewMatch.Checked;
+			Program.helper.SetChallengeForRecord(radioButton_recordMatch.Checked);
+			Settings.Core.Default.PlayNewMatch = radioButton_recordMatch.Checked;
 		}
 
 		private void AwardMatch_RadioBtn_CheckedChanged(object sender, EventArgs e) {
@@ -34,7 +36,10 @@ namespace WinFormsGUI {
 		}
 
 		private void UserControlSetForLegacyCha_Load(object sender, EventArgs e) {
-			radioBtn_NewMatch.Checked = Settings.Core.Default.PlayNewMatch;
+			if (Settings.Core.Default.PlayRecordMatch)
+				radioButton_recordMatch.Checked = true;
+			else
+				radioBtn_NewMatch.Checked = Settings.Core.Default.PlayNewMatch;
 
 			switch (Settings.Core.Default.AwardMatch) {
 			case 1:

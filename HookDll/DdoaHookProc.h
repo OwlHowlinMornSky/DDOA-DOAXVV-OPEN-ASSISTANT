@@ -22,11 +22,24 @@
 
 #include "framework.h"
 
+namespace Hook {
+
+DLL_API int StartRecord();
+DLL_API int StopRecord();
+
+}
+
 #ifdef __cplusplus    // If used by C++ code, 
 extern "C" {          // we need to export the C interface
 #endif
 
 	DLL_API LRESULT CALLBACK DdoaHookProc(
+		_In_ int    code,
+		_In_ WPARAM wParam,
+		_In_ LPARAM lParam
+	);
+
+	DLL_API LRESULT CALLBACK RecordHookProc(
 		_In_ int    code,
 		_In_ WPARAM wParam,
 		_In_ LPARAM lParam

@@ -80,6 +80,9 @@ public:
 	 * @param fmt 文本编号。
 	 */
 	virtual void GuiLogF(long fmt) = 0;
+
+	virtual int StartRecord() = 0;
+	virtual int StopRecord() = 0;
 };
 
 } // namespace ohms

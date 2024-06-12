@@ -28,6 +28,7 @@ struct CORE_API Challenge {
 	static Challenge DEFAULT; // 本体在 Settings.cpp
 	Challenge() :
 		PlayNewMatchOrPrevious(false), // 默认上一次比赛
+		PlayRecord(false), // 默认上一次比赛
 		EnterAddition(true), // 默认进入奖励挑战赛
 		CheckAddition(false), // 默认不检查奖励挑战赛
 		AutoUseCamFP(false), // 默认不使用拍摄补充FP。
@@ -36,6 +37,7 @@ struct CORE_API Challenge {
 	{}
 
 	bool PlayNewMatchOrPrevious; // 选择新比赛。
+	bool PlayRecord;
 	bool EnterAddition; // 进入奖励挑战赛。
 	bool CheckAddition; // 是否检查奖励挑战赛。
 	bool AutoUseCamFP; // 是否自动使用每日拍摄的补充FP。

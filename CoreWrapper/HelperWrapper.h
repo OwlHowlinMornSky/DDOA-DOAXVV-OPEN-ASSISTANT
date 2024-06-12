@@ -90,6 +90,7 @@ public:
 	 * @return 0 if success.
 	*/
 	System::Int32 SetChallengeForNewOrLast(bool forNew);
+	System::Int32 SetChallengeForRecord(bool forRecord);
 	/**
 	 * @brief 设置鼠标操作 发送输入 还是 窗口消息。
 	 * @param sendInput 为 true 则使用鼠标输入，否则发送窗口消息。
@@ -140,6 +141,9 @@ public:
 
 	void SetChaAskForManual(bool ask);
 	void SetChaAutoUseDrink(bool use);
+
+	int StartRecord();
+	int StopRecord();
 
 private:
 	ohms::IHelper* r_helper;

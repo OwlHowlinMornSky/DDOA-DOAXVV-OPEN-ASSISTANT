@@ -51,6 +51,9 @@ public:
 	virtual bool isRunning() override;
 	virtual long msgPop() override;
 
+	virtual int StartRecord() override;
+	virtual int StopRecord() override;
+
 public:
 	/**
 	 * @brief 压入回执消息

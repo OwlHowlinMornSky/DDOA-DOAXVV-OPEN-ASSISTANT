@@ -23,6 +23,7 @@
 #include "Clock.h"
 #include "AskedForStop.h"
 #include "Task_Navigate.h"
+#include "CoreLog.h"
 
 namespace ohms {
 
@@ -39,6 +40,7 @@ bool Task_Daily::Run(Helper& h) {
 	m_set = Settings::Daily::DEFAULT;
 
 	try {
+		CoreLog() << "Task_Daily: Start." << std::endl;
 		h.GuiLogF(ReturnMsgEnum::TaskDailyBegin);
 
 		switch (r_handler->SetForGame()) {
@@ -51,12 +53,23 @@ bool Task_Daily::Run(Helper& h) {
 			h.TaskError(ReturnMsgEnum::TaskErrNoCap);
 			break;
 		}
+		CoreLog() << "Task_Daily: Handler Setted." << std::endl;
 
-		if (m_set.DoCheck)
+		if (m_set.DoCheck) {
+			CoreLog() << "Task_Daily: Try Check." << std::endl;
 			DoCheck();
+		}
+		else {
+			CoreLog() << "Task_Daily: Setting No Check." << std::endl;
+		}
 
-		if (m_set.DoShot)
+		if (m_set.DoShot) {
+			CoreLog() << "Task_Daily: Try Shot." << std::endl;
 			DoShot();
+		}
+		else {
+			CoreLog() << "Task_Daily: Setting No Shot." << std::endl;
+		}
 
 		h.GuiLogF(ReturnMsgEnum::TaskDailyComplete);
 	}
@@ -68,6 +81,7 @@ bool Task_Daily::Run(Helper& h) {
 		h.GuiLogF(ReturnMsgEnum::TaskDailyFailed);
 	}
 
+	CoreLog() << "Task_Daily: Exit." << std::endl;
 	return true;
 }
 
@@ -77,18 +91,24 @@ void Task_Daily::DoCheck() {
 	m_checkBtn = r_helper->CreateTemplate("daily/checkClk");
 	m_checkBdTitle = r_helper->CreateTemplate("daily/chkBdTitle");
 	m_checkOk = r_helper->CreateTemplate("daily/checkOK");
+	CoreLog() << "Task_Daily: Check: Load Templates Over." << std::endl;
 
 	if (IsDailCheckDone()) {
+		CoreLog() << "Task_Daily: Check: Exit: Done." << std::endl;
 		return;
 	}
+	CoreLog() << "Task_Daily: Check: Not Done." << std::endl;
 	if (!OpenDailyCheckBoard()) {
+		CoreLog() << "Task_Daily: Check: Cannot Open." << std::endl;
 		r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 		return;
 	}
 	if (!DoDailyCheckInBoard()) {
+		CoreLog() << "Task_Daily: Check: Cannot Check." << std::endl;
 		r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 	}
 	if (!CloseCheckBoard()) {
+		CoreLog() << "Task_Daily: Check: Cannot Close." << std::endl;
 		r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 	}
 	return;
@@ -100,18 +120,22 @@ void Task_Daily::DoShot() {
 	m_shotBack = r_helper->CreateTemplate("daily/shotBack");
 	m_shot = r_helper->CreateTemplate("daily/shotShot");
 	m_homePage = r_helper->CreateTemplate("homeSpec");
+	CoreLog() << "Task_Daily: Shot: Load Templates Over." << std::endl;
 
 	if (IsShotDone()) {
 		return;
 	}
 	if (!OpenShotPage()) {
+		CoreLog() << "Task_Daily: Shot: Cannot Open." << std::endl;
 		r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 		return;
 	}
 	if (!DoShotInPage()) {
+		CoreLog() << "Task_Daily: Shot: Cannot Shot." << std::endl;
 		r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 	}
 	if (!CloseShotPage()) {
+		CoreLog() << "Task_Daily: Shot: Cannot Close." << std::endl;
 		r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 	}
 	return;

@@ -20,12 +20,27 @@
 */
 #pragma once
 
-#define WIN32_LEAN_AND_MEAN             // 从 Windows 头文件中排除极少使用的内容
-// Windows 头文件
-#include <windows.h>
+#include "ITask.h"
 
-#ifdef HOOKDLL_EXPORT
-#define DLL_API __declspec(dllexport)
-#else
-#define DLL_API __declspec(dllimport)
-#endif
+namespace ohms {
+
+class Task_Record :
+	public ITask {
+public:
+	Task_Record() = default;
+	virtual ~Task_Record() = default;
+
+	static Task_Record* Instance();
+	static void Drop();
+
+public:
+	virtual bool Run(Helper& h) override;
+	virtual int start();
+	virtual int stop();
+
+protected:
+	bool m_oldSet;
+	bool m_started;
+};
+
+}

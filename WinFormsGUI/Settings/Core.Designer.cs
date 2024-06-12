@@ -166,5 +166,17 @@ namespace WinFormsGUI.Settings {
                 this["AutoUseDrink"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayRecordMatch {
+            get {
+                return ((bool)(this["PlayRecordMatch"]));
+            }
+            set {
+                this["PlayRecordMatch"] = value;
+            }
+        }
     }
 }

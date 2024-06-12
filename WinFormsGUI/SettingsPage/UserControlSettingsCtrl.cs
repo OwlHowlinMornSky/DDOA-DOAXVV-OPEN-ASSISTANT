@@ -59,5 +59,10 @@ namespace WinFormsGUI.SettingsPage {
 			Settings.Core.Default.UseHook = checkBox_Hook.Checked;
 			Program.helper.SetUseHook(checkBox_Hook.Checked);
 		}
+
+		private void button_record_Click(object sender, EventArgs e) {
+			var w = new Form_Record();
+			w.ShowDialog(this);
+		}
 	}
 }

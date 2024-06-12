@@ -33,6 +33,7 @@
 			checkBox_useCamFP = new CheckBox();
 			checkBox_PauseForMannual = new CheckBox();
 			checkBox_autoUseDrink = new CheckBox();
+			radioButton_recordMatch = new RadioButton();
 			gpBox_AwardMatch.SuspendLayout();
 			gpBox_TargetMatch.SuspendLayout();
 			SuspendLayout();
@@ -42,7 +43,7 @@
 			gpBox_AwardMatch.Controls.Add(radioBtn_AwardIgnore);
 			gpBox_AwardMatch.Controls.Add(radioBtn_AwardPlay);
 			gpBox_AwardMatch.Controls.Add(radioBtn_AwardNo);
-			gpBox_AwardMatch.Location = new Point(3, 89);
+			gpBox_AwardMatch.Location = new Point(3, 111);
 			gpBox_AwardMatch.Name = "gpBox_AwardMatch";
 			gpBox_AwardMatch.Size = new Size(200, 107);
 			gpBox_AwardMatch.TabIndex = 5;
@@ -89,11 +90,12 @@
 			// 
 			// gpBox_TargetMatch
 			// 
+			gpBox_TargetMatch.Controls.Add(radioButton_recordMatch);
 			gpBox_TargetMatch.Controls.Add(radioBtn_NewMatch);
 			gpBox_TargetMatch.Controls.Add(radioBtn_PreviousMatch);
 			gpBox_TargetMatch.Location = new Point(3, 3);
 			gpBox_TargetMatch.Name = "gpBox_TargetMatch";
-			gpBox_TargetMatch.Size = new Size(200, 80);
+			gpBox_TargetMatch.Size = new Size(200, 102);
 			gpBox_TargetMatch.TabIndex = 4;
 			gpBox_TargetMatch.TabStop = false;
 			gpBox_TargetMatch.Text = "游戏选项";
@@ -127,7 +129,7 @@
 			// checkBox_useCamFP
 			// 
 			checkBox_useCamFP.AutoSize = true;
-			checkBox_useCamFP.Location = new Point(9, 202);
+			checkBox_useCamFP.Location = new Point(9, 224);
 			checkBox_useCamFP.Name = "checkBox_useCamFP";
 			checkBox_useCamFP.Size = new Size(172, 21);
 			checkBox_useCamFP.TabIndex = 6;
@@ -138,7 +140,7 @@
 			// checkBox_PauseForMannual
 			// 
 			checkBox_PauseForMannual.AutoSize = true;
-			checkBox_PauseForMannual.Location = new Point(9, 256);
+			checkBox_PauseForMannual.Location = new Point(9, 278);
 			checkBox_PauseForMannual.Name = "checkBox_PauseForMannual";
 			checkBox_PauseForMannual.Size = new Size(195, 21);
 			checkBox_PauseForMannual.TabIndex = 7;
@@ -149,13 +151,25 @@
 			// checkBox_autoUseDrink
 			// 
 			checkBox_autoUseDrink.AutoSize = true;
-			checkBox_autoUseDrink.Location = new Point(9, 229);
+			checkBox_autoUseDrink.Location = new Point(9, 251);
 			checkBox_autoUseDrink.Name = "checkBox_autoUseDrink";
 			checkBox_autoUseDrink.Size = new Size(136, 21);
 			checkBox_autoUseDrink.TabIndex = 8;
 			checkBox_autoUseDrink.Text = "自动使用FP恢复饮料";
 			checkBox_autoUseDrink.UseVisualStyleBackColor = true;
 			checkBox_autoUseDrink.CheckedChanged += CheckBox_autoUseDrink_CheckedChanged;
+			// 
+			// radioButton_recordMatch
+			// 
+			radioButton_recordMatch.AutoSize = true;
+			radioButton_recordMatch.Location = new Point(6, 75);
+			radioButton_recordMatch.Name = "radioButton_recordMatch";
+			radioButton_recordMatch.Size = new Size(110, 21);
+			radioButton_recordMatch.TabIndex = 2;
+			radioButton_recordMatch.TabStop = true;
+			radioButton_recordMatch.Text = "录制指定的比赛";
+			radioButton_recordMatch.UseVisualStyleBackColor = true;
+			radioButton_recordMatch.CheckedChanged += MatchSet_RadioBtn_CheckedChanged;
 			// 
 			// UserControlSetForChallenge
 			// 
@@ -167,7 +181,7 @@
 			Controls.Add(gpBox_AwardMatch);
 			Controls.Add(gpBox_TargetMatch);
 			Name = "UserControlSetForChallenge";
-			Size = new Size(210, 294);
+			Size = new Size(210, 334);
 			Load += UserControlSetForLegacyCha_Load;
 			gpBox_AwardMatch.ResumeLayout(false);
 			gpBox_AwardMatch.PerformLayout();
@@ -189,5 +203,6 @@
 		private CheckBox checkBox_useCamFP;
 		private CheckBox checkBox_PauseForMannual;
 		private CheckBox checkBox_autoUseDrink;
+		private RadioButton radioButton_recordMatch;
 	}
 }

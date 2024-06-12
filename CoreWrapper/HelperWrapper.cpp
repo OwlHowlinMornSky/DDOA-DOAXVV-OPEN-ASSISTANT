@@ -80,6 +80,11 @@ System::Int32 HelperWrapper::SetChallengeForNewOrLast(bool forNew) {
 	return System::Int32(0);
 }
 
+System::Int32 HelperWrapper::SetChallengeForRecord(bool forRecord) {
+	ohms::Settings::Challenge::DEFAULT.PlayRecord = forRecord;
+	return System::Int32(0);
+}
+
 System::Int32 HelperWrapper::SetMouseSendInputOrSendMessage(bool sendInput) {
 	ohms::Settings::WndHandler::DEFAULT.UseSendInput = sendInput;
 	return System::Int32(0);
@@ -148,6 +153,14 @@ void HelperWrapper::SetChaAskForManual(bool ask) {
 void HelperWrapper::SetChaAutoUseDrink(bool use) {
 	ohms::Settings::Challenge::DEFAULT.AutoUseDrink = use;
 	return;
+}
+
+int HelperWrapper::StartRecord() {
+	return ohms::IHelper::instance()->StartRecord();
+}
+
+int HelperWrapper::StopRecord() {
+    return ohms::IHelper::instance()->StopRecord();
 }
 
 }
