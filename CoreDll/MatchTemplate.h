@@ -78,6 +78,7 @@ public:
 	const cv::Rect& GetSearchRect() const;
 
 	cv::Point GetSpecialPointInResult(size_t pt_id);
+	cv::Point GetSpecialPointInSearch(size_t pt_id);
 
 private:
 	MatchTemplateInfo m_info; // 基本信息

@@ -92,7 +92,14 @@ namespace WinFormsGUI {
 			Settings.Core.Default.PlayLevel = comboBox1.SelectedIndex;
 			switch (Settings.Core.Default.PlayLevel) {
 			case 1: // E
-				numericUpDown1.Maximum = 6;
+			case 2: // D
+			case 3: // C
+			case 4: // B
+			case 5: // A
+				numericUpDown1.Maximum = 8;
+				break;
+			case 6: // S
+				numericUpDown1.Maximum = 8;
 				break;
 			default:
 				numericUpDown1.Maximum = 1;

@@ -198,4 +198,9 @@ cv::Point MatchTemplate::GetSpecialPointInResult(size_t pt_id) {
     return GetLastMatchRect().tl() + m_info.spPts[pt_id];
 }
 
+cv::Point MatchTemplate::GetSpecialPointInSearch(size_t pt_id) {
+	assert(pt_id < m_info.spPts.size());
+	return m_info.rect.tl() + m_info.spPts[pt_id];
+}
+
 }

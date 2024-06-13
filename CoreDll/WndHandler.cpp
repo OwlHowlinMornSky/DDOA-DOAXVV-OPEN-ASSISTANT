@@ -460,6 +460,30 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 	return true;
 }
 
+bool WndHandler::WheelUp(unsigned int cnt) {
+	if (Settings::WndHandler::DEFAULT.UseSendInput) {
+	}
+	else {
+		while (cnt-- > 0) {
+			PostMessageW(m_hwnd, WM_MOUSEWHEEL, MAKEWPARAM(MK_CONTROL, WHEEL_DELTA), MAKELPARAM(m_lastMousePoint.x, m_lastMousePoint.y));
+			sleep(milliseconds(100));
+		}
+	}
+	return false;
+}
+
+bool WndHandler::WheelDown(unsigned int cnt) {
+	if (Settings::WndHandler::DEFAULT.UseSendInput) {
+	}
+	else {
+		while (cnt-- > 0) {
+			PostMessageW(m_hwnd, WM_MOUSEWHEEL, MAKEWPARAM(MK_CONTROL, -WHEEL_DELTA), MAKELPARAM(m_lastMousePoint.x, m_lastMousePoint.y));
+			sleep(milliseconds(100));
+		}
+	}
+	return false;
+}
+
 bool WndHandler::KeepClickingUntil(const cv::Point clkPt, const MatchTemplate& _temp, Time maxTime, Time clkTime) {
 	if (clkTime < milliseconds(10)) // 点击时间不能小于10毫秒（规定的）
 		clkTime = milliseconds(10);

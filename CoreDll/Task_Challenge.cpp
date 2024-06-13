@@ -160,20 +160,154 @@ bool Task_Challenge::LoadTemplates() {
 	m_camFpComf[1] = r_helper->CreateTemplate("UseFpComf1");
 	m_camFpDrink = r_helper->CreateTemplate("cha/drink");
 	m_camFpDrinkComf = r_helper->CreateTemplate("cha/drinkComf");
+
+	m_act100pre[0] = r_helper->CreateTemplate("cha/act/l0");
+	m_act100pre[1] = r_helper->CreateTemplate("cha/act/l1");
+	m_act100pre[2] = r_helper->CreateTemplate("cha/act/l2");
+	m_act100pre[3] = r_helper->CreateTemplate("cha/act/l3");
+	m_act100pre[4] = r_helper->CreateTemplate("cha/act/l4");
+
+	m_actSlevel[0] = r_helper->CreateTemplate("cha/act/r0");
+	m_actSlevel[1] = r_helper->CreateTemplate("cha/act/r1");
+	m_actSlevel[2] = r_helper->CreateTemplate("cha/act/r2");
+	m_actSlevel[3] = r_helper->CreateTemplate("cha/act/r3");
+	m_actSlevel[4] = r_helper->CreateTemplate("cha/act/r4");
+
+
 	CoreLog() << "Task.Challenge: Finish Load Templates." << std::endl;
 	return false;
 }
 
 void Task_Challenge::FirstNavigate() {
-	switch (Task_Navigate::Instance()->TryToDeterminePage()) {
-	case NavigateEnum::MatchConfirm:
-	case NavigateEnum::MatchResult:
+	bool res = Task_Navigate::Instance()->NavigateTo(NavigateEnum::Challenge);
+	bool needManual = false;
+	switch (Settings::Challenge::DEFAULT.PlayMatch) {
+	case 1: // 新比赛
+		if (-1 == r_handler->WaitFor(*temp_newFight, milliseconds(1000)))
+			needManual = true;
 		break;
-	default:
+	case 2: // 活动关卡
+	{
+		if (!res) {
+			needManual = true;
+			break;
+		}
+		if (-1 == r_handler->WaitFor(*temp_chaBar, milliseconds(1000))) {
+			needManual = true;
+			break;
+		}
+		// 到“活动页”
+		r_handler->ClickAt(temp_chaBar->GetSpecialPointInResult(3));
+
+		TaskSleep(seconds(1.0f));
+
+		// 滚动到最底部
+		r_handler->MoveMouseTo({ 920, 530 });
+		TaskSleep(seconds(0.5f));
+		r_handler->WheelDown(20);
+
+		TaskSleep(seconds(1.0f));
+
+		cv::Mat mat;
+		bool got;
+		int up, rank;
+		// 寻找目标等级
+		got = r_handler->GetOneFrame(mat);
+		if (!got) {
+			needManual = true;
+			break;
+		}
+		up = -1;
+		rank = -1;
+		for (int i = 4; i >= 0; --i) {
+			if (m_act100pre[i]->Match(mat)) {
+				int abspos = i - Settings::Challenge::DEFAULT.SelectedActivityLevel + 1;
+				if (abspos < 0) {
+					up = -abspos;
+					rank = 0;
+				}
+				else {
+					up = 0;
+					rank = abspos;
+				}
+				break;
+			}
+		}
+		if (up < 0 || rank < 0 || rank > 4) {
+			needManual = true;
+			break;
+		}
+		if (up > 0) {
+			r_handler->WheelUp(up);
+		}
+		TaskSleep(seconds(0.5f));
+		r_handler->ClickAt(m_act100pre[rank]->GetSpecialPointInSearch(0));
+
+		TaskSleep(seconds(1.0f));
+		// 已经进入目标等级
+
+		// 滚动到最底部
+		r_handler->MoveMouseTo({ 920, 530 });
+		TaskSleep(seconds(0.5f));
+		r_handler->WheelDown(20);
+
+		TaskSleep(seconds(0.5f));
+
+		// 寻找目标关卡
+		got = r_handler->GetOneFrame(mat);
+		if (!got) {
+			needManual = true;
+			break;
+		}
+		up = -1;
+		rank = -1;
+		for (int i = 4; i >= 0; --i) {
+			if (m_actSlevel[i]->Match(mat)) {
+				int abspos = i - Settings::Challenge::DEFAULT.SelectedActivityMatch + 1;
+				if (abspos < 0) {
+					up = -abspos;
+					rank = 0;
+				}
+				else {
+					up = 0;
+					rank = abspos;
+				}
+				break;
+			}
+		}
+		if (up < 0 || rank < 0 || rank > 4) {
+			needManual = true;
+			break;
+		}
+		if (up > 0) {
+			r_handler->WheelUp(up);
+		}
+		TaskSleep(seconds(0.5f));
+		r_handler->ClickAt(m_actSlevel[rank]->GetSpecialPointInSearch(0));
+		TaskSleep(seconds(1.0f));
+		break;
+	}
+	default: // 当前/上次
+		switch (Task_Navigate::Instance()->TryToDeterminePage()) {
+		case NavigateEnum::MatchConfirm:
+		case NavigateEnum::MatchResult:
+			break;
+		default:
+			if (-1 == r_handler->WaitFor(*temp_lastFight, milliseconds(1000)))
+				needManual = true;
+			break;
+		}
+		break;
+	}
+	if (needManual) {
 		if (Settings::Challenge::DEFAULT.AskForManual) {
 			r_handler->Reset();
 			r_helper->TaskWaitForResume(ReturnMsgEnum::ManualNavigateToChallengePage);
 			r_handler->SetForGame();
+		}
+		else {
+			CoreLog() << "Task.Challenge: First Navigate Failed." << std::endl;
+			throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
 		}
 	}
 	m_loopSt = LoopStatus::Begin;
@@ -240,6 +374,10 @@ void Task_Challenge::EnterConfirmPage() {
 		pt = { 900, temp_newFight->GetLastMatchRect().y };
 		break;
 	case PlayMatch::Activity:
+		if (-1 == r_handler->WaitFor(*temp_lastFight))
+			r_helper->TaskError(ReturnMsgEnum::TaskErrChaNoPri);
+		CoreLog() << "Task.Challenge: Enter Game <Previous>." << std::endl;
+		pt = { 900, temp_lastFight->GetLastMatchRect().y };
 		break;
 	case PlayMatch::Award:
 		if (-1 == r_handler->WaitFor(*temp_newFight))

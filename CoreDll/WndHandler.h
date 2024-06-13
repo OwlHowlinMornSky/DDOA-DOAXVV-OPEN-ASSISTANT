@@ -131,6 +131,9 @@ public:
 	*/
 	bool MoveMouseTo(cv::Point pt);
 
+	bool WheelUp(unsigned int cnt = 1);
+	bool WheelDown(unsigned int cnt = 1);
+
 	/**
 	 * @brief 持续点击指定位置，直到画面出现目标。askedForStop则 throw 0
 	 * @param clkPt 指定点击位置，范围与 step_click 一致

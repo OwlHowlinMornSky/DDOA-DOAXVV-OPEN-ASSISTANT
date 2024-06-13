@@ -64,6 +64,9 @@ protected:
 	std::unique_ptr<MatchTemplate> m_camFpNo;
 	std::unique_ptr<MatchTemplate> m_camFpComf[2];
 
+	std::unique_ptr<MatchTemplate> m_act100pre[5];
+	std::unique_ptr<MatchTemplate> m_actSlevel[5];
+
 	enum class PlayMatch {
 		Previous = 0,
 		New,

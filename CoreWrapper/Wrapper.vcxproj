@@ -20,6 +20,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <WindowsTargetPlatformMinVersion>10.0.22000.0</WindowsTargetPlatformMinVersion>
     <ProjectName>CoreWrapper</ProjectName>
+    <TargetFrameworkVersion>8.0</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -49,12 +50,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)WinFormsGUI\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.22000.0\</OutDir>
+    <OutDir>$(SolutionDir)WinFormsGUI\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.22621.0\</OutDir>
     <TargetName>$(SolutionName)Wrap</TargetName>
+    <CopyLocalProjectReference>true</CopyLocalProjectReference>
+    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)WinFormsGUI\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.22000.0\</OutDir>
+    <OutDir>$(SolutionDir)WinFormsGUI\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.22621.0\</OutDir>
     <TargetName>$(SolutionName)Wrap</TargetName>
+    <CopyLocalProjectReference>true</CopyLocalProjectReference>
+    <CopyLocalDebugSymbols>true</CopyLocalDebugSymbols>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -107,6 +112,14 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CoreWrapper.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoreDll\Core.vcxproj">
+      <Project>{5b1ac077-895f-43c4-8f56-8a5adcdcc53d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\HookDll\HookDll.vcxproj">
+      <Project>{c31afe6a-8174-4515-bb0d-cb2e8a26a084}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
