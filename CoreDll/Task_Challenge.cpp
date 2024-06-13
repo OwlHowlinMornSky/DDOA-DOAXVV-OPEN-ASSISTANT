@@ -41,272 +41,64 @@ bool Task_Challenge::Run(Helper& h) {
 		CoreLog() << "Task.Challenge: Start." << std::endl;
 		h.GuiLogF(ReturnMsgEnum::ChaStart);
 
-		const bool forNew = m_set.PlayNewMatchOrPrevious; // 保存设置
+		SetHandler();
+		LoadTemplates();
 
-		switch (r_handler->SetForGame()) {
-		case WndHandler::SetReturnValue::WndNotFound:
-			CoreLog() << "Task.Challenge: Game Window Not Found." << std::endl;
-			h.TaskError(ReturnMsgEnum::TaskErrNoWnd);
+		switch (Settings::Challenge::DEFAULT.PlayMatch) {
+		case 1:
+			target = PlayMatch::New;
 			break;
-		case WndHandler::SetReturnValue::CaptureFailed:
-			CoreLog() << "Task.Challenge: Game Window Cannot Capture." << std::endl;
-			h.TaskError(ReturnMsgEnum::TaskErrNoCap);
-			break;
-		}
-		CoreLog() << "Task.Challenge: Window Handler Setted." << std::endl;
-
-		CoreLog() << "Task.Challenge: Begin Load Templates." << std::endl;
-		std::unique_ptr<MatchTemplate>
-			temp_chaBar = h.CreateTemplate("default"),
-			temp_lastFight = h.CreateTemplate("lastFight"),
-			temp_newFight = h.CreateTemplate("newFight"),
-			temp_startGame = h.CreateTemplate("start"),
-			temp_loading = h.CreateTemplate("loading"),
-			temp_lowFp = h.CreateTemplate("fp"),
-			temp_gameResult = h.CreateTemplate("result"),
-			temp_awardCha = h.CreateTemplate("add");
-		m_camFp = h.CreateTemplate("UseFp");
-		m_camFpNo = h.CreateTemplate("cha/shotFpNo");
-		m_camFpComf[0] = h.CreateTemplate("UseFpComf0");
-		m_camFpComf[1] = h.CreateTemplate("UseFpComf1");
-		m_camFpDrink = h.CreateTemplate("cha/drink");
-		m_camFpDrinkComf = h.CreateTemplate("cha/drinkComf");
-		CoreLog() << "Task.Challenge: Finish Load Templates." << std::endl;
-
-		cv::Point pt;
-		unsigned long playCnt = 0; // 次数
-		bool forAddThisTime = false; // 是否已经进入奖励挑战赛
-		unsigned long playAwardCnt = 0; // 奖励挑战赛次数
-
-		//Task_Navigate::Instance()->ShakeCursor();
-		switch (Task_Navigate::Instance()->TryToDeterminePage()) {
-		case NavigateEnum::MatchConfirm:
-		case NavigateEnum::MatchResult:
+		case 2:
+			target = PlayMatch::Activity;
 			break;
 		default:
-			if (Settings::Challenge::DEFAULT.AskForManual) {
-				r_handler->Reset();
-				h.TaskWaitForResume(ReturnMsgEnum::ManualNavigateToChallengePage);
-				r_handler->SetForGame();
-			}
+			target = PlayMatch::Previous;
+			break;
 		}
 
+		playCnt = 0; // 次数
+		playAwardCnt = 0; // 奖励挑战赛次数
+
+		m_loopSt = LoopStatus::Begin;
+		FirstNavigate();
 		while (true) {
-			bool triedUseDrink = false;
-			CoreLog() << "Task.Challenge: Loop Begin." << std::endl;
-			// 检查导航位置
-			switch (Task_Navigate::Instance()->TryToDeterminePage()) {
-			case NavigateEnum::Challenge:
-				CoreLog() << "Task.Challenge: Navigate Detected: Challenge." << std::endl;
-				TaskSleep(2.0_sec);
-				if (-1 == r_handler->WaitFor(*temp_chaBar)) {
-					CoreLog() << "Task.Challenge: Navigate Failed: No ChaBar." << std::endl;
-					throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
-				}
-				r_handler->ClickAt(temp_chaBar->GetSpecialPointInResult(0));
-				TaskSleep(500_msec);
-				break;
-			case NavigateEnum::MatchConfirm:
-				CoreLog() << "Task.Challenge: Navigate Detected: Match Confirm." << std::endl;
-				goto MatchComfirm;
-				break;
-			case NavigateEnum::MatchResult:
-				CoreLog() << "Task.Challenge: Navigate Detected: Match Result." << std::endl;
-				goto MatchEnd;
-				break;
+			switch (m_loopSt) {
 			default:
-				CoreLog() << "Task.Challenge: Navigate Detected: Others." << std::endl;
-				if (!Task_Navigate::Instance()->NavigateTo(NavigateEnum::Challenge)) {
-					CoreLog() << "Task.Challenge: Navigate Failed." << std::endl;
-					throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
-				}
-				TaskSleep(2.0_sec);
-				if (-1 == r_handler->WaitFor(*temp_chaBar)) {
-					CoreLog() << "Task.Challenge: Navigate Failed: No ChaBar." << std::endl;
-					throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
-				}
-				r_handler->ClickAt(temp_chaBar->GetSpecialPointInResult(0));
-				TaskSleep(500_msec);
+			case LoopStatus::Begin:
+				CoreLog() << "Task.Challenge: Loop Begin." << std::endl;
+				m_loopSt = LoopStatus::Navigate;
+				break;
+			case LoopStatus::Navigate:
+				InitNavigate();
+				break;
+			case LoopStatus::Enter:
+				EnterConfirmPage();
+				m_loopSt = LoopStatus::Start;
+				break;
+			case LoopStatus::Start:
+				StartMatch();
+				m_loopSt = LoopStatus::Wait;
+				break;
+			case LoopStatus::Wait:
+				WaitingForEnd();
+				m_loopSt = LoopStatus::Check;
+				break;
+			case LoopStatus::Check:
+				// 检查是否有奖励挑战赛。
+				if (m_set.CheckAddition)
+					CheckForAwrad();
+				m_loopSt = LoopStatus::End;
+				break;
+			case LoopStatus::End:
+				CoreLog() << "Task.Challenge: Loop End." << std::endl;
+				TaskSleep(1.0_sec);
+				m_loopSt = LoopStatus::Begin;
 				break;
 			}
-			CoreLog() << "Task.Challenge: Navigate Over." << std::endl;
-
-			CoreLog() << "Task.Challenge: Search for Target Match Enter Button." << std::endl;
-			// 查找目标比赛按钮。
-			if (-1 == r_handler->WaitFor(forNew ? *temp_newFight : *temp_lastFight))
-				h.TaskError(
-					forNew ?
-					ReturnMsgEnum::TaskErrChaNoNew :
-					ReturnMsgEnum::TaskErrChaNoPri
-				);
-
-			// 点击比赛，直到进入编队画面（找到挑战按钮）。
-			CoreLog() << "Task.Challenge: Enter Game <" << (forAddThisTime ? "Award" : (forNew ? "New" : "Last")) << ">." << std::endl;
-			pt = { 900, (forNew ? temp_newFight : temp_lastFight)->GetLastMatchRect().y };
-			if (!r_handler->KeepClickingUntil(pt, *temp_startGame))
-				h.TaskError(ReturnMsgEnum::TaskErrChaNoEnter);
-
-			forAddThisTime = false;
-
-		MatchComfirm:
-			CoreLog() << "Task.Challenge: Search for Match Start Button." << std::endl;
-			// 查找“挑战”按钮。
-			r_handler->WaitFor(*temp_startGame);
-			CoreLog() << "Task.Challenge: Play Game." << std::endl;
-			for (int i = 0, n = 10; i < n; ++i) {
-				CoreLog() << "Task.Challenge: Start Match Loop: " << i << "." << std::endl;
-				pt = temp_startGame->GetSpecialPointInResult(0);
-				r_handler->ClickAt(pt);
-				switch (r_handler->WaitForMultiple({ temp_loading.get(), temp_lowFp.get() }, 2.0_sec)) {
-				default:
-				case -1:
-					CoreLog() << "Task.Challenge: Start Match Loop: Not Found." << std::endl;
-					if (i == n - 1) {
-						CoreLog() << "Task.Challenge: Failed to Start Match." << std::endl;
-						h.TaskError(ReturnMsgEnum::TaskErrChaNoStart);
-					}
-					break;
-				case 0:
-					i = n;
-					CoreLog() << "Task.Challenge: Start Match Loop: OK." << std::endl;
-					break;
-				case 1:
-					CoreLog() << "Task.Challenge: Start Match Loop: Low FP." << std::endl;
-					if (!m_set.AutoUseCamFP && !m_set.AutoUseDrink) { // 使用cam补充fp
-						CoreLog() << "Task.Challenge: Task Over: Setted No Use FP." << std::endl;
-						throw TaskExceptionCode::TaskComplete;
-					}
-					switch (r_handler->WaitForMultiple({ m_camFp.get(), m_camFpNo.get() }, 2.0_sec)) {
-					case 0:
-					{
-						CoreLog() << "Task.Challenge: Try to Use FP: Available." << std::endl;
-						pt = m_camFp->GetSpecialPointInResult(0);
-
-						r_handler->ClickAt(pt);
-						TaskSleep(1.0_sec);
-
-						if (-1 == r_handler->WaitFor(*(m_camFpComf[0]))) {
-							CoreLog() << "Task.Challenge: Task Over: Try to Use FP: No 1st." << std::endl;
-							throw TaskExceptionCode::TaskComplete;
-						}
-						pt = m_camFpComf[0]->GetSpecialPointInResult(0);
-						if (!r_handler->KeepClickingUntil(pt, *(m_camFpComf[1]), 10.0_sec, 2.0_sec)) {
-							CoreLog() << "Task.Challenge: Task Over: Try to Use FP: No 2st." << std::endl;
-							throw TaskExceptionCode::TaskComplete;
-						}
-						pt = m_camFpComf[1]->GetSpecialPointInResult(0);
-
-						r_handler->ClickAt(pt);
-						TaskSleep(1.0_sec);
-						if (-1 == r_handler->WaitFor(*temp_startGame)) {
-							CoreLog() << "Task.Challenge: Task Over: Try to Use FP: No Close." << std::endl;
-							throw TaskExceptionCode::TaskComplete;
-						}
-						CoreLog() << "Task.Challenge: Try to Use FP: OK." << std::endl;
-						break;
-					}
-					default:
-						CoreLog() << "Task.Challenge: No FP." << std::endl;
-						if (!m_set.AutoUseDrink || r_handler->WaitFor(*m_camFpDrink, 2.0_sec) == -1) {
-							CoreLog() << "Task.Challenge: Task Over: No Use Drink." << std::endl;
-							throw TaskExceptionCode::TaskComplete;
-						}
-						if (triedUseDrink) {
-							CoreLog() << "Task.Challenge: Task Over: No Drink." << std::endl;
-							throw TaskExceptionCode::TaskComplete;
-						}
-						r_handler->ClickAt(m_camFpDrink->GetSpecialPointInResult(0));
-						TaskSleep(500_msec);
-						r_handler->ClickAt(m_camFpDrink->GetSpecialPointInResult(1));
-						TaskSleep(500_msec);
-						if (r_handler->WaitFor(*m_camFpDrinkComf, 2.0_sec) == -1) {
-							CoreLog() << "Task.Challenge: Task Over: Drink No Ok." << std::endl;
-							throw TaskExceptionCode::TaskComplete;
-						}
-						if (!r_handler->KeepClickingUntil(m_camFpDrinkComf->GetSpecialPointInResult(0), *temp_startGame)) {
-							CoreLog() << "Task.Challenge: Task Over: Try to Use Drink: No Close." << std::endl;
-							throw TaskExceptionCode::TaskComplete;
-						}
-						CoreLog() << "Task.Challenge: Try to Use Drink: OK." << std::endl;
-						triedUseDrink = true;
-					}
-					break;
-				}
-			}
-			CoreLog() << "Task.Challenge: Match Started." << std::endl;
-
-			if (forAddThisTime) {
-				++playAwardCnt;
-				h.GuiLogF_I(ReturnMsgEnum::ChaBeginAdd_I, playAwardCnt);
-				CoreLog() << "Task.Challenge: Match Award " << playAwardCnt << "." << std::endl;
-			}
-			else {
-				++playCnt;
-				h.GuiLogF_I(ReturnMsgEnum::ChaBegin_I, playCnt);
-				CoreLog() << "Task.Challenge: Match " << playCnt << "." << std::endl;
-			}
-
+		/*MatchComfirm:
+			StartMatch();
 		MatchEnd:
-
-			// 等待结束。
-			CoreLog() << "Task.Challenge: In Game, Waitting for End." << std::endl;
-			if (-1 == r_handler->WaitFor(*temp_gameResult, 300.0_sec))
-				h.TaskError(ReturnMsgEnum::TaskErrChaTimeOut);
-
-			// 点击，直到进入加载画面。
-			CoreLog() << "Task.Challenge: Game End, Trying to Exit." << std::endl;
-			pt = temp_gameResult->GetSpecialPointInResult(0);
-			if (!r_handler->KeepClickingUntil(pt, *temp_loading, 60.0_sec, 0.1_sec))
-				h.TaskError(ReturnMsgEnum::TaskErrChaNoEnd);
-
-			// 等待到挑战赛标签页出现。
-			CoreLog() << "Task.Challenge: Game Exit, Waitting for Challenge Page." << std::endl;
-			if (-1 == r_handler->WaitFor(*temp_chaBar, 60.0_sec))
-				h.TaskError(ReturnMsgEnum::TaskErrChaNoOver);
-			h.GuiLogF(ReturnMsgEnum::ChaOver);
-
-			// 检查是否有奖励挑战赛。
-			if (m_set.CheckAddition) {
-				if (0 == r_handler->WaitFor(*temp_awardCha, 2.0_sec)) {
-					CoreLog() << "Task.Challenge: Find Award." << std::endl;
-					h.GuiLogF(ReturnMsgEnum::ChaFindAdd);
-					if (m_set.EnterAddition) { // 进入奖励挑战赛。
-						if (forNew) {
-							pt = temp_awardCha->GetSpecialPointInResult(0);
-							if (r_handler->KeepClickingUntil(pt, *temp_newFight, 10.0_sec, 2.0_sec)) {
-								h.GuiLogF(ReturnMsgEnum::ChaOpenedAdd);
-								forAddThisTime = true;
-								playAwardCnt = 0;
-							}
-							else {
-								h.TaskError(ReturnMsgEnum::TaskErrChaOpenAddFailed);
-							}
-						}
-						else {
-							h.TaskError(ReturnMsgEnum::TaskErrChaAddNotSup);
-						}
-					}
-					else { // 回到“推荐”栏。
-						if (0 == r_handler->WaitFor(*temp_chaBar, 5.0_sec)) {
-							pt = temp_chaBar->GetSpecialPointInResult(0);
-							if (r_handler->KeepClickingUntilNo(pt, *temp_awardCha, 10.0_sec, 0.5_sec)) {
-								h.GuiLogF(ReturnMsgEnum::ChaIgnoredAdd);
-							}
-							else {
-								h.TaskError(ReturnMsgEnum::TaskErrChaIgnoreAddFailed);
-							}
-						}
-					}
-				}
-				else {
-					CoreLog() << "Task.Challenge: Not Find Award." << std::endl;
-					h.GuiLogF(ReturnMsgEnum::ChaNotFindAdd);
-				}
-			}
-
-			CoreLog() << "Task.Challenge: Loop End." << std::endl;
-
-			TaskSleep(1.0_sec);
+			WaitingForEnd();*/
 		}
 	}
 	catch (int err) {
@@ -335,6 +127,297 @@ bool Task_Challenge::Run(Helper& h) {
 	CoreLog() << "Task.Challenge: Exit." << std::endl;
 	h.GuiLogF(ReturnMsgEnum::ChaExit);
 	return taskReturnCode;
+}
+
+bool Task_Challenge::SetHandler() const {
+	switch (r_handler->SetForGame()) {
+	case WndHandler::SetReturnValue::WndNotFound:
+		CoreLog() << "Task.Challenge: Game Window Not Found." << std::endl;
+		r_helper->TaskError(ReturnMsgEnum::TaskErrNoWnd);
+		break;
+	case WndHandler::SetReturnValue::CaptureFailed:
+		CoreLog() << "Task.Challenge: Game Window Cannot Capture." << std::endl;
+		r_helper->TaskError(ReturnMsgEnum::TaskErrNoCap);
+		break;
+	}
+	CoreLog() << "Task.Challenge: Window Handler Setted." << std::endl;
+	return false;
+}
+
+bool Task_Challenge::LoadTemplates() {
+	CoreLog() << "Task.Challenge: Begin Load Templates." << std::endl;
+	temp_chaBar = r_helper->CreateTemplate("default");
+	temp_lastFight = r_helper->CreateTemplate("lastFight");
+	temp_newFight = r_helper->CreateTemplate("newFight");
+	temp_startGame = r_helper->CreateTemplate("start");
+	temp_loading = r_helper->CreateTemplate("loading");
+	temp_lowFp = r_helper->CreateTemplate("fp");
+	temp_gameResult = r_helper->CreateTemplate("result");
+	temp_awardCha = r_helper->CreateTemplate("add");
+	m_camFp = r_helper->CreateTemplate("UseFp");
+	m_camFpNo = r_helper->CreateTemplate("cha/shotFpNo");
+	m_camFpComf[0] = r_helper->CreateTemplate("UseFpComf0");
+	m_camFpComf[1] = r_helper->CreateTemplate("UseFpComf1");
+	m_camFpDrink = r_helper->CreateTemplate("cha/drink");
+	m_camFpDrinkComf = r_helper->CreateTemplate("cha/drinkComf");
+	CoreLog() << "Task.Challenge: Finish Load Templates." << std::endl;
+	return false;
+}
+
+void Task_Challenge::FirstNavigate() {
+	switch (Task_Navigate::Instance()->TryToDeterminePage()) {
+	case NavigateEnum::MatchConfirm:
+	case NavigateEnum::MatchResult:
+		break;
+	default:
+		if (Settings::Challenge::DEFAULT.AskForManual) {
+			r_handler->Reset();
+			r_helper->TaskWaitForResume(ReturnMsgEnum::ManualNavigateToChallengePage);
+			r_handler->SetForGame();
+		}
+	}
+	m_loopSt = LoopStatus::Begin;
+}
+
+bool Task_Challenge::InitNavigate() {
+	// 检查导航位置
+	switch (Task_Navigate::Instance()->TryToDeterminePage()) {
+	case NavigateEnum::Challenge:
+		CoreLog() << "Task.Challenge: Navigate Detected: Challenge." << std::endl;
+		TaskSleep(2.0_sec);
+		if (-1 == r_handler->WaitFor(*temp_chaBar)) {
+			CoreLog() << "Task.Challenge: Navigate Failed: No ChaBar." << std::endl;
+			throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
+		}
+		r_handler->ClickAt(temp_chaBar->GetSpecialPointInResult(0));
+		TaskSleep(500_msec);
+		break;
+	case NavigateEnum::MatchConfirm:
+		CoreLog() << "Task.Challenge: Navigate Detected: Match Confirm." << std::endl;
+		//goto MatchComfirm;
+		m_loopSt = LoopStatus::Start;
+		return false;
+	case NavigateEnum::MatchResult:
+		CoreLog() << "Task.Challenge: Navigate Detected: Match Result." << std::endl;
+		//goto MatchEnd;
+		m_loopSt = LoopStatus::Wait;
+		return false;
+	default:
+		CoreLog() << "Task.Challenge: Navigate Detected: Others." << std::endl;
+		if (!Task_Navigate::Instance()->NavigateTo(NavigateEnum::Challenge)) {
+			CoreLog() << "Task.Challenge: Navigate Failed." << std::endl;
+			throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
+		}
+		TaskSleep(2.0_sec);
+		if (-1 == r_handler->WaitFor(*temp_chaBar)) {
+			CoreLog() << "Task.Challenge: Navigate Failed: No ChaBar." << std::endl;
+			throw TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
+		}
+		r_handler->ClickAt(temp_chaBar->GetSpecialPointInResult(0));
+		TaskSleep(500_msec);
+		break;
+	}
+	CoreLog() << "Task.Challenge: Navigate Over." << std::endl;
+	m_loopSt = LoopStatus::Enter;
+	return false;
+}
+
+void Task_Challenge::EnterConfirmPage() {
+	cv::Point pt;
+	CoreLog() << "Task.Challenge: Search for Target Match Enter Button." << std::endl;
+	// 查找目标比赛按钮。
+	switch (target) {
+	case PlayMatch::Previous:
+		if (-1 == r_handler->WaitFor(*temp_lastFight))
+			r_helper->TaskError(ReturnMsgEnum::TaskErrChaNoPri);
+		CoreLog() << "Task.Challenge: Enter Game <Previous>." << std::endl;
+		pt = { 900, temp_lastFight->GetLastMatchRect().y };
+		break;
+	case PlayMatch::New:
+		if (-1 == r_handler->WaitFor(*temp_newFight))
+			r_helper->TaskError(ReturnMsgEnum::TaskErrChaNoNew);
+		CoreLog() << "Task.Challenge: Enter Game <New>." << std::endl;
+		pt = { 900, temp_newFight->GetLastMatchRect().y };
+		break;
+	case PlayMatch::Activity:
+		break;
+	case PlayMatch::Award:
+		if (-1 == r_handler->WaitFor(*temp_newFight))
+			r_helper->TaskError(ReturnMsgEnum::TaskErrChaNoNew);
+		CoreLog() << "Task.Challenge: Enter Game <Award>." << std::endl;
+		pt = { 900, temp_newFight->GetLastMatchRect().y };
+		break;
+	}
+
+	// 点击比赛，直到进入编队画面（找到挑战按钮）。
+	if (!r_handler->KeepClickingUntil(pt, *temp_startGame))
+		r_helper->TaskError(ReturnMsgEnum::TaskErrChaNoEnter);
+}
+
+void Task_Challenge::StartMatch() {
+	cv::Point pt;
+	CoreLog() << "Task.Challenge: Search for Match Start Button." << std::endl;
+	// 查找“挑战”按钮。
+	bool triedFp = false;
+	r_handler->WaitFor(*temp_startGame);
+	CoreLog() << "Task.Challenge: Play Game." << std::endl;
+	for (int i = 0, n = 10; i < n; ++i) {
+		CoreLog() << "Task.Challenge: Start Match Loop: " << i << "." << std::endl;
+		pt = temp_startGame->GetSpecialPointInResult(0);
+		r_handler->ClickAt(pt);
+		switch (r_handler->WaitForMultiple({ temp_loading.get(), temp_lowFp.get() }, 2.0_sec)) {
+		default:
+		case -1:
+			CoreLog() << "Task.Challenge: Start Match Loop: Not Found." << std::endl;
+			if (i == n - 1) {
+				CoreLog() << "Task.Challenge: Failed to Start Match." << std::endl;
+				r_helper->TaskError(ReturnMsgEnum::TaskErrChaNoStart);
+			}
+			break;
+		case 0:
+			i = n;
+			CoreLog() << "Task.Challenge: Start Match Loop: OK." << std::endl;
+			break;
+		case 1:
+			if (triedFp) {
+				CoreLog() << "Task.Challenge: Task Over: Fp Handle Failed." << std::endl;
+				throw TaskExceptionCode::TaskComplete;
+			}
+			CoreLog() << "Task.Challenge: Start Match Loop: Low FP." << std::endl;
+			HandleLowFp();
+			triedFp = true;
+			break;
+		}
+	}
+	CoreLog() << "Task.Challenge: Match Started." << std::endl;
+}
+
+bool Task_Challenge::HandleLowFp() {
+	cv::Point pt;
+	if (!m_set.AutoUseCamFP && !m_set.AutoUseDrink) { // 使用cam补充fp
+		CoreLog() << "Task.Challenge: Task Over: Setted No Use FP." << std::endl;
+		throw TaskExceptionCode::TaskComplete;
+	}
+	switch (r_handler->WaitForMultiple({ m_camFp.get(), m_camFpNo.get() }, 2.0_sec)) {
+	case 0:
+		CoreLog() << "Task.Challenge: Try to Use FP: Available." << std::endl;
+		pt = m_camFp->GetSpecialPointInResult(0);
+
+		r_handler->ClickAt(pt);
+		TaskSleep(1.0_sec);
+
+		if (-1 == r_handler->WaitFor(*(m_camFpComf[0]))) {
+			CoreLog() << "Task.Challenge: Task Over: Try to Use FP: No 1st." << std::endl;
+			throw TaskExceptionCode::TaskComplete;
+		}
+		pt = m_camFpComf[0]->GetSpecialPointInResult(0);
+		if (!r_handler->KeepClickingUntil(pt, *(m_camFpComf[1]), 10.0_sec, 2.0_sec)) {
+			CoreLog() << "Task.Challenge: Task Over: Try to Use FP: No 2st." << std::endl;
+			throw TaskExceptionCode::TaskComplete;
+		}
+		pt = m_camFpComf[1]->GetSpecialPointInResult(0);
+
+		r_handler->ClickAt(pt);
+		TaskSleep(1.0_sec);
+		if (-1 == r_handler->WaitFor(*temp_startGame)) {
+			CoreLog() << "Task.Challenge: Task Over: Try to Use FP: No Close." << std::endl;
+			throw TaskExceptionCode::TaskComplete;
+		}
+		CoreLog() << "Task.Challenge: Try to Use FP: OK." << std::endl;
+		break;
+	default:
+		CoreLog() << "Task.Challenge: No FP." << std::endl;
+		if (!m_set.AutoUseDrink || r_handler->WaitFor(*m_camFpDrink, 2.0_sec) == -1) {
+			CoreLog() << "Task.Challenge: Task Over: No Use Drink." << std::endl;
+			throw TaskExceptionCode::TaskComplete;
+		}
+		r_handler->ClickAt(m_camFpDrink->GetSpecialPointInResult(0));
+		TaskSleep(500_msec);
+		r_handler->ClickAt(m_camFpDrink->GetSpecialPointInResult(1));
+		TaskSleep(500_msec);
+		if (r_handler->WaitFor(*m_camFpDrinkComf, 2.0_sec) == -1) {
+			CoreLog() << "Task.Challenge: Task Over: Drink No Ok." << std::endl;
+			throw TaskExceptionCode::TaskComplete;
+		}
+		if (!r_handler->KeepClickingUntil(m_camFpDrinkComf->GetSpecialPointInResult(0), *temp_startGame)) {
+			CoreLog() << "Task.Challenge: Task Over: Try to Use Drink: No Close." << std::endl;
+			throw TaskExceptionCode::TaskComplete;
+		}
+		CoreLog() << "Task.Challenge: Try to Use Drink: OK." << std::endl;
+		break;
+	}
+	return false;
+}
+
+void Task_Challenge::WaitingForEnd() {
+	cv::Point pt;
+
+	if (target == PlayMatch::Award) {
+		++playAwardCnt;
+		r_helper->GuiLogF_I(ReturnMsgEnum::ChaBeginAdd_I, playAwardCnt);
+		CoreLog() << "Task.Challenge: Match Award " << playAwardCnt << "." << std::endl;
+	}
+	else {
+		++playCnt;
+		r_helper->GuiLogF_I(ReturnMsgEnum::ChaBegin_I, playCnt);
+		CoreLog() << "Task.Challenge: Match " << playCnt << "." << std::endl;
+	}
+
+	// 等待结束。
+	CoreLog() << "Task.Challenge: In Game, Waitting for End." << std::endl;
+	if (-1 == r_handler->WaitFor(*temp_gameResult, 300.0_sec))
+		r_helper->TaskError(ReturnMsgEnum::TaskErrChaTimeOut);
+
+	// 点击，直到进入加载画面。
+	CoreLog() << "Task.Challenge: Game End, Trying to Exit." << std::endl;
+	pt = temp_gameResult->GetSpecialPointInResult(0);
+	if (!r_handler->KeepClickingUntil(pt, *temp_loading, 60.0_sec, 0.1_sec))
+		r_helper->TaskError(ReturnMsgEnum::TaskErrChaNoEnd);
+
+	// 等待到挑战赛标签页出现。
+	CoreLog() << "Task.Challenge: Game Exit, Waitting for Challenge Page." << std::endl;
+	if (-1 == r_handler->WaitFor(*temp_chaBar, 60.0_sec))
+		r_helper->TaskError(ReturnMsgEnum::TaskErrChaNoOver);
+	r_helper->GuiLogF(ReturnMsgEnum::ChaOver);
+}
+
+void Task_Challenge::CheckForAwrad() {
+	cv::Point pt;
+	if (0 == r_handler->WaitFor(*temp_awardCha, 2.0_sec)) {
+		CoreLog() << "Task.Challenge: Find Award." << std::endl;
+		r_helper->GuiLogF(ReturnMsgEnum::ChaFindAdd);
+		if (m_set.EnterAddition) { // 进入奖励挑战赛。
+			if (target == PlayMatch::New) {
+				pt = temp_awardCha->GetSpecialPointInResult(0);
+				if (r_handler->KeepClickingUntil(pt, *temp_newFight, 10.0_sec, 2.0_sec)) {
+					r_helper->GuiLogF(ReturnMsgEnum::ChaOpenedAdd);
+					target = PlayMatch::Award;
+					playAwardCnt = 0;
+				}
+				else {
+					r_helper->TaskError(ReturnMsgEnum::TaskErrChaOpenAddFailed);
+				}
+			}
+			else {
+				r_helper->TaskError(ReturnMsgEnum::TaskErrChaAddNotSup);
+			}
+		}
+		else { // 回到“推荐”栏。
+			if (0 == r_handler->WaitFor(*temp_chaBar, 5.0_sec)) {
+				pt = temp_chaBar->GetSpecialPointInResult(0);
+				if (r_handler->KeepClickingUntilNo(pt, *temp_awardCha, 10.0_sec, 0.5_sec)) {
+					r_helper->GuiLogF(ReturnMsgEnum::ChaIgnoredAdd);
+				}
+				else {
+					r_helper->TaskError(ReturnMsgEnum::TaskErrChaIgnoreAddFailed);
+				}
+			}
+		}
+	}
+	else {
+		CoreLog() << "Task.Challenge: Not Find Award." << std::endl;
+		r_helper->GuiLogF(ReturnMsgEnum::ChaNotFindAdd);
+	}
 }
 
 }
