@@ -190,6 +190,14 @@ namespace WinFormsGUI {
 					return;
 				}
 				Program.helper.SetTaskList(list); // 设置所选的任务
+				if (Settings.Core.Default.PlayMatchType == 2) {
+					if (Settings.Core.Default.PlayLevel == 0 || Settings.Core.Default.PlayLevelR == 0) {
+						Log(Strings.Main.ChallengeActivityLevelNotSelected);
+						WorkStatusLocker.WorkUnlock(); // 解锁GUI
+						return;
+					}
+					Program.helper.SetChallengeLevel(Settings.Core.Default.PlayLevel, Settings.Core.Default.PlayLevelR);
+				}
 				if (!Program.helper.Start()) { // 启动失败
 					Log(Strings.GuiLog.WorkCanNotStartWork); // 提示。
 					WorkStatusLocker.WorkUnlock(); // 解锁GUI

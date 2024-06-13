@@ -28,7 +28,9 @@
 			radioBtn_AwardPlay = new RadioButton();
 			radioBtn_AwardNo = new RadioButton();
 			gpBox_TargetMatch = new GroupBox();
-			radioButton_recordMatch = new RadioButton();
+			numericUpDown1 = new NumericUpDown();
+			comboBox1 = new ComboBox();
+			radioButton_activity = new RadioButton();
 			radioBtn_NewMatch = new RadioButton();
 			radioBtn_PreviousMatch = new RadioButton();
 			checkBox_useCamFP = new CheckBox();
@@ -36,6 +38,7 @@
 			checkBox_autoUseDrink = new CheckBox();
 			gpBox_AwardMatch.SuspendLayout();
 			gpBox_TargetMatch.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
 			SuspendLayout();
 			// 
 			// gpBox_AwardMatch
@@ -77,20 +80,20 @@
 			// radioBtn_AwardNo
 			// 
 			radioBtn_AwardNo.AutoSize = true;
-			radioBtn_AwardNo.Checked = true;
 			radioBtn_AwardNo.ImeMode = ImeMode.NoControl;
 			radioBtn_AwardNo.Location = new Point(6, 22);
 			radioBtn_AwardNo.Name = "radioBtn_AwardNo";
 			radioBtn_AwardNo.Size = new Size(62, 21);
 			radioBtn_AwardNo.TabIndex = 0;
-			radioBtn_AwardNo.TabStop = true;
 			radioBtn_AwardNo.Text = "不检测";
 			radioBtn_AwardNo.UseVisualStyleBackColor = true;
 			radioBtn_AwardNo.CheckedChanged += AwardMatch_RadioBtn_CheckedChanged;
 			// 
 			// gpBox_TargetMatch
 			// 
-			gpBox_TargetMatch.Controls.Add(radioButton_recordMatch);
+			gpBox_TargetMatch.Controls.Add(numericUpDown1);
+			gpBox_TargetMatch.Controls.Add(comboBox1);
+			gpBox_TargetMatch.Controls.Add(radioButton_activity);
 			gpBox_TargetMatch.Controls.Add(radioBtn_NewMatch);
 			gpBox_TargetMatch.Controls.Add(radioBtn_PreviousMatch);
 			gpBox_TargetMatch.Location = new Point(3, 3);
@@ -100,17 +103,38 @@
 			gpBox_TargetMatch.TabStop = false;
 			gpBox_TargetMatch.Text = "游戏选项";
 			// 
-			// radioButton_recordMatch
+			// numericUpDown1
 			// 
-			radioButton_recordMatch.AutoSize = true;
-			radioButton_recordMatch.Location = new Point(6, 75);
-			radioButton_recordMatch.Name = "radioButton_recordMatch";
-			radioButton_recordMatch.Size = new Size(110, 21);
-			radioButton_recordMatch.TabIndex = 2;
-			radioButton_recordMatch.TabStop = true;
-			radioButton_recordMatch.Text = "录制指定的比赛";
-			radioButton_recordMatch.UseVisualStyleBackColor = true;
-			radioButton_recordMatch.CheckedChanged += MatchSet_RadioBtn_CheckedChanged;
+			numericUpDown1.Location = new Point(141, 76);
+			numericUpDown1.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
+			numericUpDown1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+			numericUpDown1.Name = "numericUpDown1";
+			numericUpDown1.Size = new Size(53, 23);
+			numericUpDown1.TabIndex = 4;
+			numericUpDown1.Value = new decimal(new int[] { 1, 0, 0, 0 });
+			numericUpDown1.ValueChanged += numericUpDown1_ValueChanged;
+			// 
+			// comboBox1
+			// 
+			comboBox1.FormattingEnabled = true;
+			comboBox1.Items.AddRange(new object[] { "-", "E", "D", "C", "B", "A", "S" });
+			comboBox1.Location = new Point(83, 74);
+			comboBox1.Name = "comboBox1";
+			comboBox1.Size = new Size(52, 25);
+			comboBox1.TabIndex = 3;
+			comboBox1.Text = "-";
+			comboBox1.SelectedValueChanged += comboBox1_SelectedValueChanged;
+			// 
+			// radioButton_activity
+			// 
+			radioButton_activity.AutoSize = true;
+			radioButton_activity.Location = new Point(6, 75);
+			radioButton_activity.Name = "radioButton_activity";
+			radioButton_activity.Size = new Size(86, 21);
+			radioButton_activity.TabIndex = 2;
+			radioButton_activity.Text = "活动关卡：";
+			radioButton_activity.UseVisualStyleBackColor = true;
+			radioButton_activity.CheckedChanged += MatchSet_RadioBtn_CheckedChanged;
 			// 
 			// radioBtn_NewMatch
 			// 
@@ -127,13 +151,11 @@
 			// radioBtn_PreviousMatch
 			// 
 			radioBtn_PreviousMatch.AutoSize = true;
-			radioBtn_PreviousMatch.Checked = true;
 			radioBtn_PreviousMatch.ImeMode = ImeMode.NoControl;
 			radioBtn_PreviousMatch.Location = new Point(6, 22);
 			radioBtn_PreviousMatch.Name = "radioBtn_PreviousMatch";
 			radioBtn_PreviousMatch.Size = new Size(79, 21);
 			radioBtn_PreviousMatch.TabIndex = 0;
-			radioBtn_PreviousMatch.TabStop = true;
 			radioBtn_PreviousMatch.Text = "当前/上次";
 			radioBtn_PreviousMatch.UseVisualStyleBackColor = true;
 			radioBtn_PreviousMatch.CheckedChanged += MatchSet_RadioBtn_CheckedChanged;
@@ -187,6 +209,7 @@
 			gpBox_AwardMatch.PerformLayout();
 			gpBox_TargetMatch.ResumeLayout(false);
 			gpBox_TargetMatch.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
 			ResumeLayout(false);
 			PerformLayout();
 		}
@@ -203,6 +226,8 @@
 		private CheckBox checkBox_useCamFP;
 		private CheckBox checkBox_PauseForMannual;
 		private CheckBox checkBox_autoUseDrink;
-		private RadioButton radioButton_recordMatch;
+		private RadioButton radioButton_activity;
+		private ComboBox comboBox1;
+		private NumericUpDown numericUpDown1;
 	}
 }

@@ -32,19 +32,6 @@ extern "C" {          // we need to export the C interface
 		_In_ LPARAM lParam
 	);
 
-	DLL_API LRESULT CALLBACK RecordHookProc(
-		_In_ int    code,
-		_In_ WPARAM wParam,
-		_In_ LPARAM lParam
-	);
-
 #ifdef __cplusplus
 }
 #endif
-
-namespace Hook {
-
-DLL_API int StartRecord(void* hwnd);
-DLL_API int StopRecord();
-
-}

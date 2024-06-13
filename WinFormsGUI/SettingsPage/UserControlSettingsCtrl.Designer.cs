@@ -27,7 +27,6 @@
 			radioBtn_CtrlInput = new RadioButton();
 			radioBtn_CtrlMsg = new RadioButton();
 			checkBox_Hook = new CheckBox();
-			button_record = new Button();
 			gpBox_CtrlSet.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -80,21 +79,10 @@
 			checkBox_Hook.UseVisualStyleBackColor = true;
 			checkBox_Hook.CheckedChanged += CheckBox_Hook_CheckedChanged;
 			// 
-			// button_record
-			// 
-			button_record.Location = new Point(3, 116);
-			button_record.Name = "button_record";
-			button_record.Size = new Size(119, 61);
-			button_record.TabIndex = 14;
-			button_record.Text = "录制";
-			button_record.UseVisualStyleBackColor = true;
-			button_record.Click += button_record_Click;
-			// 
 			// UserControlSettingsCtrl
 			// 
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
-			Controls.Add(button_record);
 			Controls.Add(checkBox_Hook);
 			Controls.Add(gpBox_CtrlSet);
 			Name = "UserControlSettingsCtrl";
@@ -111,6 +99,5 @@
 		private RadioButton radioBtn_CtrlInput;
 		private RadioButton radioBtn_CtrlMsg;
 		private CheckBox checkBox_Hook;
-		private Button button_record;
 	}
 }

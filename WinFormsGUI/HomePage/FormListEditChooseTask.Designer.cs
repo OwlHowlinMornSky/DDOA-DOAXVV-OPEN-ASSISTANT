@@ -40,6 +40,7 @@
 			listBox1.Size = new Size(233, 277);
 			listBox1.TabIndex = 0;
 			listBox1.SelectedIndexChanged += ListBox1_SelectedIndexChanged;
+			listBox1.DoubleClick += listBox1_DoubleClick;
 			// 
 			// button1
 			// 

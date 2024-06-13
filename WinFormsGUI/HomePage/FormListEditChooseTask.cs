@@ -87,5 +87,9 @@ namespace WinFormsGUI {
 			choosedTask = (uint)TaskEnumWrap.None; // 清除选择。
 			DialogResult = DialogResult.Cancel;
 		}
+
+		private void listBox1_DoubleClick(object sender, EventArgs e) {
+			DialogResult = DialogResult.OK;
+		}
 	}
 }

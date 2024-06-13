@@ -162,9 +162,6 @@ public:
 	 */
 	bool GetOneFrame(cv::Mat& store, Time maxTime = seconds(10.0f));
 
-	bool StartRecord();
-	void StopRecord();
-
 protected:
 	/**
 	 * @brief 设定目标窗口为DDOA调试器窗口。
@@ -209,7 +206,6 @@ private:
 
 	HMODULE m_hmod; // 挂钩模块。
 	FARPROC m_hookproc; // 挂钩过程。
-	FARPROC m_rechookproc; // 挂钩过程。
 	HHOOK m_hhook; // 挂钩。
 };
 

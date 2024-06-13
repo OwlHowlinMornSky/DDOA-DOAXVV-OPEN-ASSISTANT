@@ -13,8 +13,8 @@ namespace WinFormsGUI {
 #else
 			Settings.Core.Default.ShowCapture = false;
 #endif
-			Program.helper.SetChallengeForRecord(Settings.Core.Default.PlayRecordMatch);
-			Program.helper.SetChallengeForNewOrLast(Settings.Core.Default.PlayNewMatch);
+			Program.helper.SetChallengeMatch(Settings.Core.Default.PlayMatchType);
+
 			Program.helper.SetMouseSendInputOrSendMessage(Settings.Core.Default.CtrlSendInput);
 			Program.helper.SetShowCaptureOrNot(Settings.Core.Default.ShowCapture);
 			Program.helper.SetKeepAwakeOrNot(Settings.Core.Default.KeepAwake);

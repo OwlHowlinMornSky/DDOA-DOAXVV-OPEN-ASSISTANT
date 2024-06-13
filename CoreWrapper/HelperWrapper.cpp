@@ -77,13 +77,14 @@ System::Void HelperWrapper::Drop() {
 	r_helper = nullptr;
 }
 
-System::Int32 HelperWrapper::SetChallengeForNewOrLast(bool forNew) {
-	ohms::Settings::Challenge::DEFAULT.PlayNewMatchOrPrevious = forNew;
-	return System::Int32(0);
+System::Int32 HelperWrapper::SetChallengeMatch(int matchType) {
+	ohms::Settings::Challenge::DEFAULT.PlayMatch = matchType;
+    return System::Int32(0);
 }
 
-System::Int32 HelperWrapper::SetChallengeForRecord(bool forRecord) {
-	ohms::Settings::Challenge::DEFAULT.PlayRecord = forRecord;
+System::Int32 HelperWrapper::SetChallengeLevel(int level, int number) {
+	ohms::Settings::Challenge::DEFAULT.SelectedActivityLevel = level;
+	ohms::Settings::Challenge::DEFAULT.SelectedActivityMatch = number;
 	return System::Int32(0);
 }
 
@@ -155,14 +156,6 @@ void HelperWrapper::SetChaAskForManual(bool ask) {
 void HelperWrapper::SetChaAutoUseDrink(bool use) {
 	ohms::Settings::Challenge::DEFAULT.AutoUseDrink = use;
 	return;
-}
-
-int HelperWrapper::StartRecord(System::IntPtr hwnd) {
-	return ohms::IHelper::instance()->StartRecord((HWND)(void*)hwnd);
-}
-
-int HelperWrapper::StopRecord() {
-    return ohms::IHelper::instance()->StopRecord();
 }
 
 }

@@ -74,9 +74,6 @@
     <ClCompile Include="WinCheck.cpp">
       <Filter>Impl</Filter>
     </ClCompile>
-    <ClCompile Include="Task_Record.cpp">
-      <Filter>Tasks</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Helper.h">
@@ -162,9 +159,6 @@
     </ClInclude>
     <ClInclude Include="WinCheck.h">
       <Filter>Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Task_Record.h">
-      <Filter>Tasks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -26,18 +26,6 @@ namespace WinFormsGUI.Settings {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool PlayNewMatch {
-            get {
-                return ((bool)(this["PlayNewMatch"]));
-            }
-            set {
-                this["PlayNewMatch"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool CtrlSendInput {
             get {
                 return ((bool)(this["CtrlSendInput"]));
@@ -169,13 +157,37 @@ namespace WinFormsGUI.Settings {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool PlayRecordMatch {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PlayMatchType {
             get {
-                return ((bool)(this["PlayRecordMatch"]));
+                return ((int)(this["PlayMatchType"]));
             }
             set {
-                this["PlayRecordMatch"] = value;
+                this["PlayMatchType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PlayLevel {
+            get {
+                return ((int)(this["PlayLevel"]));
+            }
+            set {
+                this["PlayLevel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int PlayLevelR {
+            get {
+                return ((int)(this["PlayLevelR"]));
+            }
+            set {
+                this["PlayLevelR"] = value;
             }
         }
     }

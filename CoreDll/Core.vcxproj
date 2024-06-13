@@ -66,7 +66,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\opencv\4.8.0\build\x64\vc16\lib;$(OHMS_LIB_DIR)\ohms\wgc\v2.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)HookDll.lib;windowsapp.lib;dwmapi.lib;opencv_world480d.lib;wgc-capture-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>windowsapp.lib;dwmapi.lib;opencv_world480d.lib;wgc-capture-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Version>
       </Version>
     </Link>
@@ -93,7 +93,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\opencv\4.8.0\build\x64\vc16\lib;$(OHMS_LIB_DIR)\ohms\wgc\v2.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)HookDll.lib;windowsapp.lib;dwmapi.lib;opencv_world480.lib;wgc-capture.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>windowsapp.lib;dwmapi.lib;opencv_world480.lib;wgc-capture.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Version>
       </Version>
     </Link>
@@ -115,7 +115,6 @@
     <ClCompile Include="Task_Challenge.cpp" />
     <ClCompile Include="Task_Daily.cpp" />
     <ClCompile Include="Task_Navigate.cpp" />
-    <ClCompile Include="Task_Record.cpp" />
     <ClCompile Include="Task_StartUp.cpp" />
     <ClCompile Include="Task_TEST.cpp" />
     <ClCompile Include="Time.cpp" />
@@ -145,7 +144,6 @@
     <ClInclude Include="Task_Challenge.h" />
     <ClInclude Include="Task_Daily.h" />
     <ClInclude Include="Task_Navigate.h" />
-    <ClInclude Include="Task_Record.h" />
     <ClInclude Include="Task_StartUp.h" />
     <ClInclude Include="Task_TEST.h" />
     <ClInclude Include="Time.h" />

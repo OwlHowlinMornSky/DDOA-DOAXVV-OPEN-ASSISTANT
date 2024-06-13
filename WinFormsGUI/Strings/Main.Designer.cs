@@ -79,6 +79,15 @@ namespace WinFormsGUI.Strings {
         }
         
         /// <summary>
+        ///   查找类似 未选择活动关卡 的本地化字符串。
+        /// </summary>
+        internal static string ChallengeActivityLevelNotSelected {
+            get {
+                return ResourceManager.GetString("ChallengeActivityLevelNotSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 找不到名为 &quot;{0}&quot; 的日志字符串。 的本地化字符串。
         /// </summary>
         internal static string NoSuchLogString {

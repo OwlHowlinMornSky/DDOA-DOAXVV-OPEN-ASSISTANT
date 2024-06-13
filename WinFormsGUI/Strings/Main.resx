@@ -123,6 +123,9 @@
   <data name="Btn_Main_Stop" xml:space="preserve">
     <value>停止</value>
   </data>
+  <data name="ChallengeActivityLevelNotSelected" xml:space="preserve">
+    <value>未选择活动关卡</value>
+  </data>
   <data name="NoSuchLogString" xml:space="preserve">
     <value>找不到名为 "{0}" 的日志字符串。</value>
   </data>

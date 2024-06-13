@@ -44,6 +44,9 @@ public:
 	 * @brief 要求停止（IHelper::askForStop）
 	 */
 	System::Void AskForStop();
+	/**
+	 * @brief 取消暂停
+	 */
 	System::Void Resume();
 	/**
 	 * @brief 是否正在运行（IHelper::isRunning）
@@ -85,12 +88,18 @@ public:
 	*/
 	System::Int32 SetShowCaptureOrNot(bool show);
 	/**
-	 * @brief 设置挑战赛打新比赛或上一次比赛。
-	 * @param forNew 为 true 则打新比赛，否则打上一次比赛
+	 * @brief 设置比赛（上一次/NEW/指定活动关卡）
+	 * @param matchType 0: 上一次; 1: NEW ; 2: 活动关卡.
 	 * @return 0 if success.
-	*/
-	System::Int32 SetChallengeForNewOrLast(bool forNew);
-	System::Int32 SetChallengeForRecord(bool forRecord);
+	 */
+	System::Int32 SetChallengeMatch(int matchType);
+	/**
+	 * @brief 指定活动关卡。
+	 * @param level 推荐的星等级。
+	 * @param number 编号。
+	 * @return 0 if success.
+	 */
+	System::Int32 SetChallengeLevel(int level, int number);
 	/**
 	 * @brief 设置鼠标操作 发送输入 还是 窗口消息。
 	 * @param sendInput 为 true 则使用鼠标输入，否则发送窗口消息。
@@ -134,16 +143,28 @@ public:
 	 */
 	System::Int32 SetUseCamFP(System::Boolean isSettedUse);
 
+	/**
+	 * @brief 设置是否进行每日签到。
+	 */
 	void SetDoDailyCheck(bool setDo);
+	/**
+	 * @brief 设置是否进行每日拍摄。
+	 */
 	void SetDoDailyShot(bool setDo);
 
+	/**
+	 * @brief 设置是否（通过Hook）拦截用户鼠标消息。
+	 */
 	void SetUseHook(bool use);
 
+	/**
+	 * @brief 设置（挑战赛开始时）是否请求手动导航。
+	 */
 	void SetChaAskForManual(bool ask);
+	/**
+	 * @brief 设置挑战赛是否自动使用FP恢复饮料。
+	 */
 	void SetChaAutoUseDrink(bool use);
-
-	int StartRecord(System::IntPtr hwnd);
-	int StopRecord();
 
 private:
 	ohms::IHelper* r_helper;

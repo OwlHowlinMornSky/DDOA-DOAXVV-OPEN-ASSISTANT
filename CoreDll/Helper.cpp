@@ -34,8 +34,6 @@
 #include "ITask.h"
 #include "Sleep.h"
 
-#include "Task_Record.h"
-
 namespace ohms {
 
 Helper::Helper() :
@@ -140,14 +138,6 @@ long Helper::msgPop() {
 	long res = m_hrm.front();
 	m_hrm.pop();
 	return res;
-}
-
-int Helper::StartRecord(void* hwnd) {
-    return Task_Record::Instance()->start(hwnd);
-}
-
-int Helper::StopRecord() {
-	return Task_Record::Instance()->stop();
 }
 
 void Helper::GuiLogC_EmptyLine() {

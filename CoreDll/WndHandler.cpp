@@ -506,41 +506,6 @@ bool WndHandler::GetOneFrame(cv::Mat& store, Time maxTime) {
 	return true;
 }
 
-bool WndHandler::StartRecord() {
-	if (m_hookproc == NULL) {
-		return false;
-	}
-	if (m_hwnd == NULL) {
-		CoreLog() << "Window Not Found: " << ParseWin32Error() << std::endl;
-		return false;
-	}
-
-	DWORD pid = NULL;
-	DWORD tid = GetWindowThreadProcessId(m_hwnd, &pid);
-	if (tid == 0) {
-		CoreLog() << "Failed to Get Thread Id: " << ParseWin32Error() << std::endl;
-		return false;
-	}
-
-	m_hhook = SetWindowsHookExA(
-		WH_GETMESSAGE,
-		(HOOKPROC)m_rechookproc,
-		m_hmod,
-		tid
-	);
-	if (m_hhook == NULL) {
-		CoreLog() << "Failed to Set Hook: " << ParseWin32Error() << std::endl;
-		return false;
-	}
-	return true;
-}
-
-void WndHandler::StopRecord() {
-	if (m_hhook != NULL)
-		UnhookWindowsHookEx(m_hhook);
-	m_hhook = NULL;
-}
-
 WndHandler::SetReturnValue WndHandler::SetForDebugger(bool isGame) {
 	if (m_state == StateValue::DebuggerGame || m_state == StateValue::DebuggerLauncher) {
 		m_state = isGame ? StateValue::DebuggerGame : StateValue::DebuggerLauncher;
@@ -589,13 +554,6 @@ bool WndHandler::LoadHookInfo() {
 		ClearHookInfo();
 		return false;
 	}
-
-	m_rechookproc = GetProcAddress(m_hmod, "RecordHookProc");
-	if (m_rechookproc == NULL) {
-		CoreLog() << "Failed to Get Record Procedure Address: " << ParseWin32Error() << std::endl;
-		ClearHookInfo();
-		return false;
-	}
 	return true;
 }
 
@@ -635,7 +593,6 @@ void WndHandler::DropHook() {
 }
 
 void WndHandler::ClearHookInfo() {
-	m_rechookproc = NULL;
 	m_hookproc = NULL;
 	if (m_hmod != NULL)
 		FreeLibrary(m_hmod);
