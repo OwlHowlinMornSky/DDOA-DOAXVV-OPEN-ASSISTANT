@@ -69,6 +69,7 @@
       <AdditionalDependencies>windowsapp.lib;dwmapi.lib;opencv_world480d.lib;wgc-capture-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Version>
       </Version>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
     <Manifest>
       <AssemblyIdentity>
@@ -96,6 +97,7 @@
       <AdditionalDependencies>windowsapp.lib;dwmapi.lib;opencv_world480.lib;wgc-capture.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Version>
       </Version>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
     <Manifest>
       <AssemblyIdentity>

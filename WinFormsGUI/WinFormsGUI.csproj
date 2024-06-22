@@ -16,7 +16,6 @@
     <Description>DDOA</Description>
     <AssemblyName>$(SolutionName)</AssemblyName>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
-    <StartupObject>WinFormsGUI.Program</StartupObject>
     <Company>OHMS</Company>
     <Title>$(AssemblyName)</Title>
     <SupportedOSPlatformVersion>10.0.22000.0</SupportedOSPlatformVersion>
