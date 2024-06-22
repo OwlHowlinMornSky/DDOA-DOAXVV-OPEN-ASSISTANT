@@ -183,8 +183,8 @@ void Task_Challenge::FirstNavigate() {
 	bool needManual = false;
 	switch (Settings::Challenge::DEFAULT.PlayMatch) {
 	case 1: // 新比赛
-		if (-1 == r_handler->WaitFor(*temp_newFight, milliseconds(1000)))
-			needManual = true;
+		//if (-1 == r_handler->WaitFor(*temp_newFight, milliseconds(1000)))
+		//	needManual = true;
 		break;
 	case 2: // 活动关卡
 	{
