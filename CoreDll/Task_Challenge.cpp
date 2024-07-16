@@ -204,7 +204,7 @@ void Task_Challenge::FirstNavigate() {
 		// 滚动到最底部
 		r_handler->MoveMouseTo({ 920, 530 });
 		TaskSleep(seconds(0.5f));
-		r_handler->WheelDown(20);
+		r_handler->WheelDown(12u);
 
 		TaskSleep(seconds(1.0f));
 
@@ -249,7 +249,7 @@ void Task_Challenge::FirstNavigate() {
 		// 滚动到最底部
 		r_handler->MoveMouseTo({ 920, 530 });
 		TaskSleep(seconds(0.5f));
-		r_handler->WheelDown(20);
+		r_handler->WheelDown(12u);
 
 		TaskSleep(seconds(0.5f));
 

@@ -131,8 +131,8 @@ public:
 	*/
 	bool MoveMouseTo(cv::Point pt);
 
-	bool WheelUp(unsigned int cnt = 1);
-	bool WheelDown(unsigned int cnt = 1);
+	bool WheelUp(unsigned int cnt = 1) const;
+	bool WheelDown(unsigned int cnt = 1) const;
 
 	/**
 	 * @brief 持续点击指定位置，直到画面出现目标。askedForStop则 throw 0

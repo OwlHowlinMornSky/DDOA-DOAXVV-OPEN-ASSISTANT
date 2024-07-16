@@ -460,25 +460,25 @@ bool WndHandler::MoveMouseTo(cv::Point pt) {// 缩放到当前客户区大小
 	return true;
 }
 
-bool WndHandler::WheelUp(unsigned int cnt) {
+bool WndHandler::WheelUp(unsigned int cnt) const {
 	if (Settings::WndHandler::DEFAULT.UseSendInput) {
 	}
 	else {
 		while (cnt-- > 0) {
 			PostMessageW(m_hwnd, WM_MOUSEWHEEL, MAKEWPARAM(MK_CONTROL, WHEEL_DELTA), MAKELPARAM(m_lastMousePoint.x, m_lastMousePoint.y));
-			sleep(milliseconds(100));
+			sleep(milliseconds(300));
 		}
 	}
 	return false;
 }
 
-bool WndHandler::WheelDown(unsigned int cnt) {
+bool WndHandler::WheelDown(unsigned int cnt) const {
 	if (Settings::WndHandler::DEFAULT.UseSendInput) {
 	}
 	else {
 		while (cnt-- > 0) {
 			PostMessageW(m_hwnd, WM_MOUSEWHEEL, MAKEWPARAM(MK_CONTROL, -WHEEL_DELTA), MAKELPARAM(m_lastMousePoint.x, m_lastMousePoint.y));
-			sleep(milliseconds(100));
+			sleep(milliseconds(300));
 		}
 	}
 	return false;
