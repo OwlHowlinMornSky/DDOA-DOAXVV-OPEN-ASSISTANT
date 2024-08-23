@@ -18,6 +18,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+#include <Windows.h>
 #include "Task_StartUp.h"
 
 #include "Clock.h"
@@ -51,7 +52,15 @@ bool Task_StartUp::Run(Helper& h) {
 			// 游戏未运行（游戏窗口和启动器窗口都不存在）
 
 			// 令steam打开doaxvv
-			system("start steam://rungameid/958260");
+			//system("start steam://rungameid/958260");
+			SHELLEXECUTEINFOW info{};
+			info.cbSize = sizeof(info);
+			info.lpVerb = L"open";
+			info.nShow = SW_SHOWNORMAL;
+
+			// "E:\\Program Files\\Netease\\MuMu Player 12\\shell\\MuMuPlayer.exe"
+			info.lpFile = L"steam://rungameid/958260";
+			ShellExecuteExW(&info);
 
 			// 等待启动器打开
 			clk.restart();
