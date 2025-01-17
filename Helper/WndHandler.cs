@@ -31,6 +31,12 @@ namespace Helper {
 			}
 		}
 
+		internal IHand Hand {
+			get {
+				return m_hand;
+			}
+		}
+
 		/**
 		 * @brief 重设状态，清除目标窗口。
 		 */
@@ -330,6 +336,11 @@ namespace Helper {
 			} while (WaitFor(pattern, clkInterval));
 
 			return true;
+		}
+
+		internal void ClickAt(Point target) {
+			ExsureAbleToRun();
+			m_hand.ClickAt(target);
 		}
 
 		private void ExsureAbleToRun() {

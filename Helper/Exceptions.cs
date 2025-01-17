@@ -12,6 +12,6 @@ namespace Helper {
 	}
 	public class WndHandlerNotRunningException : Exception {
 	}
-	public class WndHandlerNoCancelTokenException : Exception {
+	public class StepCompleteException : Exception {
 	}
 }

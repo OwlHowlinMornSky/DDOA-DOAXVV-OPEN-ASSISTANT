@@ -15,6 +15,7 @@ namespace Helper {
 
 		private float m_thershold; // 判定阈值，差异量上限。
 		private Dictionary<string, Point> m_specialPoints = []; // 特殊点
+		private List<Point> m_points = [];
 
 		public Pattern(string filepathWithoutExtension, Info info) {
 			m_isFloatingArea = !info.isFixed;
@@ -29,13 +30,27 @@ namespace Helper {
 			res = !info.isMasked || LoadMask(filepathWithoutExtension + "[M].png");
 			if (!res)
 				throw new FileLoadException();
+
+			m_points = new(info.points);
 		}
 
 		public bool TryMatch(IEye eye) {
 			return Match(eye, m_thershold);
 		}
 
-		public Point? GetSpecialPointInResultRect(string point_name) {
+		public Point GetSpecialPointInResultRect(int id) {
+			Point result = m_points[id];
+			result.Offset(GetPreviousMatchedRect().Location);
+			return result;
+		}
+
+		public Point GetSpecialPointInSearchRect(int id) {
+			Point result = m_points[id];
+			result.Offset(GetSearchRect().Location);
+			return result;
+		}
+
+		public Point? GetSpecialPointInResultRectN(string point_name) {
 			if (!m_specialPoints.TryGetValue(point_name, out Point result)) {
 				return null;
 			}
@@ -43,7 +58,7 @@ namespace Helper {
 			return result;
 		}
 
-		public Point? GetSpecialPointInSearchRect(string point_name) {
+		public Point? GetSpecialPointInSearchRectN(string point_name) {
 			if (!m_specialPoints.TryGetValue(point_name, out Point result)) {
 				return null;
 			}
