@@ -37,6 +37,8 @@ namespace Helper {
 		}
 
 		private void Work(List<Step.Type> steps, CancellationToken ct) {
+			Global.WndHandler.SetCancellationToken(ct);
+
 			foreach (var steptype in steps) {
 				ct.ThrowIfCancellationRequested();
 
