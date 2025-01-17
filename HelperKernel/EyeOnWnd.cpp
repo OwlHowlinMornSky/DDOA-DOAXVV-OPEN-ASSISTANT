@@ -5,13 +5,13 @@
 
 namespace HelperKernel {
 
-EyeOnWnd::EyeOnWnd() {
-	m_mat = new cv::Mat();
+EyeOnWnd::EyeOnWnd() :
+	m_hwnd(NULL),
+	m_mat(new cv::Mat()) {
 	if (!ohms::wgc::ICapture::setup(true)) { // 初始化WGC
 		throw gcnew System::SystemException(L"Failed to setup WGC.");
 	}
 	r_capture = ohms::wgc::ICapture::getInstance();
-	m_hwnd = NULL;
 }
 
 EyeOnWnd::~EyeOnWnd() {
@@ -23,23 +23,25 @@ EyeOnWnd::~EyeOnWnd() {
 }
 
 bool EyeOnWnd::UpdateVision() {
-	if (r_capture->isRefreshed()) { // refresh过再处理画面才有意义
-		r_capture->askForRefresh();
-		if (r_capture->copyMatTo(*m_mat, true)) { // 要求转换为BGR
-			if (m_mat->size().width != 960 || m_mat->size().height != 540) { // 确保大小满足要求
-				cv::resize(
-					*m_mat, *m_mat,
-					cv::Size(960, 540),
-					0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR
-				);
-			}
-			return true;
-		}
+	if (!r_capture->isRefreshed()) { // refresh过再处理画面才有意义
+		return false;
 	}
-	return false;
+	r_capture->askForRefresh();
+	if (!r_capture->copyMatTo(*m_mat, true)) { // 要求转换为BGR
+		return false;
+	}
+	if (m_mat->size().width != 960 || m_mat->size().height != 540) { // 确保大小满足要求
+		cv::resize(
+			*m_mat, *m_mat,
+			cv::Size(960, 540),
+			0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR
+		);
+	}
+	return true;
 }
 
 const cv::Mat* EyeOnWnd::GetVision() {
+	if (!IsLooking()) return nullptr;
 	return m_mat;
 }
 

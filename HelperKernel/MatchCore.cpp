@@ -1,6 +1,7 @@
 #include "MatchCore.h"
 
 #include <opencv2/imgproc.hpp>
+#include <opencv2/imgcodecs.hpp>
 
 namespace {
 
@@ -60,6 +61,14 @@ inline bool check(const cv::Mat& matSample, const cv::Mat& matTemplate, float th
 	return (diff < thres);
 }
 
+/**
+ * @brief 判断两个mat差异是否在规定阈值内，将把遮罩应用于输入
+ * @param matSample 输入
+ * @param matTemplate 模板
+ * @param matMask 遮罩
+ * @param thres 差异阈值
+ * @return 遮罩范围外 差异程度小于阈值则为true（即足够相似）
+ */
 inline bool checkWithMask(const cv::Mat& matSample, const cv::Mat& matTemplate, const cv::Mat& matMask, float thres) {
 	assert(thres > 0.0f && thres < 100.0f);
 	assert(matSample.size() == matTemplate.size());
@@ -75,13 +84,16 @@ inline bool checkWithMask(const cv::Mat& matSample, const cv::Mat& matTemplate, 
 
 namespace HelperKernel {
 
-MatchCore::MatchCore() {
-	throw gcnew System::NotImplementedException();
-}
+MatchCore::MatchCore() :
+	m_isFloatingArea(false),
+	m_searchRect(),
+	m_prevMatchedRect(),
+	m_pattern(nullptr),
+	m_mask(nullptr) {}
 
 MatchCore::~MatchCore() {
-	if (m_target) delete m_target;
-	m_target = nullptr;
+	if (m_pattern) delete m_pattern;
+	m_pattern = nullptr;
 	if (m_mask) delete m_mask;
 	m_mask = nullptr;
 }
@@ -102,7 +114,7 @@ bool MatchCore::Match(IEye^ eye, float threshold) {
 	}
 
 	if (m_isFloatingArea) {
-		cv::Size targetSize = m_target->size();
+		cv::Size targetSize = m_pattern->size();
 		// 计算match结果的大小
 		cv::Size size = srcImage.size() - targetSize;
 		size += { 1, 1 };
@@ -111,7 +123,7 @@ bool MatchCore::Match(IEye^ eye, float threshold) {
 		cv::Mat resultImage; // match结果
 		resultImage.create(size, CV_32FC1);
 
-		cv::matchTemplate(srcImage, *m_target, resultImage, g_nMatchMethod); // match
+		cv::matchTemplate(srcImage, *m_pattern, resultImage, g_nMatchMethod); // match
 
 		// 寻找最佳匹配点
 		double minValue, maxValue;
@@ -126,7 +138,7 @@ bool MatchCore::Match(IEye^ eye, float threshold) {
 		cv::Rect prevMatch = cv::Rect(matchLocation + searchRect.tl(), targetSize);
 		sample(prevMatch).copyTo(srcImage);
 
-		m_prevMatchedRect = Drawing::Rectangle(prevMatch.x, prevMatch.y, prevMatch.width, prevMatch.height);
+		m_prevMatchedRect = Rectangle(prevMatch.x, prevMatch.y, prevMatch.width, prevMatch.height);
 	}
 	else {
 		m_prevMatchedRect = m_searchRect;
@@ -136,25 +148,73 @@ bool MatchCore::Match(IEye^ eye, float threshold) {
 	bool res =
 		(nullptr != m_mask)
 		?
-		checkWithMask(srcImage, *m_target, *m_mask, threshold)
+		checkWithMask(srcImage, *m_pattern, *m_mask, threshold)
 		:
-		check(srcImage, *m_target, threshold)
+		check(srcImage, *m_pattern, threshold)
 		;
 	return res;
-
-	return false;
 }
 
 bool MatchCore::IsFloatingArea() {
 	return m_isFloatingArea;
 }
 
-Drawing::Rectangle MatchCore::GetSearchRect() {
+Rectangle MatchCore::GetSearchRect() {
 	return m_searchRect;
 }
 
-Drawing::Rectangle MatchCore::GetPreviousMatchedRect() {
+Rectangle MatchCore::GetPreviousMatchedRect() {
 	return m_prevMatchedRect;
+}
+
+bool MatchCore::LoadPattern(System::String^ filepath) {
+	if (m_pattern) delete m_pattern;
+
+	cli::array<wchar_t>^ wArray = filepath->ToCharArray();
+	cli::array<unsigned char, 1>^ arr = System::Text::Encoding::UTF8->GetBytes(wArray);
+
+	int len = arr->Length;
+	char* cstr = new char[len + 2];
+	System::IntPtr pcstr(cstr);
+	System::Runtime::InteropServices::Marshal::Copy(arr, 0, pcstr, len);
+	cstr[len] = 0;
+	cstr[len + 1] = 0;
+
+	m_pattern = new cv::Mat(cv::imread(cstr));
+	if (m_pattern->empty())
+		return false;
+	if (!m_isFloatingArea) {
+		m_searchRect.Width = m_pattern->size().width;
+		m_searchRect.Height = m_pattern->size().height;
+	}
+
+	if (m_mask && (m_pattern->size() != m_mask->size())) {
+		return false;
+	}
+	return true;
+}
+
+bool MatchCore::LoadMask(System::String^ filepath) {
+	if (m_mask) delete m_mask;
+
+	cli::array<wchar_t>^ wArray = filepath->ToCharArray();
+	cli::array<unsigned char, 1>^ arr = System::Text::Encoding::UTF8->GetBytes(wArray);
+
+	int len = arr->Length;
+	char* cstr = new char[len + 2];
+	System::IntPtr pcstr(cstr);
+	System::Runtime::InteropServices::Marshal::Copy(arr, 0, pcstr, len);
+	cstr[len] = 0;
+	cstr[len + 1] = 0;
+
+	m_mask = new cv::Mat(cv::imread(cstr, cv::IMREAD_GRAYSCALE));
+	if (m_mask->empty())
+		return false;
+
+	if (m_pattern && (m_pattern->size() != m_mask->size())) {
+		return false;
+	}
+	return true;
 }
 
 }
