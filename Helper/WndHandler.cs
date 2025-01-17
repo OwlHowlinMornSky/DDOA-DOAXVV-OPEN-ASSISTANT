@@ -177,7 +177,7 @@ namespace Helper {
 		/// <param name="pattern">模板。</param>
 		/// <param name="timeout">限时。</param>
 		/// <returns>false为超时，true为匹配成功。</returns>
-		internal bool WaitFor(Pattern pattern, TimeSpan? timeout) {
+		internal bool WaitFor(Pattern pattern, TimeSpan? timeout = null) {
 			ExsureAbleToRun();
 			timeout ??= TimeSpan.FromSeconds(10);
 

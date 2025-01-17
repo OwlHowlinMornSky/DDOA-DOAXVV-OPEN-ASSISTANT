@@ -319,21 +319,250 @@ namespace Helper.Step {
 		}
 
 		private void InitNavigate() {
+			// 检查导航位置
+			switch (Navigate.TryToDeterminePage()) {
+			case Navigate.Page.Challenge:
+				//CoreLog() << "Task.Challenge: Navigate Detected: Challenge." << std::endl;
+				IStep.TaskSleep(TimeSpan.FromSeconds(2.0), m_ct);
+				if (!Global.WndHandler.WaitFor(temp_chaBar)) {
+					//CoreLog() << "Task.Challenge: Navigate Failed: No ChaBar." << std::endl;
+					throw new Exception();// TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
+				}
+				Global.WndHandler.ClickAt(temp_chaBar.GetSpecialPointInResultRect(0));
+				IStep.TaskSleep(TimeSpan.FromMilliseconds(500), m_ct);
+				break;
+			case Navigate.Page.MatchConfirm:
+				//CoreLog() << "Task.Challenge: Navigate Detected: Match Confirm." << std::endl;
+				//goto MatchComfirm;
+				m_loopSt = LoopStatus.Start;
+				return;
+			case Navigate.Page.MatchResult:
+				//CoreLog() << "Task.Challenge: Navigate Detected: Match Result." << std::endl;
+				//goto MatchEnd;
+				m_loopSt = LoopStatus.Wait;
+				return;
+			default:
+				//CoreLog() << "Task.Challenge: Navigate Detected: Others." << std::endl;
+				if (!Navigate.NavigateTo(Navigate.Page.Challenge)) {
+					//CoreLog() << "Task.Challenge: Navigate Failed." << std::endl;
+					throw new Exception();// TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
+				}
+				IStep.TaskSleep(TimeSpan.FromSeconds(2.0), m_ct);
+				if (!Global.WndHandler.WaitFor(temp_chaBar)) {
+					//CoreLog() << "Task.Challenge: Navigate Failed: No ChaBar." << std::endl;
+					throw new Exception();// TaskExceptionCode::KnownErrorButNotCritical; // 不影响后续任务的错误。
+				}
+				Global.WndHandler.ClickAt(temp_chaBar.GetSpecialPointInResultRect(0));
+				IStep.TaskSleep(TimeSpan.FromMilliseconds(500), m_ct);
+				break;
+			}
+			//CoreLog() << "Task.Challenge: Navigate Over." << std::endl;
+			m_loopSt = LoopStatus.Enter;
+			return;
 		}
 
 		private void EnterConfirmPage() {
+			Point pt;
+			//CoreLog() << "Task.Challenge: Search for Target Match Enter Button." << std::endl;
+			// 查找目标比赛按钮。
+			switch (target) {
+			case PlayMatch.Previous:
+				if (!Global.WndHandler.WaitFor(temp_lastFight))
+					throw new Exception();// Global.WndHandler.TaskError(ReturnMsgEnum::TaskErrChaNoPri);
+										  //CoreLog() << "Task.Challenge: Enter Game <Previous>." << std::endl;
+				pt = new(900, temp_lastFight.GetPreviousMatchedRect().Y);
+				break;
+			case PlayMatch.New:
+				if (!Global.WndHandler.WaitFor(temp_newFight))
+					throw new Exception();// Global.WndHandler.TaskError(ReturnMsgEnum::TaskErrChaNoNew);
+										  //CoreLog() << "Task.Challenge: Enter Game <New>." << std::endl;
+				pt = new(900, temp_newFight.GetPreviousMatchedRect().Y);
+				break;
+			case PlayMatch.Activity:
+				if (!Global.WndHandler.WaitFor(temp_lastFight))
+					throw new Exception();// Global.WndHandler.TaskError(ReturnMsgEnum::TaskErrChaNoPri);
+										  //CoreLog() << "Task.Challenge: Enter Game <Previous>." << std::endl;
+				pt = new(900, temp_lastFight.GetPreviousMatchedRect().Y);
+				break;
+			case PlayMatch.Award:
+				if (!Global.WndHandler.WaitFor(temp_newFight))
+					throw new Exception();// Global.WndHandler.TaskError(ReturnMsgEnum::TaskErrChaNoNew);
+										  //CoreLog() << "Task.Challenge: Enter Game <Award>." << std::endl;
+				pt = new(900, temp_newFight.GetPreviousMatchedRect().Y);
+				break;
+			default:
+				goto case PlayMatch.Previous;
+			}
+
+			// 点击比赛，直到进入编队画面（找到挑战按钮）。
+			if (!Global.WndHandler.KeepClickingUntil(pt, temp_startGame))
+				throw new Exception();// Global.WndHandler.TaskError(ReturnMsgEnum::TaskErrChaNoEnter);
 		}
 
 		private void StartMatch() {
+			Point pt;
+			//CoreLog() << "Task.Challenge: Search for Match Start Button." << std::endl;
+			// 查找“挑战”按钮。
+			bool triedFp = false;
+			Global.WndHandler.WaitFor(temp_startGame);
+			//CoreLog() << "Task.Challenge: Play Game." << std::endl;
+			for (int i = 0, n = 10; i < n; ++i) {
+				//CoreLog() << "Task.Challenge: Start Match Loop: " << i << "." << std::endl;
+				pt = temp_startGame.GetSpecialPointInResultRect(0);
+				Global.WndHandler.ClickAt(pt);
+				switch (Global.WndHandler.WaitForMultiple([temp_loading, temp_lowFp], TimeSpan.FromSeconds(2.0))) {
+				default:
+				case -1:
+					//CoreLog() << "Task.Challenge: Start Match Loop: Not Found." << std::endl;
+					if (i == n - 1) {
+						//CoreLog() << "Task.Challenge: Failed to Start Match." << std::endl;
+						throw new Exception();// Global.WndHandler.TaskError(ReturnMsgEnum::TaskErrChaNoStart);
+					}
+					break;
+				case 0:
+					i = n;
+					//CoreLog() << "Task.Challenge: Start Match Loop: OK." << std::endl;
+					break;
+				case 1:
+					if (triedFp) {
+						//CoreLog() << "Task.Challenge: Task Over: Fp Handle Failed." << std::endl;
+						throw new StepCompleteException();
+					}
+					//CoreLog() << "Task.Challenge: Start Match Loop: Low FP." << std::endl;
+					HandleLowFp();
+					triedFp = true;
+					break;
+				}
+			}
+			//CoreLog() << "Task.Challenge: Match Started." << std::endl;
 		}
 
 		private void HandleLowFp() {
+			Point pt;
+			if (!m_set.AutoUseCamFP && !m_set.AutoUseDrink) { // 使用cam补充fp
+															  //CoreLog() << "Task.Challenge: Task Over: Setted No Use FP." << std::endl;
+				throw new StepCompleteException();
+			}
+			switch (Global.WndHandler.WaitForMultiple([m_camFp, m_camFpNo], TimeSpan.FromSeconds(2.0))) {
+			case 0:
+				//CoreLog() << "Task.Challenge: Try to Use FP: Available." << std::endl;
+				pt = m_camFp.GetSpecialPointInResultRect(0);
+
+				Global.WndHandler.ClickAt(pt);
+				IStep.TaskSleep(TimeSpan.FromSeconds(1.0), m_ct);
+
+				if (!Global.WndHandler.WaitFor(m_camFpComf[0])) {
+					//CoreLog() << "Task.Challenge: Task Over: Try to Use FP: No 1st." << std::endl;
+					throw new StepCompleteException();
+				}
+				pt = m_camFpComf[0].GetSpecialPointInResultRect(0);
+				if (!Global.WndHandler.KeepClickingUntil(pt, m_camFpComf[1], TimeSpan.FromSeconds(10.0), TimeSpan.FromSeconds(2.0))) {
+					//CoreLog() << "Task.Challenge: Task Over: Try to Use FP: No 2st." << std::endl;
+					throw new StepCompleteException();
+				}
+				pt = m_camFpComf[1].GetSpecialPointInResultRect(0);
+
+				Global.WndHandler.ClickAt(pt);
+				IStep.TaskSleep(TimeSpan.FromSeconds(1.0), m_ct);
+				if (!Global.WndHandler.WaitFor(temp_startGame)) {
+					//CoreLog() << "Task.Challenge: Task Over: Try to Use FP: No Close." << std::endl;
+					throw new StepCompleteException();
+				}
+				//CoreLog() << "Task.Challenge: Try to Use FP: OK." << std::endl;
+				break;
+			default:
+				//CoreLog() << "Task.Challenge: No FP." << std::endl;
+				if (!m_set.AutoUseDrink || !Global.WndHandler.WaitFor(m_camFpDrink, TimeSpan.FromSeconds(2.0))) {
+					//CoreLog() << "Task.Challenge: Task Over: No Use Drink." << std::endl;
+					throw new StepCompleteException();
+				}
+				Global.WndHandler.ClickAt(m_camFpDrink.GetSpecialPointInResultRect(0));
+				IStep.TaskSleep(TimeSpan.FromMilliseconds(500), m_ct);
+				Global.WndHandler.ClickAt(m_camFpDrink.GetSpecialPointInResultRect(1));
+				IStep.TaskSleep(TimeSpan.FromMilliseconds(500), m_ct);
+				if (!Global.WndHandler.WaitFor(m_camFpDrinkComf, TimeSpan.FromSeconds(2.0))) {
+					//CoreLog() << "Task.Challenge: Task Over: Drink No Ok." << std::endl;
+					throw new StepCompleteException();
+				}
+				if (!Global.WndHandler.KeepClickingUntil(m_camFpDrinkComf.GetSpecialPointInResultRect(0), temp_startGame)) {
+					//CoreLog() << "Task.Challenge: Task Over: Try to Use Drink: No Close." << std::endl;
+					throw new StepCompleteException();
+				}
+				//CoreLog() << "Task.Challenge: Try to Use Drink: OK." << std::endl;
+				break;
+			}
+			return;
 		}
 
 		private void WaitingForEnd() {
+			Point pt;
+
+			if (target == PlayMatch.Award) {
+				++playAwardCnt;
+				//Global.WndHandler.GuiLogF_I(ReturnMsgEnum::ChaBeginAdd_I, playAwardCnt);
+				////CoreLog() << "Task.Challenge: Match Award " << playAwardCnt << "." << std::endl;
+			}
+			else {
+				++playCnt;
+				//Global.WndHandler.GuiLogF_I(ReturnMsgEnum::ChaBegin_I, playCnt);
+				////CoreLog() << "Task.Challenge: Match " << playCnt << "." << std::endl;
+			}
+
+			// 等待结束。
+			////CoreLog() << "Task.Challenge: In Game, Waitting for End." << std::endl;
+			if (!Global.WndHandler.WaitFor(temp_gameResult, TimeSpan.FromSeconds(300.0)))
+				throw new Exception();// Global.WndHandler.TaskError(ReturnMsgEnum::TaskErrChaTimeOut);
+
+			// 点击，直到进入加载画面。
+			////CoreLog() << "Task.Challenge: Game End, Trying to Exit." << std::endl;
+			pt = temp_gameResult.GetSpecialPointInResultRect(0);
+			if (!Global.WndHandler.KeepClickingUntil(pt, temp_loading, TimeSpan.FromSeconds(60.0), TimeSpan.FromSeconds(0.1)))
+				throw new Exception();// Global.WndHandler.TaskError(ReturnMsgEnum::TaskErrChaNoEnd);
+
+			// 等待到挑战赛标签页出现。
+			////CoreLog() << "Task.Challenge: Game Exit, Waitting for Challenge Page." << std::endl;
+			if (!Global.WndHandler.WaitFor(temp_chaBar, TimeSpan.FromSeconds(60.0)))
+				throw new Exception();// Global.WndHandler.TaskError(ReturnMsgEnum::TaskErrChaNoOver);
+			//Global.WndHandler.GuiLogF(ReturnMsgEnum::ChaOver);
 		}
 
 		private void CheckForAwrad() {
+			Point pt;
+			if (!Global.WndHandler.WaitFor(temp_awardCha, TimeSpan.FromSeconds(2.0))) {
+				////CoreLog() << "Task.Challenge: Find Award." << std::endl;
+				//Global.WndHandler.GuiLogF(ReturnMsgEnum::ChaFindAdd);
+				if (m_set.EnterAddition) { // 进入奖励挑战赛。
+					if (target == PlayMatch.New) {
+						pt = temp_awardCha.GetSpecialPointInResultRect(0);
+						if (Global.WndHandler.KeepClickingUntil(pt, temp_newFight, TimeSpan.FromSeconds(10.0), TimeSpan.FromSeconds(2.0))) {
+							//Global.WndHandler.GuiLogF(ReturnMsgEnum::ChaOpenedAdd);
+							target = PlayMatch.Award;
+							playAwardCnt = 0;
+						}
+						else {
+							throw new Exception();// Global.WndHandler.TaskError(ReturnMsgEnum::TaskErrChaOpenAddFailed);
+						}
+					}
+					else {
+						throw new Exception();// Global.WndHandler.TaskError(ReturnMsgEnum::TaskErrChaAddNotSup);
+					}
+				}
+				else { // 回到“推荐”栏。
+					if (Global.WndHandler.WaitFor(temp_chaBar, TimeSpan.FromSeconds(5.0))) {
+						pt = temp_chaBar.GetSpecialPointInResultRect(0);
+						if (Global.WndHandler.KeepClickingUntilNo(pt, temp_awardCha, TimeSpan.FromSeconds(10.0), TimeSpan.FromSeconds(0.5))) {
+							//Global.WndHandler.GuiLogF(ReturnMsgEnum::ChaIgnoredAdd);
+						}
+						else {
+							throw new Exception();// Global.WndHandler.TaskError(ReturnMsgEnum::TaskErrChaIgnoreAddFailed);
+						}
+					}
+				}
+			}
+			else {
+				////CoreLog() << "Task.Challenge: Not Find Award." << std::endl;
+				//Global.WndHandler.GuiLogF(ReturnMsgEnum::ChaNotFindAdd);
+			}
 		}
 
 	}
