@@ -15,6 +15,7 @@ EyeOnWnd::EyeOnWnd() :
 }
 
 EyeOnWnd::~EyeOnWnd() {
+	Reset();
 	m_hwnd = NULL;
 	ohms::wgc::ICapture::drop();
 	r_capture = nullptr;
