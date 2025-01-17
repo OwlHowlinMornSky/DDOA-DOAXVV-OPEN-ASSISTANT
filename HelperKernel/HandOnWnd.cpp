@@ -1,5 +1,4 @@
 #include "HandOnWnd.h"
-#include "Impl.h"
 
 namespace HelperKernel {
 
@@ -42,14 +41,14 @@ void HandOnWnd::MoveCursorTo(Drawing::Point target) {
 			int tmpx = m_lastMousePoint.X + vecx * i;
 			int tmpy = m_lastMousePoint.Y + vecy * i;
 			PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(tmpx, tmpy));
-			Impl::sleep(10);
+			Threading::Thread::Sleep(10);
 		}
 	}
 	// 最终移动光标到目的地
 	PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(pt.X, pt.Y));
 	m_lastMousePoint = pt;
 
-	Impl::sleep(20);
+	Threading::Thread::Sleep(20);
 }
 
 void HandOnWnd::MoveMouseWheel(bool isDown, unsigned int cnt) {
@@ -58,13 +57,13 @@ void HandOnWnd::MoveMouseWheel(bool isDown, unsigned int cnt) {
 	if (isDown) {
 		while (cnt-- > 0) {
 			PostMessageW(m_hwnd, WM_MOUSEWHEEL, MAKEWPARAM(MK_CONTROL, -WHEEL_DELTA), MAKELPARAM(m_lastMousePoint.X, m_lastMousePoint.Y));
-			Impl::sleep(320);
+			Threading::Thread::Sleep(320);
 		}
 	}
 	else {
 		while (cnt-- > 0) {
 			PostMessageW(m_hwnd, WM_MOUSEWHEEL, MAKEWPARAM(MK_CONTROL, WHEEL_DELTA), MAKELPARAM(m_lastMousePoint.X, m_lastMousePoint.Y));
-			Impl::sleep(320);
+			Threading::Thread::Sleep(320);
 		}
 	}
 
@@ -96,20 +95,20 @@ void HandOnWnd::ClickAt(Drawing::Point target) {
 			int tmpx = m_lastMousePoint.X + vecx * i;
 			int tmpy = m_lastMousePoint.Y + vecy * i;
 			PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(tmpx, tmpy));
-			Impl::sleep(10);
+			Threading::Thread::Sleep(10);
 		}
 	}
 	// 最终移动光标到目的地
 	PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(pt.X, pt.Y));
 	m_lastMousePoint = pt;
-	Impl::sleep(10);
+	Threading::Thread::Sleep(10);
 
 	// 点击
 	PostMessageW(m_hwnd, WM_LBUTTONDOWN, MK_LBUTTON | MK_CONTROL, MAKELPARAM(pt.X, pt.Y));
-	Impl::sleep(60);
+	Threading::Thread::Sleep(60);
 	PostMessageW(m_hwnd, WM_LBUTTONUP, 0, MAKELPARAM(pt.X, pt.Y));
 
-	Impl::sleep(10);
+	Threading::Thread::Sleep(10);
 }
 
 bool HandOnWnd::SetUserCursorInterceptionEnabled(bool enabled) {

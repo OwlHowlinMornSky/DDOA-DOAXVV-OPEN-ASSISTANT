@@ -33,9 +33,6 @@
     <ClInclude Include="HandOnWnd.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Impl.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="MatchCore.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -48,9 +45,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="HandOnWnd.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Impl.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MatchCore.cpp">
