@@ -1,4 +1,6 @@
-﻿namespace Helper.Step {
+﻿using System.Diagnostics;
+
+namespace Helper.Step {
 	public enum Type {
 		None = 0,
 
@@ -41,8 +43,23 @@
 			};
 		}
 
-		static protected void TaskSleep(TimeSpan time) {
-
+		static protected void TaskSleep(TimeSpan time, CancellationToken ct) {
+			Stopwatch watch = new();
+			while (true) {
+				ct.ThrowIfCancellationRequested();
+				if (time > TimeSpan.FromMilliseconds(60)) {
+					Thread.Sleep(TimeSpan.FromMilliseconds(60));
+					time -= watch.Elapsed;
+					watch.Restart();
+				}
+				else if (time > TimeSpan.Zero) {
+					Thread.Sleep(time);
+					break;
+				}
+				else {
+					break;
+				}
+			}
 		}
 	}
 

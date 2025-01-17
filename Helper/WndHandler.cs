@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Diagnostics;
 using HelperKernel;
+using System.Text.RegularExpressions;
 
 namespace Helper {
 	internal class WndHandler() {
@@ -22,7 +23,7 @@ namespace Helper {
 		private readonly HandOnWnd m_hand = new();
 
 		private State m_state;
-		private CancellationToken? r_ct;
+		private CancellationToken r_ct;
 
 		internal IEye Eye {
 			get {
@@ -35,7 +36,6 @@ namespace Helper {
 		 */
 		internal void Reset() {
 			m_state = State.Idle;
-			r_ct = null;
 		}
 
 		internal void SetCancellationToken(CancellationToken ct) {
@@ -141,6 +141,30 @@ namespace Helper {
 			};
 		}
 
+		/**
+		 * @brief 对目前设定窗口截取一帧。
+		 * @param store 保存这一帧的地方。
+		 * @param maxTime 最大等待时间。
+		 * @return true 则已获取，否则超时。
+		 */
+		internal bool WaitOneFrame(TimeSpan? timeout = null) {
+			ExsureAbleToRun();
+			timeout ??= TimeSpan.FromSeconds(10);
+
+			m_eye.RequireRefresh();
+			Stopwatch watch = new();
+			watch.Restart();
+			while (true) {
+				r_ct.ThrowIfCancellationRequested();
+				if (m_eye.SaveVision())
+					break;
+				if (timeout > TimeSpan.Zero && watch.Elapsed > timeout) // 应用超时
+					return false;
+				Thread.Sleep(TimeSpan.FromMilliseconds(30));
+			}
+			return true;
+		}
+
 		/// <summary>
 		/// 等待画面出现模板。
 		/// </summary>
@@ -155,7 +179,7 @@ namespace Helper {
 			Stopwatch watch = new();
 			watch.Restart();
 			while (true) {
-				r_ct?.ThrowIfCancellationRequested();
+				r_ct.ThrowIfCancellationRequested();
 #if DEBUG
 				if (m_eye.SaveVision()) {
 					bool matchRes = pattern.TryMatch(m_eye);
@@ -195,11 +219,10 @@ namespace Helper {
 
 			m_eye.RequireRefresh();
 			Stopwatch watch = new();
-			Rectangle trect;
 			int res = -1;
 			watch.Restart();
 			while (true) {
-				r_ct?.ThrowIfCancellationRequested();
+				r_ct.ThrowIfCancellationRequested();
 				if (m_eye.SaveVision()) {
 					int c = 0;
 					foreach (var i in patterns) {
@@ -270,7 +293,7 @@ namespace Helper {
 				if (timeout > TimeSpan.Zero && watch.Elapsed >= timeout) // 应用超时
 					return false;
 				m_hand.ClickAt(clkPt); // 点击
-				r_ct?.ThrowIfCancellationRequested();
+				r_ct.ThrowIfCancellationRequested();
 			} while (!WaitFor(pattern, clkInterval));
 
 			return true;
@@ -303,7 +326,7 @@ namespace Helper {
 				if (timeout > TimeSpan.Zero && watch.Elapsed >= timeout) // 应用超时
 					return false;
 				m_hand.ClickAt(clkPt); // 点击
-				r_ct?.ThrowIfCancellationRequested();
+				r_ct.ThrowIfCancellationRequested();
 			} while (WaitFor(pattern, clkInterval));
 
 			return true;
@@ -313,8 +336,6 @@ namespace Helper {
 #if DEBUG
 			if (m_state == State.Idle)
 				throw new WndHandlerNotRunningException();
-			if (r_ct == null)
-				throw new WndHandlerNoCancelTokenException();
 #endif
 		}
 	}
