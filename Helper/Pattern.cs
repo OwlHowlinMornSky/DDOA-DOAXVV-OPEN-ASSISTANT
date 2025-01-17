@@ -9,7 +9,7 @@ namespace Helper {
 			public bool isFixed;
 			public bool isMasked;
 			public float threshold;
-			public Rectangle rect = new();
+			public Rectangle rect;
 			public List<Point> points = [];
 		}
 

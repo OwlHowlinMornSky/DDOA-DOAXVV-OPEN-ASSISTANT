@@ -10,4 +10,8 @@ namespace Helper {
 	}
 	public class TemplateListFormatException : Exception {
 	}
+	public class WndHandlerNotRunningException : Exception {
+	}
+	public class WndHandlerNoCancelTokenException : Exception {
+	}
 }

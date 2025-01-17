@@ -10,10 +10,14 @@ namespace HelperKernel {
 public interface class IEye {
 public:
 	/**
-	 * @brief 刷新视野。
-	 * @return 获得了新的视野则为 true，否则视野未刷新 返回 false。
+	 * @brief 要求刷新视野。
 	 */
-	bool UpdateVision();
+	void RequireRefresh();
+	/**
+	 * @brief 把视野内容保存。
+	 * @return 获得了新的内容则为 true，否则内容未刷新 返回 false。
+	 */
+	bool SaveVision();
 	/**
 	 * @brief 获取当前的视野。
 	 * @return 当前视野，可能为nullptr（即没有视野）。
@@ -24,6 +28,9 @@ public:
 	 * @return 是否正在观察。
 	 */
 	bool IsLooking();
+
+	void DrawRectangle(System::Drawing::Rectangle rect, System::Drawing::Color color);
+	void ShowDebugWindow();
 };
 
 }

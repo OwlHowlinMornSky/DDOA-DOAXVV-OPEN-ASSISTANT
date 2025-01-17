@@ -25,6 +25,7 @@ public:
 public:
 	void Reset();
 	bool SetOnWnd(HWND hwnd);
+	bool SetOnWnd(System::String^ cls, System::String^ title);
 
 protected:
 	bool InitHookMod();

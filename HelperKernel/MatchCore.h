@@ -11,17 +11,8 @@ protected:
 	MatchCore();
 	virtual ~MatchCore();
 
-private:
+public:
 	bool IsFloatingArea();
-
-protected:
-	/**
-	 * @brief 输入截图画面检查。
-	 * @param eye 眼。
-	 * @param threshold 通过之阈值，差异度小于该值 即 匹配成功。
-	 * @return 匹配是否成功。
-	 */
-	bool Match(IEye^ eye, float threshold);
 
 	/**
 	 * @brief 获取搜索之区域。
@@ -33,6 +24,15 @@ protected:
 	 * @return 上次成功匹配时的区域。
 	 */
 	Rectangle GetPreviousMatchedRect();
+
+protected:
+	/**
+	 * @brief 输入截图画面检查。
+	 * @param eye 眼。
+	 * @param threshold 通过之阈值，差异度小于该值 即 匹配成功。
+	 * @return 匹配是否成功。
+	 */
+	bool Match(IEye^ eye, float threshold);
 
 	/**
 	 * @brief 加载模板Mat。
