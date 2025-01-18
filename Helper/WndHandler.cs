@@ -22,7 +22,7 @@ namespace Helper {
 		private readonly EyeOnWnd m_eye = new();
 		private readonly HandOnWnd m_hand = new();
 
-		private State m_state;
+		private State m_state = State.Idle;
 		private CancellationToken r_ct;
 
 		internal IEye Eye {

@@ -41,7 +41,7 @@ namespace Helper {
 				}
 				int offset = 0;
 
-				string name = pars[0];
+				string name = pars[offset++];
 				Pattern.Info info = new();
 
 				if (!int.TryParse(pars[offset++], out int tag)) {

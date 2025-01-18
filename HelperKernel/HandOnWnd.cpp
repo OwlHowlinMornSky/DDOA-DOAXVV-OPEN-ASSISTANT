@@ -134,7 +134,7 @@ void HandOnWnd::Reset() {
 
 bool HandOnWnd::SetOnWnd(HWND hwnd) {
 	Reset();
-	if (m_hwnd == NULL)
+	if (hwnd == NULL)
 		return false;
 	m_hwnd = hwnd;
 	return true;

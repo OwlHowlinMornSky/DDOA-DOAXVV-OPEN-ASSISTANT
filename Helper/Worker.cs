@@ -49,10 +49,12 @@ namespace Helper {
 				}
 				catch (NoSuchStepException ex) {
 					Log([$"{ex.Message}"]);
-					continue;
+					throw;
+					//continue;
 				}
 				catch (Exception ex) {
 					ex.GetType().ToString();
+					throw;
 					continue;
 				}
 
@@ -61,9 +63,11 @@ namespace Helper {
 				}
 				catch (WorkCannotContinueException ex) {
 					// LOG
+					throw;
 					break;
 				}
 				catch (Exception ex) {
+					throw;
 					// LOG
 				}
 			}

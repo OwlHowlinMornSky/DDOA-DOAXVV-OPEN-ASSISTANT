@@ -6,5 +6,7 @@ using System.Threading.Tasks;
 
 namespace Helper.Step {
 	internal class Debug : IStep {
+		public void Run(CancellationToken ct) {
+		}
 	}
 }

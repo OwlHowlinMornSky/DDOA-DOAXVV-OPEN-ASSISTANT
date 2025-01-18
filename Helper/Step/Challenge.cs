@@ -152,6 +152,7 @@ namespace Helper.Step {
 				}
 			}
 			catch (StepCompleteException) {
+				throw;
 				//h.GuiLogF(ReturnMsgEnum::TaskComplete);
 			}
 			catch {
@@ -307,12 +308,17 @@ namespace Helper.Step {
 			if (needManual) {
 				if (Settings.challenge.AskForManual) {
 					Global.WndHandler.Reset();
-					Global.Worker.TaskWaitForResume(ReturnMsgEnum::ManualNavigateToChallengePage);
+					//
+
+					throw new Exception();
+					
+					//Global.Worker.TaskWaitForResume(ReturnMsgEnum::ManualNavigateToChallengePage);
 					Global.WndHandler.SetForGame();
 				}
 				else {
 					//CoreLog() << "Task.Challenge: First Navigate Failed." << std::endl;
-					throw new TaskCanceledException();
+					
+					throw new OperationCanceledException(m_ct);
 				}
 			}
 			m_loopSt = LoopStatus.Begin;

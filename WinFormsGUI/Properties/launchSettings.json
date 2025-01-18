@@ -4,7 +4,7 @@
       "commandName": "Project",
       "workingDirectory": "$(ProjectDir)",
       "environmentVariables": {
-        "PATH": "$(OHMS_LIB_DIR)\\ohms\\wgc\\v2.0\\bin;$(OHMS_LIB_DIR)\\opencv\\4.8.0\\build\\x64\\vc16\\bin;$(PATH)"
+        "PATH": "$(OHMS_LIB_DIR)\\ohms\\wgc\\v2.1\\$(Platform);$(OHMS_LIB_DIR)\\opencv\\4.10.0\\build\\$(Platform)\\vc17\\bin;$(PATH)"
       },
       "nativeDebugging": true,
       "hotReloadEnabled": false

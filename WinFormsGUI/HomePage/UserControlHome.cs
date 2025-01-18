@@ -184,7 +184,7 @@ namespace WinFormsGUI {
 				WorkStatusLocker.WorkLock(); // 锁定GUI
 				uint[] list = [.. userControlList.GetEnabledList()];
 				ClearLog(); // 清空进度提示。
-				if (list.Length == 0) {
+				/*if (list.Length == 0) {
 					Log(Strings.Main.TaskListNotSelected);
 					WorkStatusLocker.WorkUnlock(); // 解锁GUI
 					return;
@@ -197,12 +197,22 @@ namespace WinFormsGUI {
 						return;
 					}
 					Program.helper.SetChallengeLevel(Settings.Core.Default.PlayLevel, Settings.Core.Default.PlayLevelR);
+				}*/
+
+				try {
+					Helper.Global.Worker.StartWork([Helper.Step.Type.Challenge]);
 				}
-				if (!Program.helper.Start()) { // 启动失败
+				catch {
 					Log(Strings.GuiLog.WorkCanNotStartWork); // 提示。
 					WorkStatusLocker.WorkUnlock(); // 解锁GUI
 					return;
 				}
+
+				/*if (!Program.helper.Start()) { // 启动失败
+					Log(Strings.GuiLog.WorkCanNotStartWork); // 提示。
+					WorkStatusLocker.WorkUnlock(); // 解锁GUI6
+					return;
+				}*/
 				timer_Main.Enabled = true; // 启动Timer获取回执信息。
 				break;
 			}

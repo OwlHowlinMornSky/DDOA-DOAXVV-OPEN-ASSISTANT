@@ -48,11 +48,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)WinFormsGUI\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.22621.0\</OutDir>
+    <OutDir>$(SolutionDir)WinFormsGUI\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.22000.0\</OutDir>
     <TargetName>$(SolutionName).Kernel</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)WinFormsGUI\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.22621.0\</OutDir>
+    <OutDir>$(SolutionDir)WinFormsGUI\bin\$(Platform)\$(Configuration)\net8.0-windows10.0.22000.0\</OutDir>
     <TargetName>$(SolutionName).Kernel</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -62,13 +62,13 @@
       </PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\opencv\4.10.0\build\include;$(OHMS_LIB_DIR)\ohms\wgc\v2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\opencv\4.10.0\build\include;$(OHMS_LIB_DIR)\ohms\wgc\v2.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <AdditionalDependencies>windowsapp.lib;dwmapi.lib;wgc-capture-d.lib;opencv_world4100d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\opencv\4.10.0\build\$(Platform)\vc17\lib;$(OHMS_LIB_DIR)\ohms\wgc\v2.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\opencv\4.10.0\build\$(Platform)\vc17\lib;$(OHMS_LIB_DIR)\ohms\wgc\v2.1\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -78,13 +78,13 @@
       </PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\opencv\4.10.0\build\include;$(OHMS_LIB_DIR)\ohms\wgc\v2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\opencv\4.10.0\build\include;$(OHMS_LIB_DIR)\ohms\wgc\v2.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <AdditionalDependencies>windowsapp.lib;dwmapi.lib;wgc-capture.lib;opencv_world4100.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\opencv\4.10.0\build\$(Platform)\vc17\lib;$(OHMS_LIB_DIR)\ohms\wgc\v2.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\opencv\4.10.0\build\$(Platform)\vc17\lib;$(OHMS_LIB_DIR)\ohms\wgc\v2.1\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

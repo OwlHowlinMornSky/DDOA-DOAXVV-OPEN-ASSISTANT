@@ -75,6 +75,10 @@ namespace WinFormsGUI {
 				}
 				return false;
 			}
+
+
+			Helper.Global.PatternManager.LoadFromFile(@"assets\tempLists.ini");
+
 			return true;
 		}
 	}
