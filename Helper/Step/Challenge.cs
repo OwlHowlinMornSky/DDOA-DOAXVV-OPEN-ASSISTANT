@@ -214,7 +214,7 @@ namespace Helper.Step {
 				IStep.TaskSleep(TimeSpan.FromSeconds(1.0), m_ct);
 
 				bool got;
-				uint up, rank;
+				int up, rank;
 				// 寻找目标等级
 				got = Global.WndHandler.WaitOneFrame();
 				HelperKernel.IEye mat = Global.WndHandler.Eye;
@@ -222,28 +222,28 @@ namespace Helper.Step {
 					needManual = true;
 					break;
 				}
-				up = 0;
-				rank = 0;
+				up = -1;
+				rank = -1;
 				for (int i = 4; i >= 0; --i) {
 					if (m_act100pre[i].TryMatch(mat)) {
 						int abspos = i - Settings.challenge.SelectedActivityLevel + 1;
 						if (abspos < 0) {
-							up = (uint)-abspos;
+							up = -abspos;
 							rank = 0;
 						}
 						else {
 							up = 0;
-							rank = (uint)abspos;
+							rank = abspos;
 						}
 						break;
 					}
 				}
-				if (up == 0 || rank == 0 || rank > 4) {
+				if (up < 0 || rank < 0 || rank > 4) {
 					needManual = true;
 					break;
 				}
 				if (up > 0) {
-					Global.WndHandler.Hand.MoveMouseWheel(false, up);
+					Global.WndHandler.Hand.MoveMouseWheel(false, (uint)up);
 				}
 				IStep.TaskSleep(TimeSpan.FromSeconds(0.5), m_ct);
 				Global.WndHandler.ClickAt(m_act100pre[rank].GetSpecialPointInSearchRect(0));
@@ -265,28 +265,28 @@ namespace Helper.Step {
 					break;
 				}
 				mat = Global.WndHandler.Eye;
-				up = 0;
-				rank = 0;
+				up = -1;
+				rank = -1;
 				for (int i = 4; i >= 0; --i) {
 					if (m_actSlevel[i].TryMatch(mat)) {
 						int abspos = i - Settings.challenge.SelectedActivityMatch + 1;
 						if (abspos < 0) {
-							up = (uint)-abspos;
+							up = -abspos;
 							rank = 0;
 						}
 						else {
 							up = 0;
-							rank = (uint)abspos;
+							rank = abspos;
 						}
 						break;
 					}
 				}
-				if (up == 0 || rank == 0 || rank > 4) {
+				if (up < 0 || rank < 0 || rank > 4) {
 					needManual = true;
 					break;
 				}
 				if (up > 0) {
-					Global.WndHandler.Hand.MoveMouseWheel(false, up);
+					Global.WndHandler.Hand.MoveMouseWheel(false, (uint)up);
 				}
 				IStep.TaskSleep(TimeSpan.FromSeconds(0.5), m_ct);
 				Global.WndHandler.ClickAt(m_actSlevel[rank].GetSpecialPointInSearchRect(0));

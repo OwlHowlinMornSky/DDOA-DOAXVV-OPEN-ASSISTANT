@@ -18,8 +18,8 @@ namespace Helper {
 		public static WndHandler wndHandler = new();
 
 		public struct Challenge() {
-			public int  PlayMatch             = 0;     // 0: Previous; 1: New; 2: Activity
-			public int  SelectedActivityLevel = 6;     // -EDCBAS...
+			public int  PlayMatch             = 2;     // 0: Previous; 1: New; 2: Activity
+			public int  SelectedActivityLevel = 5;     // -EDCBAS...
 			public int  SelectedActivityMatch = 1;     // 0123456...
 			public bool EnterAddition         = false; // 进入奖励挑战赛。默认不进入奖励挑战赛。
 			public bool CheckAddition         = false; // 是否检查奖励挑战赛。默认不检查奖励挑战赛。
