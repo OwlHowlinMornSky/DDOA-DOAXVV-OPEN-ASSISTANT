@@ -68,39 +68,39 @@ namespace Helper.Step {
 			//CoreLog() << "Task.Challenge: Begin Load Templates." << std::endl;
 			m_set = Settings.challenge;
 
-			temp_chaBar = PatternManager.CreatePattern("default") ?? throw new Exception();
-			temp_lastFight = PatternManager.CreatePattern("lastFight") ?? throw new Exception();
-			temp_newFight = PatternManager.CreatePattern("newFight") ?? throw new Exception();
-			temp_startGame = PatternManager.CreatePattern("start") ?? throw new Exception();
-			temp_loading = PatternManager.CreatePattern("loading") ?? throw new Exception();
-			temp_lowFp = PatternManager.CreatePattern("fp") ?? throw new Exception();
-			temp_gameResult = PatternManager.CreatePattern("result") ?? throw new Exception();
-			temp_awardCha = PatternManager.CreatePattern("add") ?? throw new Exception();
-			m_camFp = PatternManager.CreatePattern("UseFp") ?? throw new Exception();
-			m_camFpNo = PatternManager.CreatePattern("cha/shotFpNo") ?? throw new Exception();
+			temp_chaBar = PatternManager.CreatePattern("default");
+			temp_lastFight = PatternManager.CreatePattern("lastFight");
+			temp_newFight = PatternManager.CreatePattern("newFight");
+			temp_startGame = PatternManager.CreatePattern("start");
+			temp_loading = PatternManager.CreatePattern("loading");
+			temp_lowFp = PatternManager.CreatePattern("fp");
+			temp_gameResult = PatternManager.CreatePattern("result");
+			temp_awardCha = PatternManager.CreatePattern("add");
+			m_camFp = PatternManager.CreatePattern("UseFp");
+			m_camFpNo = PatternManager.CreatePattern("cha/shotFpNo");
 
 			m_camFpComf = [
-				PatternManager.CreatePattern("UseFpComf0") ?? throw new Exception(),
-				PatternManager.CreatePattern("UseFpComf1") ?? throw new Exception(),
+				PatternManager.CreatePattern("UseFpComf0"),
+				PatternManager.CreatePattern("UseFpComf1"),
 			];
 
-			m_camFpDrink = PatternManager.CreatePattern("cha/drink") ?? throw new Exception();
-			m_camFpDrinkComf = PatternManager.CreatePattern("cha/drinkComf") ?? throw new Exception();
+			m_camFpDrink = PatternManager.CreatePattern("cha/drink");
+			m_camFpDrinkComf = PatternManager.CreatePattern("cha/drinkComf");
 
 			m_act100pre = [
-				PatternManager.CreatePattern("cha/act/l0") ?? throw new Exception(),
-				PatternManager.CreatePattern("cha/act/l1") ?? throw new Exception(),
-				PatternManager.CreatePattern("cha/act/l2") ?? throw new Exception(),
-				PatternManager.CreatePattern("cha/act/l3") ?? throw new Exception(),
-				PatternManager.CreatePattern("cha/act/l4") ?? throw new Exception(),
+				PatternManager.CreatePattern("cha/act/l0"),
+				PatternManager.CreatePattern("cha/act/l1"),
+				PatternManager.CreatePattern("cha/act/l2"),
+				PatternManager.CreatePattern("cha/act/l3"),
+				PatternManager.CreatePattern("cha/act/l4"),
 			];
 
 			m_actSlevel = [
-				PatternManager.CreatePattern("cha/act/r0") ?? throw new Exception(),
-				PatternManager.CreatePattern("cha/act/r1") ?? throw new Exception(),
-				PatternManager.CreatePattern("cha/act/r2") ?? throw new Exception(),
-				PatternManager.CreatePattern("cha/act/r3") ?? throw new Exception(),
-				PatternManager.CreatePattern("cha/act/r4") ?? throw new Exception(),
+				PatternManager.CreatePattern("cha/act/r0"),
+				PatternManager.CreatePattern("cha/act/r1"),
+				PatternManager.CreatePattern("cha/act/r2"),
+				PatternManager.CreatePattern("cha/act/r3"),
+				PatternManager.CreatePattern("cha/act/r4"),
 			];
 
 			//CoreLog() << "Task.Challenge: Finish Load Templates." << std::endl;
@@ -166,10 +166,10 @@ namespace Helper.Step {
 				}
 			}
 			catch (StepErrorContinueException ex) {
-				GUICallbacks.Log(new(
+				IStep.Log(
 					GUICallbacks.LogInfo.Type.Error,
 					string.Format(LogStr.StepErr_X, ex.Message)
-					));
+					);
 			}
 			catch (StepCompleteException) {
 				IStep.Log(
@@ -217,7 +217,7 @@ namespace Helper.Step {
 					needManual = true;
 					break;
 				}
-				if (!WndHandler.WaitFor(temp_chaBar ?? throw new Exception(), TimeSpan.FromSeconds(1))) {
+				if (!WndHandler.WaitFor(temp_chaBar, TimeSpan.FromSeconds(1))) {
 					needManual = true;
 					break;
 				}

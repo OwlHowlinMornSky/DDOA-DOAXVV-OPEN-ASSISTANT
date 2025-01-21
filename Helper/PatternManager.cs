@@ -108,10 +108,14 @@ namespace Helper {
 			}
 		}
 
-		internal static Pattern? CreatePattern(string name) {
+		internal static Pattern? TryCreatePattern(string name) {
 			if (!m_infos.TryGetValue(name, out Pattern.Info info))
 				return null;
 			return new Pattern(Path.Combine(m_folder, name), info);
+		}
+
+		internal static Pattern CreatePattern(string name) {
+			return TryCreatePattern(name) ?? throw new Exception();
 		}
 	}
 }

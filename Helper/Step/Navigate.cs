@@ -47,14 +47,14 @@ namespace Helper.Step {
 		static private void EnsurePatterns() {
 			//CoreLog() << "Task_Navigate: Begin Load Templates." << std::endl;
 
-			temp_chaPage ??= PatternManager.CreatePattern("default") ?? throw new Exception();
-			temp_matchPage ??= PatternManager.CreatePattern("start") ?? throw new Exception();
-			temp_homePage ??= PatternManager.CreatePattern("homeSpec") ?? throw new Exception();
-			temp_resultPage ??= PatternManager.CreatePattern("result") ?? throw new Exception();
-			temp_anyOtherPageHaveReturn ??= PatternManager.CreatePattern("back") ?? throw new Exception();
-			temp_anyOtherPageHaveHome ??= PatternManager.CreatePattern("otherHome") ?? throw new Exception();
-			temp_anyOtherPageHaveHomeW ??= PatternManager.CreatePattern("otherHomeAskew") ?? throw new Exception();
-			temp_homeChaBtn ??= PatternManager.CreatePattern("homeChaBtn") ?? throw new Exception();
+			temp_chaPage ??= PatternManager.CreatePattern("default");
+			temp_matchPage ??= PatternManager.CreatePattern("start");
+			temp_homePage ??= PatternManager.CreatePattern("homeSpec");
+			temp_resultPage ??= PatternManager.CreatePattern("result");
+			temp_anyOtherPageHaveReturn ??= PatternManager.CreatePattern("back");
+			temp_anyOtherPageHaveHome ??= PatternManager.CreatePattern("otherHome");
+			temp_anyOtherPageHaveHomeW ??= PatternManager.CreatePattern("otherHomeAskew");
+			temp_homeChaBtn ??= PatternManager.CreatePattern("homeChaBtn");
 
 			//CoreLog() << "Task_Navigate: Finish Load Templates." << std::endl;
 		}
