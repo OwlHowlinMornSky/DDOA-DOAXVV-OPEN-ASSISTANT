@@ -70,7 +70,7 @@ protected:
 protected:
 	bool m_isFloatingArea; // 是否浮动范围查找。
 	Rectangle m_searchRect; // 查找之范围。
-	Rectangle m_prevMatchedRect; // 上次成功匹配之范围。
+	Rectangle m_prevMatchedRect; // 上次尝试匹配之最佳范围。未通过阈值也会更新。
 	cv::Mat* m_pattern; // 用于匹配之图案。
 	cv::Mat* m_mask;   // 用于匹配之遮罩。
 };

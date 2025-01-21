@@ -126,53 +126,78 @@ bool MatchCore::Match(IEye^ eye, float threshold) {
 	cv::Mat srcImage; // 输入
 	cv::Rect searchRect(m_searchRect.X, m_searchRect.Y, m_searchRect.Width, m_searchRect.Height);
 
-	if (nullptr != m_mask) {
-		sample(searchRect).copyTo(srcImage, *m_mask);
-	}
-	else {
+	switch ((m_isFloatingArea ? 2 : 0) | (m_mask ? 1 : 0)) {
+	case 0: // 无遮罩的固定区域。
 		sample(searchRect).copyTo(srcImage);
-	}
-
-	if (m_isFloatingArea) {
-		cv::Size targetSize = m_pattern->size();
-		// 计算match结果的大小
-		cv::Size size = srcImage.size() - targetSize;
-		size += { 1, 1 };
-		assert(size.height > 0 && size.width > 0);
-
-		cv::Mat resultImage; // match结果
-		resultImage.create(size, CV_32FC1);
-
-		cv::matchTemplate(srcImage, *m_pattern, resultImage, g_nMatchMethod); // match
-
-		// 寻找最佳匹配点
-		double minValue, maxValue;
-		cv::Point minLocation, maxLocation, matchLocation;
-		cv::minMaxLoc(resultImage, &minValue, &maxValue, &minLocation, &maxLocation);
-		if constexpr (g_nMatchMethod == cv::TM_SQDIFF || g_nMatchMethod == cv::TM_SQDIFF_NORMED)
-			matchLocation = minLocation;
-		else
-			matchLocation = maxLocation;
-
-		// 由匹配到的点确定匹配到的区域（相对于原始输入）
-		cv::Rect prevMatch = cv::Rect(matchLocation + searchRect.tl(), targetSize);
-		sample(prevMatch).copyTo(srcImage);
-
-		m_prevMatchedRect = Rectangle(prevMatch.x, prevMatch.y, prevMatch.width, prevMatch.height);
-	}
-	else {
 		m_prevMatchedRect = m_searchRect;
-	}
+		return check(srcImage, *m_pattern, threshold); // 检查区域是否满足阈值
+	case 1: // 有遮罩的固定区域。
+		sample(searchRect).copyTo(srcImage, *m_mask);
+		m_prevMatchedRect = m_searchRect;
+		return checkWithMask(srcImage, *m_pattern, *m_mask, threshold); // 检查区域是否满足阈值
+	case 2: // 无遮罩的浮动区域。
+		sample(searchRect).copyTo(srcImage);
+		{
+			cv::Size targetSize = m_pattern->size();
+			// 计算match结果的大小
+			cv::Size size = srcImage.size() - targetSize;
+			size += { 1, 1 };
+			assert(size.height > 0 && size.width > 0);
 
-	// 检查最佳区域是否满足阈值
-	bool res =
-		(nullptr != m_mask)
-		?
-		checkWithMask(srcImage, *m_pattern, *m_mask, threshold)
-		:
-		check(srcImage, *m_pattern, threshold)
-		;
-	return res;
+			cv::Mat resultImage; // match结果
+			resultImage.create(size, CV_32FC1);
+			cv::matchTemplate(srcImage, *m_pattern, resultImage, g_nMatchMethod); // match
+
+			// 寻找最佳匹配点
+			double minValue, maxValue;
+			cv::Point minLocation, maxLocation, matchLocation;
+			cv::minMaxLoc(resultImage, &minValue, &maxValue, &minLocation, &maxLocation);
+			if constexpr (g_nMatchMethod == cv::TM_SQDIFF || g_nMatchMethod == cv::TM_SQDIFF_NORMED)
+				matchLocation = minLocation;
+			else
+				matchLocation = maxLocation;
+
+			// 由匹配到的点确定匹配到的区域（相对于原始输入）
+			cv::Rect prevMatch = cv::Rect(matchLocation + searchRect.tl(), targetSize);
+			sample(prevMatch).copyTo(srcImage);
+
+			m_prevMatchedRect = Rectangle(prevMatch.x, prevMatch.y, prevMatch.width, prevMatch.height);
+		}
+		return check(srcImage, *m_pattern, threshold); // 检查最佳区域是否满足阈值
+	case 3: // 有遮罩的浮动区域。
+		sample(searchRect).copyTo(srcImage);
+		{
+			cv::Size targetSize = m_pattern->size();
+			// 计算match结果的大小
+			cv::Size size = srcImage.size() - targetSize;
+			size += { 1, 1 };
+			assert(size.height > 0 && size.width > 0);
+
+			cv::Mat resultImage; // match结果
+			resultImage.create(size, CV_32FC1);
+			cv::matchTemplate(srcImage, *m_pattern, resultImage, g_nMatchMethod, m_mask ? *m_mask : cv::noArray()); // match
+
+			// 寻找最佳匹配点
+			double minValue, maxValue;
+			cv::Point minLocation, maxLocation, matchLocation;
+			cv::minMaxLoc(resultImage, &minValue, &maxValue, &minLocation, &maxLocation);
+			if constexpr (g_nMatchMethod == cv::TM_SQDIFF || g_nMatchMethod == cv::TM_SQDIFF_NORMED)
+				matchLocation = minLocation;
+			else
+				matchLocation = maxLocation;
+
+			// 由匹配到的点确定匹配到的区域（相对于原始输入）
+			cv::Rect prevMatch = cv::Rect(matchLocation + searchRect.tl(), targetSize);
+			sample(prevMatch).copyTo(srcImage);
+
+			m_prevMatchedRect = Rectangle(prevMatch.x, prevMatch.y, prevMatch.width, prevMatch.height);
+		}
+		// 检查最佳区域是否满足阈值
+		return checkWithMask(srcImage, *m_pattern, *m_mask, threshold);
+	default:
+		break;
+	}
+	return false;
 }
 
 bool MatchCore::IsFloatingArea() {
