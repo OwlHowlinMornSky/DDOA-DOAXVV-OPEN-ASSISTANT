@@ -18,8 +18,6 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-using System.Windows.Forms;
-using Wrapper;
 
 namespace WinFormsGUI {
 
@@ -83,14 +81,10 @@ namespace WinFormsGUI {
 		/// 点击“添加”按钮。
 		/// </summary>
 		private void Button_add_Click(object sender, EventArgs e) {
-			if (m_listTasks.Count >= (int)TaskEnumWrap.TaskMaxNum) {
-				MessageBox.Show($"The limit of task length is {(int)TaskEnumWrap.TaskMaxNum}.");
-				return;
-			}
 			var choose = new FormListEditChooseTask(((Button)sender).Text);
 			var res = choose.ShowDialog();
 			var choice = choose.choosedTask;
-			if (res == DialogResult.Cancel || choice == (uint)TaskEnumWrap.None)
+			if (res == DialogResult.Cancel || choice == (uint)Helper.Step.Type.None)
 				return;
 			m_listTasks.Add(choice);
 			listBox1.Items.Add(
@@ -102,14 +96,10 @@ namespace WinFormsGUI {
 		/// 点击“插入”按钮。
 		/// </summary>
 		private void Button_Insert_Click(object sender, EventArgs e) {
-			if (m_listTasks.Count >= (int)TaskEnumWrap.TaskMaxNum) {
-				MessageBox.Show($"The limit of task length is {(int)TaskEnumWrap.TaskMaxNum}.");
-				return;
-			}
 			var choose = new FormListEditChooseTask(((Button)sender).Text);
 			var res = choose.ShowDialog();
 			var choice = choose.choosedTask;
-			if (res == DialogResult.Cancel || choice == (uint)TaskEnumWrap.None)
+			if (res == DialogResult.Cancel || choice == (uint)Helper.Step.Type.None)
 				return;
 			var index = listBox1.SelectedIndex;
 			m_listTasks.Insert(index, choice);
@@ -127,7 +117,7 @@ namespace WinFormsGUI {
 			var choose = new FormListEditChooseTask(((Button)sender).Text);
 			var res = choose.ShowDialog();
 			var choice = choose.choosedTask;
-			if (res == DialogResult.Cancel || choice == (uint)TaskEnumWrap.None)
+			if (res == DialogResult.Cancel || choice == (uint)Helper.Step.Type.None)
 				return;
 			var index = listBox1.SelectedIndex;
 			m_listTasks[index] = choice;

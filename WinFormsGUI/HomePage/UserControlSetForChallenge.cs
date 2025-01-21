@@ -24,7 +24,6 @@ namespace WinFormsGUI {
 			else {
 				Settings.Core.Default.PlayMatchType = 2;
 			}
-			Program.helper.SetChallengeMatch(Settings.Core.Default.PlayMatchType);
 		}
 
 		private void AwardMatch_RadioBtn_CheckedChanged(object sender, EventArgs e) {
