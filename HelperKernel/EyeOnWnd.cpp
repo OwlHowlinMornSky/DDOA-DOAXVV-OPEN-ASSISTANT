@@ -80,12 +80,18 @@ bool EyeOnWnd::IsLooking() {
 	return NULL != m_hwnd;
 }
 
+void EyeOnWnd::BeginDebugDraw() {
+#ifdef _DEBUG
+	//cv::resize(*m_mat, *m_mat, m_mat->size() / 2, 0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR); // 缩小到一半
+#endif // _DEBUG
+}
+
 void EyeOnWnd::DrawRectangle(System::Drawing::Rectangle rect, System::Drawing::Color color) {
 #ifdef _DEBUG
 	cv::rectangle(
 		*m_mat,
 		cv::Rect(rect.X, rect.Y, rect.Width, rect.Height),
-		cv::Scalar(color.R, color.G, color.B),
+		cv::Scalar(color.B, color.G, color.R),
 		2, 8, 0
 	);
 #endif // _DEBUG
@@ -93,8 +99,15 @@ void EyeOnWnd::DrawRectangle(System::Drawing::Rectangle rect, System::Drawing::C
 
 void EyeOnWnd::ShowDebugWindow() {
 #ifdef _DEBUG
-	cv::resize(*m_mat, *m_mat, m_mat->size() / 2, 0.0, 0.0, cv::InterpolationFlags::INTER_LINEAR); // 缩小到一半
 	cv::imshow("show", *m_mat); // show
+	cv::waitKey(1);
+#endif // _DEBUG
+}
+
+void EyeOnWnd::DestroyDebugWindows() {
+#ifdef _DEBUG
+	cv::waitKey(1);
+	cv::destroyAllWindows();
 	cv::waitKey(1);
 #endif // _DEBUG
 }
@@ -102,6 +115,7 @@ void EyeOnWnd::ShowDebugWindow() {
 void EyeOnWnd::Reset() {
 	m_hwnd = NULL;
 	r_capture->stopCapture(); // 停止截图
+	DestroyDebugWindows();
 }
 
 int EyeOnWnd::SetOnWnd(HWND hwnd) {

@@ -25,12 +25,14 @@ namespace WinFormsGUI {
 		internal TaskStatusRegistration() {
 			Helper.GUICallbacks.LockTask = LockTask;
 			Helper.GUICallbacks.Pause = () => { Pause(); };
+			Helper.GUICallbacks.Log = (x) => { Log(x); };
 		}
 
 		/// <summary>
 		/// 任务状态改变时锁定与解锁GUI的事件。
 		/// </summary>
-		internal Action<bool> LockAction = x => { };
+		internal Action OnStartLock = () => { }; // 成功开始任务后，在UI线程锁定UI。
+		internal Action<bool> LockAction = x => { }; // 任务线程跑起来后，从任务线程，通知UI线程。
 		internal bool Locked { get; private set; } = false;
 		internal void LockTask(bool x) {
 			Locked = x;
@@ -39,5 +41,6 @@ namespace WinFormsGUI {
 
 		internal Action Pause = () => { };
 
+		internal Action<Helper.GUICallbacks.LogInfo> Log = x => { };
 	}
 }

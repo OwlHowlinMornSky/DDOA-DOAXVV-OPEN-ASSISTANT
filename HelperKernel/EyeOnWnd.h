@@ -37,8 +37,10 @@ public:
 	virtual const cv::Mat* GetVision();
 	virtual bool IsLooking();
 
+	virtual void BeginDebugDraw();
 	virtual void DrawRectangle(System::Drawing::Rectangle rect, System::Drawing::Color color);
 	virtual void ShowDebugWindow();
+	virtual void DestroyDebugWindows();
 
 public:
 	void Reset();

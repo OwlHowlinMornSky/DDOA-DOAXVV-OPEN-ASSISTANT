@@ -61,6 +61,8 @@ namespace Helper {
 		 */
 		internal static void Reset() {
 			m_state = State.Idle;
+			m_eye.Reset();
+			m_hand.Reset();
 		}
 
 		internal static void SetCancellationToken(CancellationToken ct) {
@@ -229,12 +231,13 @@ namespace Helper {
 				if (m_eye.SaveVision()) {
 					bool matchRes = pattern.TryMatch(m_eye);
 					if (Settings.wndHandler.Debug_ShowCapture) {
+						m_eye.BeginDebugDraw();
 						if (pattern.IsFloatingArea()) {
 							m_eye.DrawRectangle(pattern.GetSearchRect(), Color.Blue); // 蓝线画寻找范围框
-							m_eye.DrawRectangle(pattern.GetPreviousMatchedRect(), matchRes ? Color.Green : Color.Red); // 画最佳匹配框（满足阈值为绿，否则为红）
+							m_eye.DrawRectangle(pattern.GetPreviousMatchedRect(), matchRes ? Color.FromArgb(0, 255, 0) : Color.Red); // 画最佳匹配框（满足阈值为绿，否则为红）
 						}
 						else {
-							m_eye.DrawRectangle(pattern.GetSearchRect(), matchRes ? Color.Green : Color.Red); // 画寻找范围框（满足阈值为绿，否则为红）
+							m_eye.DrawRectangle(pattern.GetSearchRect(), matchRes ? Color.FromArgb(0, 255, 0) : Color.Red); // 画寻找范围框（满足阈值为绿，否则为红）
 						}
 						m_eye.ShowDebugWindow();
 					}
@@ -279,6 +282,7 @@ namespace Helper {
 					}
 #if DEBUG
 					if (Settings.wndHandler.Debug_ShowCapture) {
+						m_eye.BeginDebugDraw();
 						foreach (var i in patterns) {
 							if (i.IsFloatingArea()) {
 								m_eye.DrawRectangle(i.GetSearchRect(), Color.Blue); // 蓝线画寻找范围框
@@ -292,10 +296,10 @@ namespace Helper {
 							Pattern i = patterns[res];
 							if (i.IsFloatingArea()) {
 								m_eye.DrawRectangle(i.GetSearchRect(), Color.Blue); // 蓝线画寻找范围框
-								m_eye.DrawRectangle(i.GetPreviousMatchedRect(), Color.Green); // 画最佳匹配框（绿）
+								m_eye.DrawRectangle(i.GetPreviousMatchedRect(), Color.FromArgb(0, 255, 0)); // 画最佳匹配框（绿）
 							}
 							else {
-								m_eye.DrawRectangle(i.GetSearchRect(), Color.Green); // 画寻找范围框（绿）
+								m_eye.DrawRectangle(i.GetSearchRect(), Color.FromArgb(0, 255, 0)); // 画寻找范围框（绿）
 							}
 						}
 						m_eye.ShowDebugWindow();

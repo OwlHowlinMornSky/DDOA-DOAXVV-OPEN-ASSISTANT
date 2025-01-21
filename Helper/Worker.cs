@@ -88,21 +88,24 @@ namespace Helper {
 					step.Run(ct);
 				}
 				catch (OperationCanceledException) {
+					WndHandler.Reset();
 					GUICallbacks.Log(new(
 						GUICallbacks.LogInfo.Type.Info,
 						LogStr.TaskCancelled
 						));
-					throw;
+					GUICallbacks.LockTask(false);
+					return;
 				}
 				catch (Exception ex) {
 					GUICallbacks.Log(new(
 						GUICallbacks.LogInfo.Type.Error,
 						LogStr.TaskErrInternalException,
-						ex.Message
+						ex.Message + ": " + ex.StackTrace
 						));
 					break;
 				}
 			}
+			WndHandler.Reset();
 
 			GUICallbacks.Log(new(
 				GUICallbacks.LogInfo.Type.Info,

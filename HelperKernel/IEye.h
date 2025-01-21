@@ -49,8 +49,10 @@ public:
 	 */
 	bool IsLooking();
 
+	void BeginDebugDraw();
 	void DrawRectangle(System::Drawing::Rectangle rect, System::Drawing::Color color);
 	void ShowDebugWindow();
+	void DestroyDebugWindows();
 };
 
 }

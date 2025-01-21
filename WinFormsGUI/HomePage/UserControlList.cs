@@ -51,29 +51,31 @@ namespace WinFormsGUI {
 		public UserControlList() {
 			InitializeComponent();
 			// 注册以在工作时锁定控件。
-			GlobalSetter.Regist.LockAction += OnWorkLockAndUnlock;
+			GlobalSetter.Regist.OnStartLock += OnTaskStartLock;
+			GlobalSetter.Regist.LockAction += OnTaskLock;
 			if (GlobalSetter.Regist.Locked)
-				OnWorkLockAndUnlock(true);
+				OnTaskLock(true);
 		}
 
 		~UserControlList() {
-			GlobalSetter.Regist.LockAction -= OnWorkLockAndUnlock;
+			GlobalSetter.Regist.LockAction -= OnTaskLock;
+		}
+
+		internal void OnTaskStartLock() {
+			button_all.Enabled = false;
+			button_clear.Enabled = false;
+			for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
+				flowLayoutPanel1.Controls[i].Enabled = false;
+			}
+			contextMenuStrip1.Enabled = false;
 		}
 
 		/// <summary>
 		/// 监听工作状态改变锁定控件的事件
 		/// </summary>
-		private void OnWorkLockAndUnlock(bool locked) {
+		private void OnTaskLock(bool locked) {
 			void f(bool isLock) {
-				if (isLock) {
-					button_all.Enabled = false;
-					button_clear.Enabled = false;
-					for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
-						flowLayoutPanel1.Controls[i].Enabled = false;
-					}
-					contextMenuStrip1.Enabled = false;
-				}
-				else {
+				if (!isLock) {
 					for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
 						flowLayoutPanel1.Controls[i].Enabled = true;
 					}

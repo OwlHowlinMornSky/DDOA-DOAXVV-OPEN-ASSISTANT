@@ -48,16 +48,28 @@ namespace WinFormsGUI {
 			// 设置左侧列表“设置小按钮”选择项改变的回调。
 			userControlList.SetSelectedChangedTo += ChangeSettingCallback;
 			// 注册以在工作时锁定控件。
+			GlobalSetter.Regist.OnStartLock += OnTaskStartLock;
 			GlobalSetter.Regist.LockAction += OnWorkLockAndUnlock;
 			if (GlobalSetter.Regist.Locked)
 				OnWorkLockAndUnlock(true);
 			GlobalSetter.Regist.Pause += OnTaskPause;
+			GlobalSetter.Regist.Log += Log;
 		}
 
 		~UserControlHome() {
 			GlobalSetter.Regist.Pause -= OnTaskPause;
 			GlobalSetter.Regist.LockAction -= OnWorkLockAndUnlock;
 			userControlList.SetSelectedChangedTo -= ChangeSettingCallback;
+		}
+
+		private void Log(Helper.GUICallbacks.LogInfo info) {
+			Log(info.title);
+			if (info.description != null)
+				Log(info.description);
+		}
+
+		internal void OnTaskStartLock() {
+			button_Main.Enabled = false;
 		}
 
 		/// <summary>
@@ -68,6 +80,7 @@ namespace WinFormsGUI {
 				if (isLock) {
 					button_Main.Enabled = true;
 					m_btnMainStatus = BtmMainStatus.Stop;
+					button_Main.Text = Strings.Main.Btn_Main_Stop;
 				}
 				else {
 					button_Main.Enabled = true;
@@ -217,12 +230,10 @@ namespace WinFormsGUI {
 
 				try {
 					Helper.Worker.StartWork(list.Select(num => (Helper.Step.Type)num));
-					GlobalSetter.Regist.LockTask(true);
-					button_Main.Enabled = false;
+					GlobalSetter.Regist.OnStartLock();
 				}
-				catch {
+				catch (Exception) {
 					Log(Strings.GuiLog.WorkCanNotStartWork); // 提示。
-					return;
 				}
 				break;
 			}

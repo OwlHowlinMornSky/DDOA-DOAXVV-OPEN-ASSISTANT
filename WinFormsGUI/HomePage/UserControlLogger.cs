@@ -122,9 +122,7 @@ namespace WinFormsGUI {
 
 		public void Log(string message, Color color) {
 			if (InvokeRequired) {
-				var r = BeginInvoke(new Action(() => {
-					LogAdd(message, color);
-				}));
+				var r = BeginInvoke(LogAdd, message, color);
 				EndInvoke(r);
 			}
 			else {

@@ -165,22 +165,19 @@ namespace Helper.Step {
 					}
 				}
 			}
+			catch (StepErrorContinueException ex) {
+				GUICallbacks.Log(new(
+					GUICallbacks.LogInfo.Type.Error,
+					string.Format(LogStr.StepErr_X, ex.Message)
+					));
+			}
 			catch (StepCompleteException) {
 				IStep.Log(
 					GUICallbacks.LogInfo.Type.Info,
 					LogStr.StepComplete
 				);
 			}
-			catch (StepErrorContinueException) {
-				;
-			}
-			catch {
-				IStep.Log(
-					GUICallbacks.LogInfo.Type.Error,
-					LogStr.StepException
-				);
-				throw;
-			}
+
 			//CoreLog() << "Task.Challenge: Exit." << std::endl;
 			IStep.Log(
 				GUICallbacks.LogInfo.Type.Info,
@@ -200,7 +197,7 @@ namespace Helper.Step {
 					r_helper->TaskError(ReturnMsgEnum::TaskErrNoCap);
 					break;*/
 				;
-				throw new Exception();
+				throw new StepErrorContinueException("Cannot set handler");
 			}
 			//CoreLog() << "Task.Challenge: Window Handler Setted." << std::endl;
 			return;
@@ -331,12 +328,12 @@ namespace Helper.Step {
 			if (needManual) {
 				if (Settings.challenge.AskForManual) {
 					WndHandler.Reset();
-					//
-
-					throw new Exception();
-
-					//Global.Worker.TaskWaitForResume(ReturnMsgEnum::ManualNavigateToChallengePage);
-					WndHandler.SetForGame();
+					IStep.Log(
+						GUICallbacks.LogInfo.Type.Warn,
+						LogStr.ManualChaPageNavigate
+						);
+					Worker.PauseForManual();
+					SetHandler();
 				}
 				else {
 					//CoreLog() << "Task.Challenge: First Navigate Failed." << std::endl;
