@@ -43,6 +43,10 @@ namespace Helper.Step {
 			};
 		}
 
+		static internal void Log(GUICallbacks.LogInfo.Type type, string title, string? description = null) {
+			GUICallbacks.Log(new(type, title, description));
+		}
+
 		static protected void TaskSleep(TimeSpan time, CancellationToken ct) {
 			Stopwatch watch = new();
 			while (true) {

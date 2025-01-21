@@ -13,13 +13,13 @@ namespace Helper {
 		public static bool IsRunning() {
 			lock (m_taskLock) {
 				return m_taskLock.isRunning;
-		}
+			}
 		}
 
 		public static void TryCancelWork() {
 			lock (m_taskLock) {
 				m_taskLock.ctSrc?.Cancel();
-		}
+			}
 		}
 
 		public static void Resume() {
@@ -57,29 +57,38 @@ namespace Helper {
 					step = Step.IStep.CreateStep(steptype);
 				}
 				catch (NoSuchStepException ex) {
-					Log([$"{ex.Message}"]);
-					throw;
-					//continue;
-				}
-				catch (Exception ex) {
-					ex.GetType().ToString();
-					throw;
+					GUICallbacks.Log(new(
+						GUICallbacks.LogInfo.Type.Error,
+						ex.Message
+						));
 					continue;
 				}
 
 				try {
 					step.Run(ct);
 				}
-				catch (WorkCannotContinueException ex) {
-					// LOG
+				catch (OperationCanceledException) {
+					GUICallbacks.Log(new(
+						GUICallbacks.LogInfo.Type.Info,
+						LogStr.TaskCancelled
+						));
 					throw;
-					break;
 				}
 				catch (Exception ex) {
-					throw;
-					// LOG
+					GUICallbacks.Log(new(
+						GUICallbacks.LogInfo.Type.Error,
+						LogStr.TaskErrInternalException,
+						ex.Message
+						));
+					break;
 				}
 			}
+
+			GUICallbacks.Log(new(
+				GUICallbacks.LogInfo.Type.Info,
+				LogStr.TaskComplete
+				));
+			GUICallbacks.LockTask(false);
 		}
 
 		internal static void PauseForManual() {
