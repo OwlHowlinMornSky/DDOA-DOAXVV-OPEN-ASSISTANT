@@ -105,7 +105,7 @@ namespace Helper.Step {
 
 					// 持续点击直到进入主页
 					pt = new(920, 40);
-					if (!WndHandler.KeepClickingUntil(pt, temp_homeSpec, TimeSpan.FromSeconds(90), TimeSpan.FromSeconds(1)))
+					if (!WndHandler.KeepClickingUntil(pt, temp_homeSpec, TimeSpan.FromSeconds(120), TimeSpan.FromSeconds(1)))
 						throw new StepErrorCriticalException("Failed to enter homepage.");
 				}
 				else {
@@ -127,7 +127,7 @@ namespace Helper.Step {
 
 						// 在标题界面则尝试进入主页
 						pt = new(920, 40);
-						if (!WndHandler.KeepClickingUntil(pt, temp_homeSpec, TimeSpan.FromSeconds(90), TimeSpan.FromSeconds(1)))
+						if (!WndHandler.KeepClickingUntil(pt, temp_homeSpec, TimeSpan.FromSeconds(120), TimeSpan.FromSeconds(1)))
 							throw new StepErrorCriticalException("Failed to enter homepage.");
 					}
 				}
