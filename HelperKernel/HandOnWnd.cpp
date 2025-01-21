@@ -19,6 +19,7 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "HandOnWnd.h"
+#include <string>
 
 namespace HelperKernel {
 
@@ -162,29 +163,25 @@ int HandOnWnd::SetOnWnd(HWND hwnd) {
 }
 
 int HandOnWnd::SetOnWnd(System::String^ cls, System::String^ title) {
-	wchar_t* cstr0 = nullptr;
+	std::wstring cstr0;
 	if (cls != nullptr) {
 		cli::array<wchar_t>^ wArray0 = cls->ToCharArray();
 		int len0 = wArray0->Length;
-		cstr0 = new wchar_t[len0 + 2];
-		System::IntPtr pcstr0(cstr0);
+		cstr0.resize(len0);
+		System::IntPtr pcstr0(cstr0.data());
 		System::Runtime::InteropServices::Marshal::Copy(wArray0, 0, pcstr0, len0);
-		cstr0[len0] = 0;
-		cstr0[len0 + 1] = 0;
 	}
 
-	wchar_t* cstr1 = nullptr;
+	std::wstring cstr1;
 	if (title != nullptr) {
 		cli::array<wchar_t>^ wArray1 = title->ToCharArray();
 		int len1 = wArray1->Length;
-		cstr1 = new wchar_t[len1 + 2];
-		System::IntPtr pcstr1(cstr1);
+		cstr1.resize(len1);
+		System::IntPtr pcstr1(cstr1.data());
 		System::Runtime::InteropServices::Marshal::Copy(wArray1, 0, pcstr1, len1);
-		cstr1[len1] = 0;
-		cstr1[len1 + 1] = 0;
 	}
 
-	HWND hwnd = FindWindowW(cstr0, cstr1);
+	HWND hwnd = FindWindowW(cstr0.c_str(), cstr1.c_str());
 	if (hwnd == NULL) {
 		return 1;
 	}

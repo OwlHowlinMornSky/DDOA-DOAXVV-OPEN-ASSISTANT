@@ -95,12 +95,14 @@
     <ClInclude Include="IHand.h" />
     <ClInclude Include="MatchCore.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="WndHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="EyeOnWnd.cpp" />
     <ClCompile Include="HandOnWnd.cpp" />
     <ClCompile Include="MatchCore.cpp" />
+    <ClCompile Include="WndHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />

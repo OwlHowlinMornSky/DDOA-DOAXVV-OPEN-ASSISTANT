@@ -69,6 +69,14 @@ namespace Helper {
 			r_ct = ct;
 		}
 
+		internal static bool LaucherAvailable() {
+			return WndHelper.WindowExist(g_findCls, g_finGWnd);
+		}
+
+		internal static bool GameWndAvailable() {
+			return WndHelper.WindowExist(g_findCls, g_findWnd);
+		}
+
 		/**
 		 * @brief 设定目标窗口为DOAXVV的登录器窗口。
 		 * @return “设定”操作的状态。

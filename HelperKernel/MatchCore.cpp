@@ -22,6 +22,7 @@
 
 #include <opencv2/imgproc.hpp>
 #include <opencv2/imgcodecs.hpp>
+#include <string>
 
 namespace {
 
@@ -214,18 +215,23 @@ Rectangle MatchCore::GetPreviousMatchedRect() {
 
 bool MatchCore::LoadPattern(System::String^ filepath) {
 	if (m_pattern) delete m_pattern;
+	if (filepath == nullptr)
+		return false;
 
-	cli::array<wchar_t>^ wArray = filepath->ToCharArray();
-	cli::array<unsigned char, 1>^ arr = System::Text::Encoding::UTF8->GetBytes(wArray);
+	std::string cstr;
+	{
+		cli::array<wchar_t>^ wArray = filepath->ToCharArray();
+		cli::array<unsigned char, 1>^ arr = System::Text::Encoding::UTF8->GetBytes(wArray);
 
-	int len = arr->Length;
-	char* cstr = new char[len + 2];
-	System::IntPtr pcstr(cstr);
-	System::Runtime::InteropServices::Marshal::Copy(arr, 0, pcstr, len);
-	cstr[len] = 0;
-	cstr[len + 1] = 0;
+		int len = arr->Length;
+		cstr.resize(len);
+		System::IntPtr pcstr(cstr.data());
+		System::Runtime::InteropServices::Marshal::Copy(arr, 0, pcstr, len);
+	}
 
-	m_pattern = new cv::Mat(cv::imread(cstr));
+	m_pattern = new cv::Mat();
+	*m_pattern = cv::imread(cstr.c_str());
+
 	if (m_pattern->empty())
 		return false;
 	if (!m_isFloatingArea) {
@@ -241,18 +247,23 @@ bool MatchCore::LoadPattern(System::String^ filepath) {
 
 bool MatchCore::LoadMask(System::String^ filepath) {
 	if (m_mask) delete m_mask;
+	if (filepath == nullptr)
+		return false;
 
-	cli::array<wchar_t>^ wArray = filepath->ToCharArray();
-	cli::array<unsigned char, 1>^ arr = System::Text::Encoding::UTF8->GetBytes(wArray);
+	std::string cstr;
+	{
+		cli::array<wchar_t>^ wArray = filepath->ToCharArray();
+		cli::array<unsigned char, 1>^ arr = System::Text::Encoding::UTF8->GetBytes(wArray);
 
-	int len = arr->Length;
-	char* cstr = new char[len + 2];
-	System::IntPtr pcstr(cstr);
-	System::Runtime::InteropServices::Marshal::Copy(arr, 0, pcstr, len);
-	cstr[len] = 0;
-	cstr[len + 1] = 0;
+		int len = arr->Length;
+		cstr.resize(len);
+		System::IntPtr pcstr(cstr.data());
+		System::Runtime::InteropServices::Marshal::Copy(arr, 0, pcstr, len);
+	}
 
-	m_mask = new cv::Mat(cv::imread(cstr, cv::IMREAD_GRAYSCALE));
+	m_mask = new cv::Mat();
+	*m_mask = cv::imread(cstr.c_str(), cv::IMREAD_GRAYSCALE);
+
 	if (m_mask->empty())
 		return false;
 
