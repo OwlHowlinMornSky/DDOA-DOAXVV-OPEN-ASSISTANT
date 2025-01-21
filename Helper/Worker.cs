@@ -1,43 +1,52 @@
 ﻿
 namespace Helper {
-	public class Worker {
+	public static class Worker {
 
-		private Action<string[]> Log = (x) => {};
-		private bool m_callbackForLogSetted = false;
-		private Task? m_prevTask;
-		private CancellationTokenSource? m_ctSrc;
+		private class TaskLock() {
+			public bool isRunning = false;
+			public CancellationTokenSource? ctSrc = null;
+		}
+		private static readonly TaskLock m_taskLock = new();
 
-		internal Worker() {
+		private static AutoResetEvent m_resume = new(false);
+
+		public static bool IsRunning() {
+			lock (m_taskLock) {
+				return m_taskLock.isRunning;
+		}
 		}
 
-		public void SetCallbackForLog(Action<string[]> action) {
-			if (m_callbackForLogSetted)
-				return;
-			m_callbackForLogSetted = true;
-			Log = action;
+		public static void TryCancelWork() {
+			lock (m_taskLock) {
+				m_taskLock.ctSrc?.Cancel();
+		}
 		}
 
-		public bool IsRunning() {
-			return m_prevTask != null && !m_prevTask.IsCompleted;
+		public static void Resume() {
+			m_resume.Set();
 		}
 
-		public void CancelWork() {
-			if (m_ctSrc == null)
-				return;
-			m_ctSrc.Cancel();
-		}
-
-		public void StartWork(List<Step.Type> steps) {
-			if (IsRunning()) {
+		public static async void StartWork(IEnumerable<Step.Type> steps) {
+			if (IsRunning())
 				throw new WorkNotCompletedException();
+			CancellationToken token;
+			lock (m_taskLock) {
+				m_taskLock.isRunning = true;
+				m_taskLock.ctSrc = new();
+				token = m_taskLock.ctSrc.Token;
 			}
-			m_ctSrc = new();
-			m_prevTask = Task.Run(() => { Work(steps, m_ctSrc.Token); }, m_ctSrc.Token);
+			await Task.Run(() => { Work(steps, token); }, token);
+			lock (m_taskLock) {
+				m_taskLock.ctSrc = null;
+				m_taskLock.isRunning = false;
+			}
 			return;
 		}
 
-		private void Work(List<Step.Type> steps, CancellationToken ct) {
-			Global.WndHandler.SetCancellationToken(ct);
+		private static void Work(IEnumerable<Step.Type> steps, CancellationToken ct) {
+			WndHandler.SetCancellationToken(ct);
+
+			GUICallbacks.LockTask(true);
 
 			foreach (var steptype in steps) {
 				ct.ThrowIfCancellationRequested();
@@ -73,5 +82,8 @@ namespace Helper {
 			}
 		}
 
+		internal static void PauseForManual() {
+			m_resume.WaitOne();
+		}
 	}
 }

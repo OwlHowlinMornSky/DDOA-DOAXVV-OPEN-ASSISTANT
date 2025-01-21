@@ -111,16 +111,17 @@ void HandOnWnd::ClickAt(Drawing::Point target) {
 	Threading::Thread::Sleep(10);
 }
 
-bool HandOnWnd::SetUserCursorInterceptionEnabled(bool enabled) {
+int HandOnWnd::SetUserCursorInterceptionEnabled(bool enabled) {
 	if (enabled) {
-		if (!GetUserCursorInterceptionEnabled() && !TryHook())
-			return false;// IHelper::instance()->GuiLogF(ReturnMsgEnum::HookFailed);
+		if (GetUserCursorInterceptionEnabled())
+			return 0;
+		return TryHook();// IHelper::instance()->GuiLogF(ReturnMsgEnum::HookFailed);
 	}
 	else {
 		if (GetUserCursorInterceptionEnabled())
 			DropHook();
 	}
-	return true;
+	return 0;
 }
 
 bool HandOnWnd::GetUserCursorInterceptionEnabled() {
@@ -132,15 +133,15 @@ void HandOnWnd::Reset() {
 	m_hwnd = NULL;
 }
 
-bool HandOnWnd::SetOnWnd(HWND hwnd) {
+int HandOnWnd::SetOnWnd(HWND hwnd) {
 	Reset();
 	if (hwnd == NULL)
-		return false;
+		return 1;
 	m_hwnd = hwnd;
-	return true;
+	return 0;
 }
 
-bool HandOnWnd::SetOnWnd(System::String^ cls, System::String^ title) {
+int HandOnWnd::SetOnWnd(System::String^ cls, System::String^ title) {
 	wchar_t* cstr0 = nullptr;
 	if (cls != nullptr) {
 		cli::array<wchar_t>^ wArray0 = cls->ToCharArray();
@@ -165,39 +166,39 @@ bool HandOnWnd::SetOnWnd(System::String^ cls, System::String^ title) {
 
 	HWND hwnd = FindWindowW(cstr0, cstr1);
 	if (hwnd == NULL) {
-		return false;
+		return 1;
 	}
 	return SetOnWnd(hwnd);
 }
 
-bool HandOnWnd::InitHookMod() {
+int HandOnWnd::InitHookMod() {
 	m_hmod = LoadLibraryW(L"HookDll.dll");
 	if (m_hmod == NULL) {
 		//CoreLog() << "Failed to Load Lobrary: " << ParseWin32Error() << std::endl;
-		return false;
+		return 1;
 	}
 
 	m_hookproc = GetProcAddress(m_hmod, "DdoaHookProc");
 	if (m_hookproc == NULL) {
 		//CoreLog() << "Failed to Get Procedure Address: " << ParseWin32Error() << std::endl;
 		DropHookMod();
-		return false;
+		return 2;
 	}
-	return true;
+	return 0;
 }
 
-bool HandOnWnd::TryHook() {
-	if (!IsOperating()) return false;
+int HandOnWnd::TryHook() {
+	if (!IsOperating()) return 1;
 
-	if (!InitHookMod()) {
-		return false;
+	if (int res = InitHookMod(); res != 0) {
+		return res + 1;
 	}
 
 	DWORD pid = NULL;
 	DWORD tid = GetWindowThreadProcessId(m_hwnd, &pid);
 	if (tid == 0) {
 		//CoreLog() << "Failed to Get Thread Id: " << ParseWin32Error() << std::endl;
-		return false;
+		return 4;
 	}
 
 	m_hhook = SetWindowsHookExA(
@@ -208,9 +209,9 @@ bool HandOnWnd::TryHook() {
 	);
 	if (m_hhook == NULL) {
 		//CoreLog() << "Failed to Set Hook: " << ParseWin32Error() << std::endl;
-		return false;
+		return 5;
 	}
-	return true;
+	return 0;
 }
 
 void HandOnWnd::DropHook() {

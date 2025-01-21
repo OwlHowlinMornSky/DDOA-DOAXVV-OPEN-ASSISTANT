@@ -5,20 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Helper {
-	public sealed class PatternManager {
+	public static class PatternManager {
 
-		private Dictionary<string, Pattern.Info> m_infos = [];
-		private string m_folder = "";
+		private static Dictionary<string, Pattern.Info> m_infos = [];
+		private static string m_folder = "";
 
-		internal PatternManager() {
-		}
-
-		public void Clear() {
+		public static void Clear() {
 			m_infos.Clear();
 			m_folder = "";
 		}
 
-		public void LoadFromFile(string filepath) {
+		public static void LoadFromFile(string filepath) {
 			Clear();
 
 			m_folder = Path.GetDirectoryName(filepath) ?? throw new FileNotFoundException();
@@ -96,11 +93,10 @@ namespace Helper {
 			}
 		}
 
-		internal Pattern? CreatePattern(string name) {
+		internal static Pattern? CreatePattern(string name) {
 			if (!m_infos.TryGetValue(name, out Pattern.Info info))
 				return null;
 			return new Pattern(Path.Combine(m_folder, name), info);
 		}
-
 	}
 }

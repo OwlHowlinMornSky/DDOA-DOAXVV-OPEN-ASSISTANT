@@ -4,7 +4,7 @@ using HelperKernel;
 using System.Text.RegularExpressions;
 
 namespace Helper {
-	internal class WndHandler() {
+	internal static class WndHandler {
 
 		const string g_findCls = "DOAX VenusVacation"; // 查找doaxvv窗口的类的名字
 		const string g_findWnd = "DOAX VenusVacation"; // 查找doaxvv窗口的名字
@@ -19,19 +19,19 @@ namespace Helper {
 			DebuggerLauncher,
 		}
 
-		private readonly EyeOnWnd m_eye = new();
-		private readonly HandOnWnd m_hand = new();
+		private static readonly EyeOnWnd m_eye = new();
+		private static readonly HandOnWnd m_hand = new();
 
-		private State m_state = State.Idle;
-		private CancellationToken r_ct;
+		private static State m_state = State.Idle;
+		private static CancellationToken r_ct;
 
-		internal IEye Eye {
+		internal static IEye Eye {
 			get {
 				return m_eye;
 			}
 		}
 
-		internal IHand Hand {
+		internal static IHand Hand {
 			get {
 				return m_hand;
 			}
@@ -40,11 +40,11 @@ namespace Helper {
 		/**
 		 * @brief 重设状态，清除目标窗口。
 		 */
-		internal void Reset() {
+		internal static void Reset() {
 			m_state = State.Idle;
 		}
 
-		internal void SetCancellationToken(CancellationToken ct) {
+		internal static void SetCancellationToken(CancellationToken ct) {
 			r_ct = ct;
 		}
 
@@ -52,26 +52,21 @@ namespace Helper {
 		 * @brief 设定目标窗口为DOAXVV的登录器窗口。
 		 * @return “设定”操作的状态。
 		 */
-		internal bool SetForLauncher() {
+		internal static bool SetForLauncher() {
 			if (Settings.wndHandler.Debug_DebugHandler) {
 				return SetForDebugger(true);
 			}
-			if (m_state == State.Game)
+			if (m_state == State.Launcher)
 				return true;
 			Reset();
 
-			if (!m_hand.SetOnWnd(g_findCls, g_finGWnd)) {
-				return false;
+			try {
+				SetWindow(g_findCls, g_finGWnd);
 			}
-			if (!m_eye.SetOnWnd(g_findCls, g_finGWnd)) {
-				m_hand.Reset();
+			catch {
 				return false;
 			}
 
-			if (Settings.wndHandler.UseHook && !Settings.wndHandler.UseSendInput)
-				m_hand.SetUserCursorInterceptionEnabled(true);
-			//if (!m_hand.SetUserCursorInterceptionEnabled(true))
-			//	IHelper::instance()->GuiLogF(ReturnMsgEnum::HookFailed);
 			m_state = State.Game;
 			return true;
 		}
@@ -80,7 +75,7 @@ namespace Helper {
 		 * @brief 设定目标窗口为DOAXVV的游戏窗口。
 		 * @return “设定”操作的状态。
 		 */
-		internal bool SetForGame() {
+		internal static bool SetForGame() {
 			if (Settings.wndHandler.Debug_DebugHandler) {
 				return SetForDebugger(true);
 			}
@@ -88,18 +83,13 @@ namespace Helper {
 				return true;
 			Reset();
 
-			if (!m_hand.SetOnWnd(g_findCls, g_findWnd)) {
-				return false;
+			try {
+				SetWindow(g_findCls, g_findWnd);
 			}
-			if (!m_eye.SetOnWnd(g_findCls, g_findWnd)) {
-				m_hand.Reset();
+			catch {
 				return false;
 			}
 
-			if (Settings.wndHandler.UseHook && !Settings.wndHandler.UseSendInput)
-				m_hand.SetUserCursorInterceptionEnabled(true);
-			//if (!m_hand.SetUserCursorInterceptionEnabled(true))
-			//	IHelper::instance()->GuiLogF(ReturnMsgEnum::HookFailed);
 			m_state = State.Game;
 			return true;
 		}
@@ -109,7 +99,7 @@ namespace Helper {
 		 * @param isGame 操作重定向类型。
 		 * @return “设定”操作的状态。
 		 */
-		protected bool SetForDebugger(bool isGame) {
+		private static bool SetForDebugger(bool isGame) {
 			if (Settings.wndHandler.Debug_DebugHandler) {
 				return SetForDebugger(true);
 			}
@@ -119,27 +109,57 @@ namespace Helper {
 			}
 			Reset();
 
-			if (!m_hand.SetOnWnd(null, g_finDWnd)) {
-				return false;
+			try {
+				SetWindow(null, g_finDWnd);
 			}
-			if (!m_eye.SetOnWnd(null, g_finDWnd)) {
-				m_hand.Reset();
+			catch {
 				return false;
 			}
 
-			if (Settings.wndHandler.UseHook && !Settings.wndHandler.UseSendInput)
-				m_hand.SetUserCursorInterceptionEnabled(true);
-			//if (!m_hand.SetUserCursorInterceptionEnabled(true))
-			//	IHelper::instance()->GuiLogF(ReturnMsgEnum::HookFailed);
 			m_state = isGame ? State.DebuggerGame : State.DebuggerLauncher;
 			return true;
+		}
+
+		private static void SetWindow(string? className, string windowName) {
+			switch (m_hand.SetOnWnd(className, windowName)) {
+			case 1:
+				throw new WndHandlerWndNotFoundException();
+			default:
+				break;
+			}
+			switch (m_eye.SetOnWnd(className, windowName)) {
+			case 1:
+				m_hand.Reset();
+				throw new WndHandlerWndNotFoundException();
+			case 2:
+				m_hand.Reset();
+				throw new WndHandlerCaptureFailedException();
+			default:
+				break;
+			}
+
+			if (Settings.wndHandler.UseHook && !Settings.wndHandler.UseSendInput) {
+				string? errorText = m_hand.SetUserCursorInterceptionEnabled(true) switch {
+					1 => "Window not found.",
+					2 => "Failed to load hook module.",
+					3 => "Hook procedure not found.",
+					4 => "Failed to get target's pid.",
+					5 => "Failed to set hook.",
+					_ => null
+				};
+				if (errorText != null) {
+					m_hand.Reset();
+					m_eye.Reset();
+					throw new WndHandlerHookFailedException(errorText);
+				}
+			}
 		}
 
 		/// <summary>
 		/// 获取当前设定的目标。
 		/// </summary>
 		/// <returns>设定的目标。</returns>
-		internal State GetState() {
+		internal static State GetState() {
 			return m_state switch {
 				State.DebuggerGame => State.Game,
 				State.DebuggerLauncher => State.Launcher,
@@ -153,7 +173,7 @@ namespace Helper {
 		 * @param maxTime 最大等待时间。
 		 * @return true 则已获取，否则超时。
 		 */
-		internal bool WaitOneFrame(TimeSpan? timeout = null) {
+		internal static bool WaitOneFrame(TimeSpan? timeout = null) {
 			ExsureAbleToRun();
 			timeout ??= TimeSpan.FromSeconds(10);
 
@@ -177,7 +197,7 @@ namespace Helper {
 		/// <param name="pattern">模板。</param>
 		/// <param name="timeout">限时。</param>
 		/// <returns>false为超时，true为匹配成功。</returns>
-		internal bool WaitFor(Pattern pattern, TimeSpan? timeout = null) {
+		internal static bool WaitFor(Pattern pattern, TimeSpan? timeout = null) {
 			ExsureAbleToRun();
 			timeout ??= TimeSpan.FromSeconds(10);
 
@@ -219,7 +239,7 @@ namespace Helper {
 		/// <param name="patterns">模板列。</param>
 		/// <param name="timeout">限时。</param>
 		/// <returns>-1为超时，自然数则为匹配到的模板的序号。</returns>
-		internal int WaitForMultiple(Pattern[] patterns, TimeSpan? timeout) {
+		internal static int WaitForMultiple(Pattern[] patterns, TimeSpan? timeout) {
 			ExsureAbleToRun();
 			timeout ??= TimeSpan.FromSeconds(10);
 
@@ -280,7 +300,7 @@ namespace Helper {
 		/// <param name="timeout">超时时间（小于等于0则为永久）</param>
 		/// <param name="clkInterval">点击间隔（不会小于10毫秒）</param>
 		/// <returns>true则已找到目标，false则为超时</returns>
-		internal bool KeepClickingUntil(
+		internal static bool KeepClickingUntil(
 			Point clkPt, Pattern pattern, TimeSpan? timeout = null, TimeSpan? clkInterval = null
 		) {
 			ExsureAbleToRun();
@@ -313,7 +333,7 @@ namespace Helper {
 		/// <param name="timeout">超时时间（小于等于0则为永久）</param>
 		/// <param name="clkInterval">点击间隔（不会小于10毫秒）</param>
 		/// <returns>true则已排除目标，false则为超时</returns>
-		internal bool KeepClickingUntilNo(
+		internal static bool KeepClickingUntilNo(
 			Point clkPt, Pattern pattern, TimeSpan? timeout = null, TimeSpan? clkInterval = null
 		) {
 			ExsureAbleToRun();
@@ -338,12 +358,12 @@ namespace Helper {
 			return true;
 		}
 
-		internal void ClickAt(Point target) {
+		internal static void ClickAt(Point target) {
 			ExsureAbleToRun();
 			m_hand.ClickAt(target);
 		}
 
-		private void ExsureAbleToRun() {
+		private static void ExsureAbleToRun() {
 #if DEBUG
 			if (m_state == State.Idle)
 				throw new WndHandlerNotRunningException();

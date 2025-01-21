@@ -85,26 +85,21 @@ void EyeOnWnd::Reset() {
 	r_capture->stopCapture(); // 停止截图
 }
 
-bool EyeOnWnd::SetOnWnd(HWND hwnd) {
+int EyeOnWnd::SetOnWnd(HWND hwnd) {
 	Reset();
 	if (hwnd == NULL) {
-		return false;
+		return 1;
 	}
 	m_hwnd = hwnd;
 	if (!IsWindow(m_hwnd) || IsIconic(m_hwnd) || !r_capture->startCaptureWindow(m_hwnd)) { // 这些是能截图的必要条件
 		m_hwnd = NULL;
-		return false;
-		//return SetReturnValue::CaptureFailed;
+		return 2;
 	}
 	r_capture->setClipToClientArea(true);
-	//if (Settings::WndHandler::DEFAULT.UseHook && !Settings::WndHandler::DEFAULT.UseSendInput)
-	//	if (!TryHook())
-	//		IHelper::instance()->GuiLogF(ReturnMsgEnum::HookFailed);
-	//m_state = StateValue::Game;
-	return true;
+	return 0;
 }
 
-bool EyeOnWnd::SetOnWnd(System::String^ cls, System::String^ title) {
+int EyeOnWnd::SetOnWnd(System::String^ cls, System::String^ title) {
 	wchar_t* cstr0 = nullptr;
 	if (cls != nullptr) {
 		cli::array<wchar_t>^ wArray0 = cls->ToCharArray();
@@ -129,7 +124,7 @@ bool EyeOnWnd::SetOnWnd(System::String^ cls, System::String^ title) {
 
 	HWND hwnd = FindWindowW(cstr0, cstr1);
 	if (hwnd == NULL) {
-		return false;
+		return 1;
 	}
 	return SetOnWnd(hwnd);
 }

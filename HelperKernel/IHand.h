@@ -14,7 +14,7 @@ public:
 
 	void ClickAt(Drawing::Point target);
 
-	bool SetUserCursorInterceptionEnabled(bool enabled);
+	int SetUserCursorInterceptionEnabled(bool enabled);
 	bool GetUserCursorInterceptionEnabled();
 
 	//void PressKey();

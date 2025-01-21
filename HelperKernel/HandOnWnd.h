@@ -19,17 +19,17 @@ public:
 
 	virtual void ClickAt(Drawing::Point target);
 
-	virtual bool SetUserCursorInterceptionEnabled(bool enabled);
+	virtual int SetUserCursorInterceptionEnabled(bool enabled);
 	virtual bool GetUserCursorInterceptionEnabled();
 
 public:
 	void Reset();
-	bool SetOnWnd(HWND hwnd);
-	bool SetOnWnd(System::String^ cls, System::String^ title);
+	int SetOnWnd(HWND hwnd);
+	int SetOnWnd(System::String^ cls, System::String^ title);
 
 protected:
-	bool InitHookMod();
-	bool TryHook();
+	int InitHookMod();
+	int TryHook();
 	void DropHook();
 	void DropHookMod();
 
