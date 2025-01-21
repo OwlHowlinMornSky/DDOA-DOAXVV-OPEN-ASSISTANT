@@ -120,20 +120,21 @@ namespace WinFormsGUI {
 		private const int SC_MAXIMIZE = 0xF030;
 		private const int SC_RESTORE = 61728;
 		protected override void WndProc(ref Message m) {
-			base.WndProc(ref m);
 			if (m.Msg == WM_SYSCOMMAND) {
 				switch (m.WParam.ToInt32() & 0xFFF0) {
 				case SC_MINIMIZE:
-					if (Settings.GUI.Default.HideToTray)
+					if (Settings.GUI.Default.HideToTray) {
 						Hide();
+						return;
+					}
 					break;
 				case SC_CLOSE:
 					if (Settings.GUI.Default.DisableClose)
-						break;
-					Close();
+						return;
 					break;
 				}
 			}
+			base.WndProc(ref m);
 		}
 	}
 }
