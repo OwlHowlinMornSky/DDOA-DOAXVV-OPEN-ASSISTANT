@@ -47,14 +47,14 @@ namespace Helper.Step {
 		static private void EnsurePatterns() {
 			//CoreLog() << "Task_Navigate: Begin Load Templates." << std::endl;
 
-			temp_chaPage ??= Global.PatternManager.CreatePattern("default") ?? throw new Exception();
-			temp_matchPage ??= Global.PatternManager.CreatePattern("start") ?? throw new Exception();
-			temp_homePage ??= Global.PatternManager.CreatePattern("homeSpec") ?? throw new Exception();
-			temp_resultPage ??= Global.PatternManager.CreatePattern("result") ?? throw new Exception();
-			temp_anyOtherPageHaveReturn ??= Global.PatternManager.CreatePattern("back") ?? throw new Exception();
-			temp_anyOtherPageHaveHome ??= Global.PatternManager.CreatePattern("otherHome") ?? throw new Exception();
-			temp_anyOtherPageHaveHomeW ??= Global.PatternManager.CreatePattern("otherHomeAskew") ?? throw new Exception();
-			temp_homeChaBtn ??= Global.PatternManager.CreatePattern("homeChaBtn") ?? throw new Exception();
+			temp_chaPage ??= PatternManager.CreatePattern("default") ?? throw new Exception();
+			temp_matchPage ??= PatternManager.CreatePattern("start") ?? throw new Exception();
+			temp_homePage ??= PatternManager.CreatePattern("homeSpec") ?? throw new Exception();
+			temp_resultPage ??= PatternManager.CreatePattern("result") ?? throw new Exception();
+			temp_anyOtherPageHaveReturn ??= PatternManager.CreatePattern("back") ?? throw new Exception();
+			temp_anyOtherPageHaveHome ??= PatternManager.CreatePattern("otherHome") ?? throw new Exception();
+			temp_anyOtherPageHaveHomeW ??= PatternManager.CreatePattern("otherHomeAskew") ?? throw new Exception();
+			temp_homeChaBtn ??= PatternManager.CreatePattern("homeChaBtn") ?? throw new Exception();
 
 			//CoreLog() << "Task_Navigate: Finish Load Templates." << std::endl;
 		}
@@ -62,17 +62,17 @@ namespace Helper.Step {
 		static public Page TryToDeterminePage() {
 			EnsurePatterns();
 
-			if (!Global.WndHandler.SetForGame()) {
+			if (!WndHandler.SetForGame()) {
 				//CoreLog() << "Task_Navigate: Window Handler Set Failed." << std::endl;
 				return Page.None;
 			}
 
 			//cv::Mat mat;
-			if (!Global.WndHandler.WaitOneFrame()) {
+			if (!WndHandler.WaitOneFrame()) {
 				//CoreLog() << "Task_Navigate: Window Handler GetOneFrame Failed." << std::endl;
 				return Page.None;
 			}
-			var mat = Global.WndHandler.Eye;
+			var mat = WndHandler.Eye;
 
 			if (temp_homePage?.TryMatch(mat) == true) {
 				//CoreLog() << "Task_Navigate: Matched: home." << std::endl;
@@ -125,7 +125,7 @@ namespace Helper.Step {
 						return false;
 					Point pt = temp_anyOtherPageHaveHome.GetSearchRect().Location;
 					pt.Offset(20, 20);
-					if (!Global.WndHandler.KeepClickingUntil(pt, temp_homePage))
+					if (!WndHandler.KeepClickingUntil(pt, temp_homePage))
 						return false;
 					break;
 				}
@@ -134,7 +134,7 @@ namespace Helper.Step {
 					if (temp_anyOtherPageHaveReturn == null || temp_homePage == null)
 						return false;
 					Point pt = temp_anyOtherPageHaveReturn.GetSearchRect().Location;
-					if (!Global.WndHandler.KeepClickingUntil(pt, temp_homePage)) {
+					if (!WndHandler.KeepClickingUntil(pt, temp_homePage)) {
 						return false;
 					}
 					break;
@@ -148,7 +148,7 @@ namespace Helper.Step {
 						return false;
 					Point pt = temp_homeChaBtn.GetSearchRect().Location;
 					pt.Offset(5, 10);
-					if (!Global.WndHandler.KeepClickingUntil(pt, temp_chaPage)) {
+					if (!WndHandler.KeepClickingUntil(pt, temp_chaPage)) {
 						return false;
 					}
 					break;
