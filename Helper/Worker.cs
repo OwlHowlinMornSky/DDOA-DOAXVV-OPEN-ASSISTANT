@@ -69,8 +69,6 @@ namespace Helper {
 			GUICallbacks.LockTask(true);
 
 			foreach (var steptype in steps) {
-				ct.ThrowIfCancellationRequested();
-
 				Step.IStep step;
 
 				try {
@@ -85,6 +83,7 @@ namespace Helper {
 				}
 
 				try {
+					ct.ThrowIfCancellationRequested();
 					step.Run(ct);
 				}
 				catch (OperationCanceledException) {
