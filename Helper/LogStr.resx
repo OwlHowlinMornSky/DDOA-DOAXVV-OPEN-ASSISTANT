@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="StepChaStartAwdMatchI" xml:space="preserve">
+    <value>开始奖励挑战赛 {0} 次</value>
+  </data>
+  <data name="StepChaStartMatchI" xml:space="preserve">
+    <value>开始第 {0} 次比赛</value>
+  </data>
+  <data name="StepChaExit" xml:space="preserve">
+    <value>步骤结束【挑战赛】</value>
+  </data>
+  <data name="StepChaAwdFound" xml:space="preserve">
+    <value>出现奖励挑战赛</value>
+  </data>
+  <data name="StepChaAwdIgnored" xml:space="preserve">
+    <value>已忽略奖励挑战赛</value>
+  </data>
+  <data name="StepChaAwdNotFound" xml:space="preserve">
+    <value>没有奖励挑战赛</value>
+  </data>
+  <data name="StepChaAwdOpened" xml:space="preserve">
+    <value>已打开奖励挑战赛</value>
+  </data>
+  <data name="StepChaMatchOver" xml:space="preserve">
+    <value>比赛结束</value>
+  </data>
+  <data name="StepChaEnter" xml:space="preserve">
+    <value>步骤开始【挑战赛】</value>
+  </data>
+  <data name="ManualChaPageNavigate" xml:space="preserve">
+    <value>请手动导航到挑战赛页面</value>
+  </data>
+  <data name="NotImplemented" xml:space="preserve">
+    <value>尚未实现</value>
+  </data>
+  <data name="TaskPaused" xml:space="preserve">
+    <value>已暂停：{0}</value>
+  </data>
+  <data name="StepComplete" xml:space="preserve">
+    <value>步骤完成</value>
+  </data>
+  <data name="StepDailyEnter" xml:space="preserve">
+    <value>步骤开始【日常任务】</value>
+  </data>
+  <data name="StepDailyExit" xml:space="preserve">
+    <value>步骤完成【日常任务】</value>
+  </data>
+  <data name="StepDailyFailed" xml:space="preserve">
+    <value>步骤失败【日常任务】</value>
+  </data>
+  <data name="StepErr" xml:space="preserve">
+    <value>步骤出错</value>
+    <comment>托盘通知使用</comment>
+  </data>
+  <data name="StepChaErrAwdNotSup" xml:space="preserve">
+    <value>“上一次比赛”不支持“进入奖励挑战赛”</value>
+  </data>
+  <data name="StepChaErrIgnoreAwdFailed" xml:space="preserve">
+    <value>忽略奖励挑战赛时出错</value>
+  </data>
+  <data name="StepChaErrFailedExitMatch" xml:space="preserve">
+    <value>无法退出关卡</value>
+  </data>
+  <data name="StepChaErrFailedEnterMatch" xml:space="preserve">
+    <value>无法打开关卡</value>
+  </data>
+  <data name="StepChaErrMatchNoNew" xml:space="preserve">
+    <value>找不到新比赛</value>
+  </data>
+  <data name="StepChaErrMatchNoOver" xml:space="preserve">
+    <value>无法退出比赛</value>
+  </data>
+  <data name="StepChaErrMatchNoPrevious" xml:space="preserve">
+    <value>找不到上一次比赛</value>
+  </data>
+  <data name="StepChaErrMatchNoStart" xml:space="preserve">
+    <value>无法开始比赛</value>
+  </data>
+  <data name="StepChaErrAwdFailedOpen" xml:space="preserve">
+    <value>无法打开奖励挑战赛</value>
+  </data>
+  <data name="StepChaErrGameTimeout" xml:space="preserve">
+    <value>比赛时间过长</value>
+  </data>
+  <data name="StepErrTimeOut" xml:space="preserve">
+    <value>超时</value>
+  </data>
+  <data name="StepErrPatternLoadFailed" xml:space="preserve">
+    <value>加载模板文件失败</value>
+  </data>
+  <data name="StepErrCaptureFailed" xml:space="preserve">
+    <value>截图失败</value>
+  </data>
+  <data name="StepErrWndNotExist" xml:space="preserve">
+    <value>找不到游戏窗口</value>
+  </data>
+  <data name="StepErr_X" xml:space="preserve">
+    <value>步骤出错：{0}</value>
+  </data>
+  <data name="StepErr_SI" xml:space="preserve">
+    <value>步骤出错：{0}: {1}</value>
+  </data>
+  <data name="StepErr_Task" xml:space="preserve">
+    <value>步骤出错【{0}】</value>
+  </data>
+  <data name="StepException" xml:space="preserve">
+    <value>步骤异常</value>
+  </data>
+  <data name="StepStartupEnter" xml:space="preserve">
+    <value>步骤开始【启动游戏】</value>
+  </data>
+  <data name="StepStartupExit" xml:space="preserve">
+    <value>步骤完成【启动游戏】</value>
+  </data>
+  <data name="StepStartupFailed" xml:space="preserve">
+    <value>步骤失败【启动游戏】</value>
+  </data>
+  <data name="StepCancelled" xml:space="preserve">
+    <value>步骤中止</value>
+  </data>
+  <data name="StepDebugBegin" xml:space="preserve">
+    <value>步骤开始：测试</value>
+  </data>
+  <data name="StepDebugEnd" xml:space="preserve">
+    <value>步骤完成：测试</value>
+  </data>
+  <data name="Test_II" xml:space="preserve">
+    <value>测试: {0}, {1}</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>未知消息：{0}</value>
+    <comment>占位</comment>
+  </data>
+  <data name="TaskWorkStartFailed" xml:space="preserve">
+    <value>无法启动任务</value>
+    <comment>Core暂未使用，Form尝试启动时使用</comment>
+  </data>
+  <data name="TaskComplete" xml:space="preserve">
+    <value>任务完成</value>
+  </data>
+  <data name="TaskCompleteDescription" xml:space="preserve">
+    <value>所有步骤均已完成</value>
+    <comment>托盘通知使用</comment>
+  </data>
+  <data name="TaskError" xml:space="preserve">
+    <value>任务出错</value>
+    <comment>Core暂未使用，托盘通知使用</comment>
+  </data>
+  <data name="TaskErrInternalException" xml:space="preserve">
+    <value>任务异常</value>
+  </data>
+  <data name="TaskResume" xml:space="preserve">
+    <value>任务继续</value>
+  </data>
+  <data name="TaskErrStartRunning" xml:space="preserve">
+    <value>不能重复运行任务</value>
+  </data>
+  <data name="TaskCancelled" xml:space="preserve">
+    <value>已停止</value>
+  </data>
+  <data name="TaskCancelling" xml:space="preserve">
+    <value>正在停止...</value>
+  </data>
+</root>

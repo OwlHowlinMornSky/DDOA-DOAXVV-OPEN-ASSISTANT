@@ -13,4 +13,19 @@
     <ProjectReference Include="..\HelperKernel\HelperKernel.vcxproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="LogStr.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LogStr.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="LogStr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LogStr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
