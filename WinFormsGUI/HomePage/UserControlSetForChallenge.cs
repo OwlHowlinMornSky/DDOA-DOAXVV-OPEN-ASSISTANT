@@ -38,8 +38,6 @@ namespace WinFormsGUI {
 		}
 
 		private void AwardMatch_RadioBtn_CheckedChanged(object sender, EventArgs e) {
-			Program.helper.SetChallengeCheckAwardOrNot(!radioBtn_AwardNo.Checked);
-			Program.helper.SetChallengePlayAwardOrNot(radioBtn_AwardPlay.Checked);
 			if (radioBtn_AwardNo.Checked) {
 				Settings.Core.Default.AwardMatch = 0;
 			}
@@ -85,17 +83,14 @@ namespace WinFormsGUI {
 
 		private void CheckBox_useCamFP_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.AutoUseCamFp = checkBox_useCamFP.Checked;
-			Program.helper.SetUseCamFP(Settings.Core.Default.AutoUseCamFp);
 		}
 
 		private void CheckBox_PauseForMannual_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.ChaPauseAndAskForManual = checkBox_PauseForMannual.Checked;
-			Program.helper.SetChaAskForManual(Settings.Core.Default.ChaPauseAndAskForManual);
 		}
 
 		private void CheckBox_autoUseDrink_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.AutoUseDrink = checkBox_autoUseDrink.Checked;
-			Program.helper.SetChaAutoUseDrink(Settings.Core.Default.AutoUseDrink);
 		}
 
 		private void comboBox1_SelectedValueChanged(object sender, EventArgs e) {

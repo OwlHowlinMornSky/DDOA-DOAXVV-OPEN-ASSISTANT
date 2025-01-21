@@ -199,7 +199,7 @@ namespace WinFormsGUI {
 			if (res == DialogResult.OK) { // 确认即修改。
 				SetList(dialog.ListTasks);
 				OnClickChooseAll(null, null);
-				SetSelectedChangedTo((uint)TaskEnumWrap.None); // 取消选择的设置项
+				SetSelectedChangedTo((uint)Helper.Step.Type.None); // 取消选择的设置项
 			}
 		}
 
@@ -211,7 +211,7 @@ namespace WinFormsGUI {
 				if (s.Length == 0)
 					continue;
 				var n = uint.Parse(s);
-				if (n > (uint)TaskEnumWrap.None && n < (uint)TaskEnumWrap.COUNT)
+				if (n > (uint)Helper.Step.Type.None && n < (uint)Helper.Step.Type.COUNT)
 					tasks.Add(n);
 			}
 			return tasks;
@@ -244,7 +244,7 @@ namespace WinFormsGUI {
 		public void OnClosing() {
 			string str = "";
 			foreach (var s in m_listTasks) {
-				if (s > (uint)TaskEnumWrap.None) {
+				if (s > (uint)Helper.Step.Type.None) {
 					str += s;
 					str += ',';
 				}
@@ -279,7 +279,7 @@ namespace WinFormsGUI {
 				var radioBtn = flowLayoutPanel1.Controls[i] as RadioButton;
 				radioBtn.Checked = false;
 			}
-			SetSelectedChangedTo((uint)TaskEnumWrap.None);
+			SetSelectedChangedTo((uint)Helper.Step.Type.None);
 		}
 
 		private void OnClickInverse() {

@@ -53,7 +53,7 @@ namespace WinFormsGUI {
 		/// 窗口试图关闭
 		/// </summary>
 		private void FormNew_FormClosing(object sender, FormClosingEventArgs e) {
-			if (Program.helper.IsRunning()) {
+			if (Helper.Worker.IsRunning()) {
 				if (e.CloseReason != CloseReason.WindowsShutDown) {
 					// 询问是否关闭
 					var res = MessageBox.Show(
@@ -67,8 +67,8 @@ namespace WinFormsGUI {
 						return;
 					}
 				}
-				Program.helper.AskForStop();
-				while (Program.helper.IsRunning()) {
+				Helper.Worker.TryCancelWork();
+				while (Helper.Worker.IsRunning()) {
 					Thread.Sleep(100);
 				}
 			}

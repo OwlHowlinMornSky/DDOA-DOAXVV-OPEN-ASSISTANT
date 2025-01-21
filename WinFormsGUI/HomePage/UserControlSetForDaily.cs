@@ -32,12 +32,10 @@ namespace WinFormsGUI {
 
 		private void CheckBox_check_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.DoDailyCheck = checkBox_check.Checked;
-			Program.helper.SetDoDailyCheck(Settings.Core.Default.DoDailyCheck);
 		}
 
 		private void CheckBox_camShot_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.DoDailyShot = checkBox_camShot.Checked;
-			Program.helper.SetDoDailyShot(Settings.Core.Default.DoDailyShot);
 		}
 
 	}

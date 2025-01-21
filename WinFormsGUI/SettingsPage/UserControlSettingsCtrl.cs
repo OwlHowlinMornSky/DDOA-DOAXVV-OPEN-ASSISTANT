@@ -48,17 +48,14 @@ namespace WinFormsGUI.SettingsPage {
 
 		private void RadioBtn_CtrlMsg_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.CtrlSendInput = false;
-			Program.helper.SetMouseSendInputOrSendMessage(false);
 		}
 
 		private void RadioBtn_CtrlInput_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.CtrlSendInput = true;
-			Program.helper.SetMouseSendInputOrSendMessage(true);
 		}
 
 		private void CheckBox_Hook_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.UseHook = checkBox_Hook.Checked;
-			Program.helper.SetUseHook(checkBox_Hook.Checked);
 		}
 
 	}

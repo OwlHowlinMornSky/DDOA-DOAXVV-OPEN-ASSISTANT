@@ -69,19 +69,14 @@ namespace WinFormsGUI.SettingsPage {
 				chkBox_SetScreenOn.Checked = false;
 				Settings.Core.Default.KeepAwake = false;
 			}
-			Program.helper.SetKeepAwakeOrNot(Settings.Core.Default.KeepAwake);
-			Program.helper.SetKeepScreenOnOrNot(Settings.Core.Default.KeepScreenOn);
 		}
 
 		private void ChkBox_SetScreenOn_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.KeepScreenOn = chkBox_SetScreenOn.Checked;
-			Program.helper.SetKeepAwakeOrNot(Settings.Core.Default.KeepAwake);
-			Program.helper.SetKeepScreenOnOrNot(Settings.Core.Default.KeepScreenOn);
 		}
 
 		private void ChkBox_SetShow_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.ShowCapture = chkBox_SetShow.Checked;
-			Program.helper.SetShowCaptureOrNot(chkBox_SetShow.Checked);
 		}
 	}
 }

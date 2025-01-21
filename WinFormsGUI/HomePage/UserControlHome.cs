@@ -28,7 +28,6 @@ namespace WinFormsGUI {
 		/// <summary>
 		/// 当前主按钮状态
 		/// </summary>
-		//private bool m_btnMainIsStart = true;
 		internal enum BtmMainStatus {
 			Start = 0,
 			Stop
@@ -42,7 +41,7 @@ namespace WinFormsGUI {
 		/// <summary>
 		/// 当前展示的设置对应任务的id。
 		/// </summary>
-		private uint m_setIdNow = (uint)TaskEnumWrap.None;
+		private uint m_setIdNow = (uint)Helper.Step.Type.None;
 
 		public UserControlHome() {
 			InitializeComponent();
@@ -83,18 +82,18 @@ namespace WinFormsGUI {
 				return;
 			panel_Settings.Controls.Clear(); // 清除当前页面
 			Control ctrl;
-			switch ((TaskEnumWrap)id) { // 选择页面
+			switch ((Helper.Step.Type)id) { // 选择页面
 			default:
-			case TaskEnumWrap.None:
-				id = (uint)TaskEnumWrap.None;
+			case Helper.Step.Type.None:
+				id = (uint)Helper.Step.Type.None;
 				ctrl = new UserControlSetForDefault();
 				break;
 			//case TaskEnumWrap.StartUp:
 			//	break;
-			case TaskEnumWrap.Daily:
+			case Helper.Step.Type.Daily:
 				ctrl = new UserControlSetForDaily();
 				break;
-			case TaskEnumWrap.Challenge:
+			case Helper.Step.Type.Challenge:
 				ctrl = new UserControlSetForChallenge();
 				break;
 			}
@@ -180,53 +179,48 @@ namespace WinFormsGUI {
 			button_Main.Enabled = false;
 			switch (m_btnMainStatus) {
 			case BtmMainStatus.Start: {
-				WorkStatusLocker.WorkLock(); // 锁定GUI
-				uint[] list = [.. userControlList.GetEnabledList()];
 				ClearLog(); // 清空进度提示。
-				/*if (list.Length == 0) {
+
+				var list = userControlList.GetEnabledList();
+				if (list.Count == 0) {
 					Log(Strings.Main.TaskListNotSelected);
-					WorkStatusLocker.WorkUnlock(); // 解锁GUI
-					return;
+					break;
 				}
-				Program.helper.SetTaskList(list); // 设置所选的任务
+
 				if (Settings.Core.Default.PlayMatchType == 2) {
 					if (Settings.Core.Default.PlayLevel == 0 || Settings.Core.Default.PlayLevelR == 0) {
 						Log(Strings.Main.ChallengeActivityLevelNotSelected);
-						WorkStatusLocker.WorkUnlock(); // 解锁GUI
-						return;
+						break;
 					}
-					Program.helper.SetChallengeLevel(Settings.Core.Default.PlayLevel, Settings.Core.Default.PlayLevelR);
-				}*/
+				}
+
+				WorkStatusLocker.WorkLock(); // 锁定GUI
+
+				GlobalSetter.ApplySettings();
 
 				try {
-					Helper.Global.Worker.StartWork([Helper.Step.Type.Challenge]);
+					Helper.Worker.StartWork(list.Select(num => (Helper.Step.Type)num));
 				}
 				catch {
 					Log(Strings.GuiLog.WorkCanNotStartWork); // 提示。
 					WorkStatusLocker.WorkUnlock(); // 解锁GUI
 					return;
 				}
-
-				/*if (!Program.helper.Start()) { // 启动失败
-					Log(Strings.GuiLog.WorkCanNotStartWork); // 提示。
-					WorkStatusLocker.WorkUnlock(); // 解锁GUI6
-					return;
-				}*/
-				timer_Main.Enabled = true; // 启动Timer获取回执信息。
 				break;
 			}
 			case BtmMainStatus.Stop: { // 要求停止
-				Program.helper.AskForStop();
+				Helper.Worker.TryCancelWork();
 				break;
 			}
 			}
 		}
 
 		private void Button_Resume_Click(object sender, EventArgs e) {
-			Program.helper.Resume();
+			GlobalSetter.ApplySettings();
+			Helper.Worker.Resume();
 		}
 
-		private static string GetLogStringFromResx(string name) {
+		/*private static string GetLogStringFromResx(string name) {
 			return Strings.GuiLog.ResourceManager.GetString(name) ?? name;
 		}
 
@@ -242,12 +236,12 @@ namespace WinFormsGUI {
 
 		private static string GetTaskNameFromResx(int i) {
 			return Strings.Main.ResourceManager.GetString("Task" + i.ToString("000")) ?? $"#{i}";
-		}
+		}*/
 
 		/// <summary>
 		/// Timer读取回执信息。
 		/// </summary>
-		private void Timer_Main_Tick(object sender, EventArgs e) {
+		/*private void Timer_Main_Tick(object sender, EventArgs e) {
 			bool setted = false;
 			ReturnCmd cmd;
 			while ((cmd = Program.helper.GetCommand()) != ReturnCmd.None) {
@@ -415,6 +409,6 @@ namespace WinFormsGUI {
 			if (setted)
 				userControlLogger.LogProcessStatusChange(false);
 			return;
-		}
+		}*/
 	}
 }

@@ -28,7 +28,7 @@ namespace WinFormsGUI {
 		/// <summary>
 		/// 选择的任务项id
 		/// </summary>
-		public uint choosedTask = (uint)TaskEnumWrap.None;
+		public uint choosedTask = (uint)Helper.Step.Type.None;
 
 		/// <summary>
 		/// 构造函数
@@ -45,12 +45,12 @@ namespace WinFormsGUI {
 		private void FormListEditChooseTask_Load(object sender, EventArgs e) {
 			listBox1.BeginUpdate();
 			// 将所有可用的任务项列出
-			for (uint i = (uint)TaskEnumWrap.None + 1, n = (uint)TaskEnumWrap.COUNT;
+			for (uint i = (uint)Helper.Step.Type.None + 1, n = (uint)Helper.Step.Type.COUNT;
 				i < n; i++) {
 				listBox1.Items.Add(Strings.Main.ResourceManager.GetString("Task" + i.ToString("000")));
 			}
 #if DEBUG
-			listBox1.Items.Add(Strings.Main.ResourceManager.GetString("Task" + ((uint)TaskEnumWrap.TEST_TASK).ToString("000")));
+			listBox1.Items.Add(Strings.Main.ResourceManager.GetString("Task" + ((uint)Helper.Step.Type.DebugTask).ToString("000")));
 #endif
 			listBox1.EndUpdate();
 		}
@@ -61,12 +61,12 @@ namespace WinFormsGUI {
 		private void ListBox1_SelectedIndexChanged(object sender, EventArgs e) {
 			// 修改选择项的记录。
 			if (listBox1.SelectedIndex == -1)
-				choosedTask = (uint)TaskEnumWrap.None;
+				choosedTask = (uint)Helper.Step.Type.None;
 			else
-				choosedTask = (uint)listBox1.SelectedIndex - (uint)TaskEnumWrap.None + 1;
+				choosedTask = (uint)listBox1.SelectedIndex - (uint)Helper.Step.Type.None + 1;
 #if DEBUG
-			if (choosedTask >= (uint)TaskEnumWrap.COUNT) {
-				choosedTask = (uint)TaskEnumWrap.TEST_TASK;
+			if (choosedTask >= (uint)Helper.Step.Type.COUNT) {
+				choosedTask = (uint)Helper.Step.Type.DebugTask;
 			}
 #endif
 		}
@@ -82,7 +82,7 @@ namespace WinFormsGUI {
 		/// 点击“取消”按钮。
 		/// </summary>
 		private void button2_Click(object sender, EventArgs e) {
-			choosedTask = (uint)TaskEnumWrap.None; // 清除选择。
+			choosedTask = (uint)Helper.Step.Type.None; // 清除选择。
 			DialogResult = DialogResult.Cancel;
 		}
 

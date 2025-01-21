@@ -36,12 +36,12 @@ namespace WinFormsGUI {
 
 		internal static void WorkLock() {
 			isLocked = true;
-			lockAction?.Invoke(true);
+			lockAction(true);
 		}
 
 		internal static void WorkUnlock() {
 			isLocked = false;
-			lockAction?.Invoke(false);
+			lockAction(false);
 		}
 
 	}
