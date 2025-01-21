@@ -51,34 +51,43 @@ namespace WinFormsGUI {
 		public UserControlList() {
 			InitializeComponent();
 			// 注册以在工作时锁定控件。
-			WorkStatusLocker.lockAction += OnWorkLockAndUnlock;
-			if (WorkStatusLocker.Locked)
+			GlobalSetter.Regist.LockAction += OnWorkLockAndUnlock;
+			if (GlobalSetter.Regist.Locked)
 				OnWorkLockAndUnlock(true);
 		}
 
 		~UserControlList() {
-			WorkStatusLocker.lockAction -= OnWorkLockAndUnlock;
+			GlobalSetter.Regist.LockAction -= OnWorkLockAndUnlock;
 		}
 
 		/// <summary>
 		/// 监听工作状态改变锁定控件的事件
 		/// </summary>
-		private void OnWorkLockAndUnlock(bool isLock) {
-			if (isLock) {
-				button_all.Enabled = false;
-				button_clear.Enabled = false;
-				for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
-					flowLayoutPanel1.Controls[i].Enabled = false;
+		private void OnWorkLockAndUnlock(bool locked) {
+			void f(bool isLock) {
+				if (isLock) {
+					button_all.Enabled = false;
+					button_clear.Enabled = false;
+					for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
+						flowLayoutPanel1.Controls[i].Enabled = false;
+					}
+					contextMenuStrip1.Enabled = false;
 				}
-				contextMenuStrip1.Enabled = false;
+				else {
+					for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
+						flowLayoutPanel1.Controls[i].Enabled = true;
+					}
+					button_clear.Enabled = true;
+					button_all.Enabled = true;
+					contextMenuStrip1.Enabled = true;
+				}
+			}
+			if (InvokeRequired) {
+				var r = BeginInvoke(f, locked);
+				EndInvoke(r);
 			}
 			else {
-				for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
-					flowLayoutPanel1.Controls[i].Enabled = true;
-				}
-				button_clear.Enabled = true;
-				button_all.Enabled = true;
-				contextMenuStrip1.Enabled = true;
+				f(locked);
 			}
 		}
 

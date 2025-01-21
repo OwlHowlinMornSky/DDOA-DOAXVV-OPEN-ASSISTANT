@@ -46,20 +46,29 @@ namespace WinFormsGUI {
 
 		public FormListEdit() {
 			InitializeComponent();
-			WorkStatusLocker.lockAction += OnWorkLockAndUnlock;
-			if (WorkStatusLocker.Locked)
+			GlobalSetter.Regist.LockAction += OnWorkLockAndUnlock;
+			if (GlobalSetter.Regist.Locked)
 				OnWorkLockAndUnlock(true);
 		}
 
 		~FormListEdit() {
-			WorkStatusLocker.lockAction -= OnWorkLockAndUnlock;
+			GlobalSetter.Regist.LockAction -= OnWorkLockAndUnlock;
 		}
 
 		/// <summary>
 		/// 监听工作状态改变锁定控件的事件
 		/// </summary>
-		private void OnWorkLockAndUnlock(bool isLock) {
-			button_ok.Enabled = !isLock;
+		private void OnWorkLockAndUnlock(bool locked) {
+			void f(bool isLock) {
+				button_ok.Enabled = !isLock;
+			}
+			if (InvokeRequired) {
+				var r = BeginInvoke(f, locked);
+				EndInvoke(r);
+			}
+			else {
+				f(locked);
+			}
 		}
 
 		/// <summary>

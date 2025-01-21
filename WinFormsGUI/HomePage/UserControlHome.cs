@@ -48,29 +48,48 @@ namespace WinFormsGUI {
 			// 设置左侧列表“设置小按钮”选择项改变的回调。
 			userControlList.SetSelectedChangedTo += ChangeSettingCallback;
 			// 注册以在工作时锁定控件。
-			WorkStatusLocker.lockAction += OnWorkLockAndUnlock;
-			if (WorkStatusLocker.Locked)
+			GlobalSetter.Regist.LockAction += OnWorkLockAndUnlock;
+			if (GlobalSetter.Regist.Locked)
 				OnWorkLockAndUnlock(true);
+			GlobalSetter.Regist.Pause += OnTaskPause;
 		}
 
 		~UserControlHome() {
-			WorkStatusLocker.lockAction -= OnWorkLockAndUnlock;
+			GlobalSetter.Regist.Pause -= OnTaskPause;
+			GlobalSetter.Regist.LockAction -= OnWorkLockAndUnlock;
 			userControlList.SetSelectedChangedTo -= ChangeSettingCallback;
 		}
 
 		/// <summary>
 		/// 监听工作状态改变锁定控件的事件
 		/// </summary>
-		private void OnWorkLockAndUnlock(bool isLock) {
-			if (isLock) {
-				panel_Settings.Enabled = false;
-				button_Main.Enabled = false;
+		private void OnWorkLockAndUnlock(bool locked) {
+			void f(bool isLock) {
+				if (isLock) {
+					button_Main.Enabled = true;
+					m_btnMainStatus = BtmMainStatus.Stop;
+				}
+				else {
+					button_Main.Enabled = true;
+					m_btnMainStatus = BtmMainStatus.Start;
+					button_Main.Text = Strings.Main.Btn_Main_Start;
+				}
+			}
+			if (InvokeRequired) {
+				var r = BeginInvoke(f, locked);
+				EndInvoke(r);
 			}
 			else {
-				panel_Settings.Enabled = true;
-				button_Main.Enabled = true;
-				button_Main.Text = Strings.Main.Btn_Main_Start;
+				f(locked);
 			}
+		}
+
+		private void OnTaskPause() {
+			var r = BeginInvoke(() => {
+				button_Resume.Visible = true;
+				SetListMiddle();
+			});
+			EndInvoke(r);
 		}
 
 		/// <summary>
@@ -194,16 +213,15 @@ namespace WinFormsGUI {
 					}
 				}
 
-				WorkStatusLocker.WorkLock(); // 锁定GUI
-
 				GlobalSetter.ApplySettings();
 
 				try {
 					Helper.Worker.StartWork(list.Select(num => (Helper.Step.Type)num));
+					GlobalSetter.Regist.LockTask(true);
+					button_Main.Enabled = false;
 				}
 				catch {
 					Log(Strings.GuiLog.WorkCanNotStartWork); // 提示。
-					WorkStatusLocker.WorkUnlock(); // 解锁GUI
 					return;
 				}
 				break;
@@ -218,6 +236,8 @@ namespace WinFormsGUI {
 		private void Button_Resume_Click(object sender, EventArgs e) {
 			GlobalSetter.ApplySettings();
 			Helper.Worker.Resume();
+			button_Resume.Visible = false;
+			SetListMiddle();
 		}
 
 		/*private static string GetLogStringFromResx(string name) {

@@ -20,29 +20,24 @@
 */
 
 namespace WinFormsGUI {
-	internal static class WorkStatusLocker {
+	internal class TaskStatusRegistration {
+
+		internal TaskStatusRegistration() {
+			Helper.GUICallbacks.LockTask = LockTask;
+			Helper.GUICallbacks.Pause = () => { Pause(); };
+		}
 
 		/// <summary>
 		/// 任务状态改变时锁定与解锁GUI的事件。
 		/// </summary>
-		internal static Action<bool> lockAction = x => { };
-
-		private static bool isLocked = false;
-		internal static bool Locked {
-			get {
-				return isLocked;
-			}
+		internal Action<bool> LockAction = x => { };
+		internal bool Locked { get; private set; } = false;
+		internal void LockTask(bool x) {
+			Locked = x;
+			LockAction(x);
 		}
 
-		internal static void WorkLock() {
-			isLocked = true;
-			lockAction(true);
-		}
-
-		internal static void WorkUnlock() {
-			isLocked = false;
-			lockAction(false);
-		}
+		internal Action Pause = () => { };
 
 	}
 }

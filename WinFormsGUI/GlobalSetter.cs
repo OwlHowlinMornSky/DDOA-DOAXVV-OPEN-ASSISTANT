@@ -22,6 +22,8 @@
 namespace WinFormsGUI {
 	internal static class GlobalSetter {
 
+		internal static TaskStatusRegistration Regist { get; } = new();
+
 		internal static void InitSettings() {
 #if DEBUG
 			Settings.Core.Default.ShowCapture = true;

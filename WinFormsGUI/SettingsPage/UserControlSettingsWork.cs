@@ -19,25 +19,36 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 
+using System.Net.Sockets;
+
 namespace WinFormsGUI.SettingsPage {
 	public partial class UserControlSettingsWork : UserControl {
 		public UserControlSettingsWork() {
 			InitializeComponent();
 			// 注册以在工作时锁定控件。
-			WorkStatusLocker.lockAction += OnWorkLockAndUnlock;
-			if (WorkStatusLocker.Locked)
+			GlobalSetter.Regist.LockAction += OnWorkLockAndUnlock;
+			if (GlobalSetter.Regist.Locked)
 				OnWorkLockAndUnlock(true);
 		}
 
 		~UserControlSettingsWork() {
-			WorkStatusLocker.lockAction -= OnWorkLockAndUnlock;
+			GlobalSetter.Regist.LockAction -= OnWorkLockAndUnlock;
 		}
 
 		/// <summary>
 		/// 监听工作状态改变锁定控件的事件
 		/// </summary>
-		private void OnWorkLockAndUnlock(bool isLock) {
-			Enabled = !isLock;
+		private void OnWorkLockAndUnlock(bool locked) {
+			void f(bool isLock) {
+				Enabled = !isLock;
+			}
+			if (InvokeRequired) {
+				var r = BeginInvoke(f, locked);
+				EndInvoke(r);
+			}
+			else {
+				f(locked);
+			}
 		}
 
 		private void UserControlSettingsWork_Load(object sender, EventArgs e) {

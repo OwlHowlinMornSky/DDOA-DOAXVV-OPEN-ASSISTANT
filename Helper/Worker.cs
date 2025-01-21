@@ -112,6 +112,7 @@ namespace Helper {
 		}
 
 		internal static void PauseForManual() {
+			GUICallbacks.Pause();
 			m_resume.WaitOne();
 		}
 	}
