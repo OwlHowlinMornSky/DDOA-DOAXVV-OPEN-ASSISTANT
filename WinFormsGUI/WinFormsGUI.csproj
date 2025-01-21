@@ -52,7 +52,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreWrapper\Wrapper.vcxproj" />
     <ProjectReference Include="..\Helper\Helper.csproj" />
   </ItemGroup>
 
