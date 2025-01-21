@@ -30,6 +30,28 @@ namespace WinFormsGUI {
 #endif
 		}
 
+		internal static void ApplySettings() {
+			Helper.Settings.global.KeepAwake = Settings.Core.Default.KeepAwake;
+			Helper.Settings.global.KeepScreenOn = Settings.Core.Default.KeepScreenOn;
+
+			Helper.Settings.wndHandler.UseSendInput = Settings.Core.Default.CtrlSendInput;
+			Helper.Settings.wndHandler.UseHook = Settings.Core.Default.UseHook;
+			Helper.Settings.wndHandler.Debug_ShowCapture = Settings.Core.Default.ShowCapture;
+			//Helper.Settings.wndHandler.Debug_DebugHandler = Settings.Core.Default;
+
+			Helper.Settings.challenge.PlayMatch = Settings.Core.Default.PlayMatchType;
+			Helper.Settings.challenge.SelectedActivityLevel = Settings.Core.Default.PlayLevel;
+			Helper.Settings.challenge.SelectedActivityMatch = Settings.Core.Default.PlayLevelR;
+			Helper.Settings.challenge.EnterAddition = Settings.Core.Default.AwardMatch == 1;
+			Helper.Settings.challenge.CheckAddition = Settings.Core.Default.AwardMatch != 0;
+			Helper.Settings.challenge.AutoUseCamFP = Settings.Core.Default.AutoUseCamFp;
+			Helper.Settings.challenge.AskForManual = Settings.Core.Default.ChaPauseAndAskForManual;
+			Helper.Settings.challenge.AutoUseDrink = Settings.Core.Default.AutoUseDrink;
+
+			Helper.Settings.daily.DoCheck = Settings.Core.Default.DoDailyCheck;
+			Helper.Settings.daily.DoShot = Settings.Core.Default.DoDailyShot;
+		}
+
 		internal static void SaveSettings() {
 			Settings.GUI.Default.Save();
 			Settings.Core.Default.Save();

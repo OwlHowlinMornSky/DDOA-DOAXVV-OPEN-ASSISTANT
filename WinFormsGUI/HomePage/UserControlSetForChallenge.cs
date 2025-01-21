@@ -95,21 +95,13 @@ namespace WinFormsGUI {
 
 		private void comboBox1_SelectedValueChanged(object sender, EventArgs e) {
 			Settings.Core.Default.PlayLevel = comboBox1.SelectedIndex;
-			switch (Settings.Core.Default.PlayLevel) {
-			case 1: // E
-			case 2: // D
-			case 3: // C
-			case 4: // B
-			case 5: // A
-				numericUpDown1.Maximum = 8;
-				break;
-			case 6: // S
-				numericUpDown1.Maximum = 8;
-				break;
-			default:
-				numericUpDown1.Maximum = 1;
-				break;
-			}
+			numericUpDown1.Maximum = Settings.Core.Default.PlayLevel switch {
+				// E,D,   C,   B,   A
+				1 or 2 or 3 or 4 or 5 => 8,
+				// S
+				6 => 8,
+				_ => 1,
+			};
 		}
 
 		private void numericUpDown1_ValueChanged(object sender, EventArgs e) {
