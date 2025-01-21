@@ -30,20 +30,13 @@ namespace WinFormsGUI {
 			SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
 			userControlHome1.MyPopNotification += PopNotification;
-			GlobalSetter.OnSettedWndCloseBtnDisabled += OnWndCloseBtnDisabled;
 		}
 
 		~FormNew() {
-			GlobalSetter.OnSettedWndCloseBtnDisabled -= OnWndCloseBtnDisabled;
 			userControlHome1.MyPopNotification -= PopNotification;
 		}
 
-		private void OnWndCloseBtnDisabled(bool disabled) {
-			Wrapper.SystemThings.SetCloseEnabled(Handle, !disabled);
-		}
-
 		private void FormNew_Load(object sender, EventArgs e) {
-			OnWndCloseBtnDisabled(Settings.GUI.Default.DisableClose);
 			if (Settings.GUI.Default.WndLastPosition.Y > -1)
 				Location = Settings.GUI.Default.WndLastPosition;
 			notifyIcon_Main.Text = Text;
@@ -91,8 +84,6 @@ namespace WinFormsGUI {
 				Show();
 				WindowState = FormWindowState.Normal;
 				Activate();
-				if (Settings.GUI.Default.DisableClose)
-					Wrapper.SystemThings.SetCloseEnabled(Handle, false);
 				break;
 			case MouseButtons.Right:
 				notifyIcon_Main.ContextMenuStrip?.Show();
@@ -136,9 +127,10 @@ namespace WinFormsGUI {
 					if (Settings.GUI.Default.HideToTray)
 						Hide();
 					break;
-				case SC_RESTORE:
+				case SC_CLOSE:
 					if (Settings.GUI.Default.DisableClose)
-						Wrapper.SystemThings.SetCloseEnabled(Handle, false);
+						break;
+					Close();
 					break;
 				}
 			}

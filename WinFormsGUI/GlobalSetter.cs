@@ -35,11 +35,5 @@ namespace WinFormsGUI {
 			Settings.Core.Default.Save();
 		}
 
-		internal static Action<bool> OnSettedWndCloseBtnDisabled = (x) => {};
-		internal static void SetWndCloseBtnDisabled(bool value) {
-			Settings.GUI.Default.DisableClose = value;
-			OnSettedWndCloseBtnDisabled(value);
-		}
-
 	}
 }
