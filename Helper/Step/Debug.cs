@@ -23,5 +23,21 @@ namespace Helper.Step {
 	internal class Debug : IStep {
 		public void Run(CancellationToken ct) {
 		}
+
+		~Debug() {
+			Dispose(false);
+		}
+
+		public void Dispose() {
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		private bool _disposed = false;
+		protected void Dispose(bool disposing) {
+			if (_disposed)
+				return;
+			_disposed = true;
+		}
 	}
 }

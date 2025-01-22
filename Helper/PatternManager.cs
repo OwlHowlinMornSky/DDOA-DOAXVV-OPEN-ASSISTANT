@@ -22,7 +22,7 @@
 namespace Helper {
 	public static class PatternManager {
 
-		private static Dictionary<string, Pattern.Info> m_infos = [];
+		private static readonly Dictionary<string, Pattern.Info> m_infos = [];
 		private static string m_folder = "";
 
 		public static void Clear() {
@@ -35,8 +35,8 @@ namespace Helper {
 
 			m_folder = Path.GetDirectoryName(filepath) ?? throw new FileNotFoundException();
 
-			FileStream fileStream = new(filepath, FileMode.Open, FileAccess.Read);
-			StreamReader reader = new(fileStream);
+			using FileStream fileStream = new(filepath, FileMode.Open, FileAccess.Read);
+			using StreamReader reader = new(fileStream);
 
 			var line = reader.ReadLine();
 			if (!int.TryParse(line, out int num))
@@ -106,6 +106,9 @@ namespace Helper {
 
 				m_infos.Add(name, info);
 			}
+
+			reader.Close();
+			fileStream.Close();
 		}
 
 		internal static Pattern? TryCreatePattern(string name) {

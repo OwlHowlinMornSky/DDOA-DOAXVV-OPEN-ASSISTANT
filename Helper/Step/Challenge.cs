@@ -23,8 +23,45 @@ using System.Drawing;
 namespace Helper.Step {
 	internal class Challenge : IStep {
 
-		private readonly Settings.Challenge m_set; // 设置数据的副本
-		private CancellationToken m_ct;
+		~Challenge() {
+			Dispose(false);
+		}
+
+		public void Dispose() {
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		private bool _disposed = false;
+		protected void Dispose(bool disposing) {
+			if (_disposed)
+				return;
+			_disposed = true;
+			if (disposing) {
+				temp_chaBar.Dispose();
+				temp_lastFight.Dispose();
+				temp_newFight.Dispose();
+				temp_startGame.Dispose();
+				temp_loading.Dispose();
+				temp_lowFp.Dispose();
+				temp_gameResult.Dispose();
+				temp_awardCha.Dispose();
+				m_camFp.Dispose();
+				m_camFpDrink.Dispose();
+				m_camFpDrinkComf.Dispose();
+				m_camFpNo.Dispose();
+
+				foreach (var p in m_camFpComf) {
+					p.Dispose();
+				}
+				foreach (var p in m_act100pre) {
+					p.Dispose();
+				}
+				foreach (var p in m_actSlevel) {
+					p.Dispose();
+				}
+			}
+		}
 
 		private readonly Pattern temp_chaBar;
 		private readonly Pattern temp_lastFight;
@@ -41,6 +78,8 @@ namespace Helper.Step {
 		private readonly Pattern[] m_camFpComf; // 2
 		private readonly Pattern[] m_act100pre; // 5
 		private readonly Pattern[] m_actSlevel; // 5
+
+		private CancellationToken m_ct;
 
 		enum PlayMatch {
 			Previous = 0,
@@ -66,7 +105,6 @@ namespace Helper.Step {
 
 		internal Challenge() {
 			//CoreLog() << "Task.Challenge: Begin Load Templates." << std::endl;
-			m_set = Settings.challenge;
 
 			temp_chaBar = PatternManager.CreatePattern("default");
 			temp_lastFight = PatternManager.CreatePattern("lastFight");
@@ -153,7 +191,7 @@ namespace Helper.Step {
 						break;
 					case LoopStatus.Check:
 						// 检查是否有奖励挑战赛。
-						if (m_set.CheckAddition)
+						if (Settings.challenge.CheckAddition)
 							CheckForAwrad();
 						m_loopSt = LoopStatus.End;
 						break;
@@ -462,7 +500,7 @@ namespace Helper.Step {
 
 		private void HandleLowFp() {
 			Point pt;
-			if (!m_set.AutoUseCamFP && !m_set.AutoUseDrink) { // 使用cam补充fp
+			if (!Settings.challenge.AutoUseCamFP && !Settings.challenge.AutoUseDrink) { // 使用cam补充fp
 															  //CoreLog() << "Task.Challenge: Task Over: Setted No Use FP." << std::endl;
 				throw new StepCompleteException();
 			}
@@ -495,7 +533,7 @@ namespace Helper.Step {
 				break;
 			default:
 				//CoreLog() << "Task.Challenge: No FP." << std::endl;
-				if (!m_set.AutoUseDrink || !WndHandler.WaitFor(m_camFpDrink, TimeSpan.FromSeconds(2.0))) {
+				if (!Settings.challenge.AutoUseDrink || !WndHandler.WaitFor(m_camFpDrink, TimeSpan.FromSeconds(2.0))) {
 					//CoreLog() << "Task.Challenge: Task Over: No Use Drink." << std::endl;
 					throw new StepCompleteException();
 				}
@@ -567,7 +605,7 @@ namespace Helper.Step {
 					GUICallbacks.LogInfo.Type.Info,
 					LogStr.StepChaAwdFound
 					);
-				if (m_set.EnterAddition) { // 进入奖励挑战赛。
+				if (Settings.challenge.EnterAddition) { // 进入奖励挑战赛。
 					if (target == PlayMatch.New) {
 						pt = temp_awardCha.GetSpecialPointInResultRect(0);
 						if (WndHandler.KeepClickingUntil(pt, temp_newFight, TimeSpan.FromSeconds(10.0), TimeSpan.FromSeconds(2.0))) {
@@ -609,6 +647,5 @@ namespace Helper.Step {
 					);
 			}
 		}
-
 	}
 }

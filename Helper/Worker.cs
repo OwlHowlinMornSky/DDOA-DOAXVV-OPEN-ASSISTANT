@@ -103,6 +103,8 @@ namespace Helper {
 						));
 					break;
 				}
+
+				step.Dispose();
 			}
 			WndHandler.Reset();
 

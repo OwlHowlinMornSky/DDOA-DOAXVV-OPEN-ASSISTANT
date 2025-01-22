@@ -37,7 +37,7 @@ namespace Helper.Step {
 		DebugTask = 999,
 	};
 
-	internal interface IStep {
+	internal interface IStep : IDisposable {
 		/// <summary>
 		/// 运行该步骤。
 		/// </summary>

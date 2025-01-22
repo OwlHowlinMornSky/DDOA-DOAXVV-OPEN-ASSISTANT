@@ -57,10 +57,10 @@ namespace Helper.Step {
 					}
 					// 启动器已打开，但游戏还未打开
 
-					Pattern temp_startBtn = PatternManager.CreatePattern("StartGameBtn");
-					Pattern temp_titleBtn = PatternManager.CreatePattern("startTitleTLbtn");
-					Pattern temp_loading = PatternManager.CreatePattern("loading");
-					Pattern temp_homeSpec = PatternManager.CreatePattern("homeSpec");
+					using Pattern temp_startBtn = PatternManager.CreatePattern("StartGameBtn");
+					using Pattern temp_titleBtn = PatternManager.CreatePattern("startTitleTLbtn");
+					using Pattern temp_loading = PatternManager.CreatePattern("loading");
+					using Pattern temp_homeSpec = PatternManager.CreatePattern("homeSpec");
 
 					WndHandler.SetForLauncher();
 
@@ -116,8 +116,8 @@ namespace Helper.Step {
 
 					if (!(page > 0 && page < Navigate.Page.COUNT)) { // 不确定在哪个页面
 
-						Pattern temp_titlePage = PatternManager.CreatePattern("startTitleTLbtn");
-						Pattern temp_homeSpec = PatternManager.CreatePattern("homeSpec");
+						using Pattern temp_titlePage = PatternManager.CreatePattern("startTitleTLbtn");
+						using Pattern temp_homeSpec = PatternManager.CreatePattern("homeSpec");
 
 						if (!WndHandler.WaitOneFrame())
 							throw new StepErrorCriticalException("Failed to capture homepage.");
@@ -147,6 +147,22 @@ namespace Helper.Step {
 					);
 			}
 			return;
+		}
+
+		~StartGame() {
+			Dispose(false);
+		}
+
+		public void Dispose() {
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		private bool _disposed = false;
+		protected void Dispose(bool disposing) {
+			if (_disposed)
+				return;
+			_disposed = true;
 		}
 	}
 }

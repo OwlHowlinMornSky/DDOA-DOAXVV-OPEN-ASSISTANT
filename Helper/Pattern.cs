@@ -58,6 +58,14 @@ namespace Helper {
 			return Match(eye, m_thershold);
 		}
 
+		public bool TryMatch(IEye eye, Rectangle rect) {
+			Rectangle tmp = m_searchRect;
+			m_searchRect = rect;
+			bool res = TryMatch(eye);
+			m_searchRect = tmp;
+			return res;
+		}
+
 		public Point GetSpecialPointInResultRect(int id) {
 			Point result = m_points[id];
 			result.Offset(GetPreviousMatchedRect().Location);
