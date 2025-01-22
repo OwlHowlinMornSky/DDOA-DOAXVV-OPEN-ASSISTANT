@@ -24,15 +24,16 @@ using namespace System::Runtime::CompilerServices;
 using namespace System::Runtime::InteropServices;
 using namespace System::Security::Permissions;
 
-[assembly:AssemblyTitleAttribute(L"HelperKernel")];
-[assembly:AssemblyDescriptionAttribute(L"")];
-[assembly:AssemblyConfigurationAttribute(L"")];
-[assembly:AssemblyCompanyAttribute(L"")];
-[assembly:AssemblyProductAttribute(L"HelperKernel")];
-[assembly:AssemblyCopyrightAttribute(L"Copyright(c)  2023-2025  Tyler Parret True")];
-[assembly:AssemblyTrademarkAttribute(L"")];
-[assembly:AssemblyCultureAttribute(L"")];
+[assembly:AssemblyTitleAttribute(L"HelperKernel")] ;
+[assembly:AssemblyDescriptionAttribute(L"DDOA")] ;
+[assembly:AssemblyConfigurationAttribute(L"")] ;
+[assembly:AssemblyCompanyAttribute(L"Tyler Parret True (OHMS)")] ;
+[assembly:AssemblyProductAttribute(L"HelperKernel")] ;
+[assembly:AssemblyCopyrightAttribute(L"Copyright(c)  2023-2025  Tyler Parret True")] ;
+[assembly:AssemblyTrademarkAttribute(L"")] ;
+[assembly:AssemblyCultureAttribute(L"")] ;
 
-[assembly:AssemblyVersionAttribute(L"1.0.*")];
+[assembly:AssemblyVersionAttribute(L"4.0.0")] ;
+[assembly:AssemblyFileVersionAttribute(L"4.0.0.10")] ;
 
-[assembly:ComVisible(false)];
+[assembly:ComVisible(false)] ;
