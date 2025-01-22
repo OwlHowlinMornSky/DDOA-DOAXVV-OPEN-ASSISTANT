@@ -189,7 +189,7 @@ bool MatchCore::Match(IEye^ eye, float threshold) {
 
 			// 由匹配到的点确定匹配到的区域（相对于原始输入）
 			cv::Rect prevMatch = cv::Rect(matchLocation + searchRect.tl(), targetSize);
-			sample(prevMatch).copyTo(srcImage);
+			sample(prevMatch).copyTo(srcImage, *m_mask);
 
 			m_prevMatchedRect = Rectangle(prevMatch.x, prevMatch.y, prevMatch.width, prevMatch.height);
 		}
