@@ -18,23 +18,50 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-
-using System.Collections.Generic;
+using System.Drawing;
 
 namespace Helper.Step {
 	internal class Daily : IStep {
+		~Daily() {
+			Dispose(false);
+		}
 
-		private Pattern m_homeDailyBtn;
-		private Pattern m_homeDailyDot;
-		private Pattern m_checkBtn;
-		private Pattern m_checkBdTitle;
-		private Pattern m_checkOk;
+		public void Dispose() {
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
 
-		private Pattern m_shotEntrance;
-		private Pattern m_shotDot;
-		private Pattern m_shotBack;
-		private Pattern m_shot;
-		private Pattern m_homePage;
+		private bool _disposed = false;
+		protected void Dispose(bool disposing) {
+			if (_disposed)
+				return;
+			_disposed = true;
+			if (disposing) {
+				m_homeDailyBtn.Dispose();
+				m_homeDailyDot.Dispose();
+				m_checkBtn.Dispose();
+				m_checkBdTitle.Dispose();
+				m_checkOk.Dispose();
+
+				m_shotEntrance.Dispose();
+				m_shotDot.Dispose();
+				m_shotBack.Dispose();
+				m_shot.Dispose();
+				m_homePage.Dispose();
+			}
+		}
+
+		private readonly Pattern m_homeDailyBtn;
+		private readonly Pattern m_homeDailyDot;
+		private readonly Pattern m_checkBtn;
+		private readonly Pattern m_checkBdTitle;
+		private readonly Pattern m_checkOk;
+
+		private readonly Pattern m_shotEntrance;
+		private readonly Pattern m_shotDot;
+		private readonly Pattern m_shotBack;
+		private readonly Pattern m_shot;
+		private readonly Pattern m_homePage;
 
 		private CancellationToken m_ct;
 
@@ -183,8 +210,10 @@ namespace Helper.Step {
 				return false;
 			}
 
+			Rectangle rect = new(m_homeDailyBtn.GetPreviousMatchedRect().Location, m_homeDailyDot.GetSearchRect().Size);
+
 			WndHandler.WaitOneFrame();
-			bool res = m_homeDailyDot.TryMatch(WndHandler.Eye);
+			bool res = m_homeDailyDot.TryMatch(WndHandler.Eye, rect);
 
 			return !res;
 		}
