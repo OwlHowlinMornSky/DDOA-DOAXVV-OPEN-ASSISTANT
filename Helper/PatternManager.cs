@@ -112,6 +112,7 @@ namespace Helper {
 		}
 
 		internal static Pattern? TryCreatePattern(string name) {
+			EnsureLoaded();
 			if (!m_infos.TryGetValue(name, out Pattern.Info info))
 				return null;
 			return new Pattern(Path.Combine(m_folder, name), info);
@@ -119,6 +120,11 @@ namespace Helper {
 
 		internal static Pattern CreatePattern(string name) {
 			return TryCreatePattern(name) ?? throw new Exception();
+		}
+
+		private static void EnsureLoaded() {
+			if (m_infos.Count == 0)
+				LoadFromFile(@"assets\tempLists.ini");
 		}
 	}
 }

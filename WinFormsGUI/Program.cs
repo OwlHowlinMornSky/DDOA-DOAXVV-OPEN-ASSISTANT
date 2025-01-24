@@ -31,7 +31,6 @@ namespace WinFormsGUI {
 			// see https://aka.ms/applicationconfiguration.
 			ApplicationConfiguration.Initialize();
 
-			Helper.PatternManager.LoadFromFile(@"assets\tempLists.ini");
 			GlobalSetter.InitSettings();
 
 			Application.Run(new FormNew());
