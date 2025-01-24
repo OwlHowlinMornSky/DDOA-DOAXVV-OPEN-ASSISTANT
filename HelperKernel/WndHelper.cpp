@@ -62,3 +62,12 @@ void HelperKernel::WndHelper::ShellStart(System::String^ path) {
 	info.lpFile = cstr.c_str();
 	ShellExecuteExW(&info);
 }
+
+void HelperKernel::WndHelper::SetState(int continuous, int system, int display, int awaymode) {
+	EXECUTION_STATE es{};
+	es |= continuous ? ES_CONTINUOUS : 0;
+	es |= system ? ES_SYSTEM_REQUIRED : 0;
+	es |= display ? ES_DISPLAY_REQUIRED : 0;
+	es |= awaymode ? ES_AWAYMODE_REQUIRED : 0;
+	SetThreadExecutionState(es);
+}

@@ -71,6 +71,8 @@ namespace Helper {
 
 			GUICallbacks.LockTask(true);
 
+			HelperKernel.WndHelper.SetState(1, Settings.global.KeepAwake ? 1 : 0, Settings.global.KeepScreenOn ? 1 : 0, 1);
+
 			foreach (var steptype in steps) {
 				Step.IStep step;
 
@@ -115,6 +117,9 @@ namespace Helper {
 				GUICallbacks.LogInfo.Type.Info,
 				LogStr.TaskComplete
 				));
+
+			HelperKernel.WndHelper.SetState(1, 0, 0, 0);
+
 			GUICallbacks.LockTask(false);
 		}
 

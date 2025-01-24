@@ -28,6 +28,20 @@ public:
 	static bool WindowExist(System::String^ cls, System::String^ title);
 
 	static void ShellStart(System::String^ path);
+
+	/**
+	 * @brief SetThreadExecutionState
+	 * @param continuous  ES_CONTINUOUS
+	 * @param system      ES_SYSTEM_REQUIRED
+	 * @param display     ES_DISPLAY_REQUIRED
+	 * @param awaymode    ES_AWAYMODE_REQUIRED
+	 */
+	static void SetState(
+		int continuous,
+		int system,
+		int display,
+		int awaymode
+	);
 };
 
 }
