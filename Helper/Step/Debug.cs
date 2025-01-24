@@ -22,6 +22,25 @@
 namespace Helper.Step {
 	internal class Debug : IStep {
 		public void Run(CancellationToken ct) {
+			IStep.Log(
+				GUICallbacks.LogInfo.Type.Notice,
+				LogStr.StepDebugBegin
+				);
+
+
+			IStep.Log(
+				GUICallbacks.LogInfo.Type.Notice,
+				LogStr.ManualChaPageNavigate
+				);
+
+			Worker.PauseForManual(ct);
+
+			IStep.TaskSleep(TimeSpan.FromSeconds(12), ct);
+
+			IStep.Log(
+				GUICallbacks.LogInfo.Type.Notice,
+				LogStr.StepDebugEnd
+				);
 		}
 
 		~Debug() {

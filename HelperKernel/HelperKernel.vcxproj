@@ -96,6 +96,7 @@
     <ClInclude Include="IHand.h" />
     <ClInclude Include="MatchCore.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="WinCheck.h" />
     <ClInclude Include="WndHelper.h" />
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +105,7 @@
     <ClCompile Include="HandOnInput.cpp" />
     <ClCompile Include="HandOnWnd.cpp" />
     <ClCompile Include="MatchCore.cpp" />
+    <ClCompile Include="WinCheck.cpp" />
     <ClCompile Include="WndHelper.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -21,15 +21,17 @@
 
 namespace Helper {
 	public static class GUICallbacks {
-		public struct LogInfo(LogInfo.Type type, string title, string? desc = null) {
+		public struct LogInfo(LogInfo.Type type, string title, string? desc = null, bool notify = false) {
 			public enum Type {
 				Info,
+				Notice,
 				Warn,
 				Error
 			}
 			public Type type = type;
 			public string title = title;
 			public string? description = desc;
+			public bool notify = notify;
 		}
 		public static Action<LogInfo> Log { set; internal get; } = (x) => { };
 
