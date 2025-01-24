@@ -370,7 +370,7 @@ namespace Helper.Step {
 						GUICallbacks.LogInfo.Type.Warn,
 						LogStr.ManualChaPageNavigate
 						);
-					Worker.PauseForManual();
+					Worker.PauseForManual(m_ct);
 					SetHandler();
 				}
 				else {

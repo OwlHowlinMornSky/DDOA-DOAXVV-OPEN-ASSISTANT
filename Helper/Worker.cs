@@ -24,11 +24,12 @@ namespace Helper {
 
 		private class TaskLock() {
 			public bool isRunning = false;
+			public bool isPaused = false;
 			public CancellationTokenSource? ctSrc = null;
 		}
 		private static readonly TaskLock m_taskLock = new();
 
-		private static AutoResetEvent m_resume = new(false);
+		private static readonly AutoResetEvent m_resume = new(false);
 
 		public static bool IsRunning() {
 			lock (m_taskLock) {
@@ -39,6 +40,8 @@ namespace Helper {
 		public static void TryCancelWork() {
 			lock (m_taskLock) {
 				m_taskLock.ctSrc?.Cancel();
+				if (m_taskLock.isPaused)
+					Resume();
 			}
 		}
 
@@ -115,9 +118,16 @@ namespace Helper {
 			GUICallbacks.LockTask(false);
 		}
 
-		internal static void PauseForManual() {
+		internal static void PauseForManual(CancellationToken ct) {
+			lock (m_taskLock) {
+				m_taskLock.isPaused = true;
+			}
 			GUICallbacks.Pause();
 			m_resume.WaitOne();
+			lock (m_taskLock) {
+				m_taskLock.isPaused = false;
+			}
+			ct.ThrowIfCancellationRequested();
 		}
 	}
 }
