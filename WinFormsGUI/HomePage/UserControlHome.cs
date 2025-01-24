@@ -63,9 +63,29 @@ namespace WinFormsGUI {
 		}
 
 		private void Log(Helper.GUICallbacks.LogInfo info) {
-			Log(info.title);
+			Log(info.title,
+					info.type switch {
+						Helper.GUICallbacks.LogInfo.Type.Info => Color.DimGray,
+						Helper.GUICallbacks.LogInfo.Type.Notice => userControlLogger.SystemColor,
+						Helper.GUICallbacks.LogInfo.Type.Warn => Color.Blue,
+						Helper.GUICallbacks.LogInfo.Type.Error => Color.Red,
+						_ => Color.DimGray
+					}
+				);
 			if (info.description != null)
 				Log(info.description);
+			if (info.notify)
+				MyPopNotification(
+					info.title,
+					info.description ?? "   ",
+					info.type switch {
+						Helper.GUICallbacks.LogInfo.Type.Info => ToolTipIcon.Info,
+						Helper.GUICallbacks.LogInfo.Type.Notice => ToolTipIcon.Info,
+						Helper.GUICallbacks.LogInfo.Type.Warn => ToolTipIcon.Warning,
+						Helper.GUICallbacks.LogInfo.Type.Error => ToolTipIcon.Error,
+						_ => ToolTipIcon.None
+					}
+					);
 		}
 
 		internal void OnTaskStartLock() {
@@ -251,195 +271,5 @@ namespace WinFormsGUI {
 			SetListMiddle();
 		}
 
-		/*private static string GetLogStringFromResx(string name) {
-			return Strings.GuiLog.ResourceManager.GetString(name) ?? name;
-		}
-
-		private static bool GetLogColorFromResx(string name, out Color clr) {
-			string res = Strings.GuiLogClr.ResourceManager.GetString(name);
-			if (res == null) {
-				clr = Color.White;
-				return false;
-			}
-			clr = Color.FromArgb(Convert.ToInt32(res, 16));
-			return true;
-		}
-
-		private static string GetTaskNameFromResx(int i) {
-			return Strings.Main.ResourceManager.GetString("Task" + i.ToString("000")) ?? $"#{i}";
-		}*/
-
-		/// <summary>
-		/// Timer读取回执信息。
-		/// </summary>
-		/*private void Timer_Main_Tick(object sender, EventArgs e) {
-			bool setted = false;
-			ReturnCmd cmd;
-			while ((cmd = Program.helper.GetCommand()) != ReturnCmd.None) {
-				if (!setted) {
-					userControlLogger.LogProcessStatusChange(true);
-					setted = true;
-				}
-
-				switch (cmd) {
-				case ReturnCmd.CMD_EmptyLine:
-					//Log();
-					break;
-				case ReturnCmd.CMD_Stopped:
-					WorkStatusLocker.WorkUnlock(); // 解锁GUI
-					timer_Main.Enabled = false;
-					break;
-				case ReturnCmd.CMD_BtnToStop:
-					button_Main.Text = Strings.Main.Btn_Main_Stop;
-					button_Main.Enabled = true;
-					m_btnMainStatus = BtmMainStatus.Stop;
-					button_Resume.Visible = false;
-					SetListMiddle();
-					break;
-				case ReturnCmd.CMD_BtnToStart:
-					button_Main.Text = Strings.Main.Btn_Main_Start;
-					button_Main.Enabled = true;
-					m_btnMainStatus = BtmMainStatus.Start;
-					button_Resume.Visible = false;
-					SetListMiddle();
-					break;
-				case ReturnCmd.CMD_Pause_F: {
-					button_Resume.Visible = true;
-					SetListMiddle();
-					var msg = Program.helper.GetMessage();
-					string description = GetLogStringFromResx(msg.ToString());
-					string t = string.Format(Strings.GuiLog.Paused, description);
-					if (GetLogColorFromResx(msg.ToString(), out var color))
-						Log(t, color);
-					else
-						Log(t);
-					MyPopNotification(Strings.Main.TaskPaused, description, ToolTipIcon.Info);
-					break;
-				}
-				case ReturnCmd.LOG_Format: {
-					var msg = Program.helper.GetMessage();
-					switch (msg) {
-					case ReturnMessage.WorkComplete:
-						Log(Strings.GuiLog.WorkComplete);
-						MyPopNotification(
-							Strings.GuiLog.WorkComplete,
-							Strings.GuiLog.WorkCompleteDescribtion,
-							ToolTipIcon.Info
-						);
-						break;
-					case ReturnMessage.WorkErrorInternalException:
-						Log(Strings.GuiLog.WorkErrorInternalException);
-						MyPopNotification(
-							Strings.GuiLog.WorkError,
-							Strings.GuiLog.WorkErrorInternalException,
-							ToolTipIcon.Error
-						);
-						break;
-					case ReturnMessage.TaskException:
-						Log(Strings.GuiLog.TaskException);
-						MyPopNotification(
-							Strings.GuiLog.WorkError,
-							Strings.GuiLog.TaskException,
-							ToolTipIcon.Error
-						);
-						break;
-					default:
-						if (GetLogColorFromResx(msg.ToString(), out var color))
-							Log(GetLogStringFromResx(msg.ToString()), color);
-						else
-							Log(GetLogStringFromResx(msg.ToString()));
-						break;
-					}
-					break;
-				}
-				case ReturnCmd.LOG_Format_S: {
-					var msg = Program.helper.GetMessage();
-					var reason = Program.helper.GetMessage();
-					string t;
-					switch (msg) {
-					case ReturnMessage.TaskErr_Format:
-						t = GetLogStringFromResx(reason.ToString());
-						Log(string.Format(Strings.GuiLog.TaskErr_Format, t), Color.DarkRed);
-						MyPopNotification(Strings.GuiLog.TaskErr, t, ToolTipIcon.Error);
-						break;
-					default:
-						t =
-							string.Format(
-								GetLogStringFromResx(msg.ToString()),
-								GetLogStringFromResx(reason.ToString())
-							);
-						if (GetLogColorFromResx(msg.ToString(), out var color))
-							Log(t, color);
-						else
-							Log(t);
-						break;
-					}
-					break;
-				}
-				case ReturnCmd.LOG_Format_I: {
-					var msg = Program.helper.GetMessage();
-					var i = Program.helper.GetValueI();
-					string t;
-					switch (msg) {
-					case ReturnMessage.TaskErr_Task: {
-						t = GetTaskNameFromResx(i);
-						Log(string.Format(Strings.GuiLog.TaskErr_Task, t), Color.DarkRed);
-						MyPopNotification(Strings.GuiLog.TaskErr, t, ToolTipIcon.Error);
-						break;
-					}
-					default: {
-						t = string.Format(
-							GetLogStringFromResx(msg.ToString()),
-							i
-						);
-						if (GetLogColorFromResx(msg.ToString(), out var color))
-							Log(t, color);
-						else
-							Log(t);
-						break;
-					}
-					}
-					break;
-				}
-				case ReturnCmd.LOG_Format_SI: {
-					var msg = Program.helper.GetMessage();
-					var s = Program.helper.GetMessage();
-					var i = Program.helper.GetValueI();
-					string t =
-						string.Format(
-							GetLogStringFromResx(msg.ToString()),
-							GetLogStringFromResx(s.ToString()),
-							i
-						);
-					if (GetLogColorFromResx(msg.ToString(), out var color))
-						Log(t, color);
-					else
-						Log(t);
-					break;
-				}
-				case ReturnCmd.LOG_Format_II: {
-					var msg = Program.helper.GetMessage();
-					var i0 = Program.helper.GetValueI();
-					var i1 = Program.helper.GetValueI();
-					string t =
-						string.Format(
-							GetLogStringFromResx(msg.ToString()),
-							i0,
-							i1
-						);
-					if (GetLogColorFromResx(msg.ToString(), out var color))
-						Log(t, color);
-					else
-						Log(t);
-					break;
-				}
-				default:
-					break;
-				}
-			}
-			if (setted)
-				userControlLogger.LogProcessStatusChange(false);
-			return;
-		}*/
 	}
 }

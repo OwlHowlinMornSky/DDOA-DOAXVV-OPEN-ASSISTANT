@@ -39,11 +39,17 @@ namespace WinFormsGUI {
 			DwmGetColorizationColor(out int pcrColorization, out _);
 			return Color.FromArgb(pcrColorization);
 		}
-		private readonly Color m_sysClr = GetSystemMainColor();
+		private Color m_sysClr = GetSystemMainColor();
 		private readonly int vScrollBarWidth = 20;
 
 		private bool m_autoResizeItem = false;
 		public int itemCntLimit = 128;
+
+		public Color SystemColor {
+			get {
+				return m_sysClr;
+			}
+		}
 
 		public UserControlLogger() {
 			InitializeComponent();
@@ -189,6 +195,10 @@ namespace WinFormsGUI {
 
 		private void ToolStripMenuItem_LogClr_Click(object sender, EventArgs e) {
 			Clear();
+		}
+
+		private void UserControlLogger_SystemColorsChanged(object sender, EventArgs e) {
+			m_sysClr = GetSystemMainColor();
 		}
 	}
 }

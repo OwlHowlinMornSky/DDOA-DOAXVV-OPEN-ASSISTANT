@@ -117,8 +117,8 @@ namespace WinFormsGUI {
 		private const int WM_SYSCOMMAND = 0x112;
 		private const int SC_CLOSE = 0xF060;
 		private const int SC_MINIMIZE = 0xF020;
-		private const int SC_MAXIMIZE = 0xF030;
-		private const int SC_RESTORE = 61728;
+		//private const int SC_MAXIMIZE = 0xF030;
+		//private const int SC_RESTORE = 61728;
 		protected override void WndProc(ref Message m) {
 			if (m.Msg == WM_SYSCOMMAND) {
 				switch (m.WParam.ToInt32() & 0xFFF0) {
