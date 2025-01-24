@@ -39,6 +39,9 @@
     <ClInclude Include="WndHelper.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="HandOnInput.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -54,6 +57,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="WndHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="HandOnInput.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

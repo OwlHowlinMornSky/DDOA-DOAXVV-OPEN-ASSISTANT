@@ -25,9 +25,7 @@ namespace HelperKernel {
 
 HandOnWnd::HandOnWnd() :
 	m_hwnd(NULL),
-	m_screenSize(),
 	m_lastMousePoint(),
-	m_workArea(),
 	m_hmod(NULL),
 	m_hookproc(NULL),
 	m_hhook(NULL) {}

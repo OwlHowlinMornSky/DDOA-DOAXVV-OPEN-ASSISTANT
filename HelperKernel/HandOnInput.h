@@ -25,10 +25,10 @@
 
 namespace HelperKernel {
 
-public ref class HandOnWnd sealed : public IHand {
+public ref class HandOnInput sealed : public IHand {
 public:
-	HandOnWnd();
-	virtual ~HandOnWnd();
+	HandOnInput();
+	virtual ~HandOnInput();
 
 public:
 	virtual bool IsOperating();
@@ -47,19 +47,10 @@ public:
 	int SetOnWnd(HWND hwnd);
 	int SetOnWnd(System::String^ cls, System::String^ title);
 
-protected:
-	int InitHookMod();
-	int TryHook();
-	void DropHook();
-	void DropHookMod();
-
 private:
 	HWND m_hwnd; // ´°¿Ú¾ä±ú
 	Drawing::Point m_lastMousePoint; // Êó±êÎ»ÖÃ¼ÇÂ¼¡£
-
-	HMODULE m_hmod; // ¹Ò¹³Ä£¿é¾ä±ú¡£
-	FARPROC m_hookproc; // ¹Ò¹³¹ý³Ì¡£
-	HHOOK m_hhook; // ¹Ò¹³¾ä±ú¡£
+	bool m_virtual_hookEnabled;
 };
 
 }

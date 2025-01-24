@@ -90,6 +90,7 @@
   <ItemGroup>
     <ClInclude Include="EyeOnWnd.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="HandOnInput.h" />
     <ClInclude Include="HandOnWnd.h" />
     <ClInclude Include="IEye.h" />
     <ClInclude Include="IHand.h" />
@@ -100,6 +101,7 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="EyeOnWnd.cpp" />
+    <ClCompile Include="HandOnInput.cpp" />
     <ClCompile Include="HandOnWnd.cpp" />
     <ClCompile Include="MatchCore.cpp" />
     <ClCompile Include="WndHelper.cpp" />
