@@ -25,7 +25,9 @@ namespace Helper {
 	public class NoSuchStepException : Exception {
 	}
 
-	public class TemplateListFormatException : Exception {
+	public class PatternListWrongFormatException : Exception {
+	}
+	public class PatternManagerFailedCreationException(string str) : Exception(str) {
 	}
 
 	public class WndHandlerNotRunningException : Exception {

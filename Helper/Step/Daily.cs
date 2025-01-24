@@ -88,7 +88,7 @@ namespace Helper.Step {
 				GUICallbacks.LockStepDaily(true);
 				//CoreLog() << "Task_Daily: Start." << std::endl;
 				IStep.Log(
-					GUICallbacks.LogInfo.Type.Error,
+					GUICallbacks.LogInfo.Type.Notice,
 					LogStr.StepDailyEnter
 					);
 
@@ -118,11 +118,6 @@ namespace Helper.Step {
 				else {
 					//CoreLog() << "Task_Daily: Setting No Shot." << std::endl;
 				}
-
-				IStep.Log(
-					GUICallbacks.LogInfo.Type.Error,
-					LogStr.StepDailyExit
-					);
 			}
 			catch (Exception) {
 				IStep.Log(
@@ -134,6 +129,11 @@ namespace Helper.Step {
 				GUICallbacks.LockStepDaily(false);
 			}
 
+
+			IStep.Log(
+				GUICallbacks.LogInfo.Type.Notice,
+				LogStr.StepDailyExit
+				);
 			//CoreLog() << "Task_Daily: Exit." << std::endl;
 			return;
 		}
@@ -151,7 +151,7 @@ namespace Helper.Step {
 
 				IStep.Log(
 					GUICallbacks.LogInfo.Type.Error,
-					LogStr.StepErr
+					LogStr.StepErr + " (1)"
 					);
 				//r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 				return;
@@ -160,7 +160,7 @@ namespace Helper.Step {
 				//CoreLog() << "Task_Daily: Check: Cannot Check." << std::endl;
 				IStep.Log(
 					GUICallbacks.LogInfo.Type.Error,
-					LogStr.StepErr
+					LogStr.StepErr + " (2)"
 					);
 				//r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 			}
@@ -168,7 +168,7 @@ namespace Helper.Step {
 				//CoreLog() << "Task_Daily: Check: Cannot Close." << std::endl;
 				IStep.Log(
 					GUICallbacks.LogInfo.Type.Error,
-					LogStr.StepErr
+					LogStr.StepErr + " (3)"
 					);
 				//r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 			}
@@ -183,7 +183,7 @@ namespace Helper.Step {
 				//CoreLog() << "Task_Daily: Shot: Cannot Open." << std::endl;
 				IStep.Log(
 					GUICallbacks.LogInfo.Type.Error,
-					LogStr.StepErr
+					LogStr.StepErr + " (4)"
 					);
 				//r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 				return;
@@ -192,7 +192,7 @@ namespace Helper.Step {
 				//CoreLog() << "Task_Daily: Shot: Cannot Shot." << std::endl;
 				IStep.Log(
 					GUICallbacks.LogInfo.Type.Error,
-					LogStr.StepErr
+					LogStr.StepErr + " (5)"
 					);
 				//r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 			}
@@ -200,7 +200,7 @@ namespace Helper.Step {
 				//CoreLog() << "Task_Daily: Shot: Cannot Close." << std::endl;
 				IStep.Log(
 					GUICallbacks.LogInfo.Type.Error,
-					LogStr.StepErr
+					LogStr.StepErr + " (6)"
 					);
 				//r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 			}

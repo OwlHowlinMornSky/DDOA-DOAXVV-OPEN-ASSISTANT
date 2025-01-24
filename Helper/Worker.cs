@@ -115,7 +115,9 @@ namespace Helper {
 
 			GUICallbacks.Log(new(
 				GUICallbacks.LogInfo.Type.Info,
-				LogStr.TaskComplete
+				LogStr.TaskComplete,
+				null,
+				true
 				));
 
 			HelperKernel.WndHelper.SetState(1, 0, 0, 0);

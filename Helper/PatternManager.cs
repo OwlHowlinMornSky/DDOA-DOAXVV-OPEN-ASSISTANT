@@ -40,7 +40,7 @@ namespace Helper {
 
 			var line = reader.ReadLine();
 			if (!int.TryParse(line, out int num))
-				throw new TemplateListFormatException();
+				throw new PatternListWrongFormatException();
 
 			for (int i = 0; i < num; ++i) {
 				line = reader.ReadLine();
@@ -49,7 +49,7 @@ namespace Helper {
 				var pars = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 				if (pars.Length < 8) {
 					Clear();
-					throw new TemplateListFormatException();
+					throw new PatternListWrongFormatException();
 				}
 				int offset = 0;
 
@@ -58,48 +58,48 @@ namespace Helper {
 
 				if (!int.TryParse(pars[offset++], out int tag)) {
 					Clear();
-					throw new TemplateListFormatException();
+					throw new PatternListWrongFormatException();
 				}
 				info.isFixed = (tag & 0x1) != 0;
 				info.isMasked = (tag & 0x2) != 0;
 
 				if (!int.TryParse(pars[offset++], out tag)) {
 					Clear();
-					throw new TemplateListFormatException();
+					throw new PatternListWrongFormatException();
 				}
 				info.threshold = tag / 65536.0f;
 
 
 				if (!int.TryParse(pars[offset++], out int c0)) {
 					Clear();
-					throw new TemplateListFormatException();
+					throw new PatternListWrongFormatException();
 				}
 				if (!int.TryParse(pars[offset++], out int c1)) {
 					Clear();
-					throw new TemplateListFormatException();
+					throw new PatternListWrongFormatException();
 				}
 				if (!int.TryParse(pars[offset++], out int c2)) {
 					Clear();
-					throw new TemplateListFormatException();
+					throw new PatternListWrongFormatException();
 				}
 				if (!int.TryParse(pars[offset++], out int c3)) {
 					Clear();
-					throw new TemplateListFormatException();
+					throw new PatternListWrongFormatException();
 				}
 				info.rect = new(c0, c1, c2, c3);
 
 				if (!int.TryParse(pars[offset++], out int nsp)) {
 					Clear();
-					throw new TemplateListFormatException();
+					throw new PatternListWrongFormatException();
 				}
 				for (int j = 0; j < nsp; j++) {
 					if (!int.TryParse(pars[offset++], out int x)) {
 						Clear();
-						throw new TemplateListFormatException();
+						throw new PatternListWrongFormatException();
 					}
 					if (!int.TryParse(pars[offset++], out int y)) {
 						Clear();
-						throw new TemplateListFormatException();
+						throw new PatternListWrongFormatException();
 					}
 					info.points.Add(new(x, y));
 				}
@@ -119,7 +119,7 @@ namespace Helper {
 		}
 
 		internal static Pattern CreatePattern(string name) {
-			return TryCreatePattern(name) ?? throw new Exception();
+			return TryCreatePattern(name) ?? throw new PatternManagerFailedCreationException(name);
 		}
 
 		private static void EnsureLoaded() {
