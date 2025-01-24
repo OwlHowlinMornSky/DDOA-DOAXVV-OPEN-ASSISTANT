@@ -83,7 +83,9 @@ namespace Helper.Step {
 
 		public void Run(CancellationToken ct) {
 			m_ct = ct;
+
 			try {
+				GUICallbacks.LockStepDaily(true);
 				//CoreLog() << "Task_Daily: Start." << std::endl;
 				IStep.Log(
 					GUICallbacks.LogInfo.Type.Error,
@@ -127,6 +129,9 @@ namespace Helper.Step {
 					GUICallbacks.LogInfo.Type.Error,
 					LogStr.StepDailyFailed
 					);
+			}
+			finally {
+				GUICallbacks.LockStepDaily(false);
 			}
 
 			//CoreLog() << "Task_Daily: Exit." << std::endl;

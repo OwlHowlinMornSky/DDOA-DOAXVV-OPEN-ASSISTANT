@@ -23,11 +23,28 @@ namespace WinFormsGUI {
 	public partial class UserControlSetForDaily : UserControl {
 		public UserControlSetForDaily() {
 			InitializeComponent();
+
+			GlobalSetter.Regist.OnLockStepDaily += OnLockStep;
+			if (GlobalSetter.Regist.LockedStepDaily)
+				OnLockStep(true);
+		}
+
+		private void OnLockStep(bool isLock) {
+			void f(bool locked) {
+				Enabled = !locked;
+			}
+			if (InvokeRequired) {
+				var r = BeginInvoke(f, isLock);
+				EndInvoke(r);
+			}
+			else {
+				f(isLock);
+			}
 		}
 
 		private void UserControlSetForDaily_Load(object sender, EventArgs e) {
-			 checkBox_check.Checked = Settings.Core.Default.DoDailyCheck;
-			 checkBox_camShot.Checked = Settings.Core.Default.DoDailyShot;
+			checkBox_check.Checked = Settings.Core.Default.DoDailyCheck;
+			checkBox_camShot.Checked = Settings.Core.Default.DoDailyShot;
 		}
 
 		private void CheckBox_check_CheckedChanged(object sender, EventArgs e) {

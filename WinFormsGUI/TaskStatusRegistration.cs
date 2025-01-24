@@ -24,23 +24,39 @@ namespace WinFormsGUI {
 
 		internal TaskStatusRegistration() {
 			Helper.GUICallbacks.LockTask = LockTask;
+			Helper.GUICallbacks.LockStepDaily = LockStepDaily;
+			Helper.GUICallbacks.LockStepChallenge = LockStepChallenge;
 			Helper.GUICallbacks.Pause = () => { Pause(); };
 			Helper.GUICallbacks.Log = (x) => { Log(x); };
 		}
+
+		internal Action<Helper.GUICallbacks.LogInfo> Log = x => { };
+
+		internal Action Pause = () => { };
 
 		/// <summary>
 		/// 任务状态改变时锁定与解锁GUI的事件。
 		/// </summary>
 		internal Action OnStartLock = () => { }; // 成功开始任务后，在UI线程锁定UI。
-		internal Action<bool> LockAction = x => { }; // 任务线程跑起来后，从任务线程，通知UI线程。
-		internal bool Locked { get; private set; } = false;
+		internal Action<bool> OnLockWork = x => { }; // 任务线程跑起来后，从任务线程，通知UI线程。
+		internal bool LockedWork { get; private set; } = false;
 		internal void LockTask(bool x) {
-			Locked = x;
-			LockAction(x);
+			LockedWork = x;
+			OnLockWork(x);
 		}
 
-		internal Action Pause = () => { };
+		internal Action<bool> OnLockStepDaily = x => { }; // 任务线程跑起来后，从任务线程，通知UI线程。
+		internal bool LockedStepDaily { get; private set; } = false;
+		internal void LockStepDaily(bool x) {
+			LockedStepDaily = x;
+			OnLockStepDaily(x);
+		}
 
-		internal Action<Helper.GUICallbacks.LogInfo> Log = x => { };
+		internal Action<bool> OnLockStepChallenge = x => { }; // 任务线程跑起来后，从任务线程，通知UI线程。
+		internal bool LockedStepChallenge { get; private set; } = false;
+		internal void LockStepChallenge(bool x) {
+			LockedStepChallenge = x;
+			OnLockStepChallenge(x);
+		}
 	}
 }

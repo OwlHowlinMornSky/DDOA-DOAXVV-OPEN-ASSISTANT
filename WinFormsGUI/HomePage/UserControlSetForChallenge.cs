@@ -23,6 +23,23 @@ namespace WinFormsGUI {
 	public partial class UserControlSetForChallenge : UserControl {
 		public UserControlSetForChallenge() {
 			InitializeComponent();
+
+			GlobalSetter.Regist.OnLockStepChallenge += OnLockStep;
+			if (GlobalSetter.Regist.LockedStepDaily)
+				OnLockStep(true);
+		}
+
+		private void OnLockStep(bool isLock) {
+			void f(bool locked) {
+				Enabled = !locked;
+			}
+			if (InvokeRequired) {
+				var r = BeginInvoke(f, isLock);
+				EndInvoke(r);
+			}
+			else {
+				f(isLock);
+			}
 		}
 
 		private void MatchSet_RadioBtn_CheckedChanged(object sender, EventArgs e) {

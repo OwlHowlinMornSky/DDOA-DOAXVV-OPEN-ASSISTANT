@@ -26,13 +26,13 @@ namespace WinFormsGUI.SettingsPage {
 		public UserControlSettingsWork() {
 			InitializeComponent();
 			// 注册以在工作时锁定控件。
-			GlobalSetter.Regist.LockAction += OnWorkLockAndUnlock;
-			if (GlobalSetter.Regist.Locked)
+			GlobalSetter.Regist.OnLockWork += OnWorkLockAndUnlock;
+			if (GlobalSetter.Regist.LockedStepDaily)
 				OnWorkLockAndUnlock(true);
 		}
 
 		~UserControlSettingsWork() {
-			GlobalSetter.Regist.LockAction -= OnWorkLockAndUnlock;
+			GlobalSetter.Regist.OnLockWork -= OnWorkLockAndUnlock;
 		}
 
 		/// <summary>

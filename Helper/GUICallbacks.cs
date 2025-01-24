@@ -38,5 +38,8 @@ namespace Helper {
 		public static Action<bool> LockTask { set; internal get; } = (x) => { };
 		public static Action<bool, Step.Type> LockSettings { set; internal get; } = (x, y) => { };
 		public static Action Pause { set; internal get; } = () => { };
+
+		public static Action<bool> LockStepDaily { set; internal get; } = x => { };
+		public static Action<bool> LockStepChallenge { set; internal get; } = x => { };
 	}
 }

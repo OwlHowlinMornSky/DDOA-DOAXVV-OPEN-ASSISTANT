@@ -147,7 +147,9 @@ namespace Helper.Step {
 
 		public void Run(CancellationToken ct) {
 			m_ct = ct;
+
 			try {
+				GUICallbacks.LockStepChallenge(true);
 				//CoreLog() << "Task.Challenge: Start." << std::endl;
 
 				IStep.Log(
@@ -214,6 +216,9 @@ namespace Helper.Step {
 					GUICallbacks.LogInfo.Type.Info,
 					LogStr.StepComplete
 				);
+			}
+			finally {
+				GUICallbacks.LockStepChallenge(false);
 			}
 
 			//CoreLog() << "Task.Challenge: Exit." << std::endl;
