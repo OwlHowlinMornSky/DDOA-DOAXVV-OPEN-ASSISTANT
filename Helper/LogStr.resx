@@ -248,10 +248,6 @@
     <value>未知消息：{0}</value>
     <comment>占位</comment>
   </data>
-  <data name="TaskWorkStartFailed" xml:space="preserve">
-    <value>无法启动任务</value>
-    <comment>Core暂未使用，Form尝试启动时使用</comment>
-  </data>
   <data name="TaskComplete" xml:space="preserve">
     <value>任务完成</value>
   </data>

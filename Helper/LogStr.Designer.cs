@@ -502,15 +502,6 @@ namespace Helper {
         }
         
         /// <summary>
-        ///   查找类似 无法启动任务 的本地化字符串。
-        /// </summary>
-        internal static string TaskWorkStartFailed {
-            get {
-                return ResourceManager.GetString("TaskWorkStartFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 测试: {0}, {1} 的本地化字符串。
         /// </summary>
         internal static string Test_II {

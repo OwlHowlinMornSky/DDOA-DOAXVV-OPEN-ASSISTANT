@@ -248,5 +248,14 @@ namespace WinFormsGUI.Strings {
                 return ResourceManager.GetString("TaskPaused", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 无法启动任务 的本地化字符串。
+        /// </summary>
+        internal static string TaskWorkStartFailed {
+            get {
+                return ResourceManager.GetString("TaskWorkStartFailed", resourceCulture);
+            }
+        }
     }
 }
