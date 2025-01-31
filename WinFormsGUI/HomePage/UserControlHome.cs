@@ -259,6 +259,8 @@ namespace WinFormsGUI {
 			}
 			case BtmMainStatus.Stop: { // 要求停止
 				Helper.Worker.TryCancelWork();
+				button_Resume.Visible = false;
+				SetListMiddle();
 				break;
 			}
 			}
