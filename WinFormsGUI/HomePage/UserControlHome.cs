@@ -49,16 +49,16 @@ namespace WinFormsGUI {
 			userControlList.SetSelectedChangedTo += ChangeSettingCallback;
 			// 注册以在工作时锁定控件。
 			GlobalSetter.Regist.OnStartLock += OnTaskStartLock;
-			GlobalSetter.Regist.OnLockWork += OnWorkLockAndUnlock;
-			if (GlobalSetter.Regist.LockedStepDaily)
-				OnWorkLockAndUnlock(true);
 			GlobalSetter.Regist.Pause += OnTaskPause;
 			GlobalSetter.Regist.Log += Log;
+			GlobalSetter.Regist.OnLockWork.Add(OnWorkLockAndUnlock);
 		}
 
 		~UserControlHome() {
+			GlobalSetter.Regist.OnLockWork.Rid(OnWorkLockAndUnlock);
+			GlobalSetter.Regist.Log -= Log;
 			GlobalSetter.Regist.Pause -= OnTaskPause;
-			GlobalSetter.Regist.OnLockWork -= OnWorkLockAndUnlock;
+			GlobalSetter.Regist.OnStartLock -= OnTaskStartLock;
 			userControlList.SetSelectedChangedTo -= ChangeSettingCallback;
 		}
 

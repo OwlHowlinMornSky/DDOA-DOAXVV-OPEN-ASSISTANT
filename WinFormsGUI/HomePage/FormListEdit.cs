@@ -47,13 +47,11 @@ namespace WinFormsGUI {
 		public FormListEdit() {
 			InitializeComponent();
 			GlobalSetter.Regist.OnStartLock += OnTaskStartLock;
-			GlobalSetter.Regist.OnLockWork += OnTaskLock;
-			if (GlobalSetter.Regist.LockedStepDaily)
-				OnTaskLock(true);
+			GlobalSetter.Regist.OnLockWork.Add(OnTaskLock);
 		}
 
 		~FormListEdit() {
-			GlobalSetter.Regist.OnLockWork -= OnTaskLock;
+			GlobalSetter.Regist.OnLockWork.Rid(OnTaskLock);
 		}
 
 		internal void OnTaskStartLock() {

@@ -24,9 +24,11 @@ namespace WinFormsGUI {
 		public UserControlSetForDaily() {
 			InitializeComponent();
 
-			GlobalSetter.Regist.OnLockStepDaily += OnLockStep;
-			if (GlobalSetter.Regist.LockedStepDaily)
-				OnLockStep(true);
+			GlobalSetter.Regist.OnLockStepDaily.Add(OnLockStep);
+		}
+
+		~UserControlSetForDaily() {
+			GlobalSetter.Regist.OnLockStepDaily.Rid(OnLockStep);
 		}
 
 		private void OnLockStep(bool isLock) {

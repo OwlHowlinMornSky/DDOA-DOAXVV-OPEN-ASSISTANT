@@ -19,20 +19,16 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 
-using System.Net.Sockets;
-
 namespace WinFormsGUI.SettingsPage {
 	public partial class UserControlSettingsCtrl : UserControl {
 		public UserControlSettingsCtrl() {
 			InitializeComponent();
 			// 注册以在工作时锁定控件。
-			GlobalSetter.Regist.OnLockWork += OnWorkLockAndUnlock;
-			if (GlobalSetter.Regist.LockedStepDaily)
-				OnWorkLockAndUnlock(true);
+			GlobalSetter.Regist.OnLockWork.Add(OnWorkLockAndUnlock);
 		}
 
 		~UserControlSettingsCtrl() {
-			GlobalSetter.Regist.OnLockWork -= OnWorkLockAndUnlock;
+			GlobalSetter.Regist.OnLockWork.Rid(OnWorkLockAndUnlock);
 		}
 
 		/// <summary>

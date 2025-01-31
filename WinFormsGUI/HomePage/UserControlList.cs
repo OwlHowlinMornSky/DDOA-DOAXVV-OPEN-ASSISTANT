@@ -52,13 +52,11 @@ namespace WinFormsGUI {
 			InitializeComponent();
 			// 注册以在工作时锁定控件。
 			GlobalSetter.Regist.OnStartLock += OnTaskStartLock;
-			GlobalSetter.Regist.OnLockWork += OnTaskLock;
-			if (GlobalSetter.Regist.LockedStepDaily)
-				OnTaskLock(true);
+			GlobalSetter.Regist.OnLockWork.Add(OnTaskLock);
 		}
 
 		~UserControlList() {
-			GlobalSetter.Regist.OnLockWork -= OnTaskLock;
+			GlobalSetter.Regist.OnLockWork.Rid(OnTaskLock);
 		}
 
 		internal void OnTaskStartLock() {

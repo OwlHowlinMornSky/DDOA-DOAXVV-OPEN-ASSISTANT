@@ -24,9 +24,11 @@ namespace WinFormsGUI {
 		public UserControlSetForChallenge() {
 			InitializeComponent();
 
-			GlobalSetter.Regist.OnLockStepChallenge += OnLockStep;
-			if (GlobalSetter.Regist.LockedStepDaily)
-				OnLockStep(true);
+			GlobalSetter.Regist.OnLockStepChallenge.Add(OnLockStep);
+		}
+
+		~UserControlSetForChallenge() {
+			GlobalSetter.Regist.OnLockStepChallenge.Rid(OnLockStep);
 		}
 
 		private void OnLockStep(bool isLock) {

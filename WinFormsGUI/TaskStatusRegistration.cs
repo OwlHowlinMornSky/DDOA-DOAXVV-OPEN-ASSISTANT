@@ -19,44 +19,49 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
 namespace WinFormsGUI {
+	internal class GuiLockReg {
+		private Action<bool> m_register = x => { };
+		internal bool Value {
+			get; private set;
+		}
+		internal GuiLockReg(ref Action<bool> source, bool initVal = false) {
+			Value = initVal;
+			source = OnAction;
+		}
+		private void OnAction(bool val) {
+			Value = val;
+			m_register(val);
+		}
+		internal void Add(Action<bool> action) {
+			m_register += action;
+			if (Value)
+				action(true);
+		}
+		internal void Rid(Action<bool> action) {
+			m_register -= action;
+		}
+	}
+
 	internal class TaskStatusRegistration {
 
 		internal TaskStatusRegistration() {
-			Helper.GUICallbacks.LockTask = LockTask;
-			Helper.GUICallbacks.LockStepDaily = LockStepDaily;
-			Helper.GUICallbacks.LockStepChallenge = LockStepChallenge;
-			Helper.GUICallbacks.Pause = () => { Pause(); };
 			Helper.GUICallbacks.Log = (x) => { Log(x); };
+			Helper.GUICallbacks.Pause = () => { Pause(); };
 		}
 
-		internal Action<Helper.GUICallbacks.LogInfo> Log = x => { };
-
-		internal Action Pause = () => { };
+		internal Action OnStartLock = () => { }; // 成功开始任务后，在UI线程锁定UI。
 
 		/// <summary>
 		/// 任务状态改变时锁定与解锁GUI的事件。
+		/// 任务线程跑起来后，从任务线程，通知UI线程。
 		/// </summary>
-		internal Action OnStartLock = () => { }; // 成功开始任务后，在UI线程锁定UI。
-		internal Action<bool> OnLockWork = x => { }; // 任务线程跑起来后，从任务线程，通知UI线程。
-		internal bool LockedWork { get; private set; } = false;
-		internal void LockTask(bool x) {
-			LockedWork = x;
-			OnLockWork(x);
-		}
-
-		internal Action<bool> OnLockStepDaily = x => { }; // 任务线程跑起来后，从任务线程，通知UI线程。
-		internal bool LockedStepDaily { get; private set; } = false;
-		internal void LockStepDaily(bool x) {
-			LockedStepDaily = x;
-			OnLockStepDaily(x);
-		}
-
-		internal Action<bool> OnLockStepChallenge = x => { }; // 任务线程跑起来后，从任务线程，通知UI线程。
-		internal bool LockedStepChallenge { get; private set; } = false;
-		internal void LockStepChallenge(bool x) {
-			LockedStepChallenge = x;
-			OnLockStepChallenge(x);
-		}
+		internal Action<Helper.GUICallbacks.LogInfo> Log = x => { };
+		internal Action Pause = () => { };
+		internal GuiLockReg OnLockWork = new(ref Helper.GUICallbacks.LockTask);
+		internal GuiLockReg OnLockStepDaily = new(ref Helper.GUICallbacks.LockStepDaily);
+		internal GuiLockReg OnLockStepChallenge = new(ref Helper.GUICallbacks.LockStepChallenge);
 	}
 }
