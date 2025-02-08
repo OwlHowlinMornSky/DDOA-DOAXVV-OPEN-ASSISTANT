@@ -235,6 +235,9 @@ namespace Helper.Step {
 				m_homeDailyBtn.GetSpecialPointInResultRect(0),
 				m_checkBdTitle
 			);
+
+			WndHandler.Hand.MoveCursorTo(m_checkBdTitle.GetSpecialPointInSearchRect(0));
+
 			IStep.TaskSleep(TimeSpan.FromSeconds(1.0), m_ct);
 
 			return true;

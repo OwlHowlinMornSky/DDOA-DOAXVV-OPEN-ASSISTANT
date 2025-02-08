@@ -178,6 +178,9 @@
     <thres>10</thres>
     <rect float="true"><x>417</x><y>35</y><w>159</w><h>45</h></rect>
     <mat>daily/chkBdTitle.png</mat>
+    <points>
+      <pt name="mouseDock" id="0"><x>130</x><y>20</y></pt>
+    </points>
   </p>
   <p name="daily.shoot.entrance" old_name="daily/shotEntrance">
     <thres>10</thres>
