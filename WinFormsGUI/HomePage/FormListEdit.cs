@@ -1,7 +1,7 @@
 ﻿/*
 *    DDOA-DOAXVV-OPEN-ASSISTANT
 * 
-*     Copyright 2023-2024  Tyler Parret True
+*     Copyright 2023-2025  Tyler Parret True
 * 
 *    Licensed under the Apache License, Version 2.0 (the "License");
 *    you may not use this file except in compliance with the License.
@@ -18,8 +18,6 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-using System.Windows.Forms;
-using Wrapper;
 
 namespace WinFormsGUI {
 
@@ -48,20 +46,33 @@ namespace WinFormsGUI {
 
 		public FormListEdit() {
 			InitializeComponent();
-			WorkStatusLocker.lockAction += OnWorkLockAndUnlock;
-			if (WorkStatusLocker.Locked)
-				OnWorkLockAndUnlock(true);
+			GlobalSetter.Regist.OnStartLock += OnTaskStartLock;
+			GlobalSetter.Regist.OnLockWork.Add(OnTaskLock);
 		}
 
 		~FormListEdit() {
-			WorkStatusLocker.lockAction -= OnWorkLockAndUnlock;
+			GlobalSetter.Regist.OnLockWork.Rid(OnTaskLock);
+		}
+
+		internal void OnTaskStartLock() {
+			button_ok.Enabled = false;
 		}
 
 		/// <summary>
 		/// 监听工作状态改变锁定控件的事件
 		/// </summary>
-		private void OnWorkLockAndUnlock(bool isLock) {
-			button_ok.Enabled = !isLock;
+		private void OnTaskLock(bool locked) {
+			void f(bool isLock) {
+				if (!isLock)
+					button_ok.Enabled = true;
+			}
+			if (InvokeRequired) {
+				var r = BeginInvoke(f, locked);
+				EndInvoke(r);
+			}
+			else {
+				f(locked);
+			}
 		}
 
 		/// <summary>
@@ -83,14 +94,10 @@ namespace WinFormsGUI {
 		/// 点击“添加”按钮。
 		/// </summary>
 		private void Button_add_Click(object sender, EventArgs e) {
-			if (m_listTasks.Count >= (int)TaskEnumWrap.TaskMaxNum) {
-				MessageBox.Show($"The limit of task length is {(int)TaskEnumWrap.TaskMaxNum}.");
-				return;
-			}
 			var choose = new FormListEditChooseTask(((Button)sender).Text);
 			var res = choose.ShowDialog();
 			var choice = choose.choosedTask;
-			if (res == DialogResult.Cancel || choice == (uint)TaskEnumWrap.None)
+			if (res == DialogResult.Cancel || choice == (uint)Helper.Step.Type.None)
 				return;
 			m_listTasks.Add(choice);
 			listBox1.Items.Add(
@@ -102,14 +109,10 @@ namespace WinFormsGUI {
 		/// 点击“插入”按钮。
 		/// </summary>
 		private void Button_Insert_Click(object sender, EventArgs e) {
-			if (m_listTasks.Count >= (int)TaskEnumWrap.TaskMaxNum) {
-				MessageBox.Show($"The limit of task length is {(int)TaskEnumWrap.TaskMaxNum}.");
-				return;
-			}
 			var choose = new FormListEditChooseTask(((Button)sender).Text);
 			var res = choose.ShowDialog();
 			var choice = choose.choosedTask;
-			if (res == DialogResult.Cancel || choice == (uint)TaskEnumWrap.None)
+			if (res == DialogResult.Cancel || choice == (uint)Helper.Step.Type.None)
 				return;
 			var index = listBox1.SelectedIndex;
 			m_listTasks.Insert(index, choice);
@@ -127,7 +130,7 @@ namespace WinFormsGUI {
 			var choose = new FormListEditChooseTask(((Button)sender).Text);
 			var res = choose.ShowDialog();
 			var choice = choose.choosedTask;
-			if (res == DialogResult.Cancel || choice == (uint)TaskEnumWrap.None)
+			if (res == DialogResult.Cancel || choice == (uint)Helper.Step.Type.None)
 				return;
 			var index = listBox1.SelectedIndex;
 			m_listTasks[index] = choice;

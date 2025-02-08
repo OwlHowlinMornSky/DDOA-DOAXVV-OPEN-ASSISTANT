@@ -1,7 +1,7 @@
 ﻿/*
 *    DDOA-DOAXVV-OPEN-ASSISTANT
 * 
-*     Copyright 2023-2024  Tyler Parret True
+*     Copyright 2023-2025  Tyler Parret True
 * 
 *    Licensed under the Apache License, Version 2.0 (the "License");
 *    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+
 namespace WinFormsGUI.SettingsPage {
 	public partial class UserControlSettingsGUI : UserControl {
 		public UserControlSettingsGUI() {
@@ -31,7 +32,7 @@ namespace WinFormsGUI.SettingsPage {
 		}
 
 		private void ChkBox_SetDisableClose_CheckedChanged(object sender, EventArgs e) {
-			GlobalSetter.SetWndCloseBtnDisabled(chkBox_SetDisableClose.Checked);
+			Settings.GUI.Default.DisableClose = chkBox_SetDisableClose.Checked;
 		}
 
 		private void ChkBox_SetHideToTray_CheckedChanged(object sender, EventArgs e) {

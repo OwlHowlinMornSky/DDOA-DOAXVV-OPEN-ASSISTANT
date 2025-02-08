@@ -1,7 +1,7 @@
 ﻿/*
 *    DDOA-DOAXVV-OPEN-ASSISTANT
 * 
-*     Copyright 2023-2024  Tyler Parret True
+*     Copyright 2023-2025  Tyler Parret True
 * 
 *    Licensed under the Apache License, Version 2.0 (the "License");
 *    you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-using Wrapper;
 
 namespace WinFormsGUI {
 	/// <summary>
@@ -52,34 +51,43 @@ namespace WinFormsGUI {
 		public UserControlList() {
 			InitializeComponent();
 			// 注册以在工作时锁定控件。
-			WorkStatusLocker.lockAction += OnWorkLockAndUnlock;
-			if (WorkStatusLocker.Locked)
-				OnWorkLockAndUnlock(true);
+			GlobalSetter.Regist.OnStartLock += OnTaskStartLock;
+			GlobalSetter.Regist.OnLockWork.Add(OnTaskLock);
 		}
 
 		~UserControlList() {
-			WorkStatusLocker.lockAction -= OnWorkLockAndUnlock;
+			GlobalSetter.Regist.OnLockWork.Rid(OnTaskLock);
+		}
+
+		internal void OnTaskStartLock() {
+			button_all.Enabled = false;
+			button_clear.Enabled = false;
+			for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
+				flowLayoutPanel1.Controls[i].Enabled = false;
+			}
+			contextMenuStrip1.Enabled = false;
 		}
 
 		/// <summary>
 		/// 监听工作状态改变锁定控件的事件
 		/// </summary>
-		private void OnWorkLockAndUnlock(bool isLock) {
-			if (isLock) {
-				button_all.Enabled = false;
-				button_clear.Enabled = false;
-				for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
-					flowLayoutPanel1.Controls[i].Enabled = false;
+		private void OnTaskLock(bool locked) {
+			void f(bool isLock) {
+				if (!isLock) {
+					for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
+						flowLayoutPanel1.Controls[i].Enabled = true;
+					}
+					button_clear.Enabled = true;
+					button_all.Enabled = true;
+					contextMenuStrip1.Enabled = true;
 				}
-				contextMenuStrip1.Enabled = false;
+			}
+			if (InvokeRequired) {
+				var r = BeginInvoke(f, locked);
+				EndInvoke(r);
 			}
 			else {
-				for (int i = 0, n = flowLayoutPanel1.Controls.Count; i < n; i += 2) {
-					flowLayoutPanel1.Controls[i].Enabled = true;
-				}
-				button_clear.Enabled = true;
-				button_all.Enabled = true;
-				contextMenuStrip1.Enabled = true;
+				f(locked);
 			}
 		}
 
@@ -200,7 +208,7 @@ namespace WinFormsGUI {
 			if (res == DialogResult.OK) { // 确认即修改。
 				SetList(dialog.ListTasks);
 				OnClickChooseAll(null, null);
-				SetSelectedChangedTo((uint)TaskEnumWrap.None); // 取消选择的设置项
+				SetSelectedChangedTo((uint)Helper.Step.Type.None); // 取消选择的设置项
 			}
 		}
 
@@ -212,7 +220,7 @@ namespace WinFormsGUI {
 				if (s.Length == 0)
 					continue;
 				var n = uint.Parse(s);
-				if (n > (uint)TaskEnumWrap.None && n < (uint)TaskEnumWrap.COUNT)
+				if (n > (uint)Helper.Step.Type.None && n < (uint)Helper.Step.Type.COUNT)
 					tasks.Add(n);
 			}
 			return tasks;
@@ -245,7 +253,7 @@ namespace WinFormsGUI {
 		public void OnClosing() {
 			string str = "";
 			foreach (var s in m_listTasks) {
-				if (s > (uint)TaskEnumWrap.None) {
+				if (s > (uint)Helper.Step.Type.None) {
 					str += s;
 					str += ',';
 				}
@@ -280,7 +288,7 @@ namespace WinFormsGUI {
 				var radioBtn = flowLayoutPanel1.Controls[i] as RadioButton;
 				radioBtn.Checked = false;
 			}
-			SetSelectedChangedTo((uint)TaskEnumWrap.None);
+			SetSelectedChangedTo((uint)Helper.Step.Type.None);
 		}
 
 		private void OnClickInverse() {

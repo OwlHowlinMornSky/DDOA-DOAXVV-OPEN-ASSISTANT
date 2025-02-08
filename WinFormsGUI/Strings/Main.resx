@@ -180,4 +180,7 @@
   <data name="TaskPaused" xml:space="preserve">
     <value>任务暂停</value>
   </data>
+  <data name="TaskWorkStartFailed" xml:space="preserve">
+    <value>无法启动任务</value>
+  </data>
 </root>

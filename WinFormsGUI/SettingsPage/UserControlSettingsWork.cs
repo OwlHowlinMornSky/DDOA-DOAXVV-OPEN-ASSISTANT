@@ -1,7 +1,7 @@
 ﻿/*
 *    DDOA-DOAXVV-OPEN-ASSISTANT
 * 
-*     Copyright 2023-2024  Tyler Parret True
+*     Copyright 2023-2025  Tyler Parret True
 * 
 *    Licensed under the Apache License, Version 2.0 (the "License");
 *    you may not use this file except in compliance with the License.
@@ -18,25 +18,35 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+
+using System.Net.Sockets;
+
 namespace WinFormsGUI.SettingsPage {
 	public partial class UserControlSettingsWork : UserControl {
 		public UserControlSettingsWork() {
 			InitializeComponent();
 			// 注册以在工作时锁定控件。
-			WorkStatusLocker.lockAction += OnWorkLockAndUnlock;
-			if (WorkStatusLocker.Locked)
-				OnWorkLockAndUnlock(true);
+			GlobalSetter.Regist.OnLockWork.Add(OnWorkLockAndUnlock);
 		}
 
 		~UserControlSettingsWork() {
-			WorkStatusLocker.lockAction -= OnWorkLockAndUnlock;
+			GlobalSetter.Regist.OnLockWork.Rid(OnWorkLockAndUnlock);
 		}
 
 		/// <summary>
 		/// 监听工作状态改变锁定控件的事件
 		/// </summary>
-		private void OnWorkLockAndUnlock(bool isLock) {
-			Enabled = !isLock;
+		private void OnWorkLockAndUnlock(bool locked) {
+			void f(bool isLock) {
+				Enabled = !isLock;
+			}
+			if (InvokeRequired) {
+				var r = BeginInvoke(f, locked);
+				EndInvoke(r);
+			}
+			else {
+				f(locked);
+			}
 		}
 
 		private void UserControlSettingsWork_Load(object sender, EventArgs e) {
@@ -68,19 +78,14 @@ namespace WinFormsGUI.SettingsPage {
 				chkBox_SetScreenOn.Checked = false;
 				Settings.Core.Default.KeepAwake = false;
 			}
-			Program.helper.SetKeepAwakeOrNot(Settings.Core.Default.KeepAwake);
-			Program.helper.SetKeepScreenOnOrNot(Settings.Core.Default.KeepScreenOn);
 		}
 
 		private void ChkBox_SetScreenOn_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.KeepScreenOn = chkBox_SetScreenOn.Checked;
-			Program.helper.SetKeepAwakeOrNot(Settings.Core.Default.KeepAwake);
-			Program.helper.SetKeepScreenOnOrNot(Settings.Core.Default.KeepScreenOn);
 		}
 
 		private void ChkBox_SetShow_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.ShowCapture = chkBox_SetShow.Checked;
-			Program.helper.SetShowCaptureOrNot(chkBox_SetShow.Checked);
 		}
 	}
 }

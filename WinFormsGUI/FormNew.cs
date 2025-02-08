@@ -1,7 +1,7 @@
 ﻿/*
 *    DDOA-DOAXVV-OPEN-ASSISTANT
 * 
-*     Copyright 2023-2024  Tyler Parret True
+*     Copyright 2023-2025  Tyler Parret True
 * 
 *    Licensed under the Apache License, Version 2.0 (the "License");
 *    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+
 namespace WinFormsGUI {
 	/// <summary>
 	/// 测试用窗口
@@ -29,20 +30,13 @@ namespace WinFormsGUI {
 			SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
 			userControlHome1.MyPopNotification += PopNotification;
-			GlobalSetter.OnSettedWndCloseBtnDisabled += OnWndCloseBtnDisabled;
 		}
 
 		~FormNew() {
-			GlobalSetter.OnSettedWndCloseBtnDisabled -= OnWndCloseBtnDisabled;
 			userControlHome1.MyPopNotification -= PopNotification;
 		}
 
-		private void OnWndCloseBtnDisabled(bool disabled) {
-			Wrapper.SystemThings.SetCloseEnabled(Handle, !disabled);
-		}
-
 		private void FormNew_Load(object sender, EventArgs e) {
-			OnWndCloseBtnDisabled(Settings.GUI.Default.DisableClose);
 			if (Settings.GUI.Default.WndLastPosition.Y > -1)
 				Location = Settings.GUI.Default.WndLastPosition;
 			notifyIcon_Main.Text = Text;
@@ -52,7 +46,7 @@ namespace WinFormsGUI {
 		/// 窗口试图关闭
 		/// </summary>
 		private void FormNew_FormClosing(object sender, FormClosingEventArgs e) {
-			if (Program.helper.IsRunning()) {
+			if (Helper.Worker.IsRunning()) {
 				if (e.CloseReason != CloseReason.WindowsShutDown) {
 					// 询问是否关闭
 					var res = MessageBox.Show(
@@ -66,8 +60,8 @@ namespace WinFormsGUI {
 						return;
 					}
 				}
-				Program.helper.AskForStop();
-				while (Program.helper.IsRunning()) {
+				Helper.Worker.TryCancelWork();
+				while (Helper.Worker.IsRunning()) {
 					Thread.Sleep(100);
 				}
 			}
@@ -90,8 +84,6 @@ namespace WinFormsGUI {
 				Show();
 				WindowState = FormWindowState.Normal;
 				Activate();
-				if (Settings.GUI.Default.DisableClose)
-					Wrapper.SystemThings.SetCloseEnabled(Handle, false);
 				break;
 			case MouseButtons.Right:
 				notifyIcon_Main.ContextMenuStrip?.Show();
@@ -125,22 +117,24 @@ namespace WinFormsGUI {
 		private const int WM_SYSCOMMAND = 0x112;
 		private const int SC_CLOSE = 0xF060;
 		private const int SC_MINIMIZE = 0xF020;
-		private const int SC_MAXIMIZE = 0xF030;
-		private const int SC_RESTORE = 61728;
+		//private const int SC_MAXIMIZE = 0xF030;
+		//private const int SC_RESTORE = 61728;
 		protected override void WndProc(ref Message m) {
-			base.WndProc(ref m);
 			if (m.Msg == WM_SYSCOMMAND) {
 				switch (m.WParam.ToInt32() & 0xFFF0) {
 				case SC_MINIMIZE:
-					if (Settings.GUI.Default.HideToTray)
+					if (Settings.GUI.Default.HideToTray) {
 						Hide();
+						return;
+					}
 					break;
-				case SC_RESTORE:
+				case SC_CLOSE:
 					if (Settings.GUI.Default.DisableClose)
-						Wrapper.SystemThings.SetCloseEnabled(Handle, false);
+						return;
 					break;
 				}
 			}
+			base.WndProc(ref m);
 		}
 	}
 }

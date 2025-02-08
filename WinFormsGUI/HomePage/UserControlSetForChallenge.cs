@@ -1,17 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿/*
+*    DDOA-DOAXVV-OPEN-ASSISTANT
+* 
+*     Copyright 2023-2025  Tyler Parret True
+* 
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+* 
+*        http://www.apache.org/licenses/LICENSE-2.0
+* 
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+* 
+* @Authors
+*    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
+*/
 
 namespace WinFormsGUI {
 	public partial class UserControlSetForChallenge : UserControl {
 		public UserControlSetForChallenge() {
 			InitializeComponent();
+
+			GlobalSetter.Regist.OnLockStepChallenge.Add(OnLockStep);
+		}
+
+		~UserControlSetForChallenge() {
+			GlobalSetter.Regist.OnLockStepChallenge.Rid(OnLockStep);
+		}
+
+		private void OnLockStep(bool isLock) {
+			void f(bool locked) {
+				Enabled = !locked;
+			}
+			if (InvokeRequired) {
+				var r = BeginInvoke(f, isLock);
+				EndInvoke(r);
+			}
+			else {
+				f(isLock);
+			}
 		}
 
 		private void MatchSet_RadioBtn_CheckedChanged(object sender, EventArgs e) {
@@ -24,12 +54,9 @@ namespace WinFormsGUI {
 			else {
 				Settings.Core.Default.PlayMatchType = 2;
 			}
-			Program.helper.SetChallengeMatch(Settings.Core.Default.PlayMatchType);
 		}
 
 		private void AwardMatch_RadioBtn_CheckedChanged(object sender, EventArgs e) {
-			Program.helper.SetChallengeCheckAwardOrNot(!radioBtn_AwardNo.Checked);
-			Program.helper.SetChallengePlayAwardOrNot(radioBtn_AwardPlay.Checked);
 			if (radioBtn_AwardNo.Checked) {
 				Settings.Core.Default.AwardMatch = 0;
 			}
@@ -75,36 +102,25 @@ namespace WinFormsGUI {
 
 		private void CheckBox_useCamFP_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.AutoUseCamFp = checkBox_useCamFP.Checked;
-			Program.helper.SetUseCamFP(Settings.Core.Default.AutoUseCamFp);
 		}
 
 		private void CheckBox_PauseForMannual_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.ChaPauseAndAskForManual = checkBox_PauseForMannual.Checked;
-			Program.helper.SetChaAskForManual(Settings.Core.Default.ChaPauseAndAskForManual);
 		}
 
 		private void CheckBox_autoUseDrink_CheckedChanged(object sender, EventArgs e) {
 			Settings.Core.Default.AutoUseDrink = checkBox_autoUseDrink.Checked;
-			Program.helper.SetChaAutoUseDrink(Settings.Core.Default.AutoUseDrink);
 		}
 
 		private void comboBox1_SelectedValueChanged(object sender, EventArgs e) {
 			Settings.Core.Default.PlayLevel = comboBox1.SelectedIndex;
-			switch (Settings.Core.Default.PlayLevel) {
-			case 1: // E
-			case 2: // D
-			case 3: // C
-			case 4: // B
-			case 5: // A
-				numericUpDown1.Maximum = 8;
-				break;
-			case 6: // S
-				numericUpDown1.Maximum = 8;
-				break;
-			default:
-				numericUpDown1.Maximum = 1;
-				break;
-			}
+			numericUpDown1.Maximum = Settings.Core.Default.PlayLevel switch {
+				// E,D,   C,   B,   A
+				1 or 2 or 3 or 4 or 5 => 8,
+				// S
+				6 => 8,
+				_ => 1,
+			};
 		}
 
 		private void numericUpDown1_ValueChanged(object sender, EventArgs e) {

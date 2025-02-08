@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<patterns>
+  <p name="cha.menu.colHead" old_name="default">
+    <thres>10</thres>
+    <rect float="true"><x>640</x><y>80</y><w>320</w><h>190</h></rect>
+    <mat>default.png</mat>
+    <points>
+      <pt name="rec." id="0"><x>34</x><y>14</y></pt>
+      <pt name="main" id="1"><x>110</x><y>14</y></pt>
+      <pt name="daily" id="2"><x>185</x><y>14</y></pt>
+      <pt name="event" id="3"><x>260</x><y>14</y></pt>
+    </points>
+  </p>
+  <p name="cha.menu.prevMatch" old_name="lastFight">
+    <thres>10</thres>
+    <rect float="true"><x>600</x><y>240</y><w>100</w><h>300</h></rect>
+    <mat>lastFight.png</mat>
+  </p>
+  <p name="cha.menu.newMatch" old_name="newFight">
+    <thres>10</thres>
+    <rect float="true"><x>600</x><y>240</y><w>100</w><h>300</h></rect>
+    <mat>newFight.png</mat>
+  </p>
+  <p name="cha.prep.startBtn" old_name="start">
+    <thres>10</thres>
+    <rect><x>720</x><y>482</y><w>103</w><h>51</h></rect>
+    <mat>start.png</mat>
+    <points>
+      <pt name="click" id="0"><x>58</x><y>22</y></pt>
+    </points>
+  </p>
+  <p name="navigate.loading" old_name="loading">
+    <thres>20</thres>
+    <rect><x>24</x><y>59</y><w>0</w><h>0</h></rect>
+    <mat>loading.png</mat>
+  </p>
+  <p name="cha.prep.lowfp" old_name="fp">
+    <thres>10</thres>
+    <rect><x>398</x><y>143</y><w>163</w><h>29</h></rect>
+    <mat>fp.png</mat>
+  </p>
+  <p name="cha.match.result" old_name="result">
+    <thres>25</thres>
+    <rect><x>675</x><y>50</y><w>254</w><h>49</h></rect>
+    <mat>result.png</mat>
+    <points>
+      <pt name="click" id="0"><x>100</x><y>0</y></pt>
+    </points>
+  </p>
+  <p name="cha.menu.awdBtnInit" old_name="add">
+    <thres>10</thres>
+    <rect float="true"><x>860</x><y>120</y><w>100</w><h>240</h></rect>
+    <mat>add.png</mat>
+    <points>
+      <pt name="click" id="0"><x>30</x><y>50</y></pt>
+    </points>
+  </p>
+  <p name="launcher.startGameBtn" old_name="StartGameBtn">
+    <thres>5</thres>
+    <rect><x>712</x><y>70</y><w>232</w><h>105</h></rect>
+    <mat>StartGameBtn.png</mat>
+    <points>
+      <pt name="click" id="0"><x>114</x><y>49</y></pt>
+    </points>
+  </p>
+  <p name="launcher.titlePageMark" old_name="startTitleTLbtn">
+    <thres>25</thres>
+    <rect float="true"><x>0</x><y>0</y><w>206</w><h>70</h></rect>
+    <mat>startTitleTLbtn.png</mat>
+  </p>
+  <p name="navigate.homeMark" old_name="homeSpec">
+    <thres>10</thres>
+    <rect><x>112</x><y>98</y><w>35</w><h>43</h></rect>
+    <mat>homeSpec.png</mat>
+  </p>
+  <p name="navigate.mainReturnBtn" old_name="back">
+    <thres>10</thres>
+    <rect><x>97</x><y>117</y><w>23</w><h>11</h></rect>
+    <mat>back.png</mat>
+    <points>
+      <pt name="click" id="0"><x>12</x><y>6</y></pt>
+    </points>
+  </p>
+  <p name="navigate.homeBtn" old_name="otherHome">
+    <thres>10</thres>
+    <rect><x>18</x><y>45</y><w>52</w><h>52</h></rect>
+    <mat>otherHome.png</mat>
+    <points>
+      <pt name="click" id="0"><x>27</x><y>25</y></pt>
+    </points>
+  </p>
+  <p name="navigate.homeBtnSkew" old_name="otherHomeAskew">
+    <thres>10</thres>
+    <rect><x>20</x><y>44</y><w>49</w><h>53</h></rect>
+    <mat>otherHomeAskew.png</mat>
+    <points>
+      <pt name="click" id="0"><x>27</x><y>24</y></pt>
+    </points>
+  </p>
+  <p name="navigate.chaBtn" old_name="homeChaBtn">
+    <thres>10</thres>
+    <rect><x>34</x><y>144</y><w>42</w><h>24</h></rect>
+    <mat>homeChaBtn.png</mat>
+    <points>
+      <pt name="click" id="0"><x>22</x><y>7</y></pt>
+    </points>
+  </p>
+  <p name="cha.prep.camFp" old_name="UseFp">
+    <thres>10</thres>
+    <rect><x>612</x><y>218</y><w>40</w><h>37</h></rect>
+    <mat>UseFp.png</mat>
+    <points>
+      <pt name="click" id="0"><x>21</x><y>17</y></pt>
+    </points>
+  </p>
+  <p name="cha.prep.camFpUsed" old_name="cha/shotFpNo">
+    <thres>10</thres>
+    <rect><x>610</x><y>214</y><w>43</w><h>42</h></rect>
+    <mat>cha/shotFpNo.png</mat>
+  </p>
+  <p name="cha.prep.drinkFpBtns" old_name="cha/drink">
+    <thres>10</thres>
+    <rect><x>401</x><y>281</y><w>105</w><h>91</h></rect>
+    <mat>cha/drink.png</mat>
+    <points>
+      <pt name="max100" id="0"><x>81</x><y>18</y></pt>
+      <pt name="maxMax" id="1"><x>81</x><y>72</y></pt>
+    </points>
+  </p>
+  <p name="cha.prep.drinkOK" old_name="cha/drinkComf">
+    <thres>10</thres>
+    <rect><x>498</x><y>421</y><w>65</w><h>63</h></rect>
+    <mat>cha/drinkComf.png</mat>
+    <points>
+      <pt name="click" id="0"><x>32</x><y>32</y></pt>
+    </points>
+  </p>
+  <p name="cha.prep.FpOK1" old_name="UseFpComf0">
+    <thres>10</thres>
+    <rect><x>500</x><y>422</y><w>59</w><h>62</h></rect>
+    <mat>UseFpComf0.png</mat>
+    <points>
+      <pt name="click" id="0"><x>46</x><y>20</y></pt>
+    </points>
+  </p>
+  <p name="cha.prep.FpOK2" old_name="UseFpComf1">
+    <thres>10</thres>
+    <rect><x>450</x><y>425</y><w>60</w><h>57</h></rect>
+    <mat>UseFpComf1.png</mat>
+    <points>
+      <pt name="click" id="0"><x>21</x><y>28</y></pt>
+    </points>
+  </p>
+  <p name="daily.check.entrance" old_name="daily/checkBtn">
+    <thres>5</thres>
+    <rect float="true"><x>649</x><y>100</y><w>308</w><h>157</h></rect>
+    <mat>daily/checkBtn.png</mat>
+    <mask>daily/checkBtn[M].png</mask>
+    <points>
+      <pt name="click" id="0"><x>26</x><y>30</y></pt>
+    </points>
+  </p>
+  <p name="daily.check.mark" old_name="daily/checkDot">
+    <thres>10</thres>
+    <rect><x>707</x><y>113</y><w>57</w><h>66</h></rect>
+    <mat>daily/checkDot.png</mat>
+    <mask>daily/checkDot[M].png</mask>
+  </p>
+  <p name="daily.check.btn" old_name="daily/checkClk">
+    <thres>25</thres>
+    <rect float="true"><x>216</x><y>101</y><w>571</w><h>346</h></rect>
+    <mat>daily/checkClk.png</mat>
+    <points>
+      <pt name="click" id="0"><x>22</x><y>7</y></pt>
+    </points>
+  </p>
+  <p name="daily.check.head" old_name="daily/chkBdTitle">
+    <thres>10</thres>
+    <rect float="true"><x>417</x><y>35</y><w>159</w><h>45</h></rect>
+    <mat>daily/chkBdTitle.png</mat>
+    <points>
+      <pt name="mouseDock" id="0"><x>130</x><y>20</y></pt>
+    </points>
+  </p>
+  <p name="daily.shoot.entrance" old_name="daily/shotEntrance">
+    <thres>10</thres>
+    <rect><x>889</x><y>56</y><w>42</w><h>59</h></rect>
+    <mat>daily/shotEntrance.png</mat>
+    <mask>daily/shotEntrance[M].png</mask>
+    <points>
+      <pt name="click" id="0"><x>21</x><y>29</y></pt>
+    </points>
+  </p>
+  <p name="daily.shoot.mark" old_name="daily/shotDot">
+    <thres>10</thres>
+    <rect><x>889</x><y>56</y><w>42</w><h>59</h></rect>
+    <mat>daily/shotDot.png</mat>
+    <mask>daily/shotDot[M].png</mask>
+  </p>
+  <p name="daily.shoot.return" old_name="daily/shotBack">
+    <thres>10</thres>
+    <rect><x>76</x><y>47</y><w>32</w><h>33</h></rect>
+    <mat>daily/shotBack.png</mat>
+    <mask>daily/shotBack[M].png</mask>
+    <points>
+      <pt name="click" id="0"><x>17</x><y>17</y></pt>
+    </points>
+  </p>
+  <p name="daily.shoot.btn" old_name="daily/shotShot">
+    <thres>10</thres>
+    <rect><x>840</x><y>446</y><w>54</w><h>52</h></rect>
+    <mat>daily/shotShot.png</mat>
+    <mask>daily/shotShot[M].png</mask>
+    <points>
+      <pt name="click" id="0"><x>24</x><y>27</y></pt>
+    </points>
+  </p>
+  <p name="daily.check.ok" old_name="daily/checkOK">
+    <thres>10</thres>
+    <rect><x>447</x><y>420</y><w>67</w><h>65</h></rect>
+    <mat>daily/checkOK.png</mat>
+    <points>
+      <pt name="click" id="0"><x>32</x><y>34</y></pt>
+    </points>
+  </p>
+  <p name="cha.menu.100%0" old_name="cha/act/l0">
+    <thres>10</thres>
+    <rect><x>861</x><y>246</y><w>83</w><h>48</h></rect>
+    <mat>cha/act/l0.png</mat>
+    <points>
+      <pt name="click" id="0"><x>20</x><y>20</y></pt>
+    </points>
+  </p>
+  <p name="cha.menu.100%1" old_name="cha/act/l1">
+    <thres>10</thres>
+    <rect><x>862</x><y>301</y><w>83</w><h>47</h></rect>
+    <mat>cha/act/l1.png</mat>
+    <points>
+      <pt name="click" id="0"><x>20</x><y>20</y></pt>
+    </points>
+  </p>
+  <p name="cha.menu.100%2" old_name="cha/act/l2">
+    <thres>10</thres>
+    <rect><x>862</x><y>356</y><w>82</w><h>44</h></rect>
+    <mat>cha/act/l2.png</mat>
+    <points>
+      <pt name="click" id="0"><x>20</x><y>20</y></pt>
+    </points>
+  </p>
+  <p name="cha.menu.100%3" old_name="cha/act/l3">
+    <thres>10</thres>
+    <rect><x>862</x><y>410</y><w>81</w><h>46</h></rect>
+    <mat>cha/act/l3.png</mat>
+    <points>
+      <pt name="click" id="0"><x>20</x><y>20</y></pt>
+    </points>
+  </p>
+  <p name="cha.menu.100%4" old_name="cha/act/l4">
+    <thres>10</thres>
+    <rect><x>860</x><y>463</y><w>83</w><h>47</h></rect>
+    <mat>cha/act/l4.png</mat>
+    <points>
+      <pt name="click" id="0"><x>20</x><y>20</y></pt>
+    </points>
+  </p>
+  <p name="cha.menu.sLevel0" old_name="cha/act/r0">
+    <thres>10</thres>
+    <rect><x>898</x><y>248</y><w>57</w><h>47</h></rect>
+    <mat>cha/act/r0.png</mat>
+    <points>
+      <pt name="click" id="0"><x>20</x><y>20</y></pt>
+    </points>
+  </p>
+  <p name="cha.menu.sLevel1" old_name="cha/act/r1">
+    <thres>10</thres>
+    <rect><x>899</x><y>303</y><w>54</w><h>44</h></rect>
+    <mat>cha/act/r1.png</mat>
+    <points>
+      <pt name="click" id="0"><x>20</x><y>20</y></pt>
+    </points>
+  </p>
+  <p name="cha.menu.sLevel2" old_name="cha/act/r2">
+    <thres>10</thres>
+    <rect><x>899</x><y>357</y><w>54</w><h>45</h></rect>
+    <mat>cha/act/r2.png</mat>
+    <points>
+      <pt name="click" id="0"><x>20</x><y>20</y></pt>
+    </points>
+  </p>
+  <p name="cha.menu.sLevel3" old_name="cha/act/r3">
+    <thres>10</thres>
+    <rect><x>900</x><y>414</y><w>51</w><h>42</h></rect>
+    <mat>cha/act/r3.png</mat>
+    <points>
+      <pt name="click" id="0"><x>20</x><y>20</y></pt>
+    </points>
+  </p>
+  <p name="cha.menu.sLevel4" old_name="cha/act/r4">
+    <thres>10</thres>
+    <rect><x>900</x><y>467</y><w>53</w><h>44</h></rect>
+    <mat>cha/act/r4.png</mat>
+    <points>
+      <pt name="click" id="0"><x>20</x><y>20</y></pt>
+    </points>
+  </p>
+</patterns>

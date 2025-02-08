@@ -2,26 +2,25 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.22000.0</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <Platforms>x64</Platforms>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <Authors>Tyler Parret True (OHMS)</Authors>
     <PackageProjectUrl>https://github.com/OwlHowlinMornSky/DDOA-DOAXVV-OPEN-ASSISTANT</PackageProjectUrl>
     <Product>$(SolutionName)-$(AssemblyName)</Product>
-    <Copyright>Copyright © 2023-2024 Tyler Parret True (OHMS) </Copyright>
-    <AssemblyVersion>3.1.0.9</AssemblyVersion>
-    <FileVersion>3.1.0.9</FileVersion>
+    <Copyright>Copyright © 2023-2025 Tyler Parret True (OHMS) </Copyright>
+    <FileVersion>4.0.0.10</FileVersion>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <Description>DDOA</Description>
     <AssemblyName>$(SolutionName)</AssemblyName>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
-    <Company>OHMS</Company>
     <Title>$(AssemblyName)</Title>
     <SupportedOSPlatformVersion>10.0.22000.0</SupportedOSPlatformVersion>
-    <Version>3.1.0</Version>
+    <Version>4.0.0</Version>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RepositoryUrl>https://github.com/OwlHowlinMornSky/DDOA-DOAXVV-OPEN-ASSISTANT</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
@@ -52,7 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreWrapper\Wrapper.vcxproj" />
+    <ProjectReference Include="..\Helper\Helper.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -70,16 +69,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Param.settings</DependentUpon>
-    </Compile>
-    <Compile Update="Strings\GuiLog.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>GuiLog.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Strings\GuiLogClr.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>GuiLogClr.resx</DependentUpon>
     </Compile>
     <Compile Update="Strings\Main.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -116,14 +105,6 @@
     <EmbeddedResource Update="Resources\Img.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Img.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\GuiLog.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>GuiLog.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\GuiLogClr.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>GuiLogClr.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Strings\Main.resx">
       <Generator>ResXFileCodeGenerator</Generator>

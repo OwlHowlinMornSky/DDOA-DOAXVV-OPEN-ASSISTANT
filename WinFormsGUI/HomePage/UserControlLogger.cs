@@ -1,7 +1,7 @@
 ﻿/*
 *    DDOA-DOAXVV-OPEN-ASSISTANT
 * 
-*     Copyright 2023-2024  Tyler Parret True
+*     Copyright 2023-2025  Tyler Parret True
 * 
 *    Licensed under the Apache License, Version 2.0 (the "License");
 *    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+
 namespace WinFormsGUI {
 
 	internal struct LogItem {
@@ -38,11 +39,17 @@ namespace WinFormsGUI {
 			DwmGetColorizationColor(out int pcrColorization, out _);
 			return Color.FromArgb(pcrColorization);
 		}
-		private readonly Color m_sysClr = GetSystemMainColor();
+		private Color m_sysClr = GetSystemMainColor();
 		private readonly int vScrollBarWidth = 20;
 
 		private bool m_autoResizeItem = false;
 		public int itemCntLimit = 128;
+
+		public Color SystemColor {
+			get {
+				return m_sysClr;
+			}
+		}
 
 		public UserControlLogger() {
 			InitializeComponent();
@@ -121,9 +128,7 @@ namespace WinFormsGUI {
 
 		public void Log(string message, Color color) {
 			if (InvokeRequired) {
-				var r = BeginInvoke(new Action(() => {
-					LogAdd(message, color);
-				}));
+				var r = BeginInvoke(LogAdd, message, color);
 				EndInvoke(r);
 			}
 			else {
@@ -190,6 +195,10 @@ namespace WinFormsGUI {
 
 		private void ToolStripMenuItem_LogClr_Click(object sender, EventArgs e) {
 			Clear();
+		}
+
+		private void UserControlLogger_SystemColorsChanged(object sender, EventArgs e) {
+			m_sysClr = GetSystemMainColor();
 		}
 	}
 }

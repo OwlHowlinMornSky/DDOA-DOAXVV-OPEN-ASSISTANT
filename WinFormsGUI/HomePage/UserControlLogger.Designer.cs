@@ -52,12 +52,12 @@
 			contextMenuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem_LogClr });
 			contextMenuStrip1.Name = "contextMenuStrip1";
 			contextMenuStrip1.ShowImageMargin = false;
-			contextMenuStrip1.Size = new Size(156, 48);
+			contextMenuStrip1.Size = new Size(76, 26);
 			// 
 			// toolStripMenuItem_LogClr
 			// 
 			toolStripMenuItem_LogClr.Name = "toolStripMenuItem_LogClr";
-			toolStripMenuItem_LogClr.Size = new Size(155, 22);
+			toolStripMenuItem_LogClr.Size = new Size(75, 22);
 			toolStripMenuItem_LogClr.Text = "清空";
 			toolStripMenuItem_LogClr.Click += ToolStripMenuItem_LogClr_Click;
 			// 
@@ -72,6 +72,7 @@
 			Name = "UserControlLogger";
 			Size = new Size(180, 74);
 			SizeChanged += UserControlLogger_SizeChanged;
+			SystemColorsChanged += UserControlLogger_SystemColorsChanged;
 			contextMenuStrip1.ResumeLayout(false);
 			ResumeLayout(false);
 		}

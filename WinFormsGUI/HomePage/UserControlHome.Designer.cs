@@ -31,7 +31,6 @@
 			button_Resume = new Button();
 			userControlList = new UserControlList();
 			button_Main = new Button();
-			timer_Main = new System.Windows.Forms.Timer(components);
 			tableLayoutPanel_Main.SuspendLayout();
 			panel_leftCtrl.SuspendLayout();
 			SuspendLayout();
@@ -120,10 +119,6 @@
 			button_Main.UseVisualStyleBackColor = true;
 			button_Main.Click += Button_Main_Click;
 			// 
-			// timer_Main
-			// 
-			timer_Main.Tick += Timer_Main_Tick;
-			// 
 			// UserControlHome
 			// 
 			AutoScaleDimensions = new SizeF(7F, 17F);
@@ -146,7 +141,6 @@
 		private UserControlLogger userControlLogger;
 		private Panel panel_leftCtrl;
 		private Button button_Main;
-		private System.Windows.Forms.Timer timer_Main;
 		private UserControlList userControlList;
 		private Button button_Resume;
 	}
