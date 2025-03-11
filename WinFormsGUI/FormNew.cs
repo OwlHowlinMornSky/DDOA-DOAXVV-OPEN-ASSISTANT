@@ -21,7 +21,7 @@
 
 namespace WinFormsGUI {
 	/// <summary>
-	/// 测试用窗口
+	/// 主窗口
 	/// </summary>
 	public partial class FormNew : Form {
 
@@ -115,7 +115,7 @@ namespace WinFormsGUI {
 		}
 
 		private const int WM_SYSCOMMAND = 0x112;
-		private const int SC_CLOSE = 0xF060;
+		//private const int SC_CLOSE = 0xF060;
 		private const int SC_MINIMIZE = 0xF020;
 		//private const int SC_MAXIMIZE = 0xF030;
 		//private const int SC_RESTORE = 61728;
@@ -127,10 +127,6 @@ namespace WinFormsGUI {
 						Hide();
 						return;
 					}
-					break;
-				case SC_CLOSE:
-					if (Settings.GUI.Default.DisableClose)
-						return;
 					break;
 				}
 			}

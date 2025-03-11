@@ -74,6 +74,8 @@ namespace WinFormsGUI {
 				);
 			if (info.description != null)
 				Log(info.description);
+			if (info.type == Helper.GUICallbacks.LogInfo.Type.Warn || info.type == Helper.GUICallbacks.LogInfo.Type.Error)
+				info.notify = true;
 			if (info.notify)
 				MyPopNotification(
 					info.title,
