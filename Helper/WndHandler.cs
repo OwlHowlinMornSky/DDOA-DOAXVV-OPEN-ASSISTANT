@@ -39,7 +39,7 @@ namespace Helper {
 		}
 
 		private static readonly EyeOnWnd m_eye = new();
-		private static readonly HandOnWnd m_hand = new();
+		private static IHand? m_hand = null;
 
 		private static State m_state = State.Idle;
 		private static CancellationToken r_ct;
@@ -52,6 +52,14 @@ namespace Helper {
 
 		internal static IHand Hand {
 			get {
+				if (m_hand == null) {
+					if (Settings.wndHandler.UseSendInput) {
+						m_hand = new HandOnInput();
+					}
+					else {
+						m_hand = new HandOnWnd();
+					}
+				}
 				return m_hand;
 			}
 		}
@@ -62,7 +70,8 @@ namespace Helper {
 		internal static void Reset() {
 			m_state = State.Idle;
 			m_eye.Reset();
-			m_hand.Reset();
+			m_hand?.Reset();
+			m_hand = null;
 		}
 
 		internal static void SetCancellationToken(CancellationToken ct) {
@@ -150,6 +159,14 @@ namespace Helper {
 		}
 
 		private static void SetWindow(string? className, string windowName) {
+			if (m_hand == null) {
+				if (Settings.wndHandler.UseSendInput) {
+					m_hand = new HandOnInput();
+				}
+				else {
+					m_hand = new HandOnWnd();
+				}
+			}
 			switch (m_hand.SetOnWnd(className, windowName)) {
 			case 1:
 				throw new WndHandlerWndNotFoundException();
@@ -346,6 +363,16 @@ namespace Helper {
 
 			Stopwatch watch = new();
 			watch.Restart();
+
+			if (m_hand == null) {
+				if (Settings.wndHandler.UseSendInput) {
+					m_hand = new HandOnInput();
+				}
+				else {
+					m_hand = new HandOnWnd();
+				}
+			}
+
 			do {
 				if (timeout > TimeSpan.Zero && watch.Elapsed >= timeout) // 应用超时
 					return false;
@@ -379,6 +406,16 @@ namespace Helper {
 
 			Stopwatch watch = new();
 			watch.Restart();
+
+			if (m_hand == null) {
+				if (Settings.wndHandler.UseSendInput) {
+					m_hand = new HandOnInput();
+				}
+				else {
+					m_hand = new HandOnWnd();
+				}
+			}
+
 			do {
 				if (timeout > TimeSpan.Zero && watch.Elapsed >= timeout) // 应用超时
 					return false;
@@ -391,6 +428,16 @@ namespace Helper {
 
 		internal static void ClickAt(Point target) {
 			ExsureAbleToRun();
+
+			if (m_hand == null) {
+				if (Settings.wndHandler.UseSendInput) {
+					m_hand = new HandOnInput();
+				}
+				else {
+					m_hand = new HandOnWnd();
+				}
+			}
+
 			m_hand.ClickAt(target);
 		}
 

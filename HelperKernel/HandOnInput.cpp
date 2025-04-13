@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    DDOA-DOAXVV-OPEN-ASSISTANT
 *
 *     Copyright 2023-2025  Tyler Parret True
@@ -34,221 +34,6 @@ HandOnInput::~HandOnInput() {
 
 bool HandOnInput::IsOperating() {
 	return NULL != m_hwnd;
-}
-
-void HandOnInput::MoveCursorTo(Drawing::Point target) {
-	if (!IsOperating()) return;
-
-	// Ëõ·Åµ½¿Í»§Çø´óÐ¡
-	RECT rect{ 0 };
-	GetClientRect(m_hwnd, &rect);
-	Drawing::Point pt(target.X * (rect.right - rect.left) / 960, target.Y * (rect.bottom - rect.top) / 540);
-
-	RECT workArea = {};
-	POINT screenSize = {};
-	// »ñÈ¡¿ÉÓÃ×ÀÃæ´óÐ¡
-	SystemParametersInfoW(SPI_GETWORKAREA, 0, &workArea, 0);
-	// »ñÈ¡ÆÁÄ»´óÐ¡
-	screenSize.x = GetSystemMetrics(SM_CXSCREEN);
-	screenSize.y = GetSystemMetrics(SM_CYSCREEN);
-
-	GetWindowRect(m_hwnd, &rect);
-
-	// °ÑÄ¿±ê´°¿ÚÒÆ¶¯µ½ÆÁÄ»·¶Î§ÄÚ
-	if (rect.right > workArea.right)
-		rect.left -= rect.right - workArea.right;
-	if (rect.left < workArea.left)
-		rect.left = workArea.left;
-	if (rect.bottom > workArea.bottom)
-		rect.top -= rect.bottom - workArea.bottom;
-	if (rect.top < workArea.top)
-		rect.top = workArea.top;
-	SetWindowPos(m_hwnd, NULL, rect.left, rect.top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOACTIVATE);
-
-	INPUT input = {};
-
-	// ÓÐ¾àÀëÊ±Á¬ÐøÒÆ¶¯¹â±ê
-	if (pt != m_lastMousePoint) {
-		int vecx = pt.X - m_lastMousePoint.X;
-		int vecy = pt.Y - m_lastMousePoint.Y;
-		float deltaLength = System::MathF::Sqrt(1.0f * vecx * vecx + vecy * vecy);
-		int stepCnt = (int)System::MathF::Round(System::MathF::Sqrt(deltaLength) / 2.0f) + 1;
-		vecx /= stepCnt;
-		vecy /= stepCnt;
-		for (int i = 1; i < stepCnt; ++i) {
-			int tmpx = m_lastMousePoint.X + vecx * i;
-			int tmpy = m_lastMousePoint.Y + vecy * i;
-
-			POINT tmp{};
-			ClientToScreen(m_hwnd, &tmp);
-			tmp.x = tmp.x * 65535ll / screenSize.x;
-			tmp.y = tmp.y * 65535ll / screenSize.y;
-
-			input.type = INPUT_MOUSE;
-			input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-			input.mi.dx = tmp.x;
-			input.mi.dy = tmp.y;
-			SendInput(1, &input, sizeof(INPUT));
-			Threading::Thread::Sleep(10);
-		}
-	}
-	POINT p{ pt.X, pt.Y };
-	ClientToScreen(m_hwnd, &p);
-	p.x = p.x * 65535ll / screenSize.x;
-	p.y = p.y * 65535ll / screenSize.y;
-
-	// ×îÖÕÒÆ¶¯¹â±êµ½Ä¿µÄµØ
-	input.type = INPUT_MOUSE;
-	input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-	input.mi.dx = p.x;
-	input.mi.dy = p.y;
-	SendInput(1, &input, sizeof(INPUT));
-	Threading::Thread::Sleep(10);
-	m_lastMousePoint = pt;
-
-	Threading::Thread::Sleep(10);
-}
-
-void HandOnInput::MoveMouseWheel(bool isDown, unsigned int cnt) {
-	if (!IsOperating()) return;
-
-	RECT workArea = {};
-	POINT screenSize = {};
-	// »ñÈ¡¿ÉÓÃ×ÀÃæ´óÐ¡
-	SystemParametersInfoW(SPI_GETWORKAREA, 0, &workArea, 0);
-	// »ñÈ¡ÆÁÄ»´óÐ¡
-	screenSize.x = GetSystemMetrics(SM_CXSCREEN);
-	screenSize.y = GetSystemMetrics(SM_CYSCREEN);
-
-	RECT rect{ 0 };
-	GetWindowRect(m_hwnd, &rect);
-
-	// °ÑÄ¿±ê´°¿ÚÒÆ¶¯µ½ÆÁÄ»·¶Î§ÄÚ
-	if (rect.right > workArea.right)
-		rect.left -= rect.right - workArea.right;
-	if (rect.left < workArea.left)
-		rect.left = workArea.left;
-	if (rect.bottom > workArea.bottom)
-		rect.top -= rect.bottom - workArea.bottom;
-	if (rect.top < workArea.top)
-		rect.top = workArea.top;
-	SetWindowPos(m_hwnd, NULL, rect.left, rect.top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOACTIVATE);
-
-	INPUT input = {};
-	input.type = INPUT_MOUSE;
-	input.mi.dwFlags = MOUSEEVENTF_WHEEL | MOUSEEVENTF_ABSOLUTE;
-	input.mi.mouseData = isDown ? -WHEEL_DELTA : WHEEL_DELTA;
-	input.mi.dx = m_lastMousePoint.X * 65535ll / screenSize.x;
-	input.mi.dy = m_lastMousePoint.Y * 65535ll / screenSize.y;
-
-	while (cnt-- > 0) {
-		SendInput(1, &input, sizeof(INPUT));
-		Threading::Thread::Sleep(320);
-	}
-
-	return;
-}
-
-Drawing::Point HandOnInput::GetCursorPosition() {
-	return m_lastMousePoint;
-}
-
-void HandOnInput::ClickAt(Drawing::Point target) {
-	if (!IsOperating()) return;
-
-	// Ëõ·Åµ½µ±Ç°¿Í»§Çø´óÐ¡
-	RECT rect{ 0 };
-	GetClientRect(m_hwnd, &rect);
-	Drawing::Point pt(target.X * (rect.right - rect.left) / 960, target.Y * (rect.bottom - rect.top) / 540);
-
-	RECT workArea = {};
-	POINT screenSize = {};
-	// »ñÈ¡¿ÉÓÃ×ÀÃæ´óÐ¡
-	SystemParametersInfoW(SPI_GETWORKAREA, 0, &workArea, 0);
-	// »ñÈ¡ÆÁÄ»´óÐ¡
-	screenSize.x = GetSystemMetrics(SM_CXSCREEN);
-	screenSize.y = GetSystemMetrics(SM_CYSCREEN);
-
-	GetWindowRect(m_hwnd, &rect);
-
-	// °ÑÄ¿±ê´°¿ÚÒÆ¶¯µ½ÆÁÄ»·¶Î§ÄÚ
-	if (rect.right > workArea.right)
-		rect.left -= rect.right - workArea.right;
-	if (rect.left < workArea.left)
-		rect.left = workArea.left;
-	if (rect.bottom > workArea.bottom)
-		rect.top -= rect.bottom - workArea.bottom;
-	if (rect.top < workArea.top)
-		rect.top = workArea.top;
-	SetWindowPos(m_hwnd, NULL, rect.left, rect.top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOACTIVATE);
-
-	INPUT input = {};
-
-	// ÓÐ¾àÀëÊ±Á¬ÐøÒÆ¶¯¹â±ê
-	if (pt != m_lastMousePoint) {
-		int vecx = pt.X - m_lastMousePoint.X;
-		int vecy = pt.Y - m_lastMousePoint.Y;
-		float deltaLength = System::MathF::Sqrt(1.0f * vecx * vecx + vecy * vecy);
-		int stepCnt = (int)System::MathF::Round(System::MathF::Sqrt(deltaLength) / 2.0f) + 1;
-		vecx /= stepCnt;
-		vecy /= stepCnt;
-		for (int i = 1; i < stepCnt; ++i) {
-			int tmpx = m_lastMousePoint.X + vecx * i;
-			int tmpy = m_lastMousePoint.Y + vecy * i;
-
-			POINT tmp{};
-			ClientToScreen(m_hwnd, &tmp);
-			tmp.x = tmp.x * 65535ll / screenSize.x;
-			tmp.y = tmp.y * 65535ll / screenSize.y;
-
-			input.type = INPUT_MOUSE;
-			input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-			input.mi.dx = tmp.x;
-			input.mi.dy = tmp.y;
-			SendInput(1, &input, sizeof(INPUT));
-			Threading::Thread::Sleep(10);
-		}
-	}
-	POINT p{ pt.X, pt.Y };
-	ClientToScreen(m_hwnd, &p);
-	p.x = p.x * 65535ll / screenSize.x;
-	p.y = p.y * 65535ll / screenSize.y;
-
-	// ×îÖÕÒÆ¶¯¹â±êµ½Ä¿µÄµØ
-	input.type = INPUT_MOUSE;
-	input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-	input.mi.dx = p.x;
-	input.mi.dy = p.y;
-	SendInput(1, &input, sizeof(INPUT));
-	m_lastMousePoint = pt;
-	Threading::Thread::Sleep(10);
-
-	// µã»÷
-	input.type = INPUT_MOUSE;
-	input.mi.dwFlags = MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_ABSOLUTE;
-	input.mi.dx = p.x;
-	input.mi.dy = p.y;
-	SendInput(1, &input, sizeof(INPUT));
-
-	Threading::Thread::Sleep(60);
-
-	input.type = INPUT_MOUSE;
-	input.mi.dwFlags = MOUSEEVENTF_LEFTUP | MOUSEEVENTF_ABSOLUTE;
-	input.mi.dx = p.x;
-	input.mi.dy = p.y;
-	SendInput(1, &input, sizeof(INPUT));
-
-	Threading::Thread::Sleep(10);
-}
-
-int HandOnInput::SetUserCursorInterceptionEnabled(bool enabled) {
-	// SendInput do not need hook.
-	m_virtual_hookEnabled = enabled;
-	return 0;
-}
-
-bool HandOnInput::GetUserCursorInterceptionEnabled() {
-	return m_virtual_hookEnabled;
 }
 
 void HandOnInput::Reset() {
@@ -287,6 +72,221 @@ int HandOnInput::SetOnWnd(System::String^ cls, System::String^ title) {
 		return 1;
 	}
 	return SetOnWnd(hwnd);
+}
+
+void HandOnInput::MoveCursorTo(Drawing::Point target) {
+	if (!IsOperating()) return;
+
+	// ç¼©æ”¾åˆ°å®¢æˆ·åŒºå¤§å°
+	RECT rect{ 0 };
+	GetClientRect(m_hwnd, &rect);
+	Drawing::Point pt(target.X * (rect.right - rect.left) / 960, target.Y * (rect.bottom - rect.top) / 540);
+
+	RECT workArea = {};
+	POINT screenSize = {};
+	// èŽ·å–å¯ç”¨æ¡Œé¢å¤§å°
+	SystemParametersInfoW(SPI_GETWORKAREA, 0, &workArea, 0);
+	// èŽ·å–å±å¹•å¤§å°
+	screenSize.x = GetSystemMetrics(SM_CXSCREEN);
+	screenSize.y = GetSystemMetrics(SM_CYSCREEN);
+
+	GetWindowRect(m_hwnd, &rect);
+
+	// æŠŠç›®æ ‡çª—å£ç§»åŠ¨åˆ°å±å¹•èŒƒå›´å†…
+	if (rect.right > workArea.right)
+		rect.left -= rect.right - workArea.right;
+	if (rect.left < workArea.left)
+		rect.left = workArea.left;
+	if (rect.bottom > workArea.bottom)
+		rect.top -= rect.bottom - workArea.bottom;
+	if (rect.top < workArea.top)
+		rect.top = workArea.top;
+	SetWindowPos(m_hwnd, NULL, rect.left, rect.top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOACTIVATE);
+
+	INPUT input = {};
+
+	// æœ‰è·ç¦»æ—¶è¿žç»­ç§»åŠ¨å…‰æ ‡
+	if (pt != m_lastMousePoint) {
+		int vecx = pt.X - m_lastMousePoint.X;
+		int vecy = pt.Y - m_lastMousePoint.Y;
+		float deltaLength = System::MathF::Sqrt(1.0f * vecx * vecx + vecy * vecy);
+		int stepCnt = (int)System::MathF::Round(System::MathF::Sqrt(deltaLength) / 2.0f) + 1;
+		vecx /= stepCnt;
+		vecy /= stepCnt;
+		for (int i = 1; i < stepCnt; ++i) {
+			int tmpx = m_lastMousePoint.X + vecx * i;
+			int tmpy = m_lastMousePoint.Y + vecy * i;
+
+			POINT tmp{};
+			ClientToScreen(m_hwnd, &tmp);
+			tmp.x = tmp.x * 65535ll / screenSize.x;
+			tmp.y = tmp.y * 65535ll / screenSize.y;
+
+			input.type = INPUT_MOUSE;
+			input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+			input.mi.dx = tmp.x;
+			input.mi.dy = tmp.y;
+			SendInput(1, &input, sizeof(INPUT));
+			Threading::Thread::Sleep(10);
+		}
+	}
+	POINT p{ pt.X, pt.Y };
+	ClientToScreen(m_hwnd, &p);
+	p.x = p.x * 65535ll / screenSize.x;
+	p.y = p.y * 65535ll / screenSize.y;
+
+	// æœ€ç»ˆç§»åŠ¨å…‰æ ‡åˆ°ç›®çš„åœ°
+	input.type = INPUT_MOUSE;
+	input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+	input.mi.dx = p.x;
+	input.mi.dy = p.y;
+	SendInput(1, &input, sizeof(INPUT));
+	Threading::Thread::Sleep(10);
+	m_lastMousePoint = pt;
+
+	Threading::Thread::Sleep(10);
+}
+
+void HandOnInput::MoveMouseWheel(bool isDown, unsigned int cnt) {
+	if (!IsOperating()) return;
+
+	RECT workArea = {};
+	POINT screenSize = {};
+	// èŽ·å–å¯ç”¨æ¡Œé¢å¤§å°
+	SystemParametersInfoW(SPI_GETWORKAREA, 0, &workArea, 0);
+	// èŽ·å–å±å¹•å¤§å°
+	screenSize.x = GetSystemMetrics(SM_CXSCREEN);
+	screenSize.y = GetSystemMetrics(SM_CYSCREEN);
+
+	RECT rect{ 0 };
+	GetWindowRect(m_hwnd, &rect);
+
+	// æŠŠç›®æ ‡çª—å£ç§»åŠ¨åˆ°å±å¹•èŒƒå›´å†…
+	if (rect.right > workArea.right)
+		rect.left -= rect.right - workArea.right;
+	if (rect.left < workArea.left)
+		rect.left = workArea.left;
+	if (rect.bottom > workArea.bottom)
+		rect.top -= rect.bottom - workArea.bottom;
+	if (rect.top < workArea.top)
+		rect.top = workArea.top;
+	SetWindowPos(m_hwnd, NULL, rect.left, rect.top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOACTIVATE);
+
+	INPUT input = {};
+	input.type = INPUT_MOUSE;
+	input.mi.dwFlags = MOUSEEVENTF_WHEEL | MOUSEEVENTF_ABSOLUTE;
+	input.mi.mouseData = isDown ? -WHEEL_DELTA : WHEEL_DELTA;
+	input.mi.dx = m_lastMousePoint.X * 65535ll / screenSize.x;
+	input.mi.dy = m_lastMousePoint.Y * 65535ll / screenSize.y;
+
+	while (cnt-- > 0) {
+		SendInput(1, &input, sizeof(INPUT));
+		Threading::Thread::Sleep(320);
+	}
+
+	return;
+}
+
+Drawing::Point HandOnInput::GetCursorPosition() {
+	return m_lastMousePoint;
+}
+
+void HandOnInput::ClickAt(Drawing::Point target) {
+	if (!IsOperating()) return;
+
+	// ç¼©æ”¾åˆ°å½“å‰å®¢æˆ·åŒºå¤§å°
+	RECT rect{ 0 };
+	GetClientRect(m_hwnd, &rect);
+	Drawing::Point pt(target.X * (rect.right - rect.left) / 960, target.Y * (rect.bottom - rect.top) / 540);
+
+	RECT workArea = {};
+	POINT screenSize = {};
+	// èŽ·å–å¯ç”¨æ¡Œé¢å¤§å°
+	SystemParametersInfoW(SPI_GETWORKAREA, 0, &workArea, 0);
+	// èŽ·å–å±å¹•å¤§å°
+	screenSize.x = GetSystemMetrics(SM_CXSCREEN);
+	screenSize.y = GetSystemMetrics(SM_CYSCREEN);
+
+	GetWindowRect(m_hwnd, &rect);
+
+	// æŠŠç›®æ ‡çª—å£ç§»åŠ¨åˆ°å±å¹•èŒƒå›´å†…
+	if (rect.right > workArea.right)
+		rect.left -= rect.right - workArea.right;
+	if (rect.left < workArea.left)
+		rect.left = workArea.left;
+	if (rect.bottom > workArea.bottom)
+		rect.top -= rect.bottom - workArea.bottom;
+	if (rect.top < workArea.top)
+		rect.top = workArea.top;
+	SetWindowPos(m_hwnd, NULL, rect.left, rect.top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOACTIVATE);
+
+	INPUT input = {};
+
+	// æœ‰è·ç¦»æ—¶è¿žç»­ç§»åŠ¨å…‰æ ‡
+	if (pt != m_lastMousePoint) {
+		int vecx = pt.X - m_lastMousePoint.X;
+		int vecy = pt.Y - m_lastMousePoint.Y;
+		float deltaLength = System::MathF::Sqrt(1.0f * vecx * vecx + vecy * vecy);
+		int stepCnt = (int)System::MathF::Round(System::MathF::Sqrt(deltaLength) / 2.0f) + 1;
+		vecx /= stepCnt;
+		vecy /= stepCnt;
+		for (int i = 1; i < stepCnt; ++i) {
+			int tmpx = m_lastMousePoint.X + vecx * i;
+			int tmpy = m_lastMousePoint.Y + vecy * i;
+
+			POINT tmp{};
+			ClientToScreen(m_hwnd, &tmp);
+			tmp.x = tmp.x * 65535ll / screenSize.x;
+			tmp.y = tmp.y * 65535ll / screenSize.y;
+
+			input.type = INPUT_MOUSE;
+			input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+			input.mi.dx = tmp.x;
+			input.mi.dy = tmp.y;
+			SendInput(1, &input, sizeof(INPUT));
+			Threading::Thread::Sleep(10);
+		}
+	}
+	POINT p{ pt.X, pt.Y };
+	ClientToScreen(m_hwnd, &p);
+	p.x = p.x * 65535ll / screenSize.x;
+	p.y = p.y * 65535ll / screenSize.y;
+
+	// æœ€ç»ˆç§»åŠ¨å…‰æ ‡åˆ°ç›®çš„åœ°
+	input.type = INPUT_MOUSE;
+	input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+	input.mi.dx = p.x;
+	input.mi.dy = p.y;
+	SendInput(1, &input, sizeof(INPUT));
+	m_lastMousePoint = pt;
+	Threading::Thread::Sleep(10);
+
+	// ç‚¹å‡»
+	input.type = INPUT_MOUSE;
+	input.mi.dwFlags = MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_ABSOLUTE;
+	input.mi.dx = p.x;
+	input.mi.dy = p.y;
+	SendInput(1, &input, sizeof(INPUT));
+
+	Threading::Thread::Sleep(60);
+
+	input.type = INPUT_MOUSE;
+	input.mi.dwFlags = MOUSEEVENTF_LEFTUP | MOUSEEVENTF_ABSOLUTE;
+	input.mi.dx = p.x;
+	input.mi.dy = p.y;
+	SendInput(1, &input, sizeof(INPUT));
+
+	Threading::Thread::Sleep(10);
+}
+
+int HandOnInput::SetUserCursorInterceptionEnabled(bool enabled) {
+	// SendInput do not need hook.
+	m_virtual_hookEnabled = enabled;
+	return 0;
+}
+
+bool HandOnInput::GetUserCursorInterceptionEnabled() {
+	return m_virtual_hookEnabled;
 }
 
 }

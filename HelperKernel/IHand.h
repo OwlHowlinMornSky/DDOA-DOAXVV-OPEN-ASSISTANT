@@ -1,4 +1,4 @@
-/*
+﻿/*
 *    DDOA-DOAXVV-OPEN-ASSISTANT
 *
 *     Copyright 2023-2025  Tyler Parret True
@@ -20,6 +20,7 @@
 */
 #pragma once
 
+#include "framework.h"
 using namespace System;
 
 namespace HelperKernel {
@@ -27,6 +28,9 @@ namespace HelperKernel {
 public interface class IHand {
 public:
 	bool IsOperating();
+	void Reset();
+	int SetOnWnd(HWND hwnd);
+	int SetOnWnd(System::String^ cls, System::String^ title);
 	
 	void MoveCursorTo(Drawing::Point target);
 	void MoveMouseWheel(bool isDown, unsigned int cnt);
