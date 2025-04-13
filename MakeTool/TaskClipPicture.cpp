@@ -165,3 +165,36 @@ void TaskClipPicture(std::vector<std::string>& filenames) {
 	TaskOver();
 	return;
 }
+
+void TaskMask(std::vector<std::string>& filenames) {
+	static std::string maskPath;
+	if (maskPath.empty()) {
+		maskPath = filenames[0];
+		TaskOver();
+		return;
+	}
+
+	cv::Mat mask = cv::imread(maskPath);
+	cv::Mat temp = cv::imread(filenames[0]);
+
+	maskPath.clear();
+
+	//if (temp.empty())
+	//	return 1;
+
+	cv::cvtColor(mask, mask, cv::COLOR_BGRA2GRAY);
+	cv::threshold(mask, mask, 8.0, 255.0, cv::ThresholdTypes::THRESH_BINARY);
+
+	cv::Mat res;
+	temp.copyTo(res, mask);
+	//cv::imshow("test1", res);
+
+	//cv::resize(mat, mat, mat.size() * 4, 0.0, 0.0, InterpolationFlags::INTER_NEAREST);
+	//cv::imshow("test", mask);
+
+	cv::imwrite("finalmask.png", mask);
+	cv::imwrite("finaltemp.png", res);
+
+	cv::waitKey(0);
+	TaskOver();
+}
