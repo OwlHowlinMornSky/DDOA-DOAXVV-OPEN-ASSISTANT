@@ -248,6 +248,7 @@ namespace Helper.Step {
 
 		private void FirstNavigate() {
 			bool res = Navigate.NavigateTo(Navigate.Page.Challenge);
+			IStep.TaskSleep(TimeSpan.FromSeconds(3), m_ct);
 			bool needManual = false;
 			switch (Settings.challenge.PlayMatch) {
 			case 1: // 新比赛
