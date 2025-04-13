@@ -48,6 +48,8 @@ void OnDropFiles(HWND hwnd, HDROP hDropInfo) {
 	if (g_strings.size() == 1) {
 		std::thread th(TaskClipPicture, std::ref(g_strings));
 		th.detach();
+		//std::thread th(TaskMask, std::ref(g_strings));
+		//th.detach();
 	}
 	else {
 

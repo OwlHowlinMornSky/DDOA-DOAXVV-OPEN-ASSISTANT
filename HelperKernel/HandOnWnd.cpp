@@ -1,4 +1,4 @@
-/*
+Ôªø/*
 *    DDOA-DOAXVV-OPEN-ASSISTANT
 *
 *     Copyright 2023-2025  Tyler Parret True
@@ -39,114 +39,6 @@ bool HandOnWnd::IsOperating() {
 	return NULL != m_hwnd;
 }
 
-void HandOnWnd::MoveCursorTo(Drawing::Point target) {
-	if (!IsOperating()) return;
-
-	// Àı∑≈µΩøÕªß«¯¥Û–°
-	RECT rect{ 0 };
-	GetClientRect(m_hwnd, &rect);
-	Drawing::Point pt(target.X * (rect.right - rect.left) / 960, target.Y * (rect.bottom - rect.top) / 540);
-
-	PostMessageW(m_hwnd, WM_SETFOCUS, 0, 0);
-	// ”–æ‡¿Î ±¡¨–¯“∆∂Øπ‚±Í
-	if (pt != m_lastMousePoint) {
-		int vecx = pt.X - m_lastMousePoint.X;
-		int vecy = pt.Y - m_lastMousePoint.Y;
-		float deltaLength = System::MathF::Sqrt(1.0f * vecx * vecx + vecy * vecy);
-		int stepCnt = (int)System::MathF::Round(System::MathF::Sqrt(deltaLength) / 2.0f) + 1;
-		vecx /= stepCnt;
-		vecy /= stepCnt;
-		for (int i = 1; i < stepCnt; ++i) {
-			int tmpx = m_lastMousePoint.X + vecx * i;
-			int tmpy = m_lastMousePoint.Y + vecy * i;
-			PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(tmpx, tmpy));
-			Threading::Thread::Sleep(10);
-		}
-	}
-	// ◊Ó÷’“∆∂Øπ‚±ÍµΩƒøµƒµÿ
-	PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(pt.X, pt.Y));
-	m_lastMousePoint = pt;
-
-	Threading::Thread::Sleep(20);
-}
-
-void HandOnWnd::MoveMouseWheel(bool isDown, unsigned int cnt) {
-	if (!IsOperating()) return;
-
-	if (isDown) {
-		while (cnt-- > 0) {
-			PostMessageW(m_hwnd, WM_MOUSEWHEEL, MAKEWPARAM(MK_CONTROL, -WHEEL_DELTA), MAKELPARAM(m_lastMousePoint.X, m_lastMousePoint.Y));
-			Threading::Thread::Sleep(320);
-		}
-	}
-	else {
-		while (cnt-- > 0) {
-			PostMessageW(m_hwnd, WM_MOUSEWHEEL, MAKEWPARAM(MK_CONTROL, WHEEL_DELTA), MAKELPARAM(m_lastMousePoint.X, m_lastMousePoint.Y));
-			Threading::Thread::Sleep(320);
-		}
-	}
-
-	return;
-}
-
-Drawing::Point HandOnWnd::GetCursorPosition() {
-	return m_lastMousePoint;
-}
-
-void HandOnWnd::ClickAt(Drawing::Point target) {
-	if (!IsOperating()) return;
-
-	// Àı∑≈µΩµ±«∞øÕªß«¯¥Û–°
-	RECT rect{ 0 };
-	GetClientRect(m_hwnd, &rect);
-	Drawing::Point pt(target.X * (rect.right - rect.left) / 960, target.Y * (rect.bottom - rect.top) / 540);
-
-	PostMessageW(m_hwnd, WM_SETFOCUS, 0, 0);
-	// ”–æ‡¿Î ±¡¨–¯“∆∂Øπ‚±Í
-	if (pt != m_lastMousePoint) {
-		int vecx = pt.X - m_lastMousePoint.X;
-		int vecy = pt.Y - m_lastMousePoint.Y;
-		float deltaLength = System::MathF::Sqrt(1.0f * vecx * vecx + vecy * vecy);
-		int stepCnt = (int)System::MathF::Round(System::MathF::Sqrt(deltaLength) / 2.0f) + 1;
-		vecx /= stepCnt;
-		vecy /= stepCnt;
-		for (int i = 1; i < stepCnt; ++i) {
-			int tmpx = m_lastMousePoint.X + vecx * i;
-			int tmpy = m_lastMousePoint.Y + vecy * i;
-			PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(tmpx, tmpy));
-			Threading::Thread::Sleep(10);
-		}
-	}
-	// ◊Ó÷’“∆∂Øπ‚±ÍµΩƒøµƒµÿ
-	PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(pt.X, pt.Y));
-	m_lastMousePoint = pt;
-	Threading::Thread::Sleep(10);
-
-	// µ„ª˜
-	PostMessageW(m_hwnd, WM_LBUTTONDOWN, MK_LBUTTON | MK_CONTROL, MAKELPARAM(pt.X, pt.Y));
-	Threading::Thread::Sleep(60);
-	PostMessageW(m_hwnd, WM_LBUTTONUP, 0, MAKELPARAM(pt.X, pt.Y));
-
-	Threading::Thread::Sleep(10);
-}
-
-int HandOnWnd::SetUserCursorInterceptionEnabled(bool enabled) {
-	if (enabled) {
-		if (GetUserCursorInterceptionEnabled())
-			return 0;
-		return TryHook();// IHelper::instance()->GuiLogF(ReturnMsgEnum::HookFailed);
-	}
-	else {
-		if (GetUserCursorInterceptionEnabled())
-			DropHook();
-	}
-	return 0;
-}
-
-bool HandOnWnd::GetUserCursorInterceptionEnabled() {
-	return NULL != m_hhook;
-}
-
 void HandOnWnd::Reset() {
 	DropHook();
 	m_hwnd = NULL;
@@ -184,6 +76,114 @@ int HandOnWnd::SetOnWnd(System::String^ cls, System::String^ title) {
 		return 1;
 	}
 	return SetOnWnd(hwnd);
+}
+
+void HandOnWnd::MoveCursorTo(Drawing::Point target) {
+	if (!IsOperating()) return;
+
+	// Áº©ÊîæÂà∞ÂÆ¢Êà∑Âå∫Â§ßÂ∞è
+	RECT rect{ 0 };
+	GetClientRect(m_hwnd, &rect);
+	Drawing::Point pt(target.X * (rect.right - rect.left) / 960, target.Y * (rect.bottom - rect.top) / 540);
+
+	PostMessageW(m_hwnd, WM_SETFOCUS, 0, 0);
+	// ÊúâË∑ùÁ¶ªÊó∂ËøûÁª≠ÁßªÂä®ÂÖâÊ†á
+	if (pt != m_lastMousePoint) {
+		int vecx = pt.X - m_lastMousePoint.X;
+		int vecy = pt.Y - m_lastMousePoint.Y;
+		float deltaLength = System::MathF::Sqrt(1.0f * vecx * vecx + vecy * vecy);
+		int stepCnt = (int)System::MathF::Round(System::MathF::Sqrt(deltaLength) / 2.0f) + 1;
+		vecx /= stepCnt;
+		vecy /= stepCnt;
+		for (int i = 1; i < stepCnt; ++i) {
+			int tmpx = m_lastMousePoint.X + vecx * i;
+			int tmpy = m_lastMousePoint.Y + vecy * i;
+			PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(tmpx, tmpy));
+			Threading::Thread::Sleep(10);
+		}
+	}
+	// ÊúÄÁªàÁßªÂä®ÂÖâÊ†áÂà∞ÁõÆÁöÑÂú∞
+	PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(pt.X, pt.Y));
+	m_lastMousePoint = pt;
+
+	Threading::Thread::Sleep(20);
+}
+
+void HandOnWnd::MoveMouseWheel(bool isDown, unsigned int cnt) {
+	if (!IsOperating()) return;
+
+	if (isDown) {
+		while (cnt-- > 0) {
+			PostMessageW(m_hwnd, WM_MOUSEWHEEL, MAKEWPARAM(MK_CONTROL, -WHEEL_DELTA), MAKELPARAM(m_lastMousePoint.X, m_lastMousePoint.Y));
+			Threading::Thread::Sleep(320);
+		}
+	}
+	else {
+		while (cnt-- > 0) {
+			PostMessageW(m_hwnd, WM_MOUSEWHEEL, MAKEWPARAM(MK_CONTROL, WHEEL_DELTA), MAKELPARAM(m_lastMousePoint.X, m_lastMousePoint.Y));
+			Threading::Thread::Sleep(320);
+		}
+	}
+
+	return;
+}
+
+Drawing::Point HandOnWnd::GetCursorPosition() {
+	return m_lastMousePoint;
+}
+
+void HandOnWnd::ClickAt(Drawing::Point target) {
+	if (!IsOperating()) return;
+
+	// Áº©ÊîæÂà∞ÂΩìÂâçÂÆ¢Êà∑Âå∫Â§ßÂ∞è
+	RECT rect{ 0 };
+	GetClientRect(m_hwnd, &rect);
+	Drawing::Point pt(target.X * (rect.right - rect.left) / 960, target.Y * (rect.bottom - rect.top) / 540);
+
+	PostMessageW(m_hwnd, WM_SETFOCUS, 0, 0);
+	// ÊúâË∑ùÁ¶ªÊó∂ËøûÁª≠ÁßªÂä®ÂÖâÊ†á
+	if (pt != m_lastMousePoint) {
+		int vecx = pt.X - m_lastMousePoint.X;
+		int vecy = pt.Y - m_lastMousePoint.Y;
+		float deltaLength = System::MathF::Sqrt(1.0f * vecx * vecx + vecy * vecy);
+		int stepCnt = (int)System::MathF::Round(System::MathF::Sqrt(deltaLength) / 2.0f) + 1;
+		vecx /= stepCnt;
+		vecy /= stepCnt;
+		for (int i = 1; i < stepCnt; ++i) {
+			int tmpx = m_lastMousePoint.X + vecx * i;
+			int tmpy = m_lastMousePoint.Y + vecy * i;
+			PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(tmpx, tmpy));
+			Threading::Thread::Sleep(10);
+		}
+	}
+	// ÊúÄÁªàÁßªÂä®ÂÖâÊ†áÂà∞ÁõÆÁöÑÂú∞
+	PostMessageW(m_hwnd, WM_MOUSEMOVE, MK_CONTROL, MAKELPARAM(pt.X, pt.Y));
+	m_lastMousePoint = pt;
+	Threading::Thread::Sleep(10);
+
+	// ÁÇπÂáª
+	PostMessageW(m_hwnd, WM_LBUTTONDOWN, MK_LBUTTON | MK_CONTROL, MAKELPARAM(pt.X, pt.Y));
+	Threading::Thread::Sleep(60);
+	PostMessageW(m_hwnd, WM_LBUTTONUP, 0, MAKELPARAM(pt.X, pt.Y));
+
+	Threading::Thread::Sleep(10);
+}
+
+int HandOnWnd::SetUserCursorInterceptionEnabled(bool enabled) {
+	if (enabled) {
+		if (GetUserCursorInterceptionEnabled())
+			return 0;
+		return TryHook();// IHelper::instance()->GuiLogF(ReturnMsgEnum::HookFailed);
+	}
+	else {
+		if (GetUserCursorInterceptionEnabled())
+			DropHook();
+	}
+	return 0;
+}
+
+bool HandOnWnd::GetUserCursorInterceptionEnabled() {
+	return NULL != m_hhook;
 }
 
 int HandOnWnd::InitHookMod() {

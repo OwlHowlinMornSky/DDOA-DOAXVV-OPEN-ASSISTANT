@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    DDOA-DOAXVV-OPEN-ASSISTANT
 *
 *     Copyright 2023-2025  Tyler Parret True
@@ -21,7 +21,6 @@
 #pragma once
 
 #include "IHand.h"
-#include "framework.h"
 
 namespace HelperKernel {
 
@@ -32,6 +31,9 @@ public:
 
 public:
 	virtual bool IsOperating();
+	virtual void Reset();
+	virtual int SetOnWnd(HWND hwnd);
+	virtual int SetOnWnd(System::String^ cls, System::String^ title);
 
 	virtual void MoveCursorTo(Drawing::Point target);
 	virtual void MoveMouseWheel(bool isDown, unsigned int cnt);
@@ -43,13 +45,10 @@ public:
 	virtual bool GetUserCursorInterceptionEnabled();
 
 public:
-	void Reset();
-	int SetOnWnd(HWND hwnd);
-	int SetOnWnd(System::String^ cls, System::String^ title);
 
 private:
-	HWND m_hwnd; // ´°¿Ú¾ä±ú
-	Drawing::Point m_lastMousePoint; // Êó±êÎ»ÖÃ¼ÇÂ¼¡£
+	HWND m_hwnd; // çª—å£å¥æŸ„
+	Drawing::Point m_lastMousePoint; // é¼ æ ‡ä½ç½®è®°å½•ã€‚
 	bool m_virtual_hookEnabled;
 };
 

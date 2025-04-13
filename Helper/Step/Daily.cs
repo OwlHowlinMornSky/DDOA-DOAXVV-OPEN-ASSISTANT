@@ -37,6 +37,7 @@ namespace Helper.Step {
 				return;
 			_disposed = true;
 			if (disposing) {
+				m_homeAct.Dispose();
 				m_homeDailyBtn.Dispose();
 				m_homeDailyDot.Dispose();
 				m_checkBtn.Dispose();
@@ -51,6 +52,7 @@ namespace Helper.Step {
 			}
 		}
 
+		private readonly Pattern m_homeAct;
 		private readonly Pattern m_homeDailyBtn;
 		private readonly Pattern m_homeDailyDot;
 		private readonly Pattern m_checkBtn;
@@ -66,15 +68,16 @@ namespace Helper.Step {
 		private CancellationToken m_ct;
 
 		public Daily() {
-			m_homeDailyBtn = PatternManager.CreatePattern("daily/checkBtn");
-			m_homeDailyDot = PatternManager.CreatePattern("daily/checkDot");
+			m_homeAct = PatternManager.CreatePattern("daily/act");
+			m_homeDailyBtn = PatternManager.CreatePattern("daily/checkEntrance");
+			m_homeDailyDot = PatternManager.CreatePattern("daily/checkDotN");
 			m_checkBtn = PatternManager.CreatePattern("daily/checkClk");
 			m_checkBdTitle = PatternManager.CreatePattern("daily/chkBdTitle");
 			m_checkOk = PatternManager.CreatePattern("daily/checkOK");
 			//CoreLog() << "Task_Daily: Check: Load Templates Over." << std::endl;
 
-			m_shotEntrance = PatternManager.CreatePattern("daily/shotEntrance");
-			m_shotDot = PatternManager.CreatePattern("daily/shotDot");
+			m_shotEntrance = PatternManager.CreatePattern("daily/shotEntranceN");
+			m_shotDot = PatternManager.CreatePattern("daily/shotDotN");
 			m_shotBack = PatternManager.CreatePattern("daily/shotBack");
 			m_shot = PatternManager.CreatePattern("daily/shotShot");
 			m_homePage = PatternManager.CreatePattern("homeSpec");
@@ -141,13 +144,14 @@ namespace Helper.Step {
 
 		private void DoCheck() {
 			if (IsDailCheckDone()) {
+				WndHandler.Hand.MoveCursorTo(new Point(0, 0));
+				SwitchActPanel();
 				//CoreLog() << "Task_Daily: Check: Exit: Done." << std::endl;
 				return;
 			}
 			//CoreLog() << "Task_Daily: Check: Not Done." << std::endl;
 			if (!OpenDailyCheckBoard()) {
 				//CoreLog() << "Task_Daily: Check: Cannot Open." << std::endl;
-
 
 				IStep.Log(
 					GUICallbacks.LogInfo.Type.Error,
@@ -188,6 +192,7 @@ namespace Helper.Step {
 				//r_helper->GuiLogF_I(ReturnMsgEnum::TaskErr_Task, TaskEnum::Daily);
 				return;
 			}
+			WndHandler.Hand.MoveCursorTo(new Point(0, 0));
 			if (!DoShotInPage()) {
 				//CoreLog() << "Task_Daily: Shot: Cannot Shot." << std::endl;
 				IStep.Log(
@@ -207,20 +212,36 @@ namespace Helper.Step {
 			return;
 		}
 
+		private bool SwitchActPanel() {
+			if (!WndHandler.WaitFor(m_homeAct)) {
+				// 超时
+				return false;
+			}
+
+			WndHandler.ClickAt(m_homeAct.GetSpecialPointInResultRect(0));
+
+			IStep.TaskSleep(TimeSpan.FromSeconds(1), m_ct);
+
+			return true;
+		}
+
 		private bool IsDailCheckDone() {
 			Navigate.NavigateTo(Navigate.Page.Home);
 
+			if (!SwitchActPanel()) {
+				return true;
+			}
 			if (!WndHandler.WaitFor(m_homeDailyBtn)) {
 				// 超时
-				return false;
+				return true;
 			}
 
 			Rectangle rect = new(m_homeDailyBtn.GetPreviousMatchedRect().Location, m_homeDailyDot.GetSearchRect().Size);
 
 			WndHandler.WaitOneFrame();
 			bool res = m_homeDailyDot.TryMatch(WndHandler.Eye, rect);
-
 			return !res;
+
 		}
 
 		private bool OpenDailyCheckBoard() {
