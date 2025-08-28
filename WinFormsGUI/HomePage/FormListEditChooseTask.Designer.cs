@@ -66,8 +66,7 @@
 			// 
 			// FormListEditChooseTask
 			// 
-			AutoScaleDimensions = new SizeF(7F, 17F);
-			AutoScaleMode = AutoScaleMode.Font;
+			AutoScaleMode = AutoScaleMode.Inherit;
 			ClientSize = new Size(344, 301);
 			Controls.Add(button2);
 			Controls.Add(button1);

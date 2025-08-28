@@ -21,6 +21,7 @@
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <RepositoryUrl>https://github.com/OwlHowlinMornSky/DDOA-DOAXVV-OPEN-ASSISTANT</RepositoryUrl>
+	<ForceDesignerDPIUnaware>true</ForceDesignerDPIUnaware>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />

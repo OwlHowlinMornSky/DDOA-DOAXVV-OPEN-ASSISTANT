@@ -43,6 +43,7 @@
 			// 
 			// gpBox_AwardMatch
 			// 
+			gpBox_AwardMatch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			gpBox_AwardMatch.Controls.Add(radioBtn_AwardIgnore);
 			gpBox_AwardMatch.Controls.Add(radioBtn_AwardPlay);
 			gpBox_AwardMatch.Controls.Add(radioBtn_AwardNo);
@@ -91,6 +92,7 @@
 			// 
 			// gpBox_TargetMatch
 			// 
+			gpBox_TargetMatch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			gpBox_TargetMatch.Controls.Add(numericUpDown1);
 			gpBox_TargetMatch.Controls.Add(comboBox1);
 			gpBox_TargetMatch.Controls.Add(radioButton_activity);
@@ -105,6 +107,7 @@
 			// 
 			// numericUpDown1
 			// 
+			numericUpDown1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			numericUpDown1.Location = new Point(141, 76);
 			numericUpDown1.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
 			numericUpDown1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
@@ -116,6 +119,7 @@
 			// 
 			// comboBox1
 			// 
+			comboBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			comboBox1.FormattingEnabled = true;
 			comboBox1.Items.AddRange(new object[] { "-", "E", "D", "C", "B", "A", "S" });
 			comboBox1.Location = new Point(83, 74);
@@ -195,8 +199,7 @@
 			// 
 			// UserControlSetForChallenge
 			// 
-			AutoScaleDimensions = new SizeF(7F, 17F);
-			AutoScaleMode = AutoScaleMode.Font;
+			AutoScaleMode = AutoScaleMode.Inherit;
 			Controls.Add(checkBox_autoUseDrink);
 			Controls.Add(checkBox_PauseForMannual);
 			Controls.Add(checkBox_useCamFP);

@@ -52,8 +52,7 @@
 			// 
 			// UserControlSettings
 			// 
-			AutoScaleDimensions = new SizeF(7F, 17F);
-			AutoScaleMode = AutoScaleMode.Font;
+			AutoScaleMode = AutoScaleMode.Inherit;
 			Controls.Add(panel1);
 			Controls.Add(listBox1);
 			Name = "UserControlSettings";

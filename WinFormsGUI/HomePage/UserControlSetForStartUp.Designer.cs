@@ -23,8 +23,13 @@
 		/// 使用代码编辑器修改此方法的内容。
 		/// </summary>
 		private void InitializeComponent() {
-			components = new System.ComponentModel.Container();
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			SuspendLayout();
+			// 
+			// UserControlSetForStartUp
+			// 
+			AutoScaleMode = AutoScaleMode.Inherit;
+			Name = "UserControlSetForStartUp";
+			ResumeLayout(false);
 		}
 
 		#endregion

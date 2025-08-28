@@ -69,8 +69,7 @@
 			// 
 			// UserControlSettingsWork
 			// 
-			AutoScaleDimensions = new SizeF(7F, 17F);
-			AutoScaleMode = AutoScaleMode.Font;
+			AutoScaleMode = AutoScaleMode.Inherit;
 			Controls.Add(chkBox_SetScreenOn);
 			Controls.Add(chkBox_SetAwake);
 			Controls.Add(chkBox_SetShow);

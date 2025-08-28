@@ -66,8 +66,7 @@
 			// 
 			// UserControlSettingsGUI
 			// 
-			AutoScaleDimensions = new SizeF(7F, 17F);
-			AutoScaleMode = AutoScaleMode.Font;
+			AutoScaleMode = AutoScaleMode.Inherit;
 			Controls.Add(chkBox_SetHideToTray);
 			Controls.Add(chkBox_SetNotify);
 			Controls.Add(chkBox_SetDisableClose);

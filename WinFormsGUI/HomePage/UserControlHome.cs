@@ -209,13 +209,12 @@ namespace WinFormsGUI {
 		/// 把左侧第一列内容在其panel中居中
 		/// </summary>
 		private void SetListMiddle() {
-			userControlList.Left = (panel_leftCtrl.Width - userControlList.Width) / 2;
 			if (button_Resume.Visible) {
-				button_Main.Left = panel_leftCtrl.Width / 2 - button_Main.Width - 2;
-				button_Resume.Left = panel_leftCtrl.Width / 2 + 2;
+				button_Main.Left = panel1.Width / 2 - button_Main.Width - 2;
+				button_Resume.Left = panel1.Width / 2 + 2;
 			}
 			else {
-				button_Main.Left = (panel_leftCtrl.Width - button_Main.Width) / 2;
+				button_Main.Left = (panel1.Width - button_Main.Width) / 2;
 			}
 		}
 
@@ -238,6 +237,7 @@ namespace WinFormsGUI {
 				var list = userControlList.GetEnabledList();
 				if (list.Count == 0) {
 					Log(Strings.Main.TaskListNotSelected);
+					button_Main.Enabled = true;
 					break;
 				}
 
@@ -274,6 +274,5 @@ namespace WinFormsGUI {
 			button_Resume.Visible = false;
 			SetListMiddle();
 		}
-
 	}
 }

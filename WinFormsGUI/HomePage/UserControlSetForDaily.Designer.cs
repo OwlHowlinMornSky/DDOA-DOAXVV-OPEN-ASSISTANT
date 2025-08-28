@@ -51,8 +51,7 @@
 			// 
 			// UserControlSetForDaily
 			// 
-			AutoScaleDimensions = new SizeF(7F, 17F);
-			AutoScaleMode = AutoScaleMode.Font;
+			AutoScaleMode = AutoScaleMode.Inherit;
 			Controls.Add(checkBox_camShot);
 			Controls.Add(checkBox_check);
 			Name = "UserControlSetForDaily";
