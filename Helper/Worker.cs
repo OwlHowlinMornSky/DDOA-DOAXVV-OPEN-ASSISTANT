@@ -23,9 +23,9 @@ namespace Helper {
 	public static class Worker {
 
 		private class TaskLock() {
-			public bool isRunning = false;
 			public bool isPaused = false;
 			public CancellationTokenSource? ctSrc = null;
+			public Task? task = null;
 		}
 		private static readonly TaskLock m_taskLock = new();
 
@@ -33,7 +33,7 @@ namespace Helper {
 
 		public static bool IsRunning() {
 			lock (m_taskLock) {
-				return m_taskLock.isRunning;
+				return !(m_taskLock.task?.IsCompleted ?? true);
 			}
 		}
 
@@ -54,14 +54,14 @@ namespace Helper {
 				throw new WorkNotCompletedException();
 			CancellationToken token;
 			lock (m_taskLock) {
-				m_taskLock.isRunning = true;
 				m_taskLock.ctSrc = new();
 				token = m_taskLock.ctSrc.Token;
+				m_taskLock.task = Task.Run(() => { Work(steps, token); }, token);
 			}
-			await Task.Run(() => { Work(steps, token); }, token);
+			await m_taskLock.task;
 			lock (m_taskLock) {
+				m_taskLock.task = null;
 				m_taskLock.ctSrc = null;
-				m_taskLock.isRunning = false;
 			}
 			return;
 		}

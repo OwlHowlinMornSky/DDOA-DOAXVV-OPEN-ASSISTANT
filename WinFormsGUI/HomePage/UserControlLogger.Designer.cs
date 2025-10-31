@@ -63,8 +63,7 @@
 			// 
 			// UserControlLogger
 			// 
-			AutoScaleDimensions = new SizeF(7F, 17F);
-			AutoScaleMode = AutoScaleMode.Font;
+			AutoScaleMode = AutoScaleMode.Inherit;
 			AutoSize = true;
 			ContextMenuStrip = contextMenuStrip1;
 			Controls.Add(listBox1);

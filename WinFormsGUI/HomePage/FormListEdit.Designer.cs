@@ -165,8 +165,7 @@
 			// 
 			// FormListEdit
 			// 
-			AutoScaleDimensions = new SizeF(7F, 17F);
-			AutoScaleMode = AutoScaleMode.Font;
+			AutoScaleMode = AutoScaleMode.Inherit;
 			ClientSize = new Size(344, 381);
 			Controls.Add(button_reset);
 			Controls.Add(button_clearAll);

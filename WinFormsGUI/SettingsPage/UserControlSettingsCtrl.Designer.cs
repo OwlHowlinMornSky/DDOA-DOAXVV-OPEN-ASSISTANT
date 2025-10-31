@@ -81,8 +81,7 @@
 			// 
 			// UserControlSettingsCtrl
 			// 
-			AutoScaleDimensions = new SizeF(7F, 17F);
-			AutoScaleMode = AutoScaleMode.Font;
+			AutoScaleMode = AutoScaleMode.Inherit;
 			Controls.Add(checkBox_Hook);
 			Controls.Add(gpBox_CtrlSet);
 			Name = "UserControlSettingsCtrl";

@@ -38,17 +38,17 @@
 			// 
 			// flowLayoutPanel1
 			// 
-			flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
 			flowLayoutPanel1.Location = new Point(0, 0);
 			flowLayoutPanel1.Name = "flowLayoutPanel1";
-			flowLayoutPanel1.Size = new Size(180, 24);
+			flowLayoutPanel1.Size = new Size(180, 180);
 			flowLayoutPanel1.TabIndex = 3;
 			flowLayoutPanel1.DoubleClick += FlowLayoutPanel1_DoubleClick;
 			// 
 			// button_all
 			// 
 			button_all.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-			button_all.Location = new Point(4, 32);
+			button_all.Location = new Point(4, 146);
 			button_all.Name = "button_all";
 			button_all.Size = new Size(85, 30);
 			button_all.TabIndex = 4;
@@ -59,7 +59,7 @@
 			// button_clear
 			// 
 			button_clear.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-			button_clear.Location = new Point(91, 32);
+			button_clear.Location = new Point(91, 146);
 			button_clear.Name = "button_clear";
 			button_clear.Size = new Size(85, 30);
 			button_clear.TabIndex = 5;
@@ -72,53 +72,50 @@
 			contextMenuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem_Edit, toolStripSeparator1, toolStripMenuItem_All, toolStripMenuItem_Clear, toolStripMenuItem_Inverse });
 			contextMenuStrip1.Name = "contextMenuStrip1";
 			contextMenuStrip1.ShowImageMargin = false;
-			contextMenuStrip1.Size = new Size(156, 120);
+			contextMenuStrip1.Size = new Size(76, 98);
 			// 
 			// toolStripMenuItem_Edit
 			// 
 			toolStripMenuItem_Edit.Name = "toolStripMenuItem_Edit";
-			toolStripMenuItem_Edit.Size = new Size(155, 22);
+			toolStripMenuItem_Edit.Size = new Size(75, 22);
 			toolStripMenuItem_Edit.Text = "编辑";
 			toolStripMenuItem_Edit.Click += OnClickEditList;
 			// 
 			// toolStripSeparator1
 			// 
 			toolStripSeparator1.Name = "toolStripSeparator1";
-			toolStripSeparator1.Size = new Size(152, 6);
+			toolStripSeparator1.Size = new Size(72, 6);
 			// 
 			// toolStripMenuItem_All
 			// 
 			toolStripMenuItem_All.Name = "toolStripMenuItem_All";
-			toolStripMenuItem_All.Size = new Size(155, 22);
+			toolStripMenuItem_All.Size = new Size(75, 22);
 			toolStripMenuItem_All.Text = "全选";
 			toolStripMenuItem_All.Click += OnClickChooseAll;
 			// 
 			// toolStripMenuItem_Clear
 			// 
 			toolStripMenuItem_Clear.Name = "toolStripMenuItem_Clear";
-			toolStripMenuItem_Clear.Size = new Size(155, 22);
+			toolStripMenuItem_Clear.Size = new Size(75, 22);
 			toolStripMenuItem_Clear.Text = "清空";
 			toolStripMenuItem_Clear.Click += OnClickClearList;
 			// 
 			// toolStripMenuItem_Inverse
 			// 
 			toolStripMenuItem_Inverse.Name = "toolStripMenuItem_Inverse";
-			toolStripMenuItem_Inverse.Size = new Size(155, 22);
+			toolStripMenuItem_Inverse.Size = new Size(75, 22);
 			toolStripMenuItem_Inverse.Text = "反选";
 			toolStripMenuItem_Inverse.Click += ToolStripMenuItem_Inverse_Click;
 			// 
 			// UserControlList
 			// 
-			AutoScaleDimensions = new SizeF(96F, 96F);
-			AutoScaleMode = AutoScaleMode.Dpi;
+			AutoScaleMode = AutoScaleMode.Inherit;
 			ContextMenuStrip = contextMenuStrip1;
 			Controls.Add(button_clear);
 			Controls.Add(button_all);
 			Controls.Add(flowLayoutPanel1);
-			MaximumSize = new Size(180, 0);
-			MinimumSize = new Size(180, 42);
 			Name = "UserControlList";
-			Size = new Size(180, 66);
+			Size = new Size(180, 180);
 			Load += UserControlList_Load;
 			contextMenuStrip1.ResumeLayout(false);
 			ResumeLayout(false);

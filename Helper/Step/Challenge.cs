@@ -252,6 +252,15 @@ namespace Helper.Step {
 			bool needManual = false;
 			switch (Settings.challenge.PlayMatch) {
 			case 1: // 新比赛
+				if (!res) {
+					needManual = true;
+					break;
+				}
+				if (!WndHandler.WaitFor(temp_chaBar, TimeSpan.FromSeconds(3))) {
+					needManual = true;
+					break;
+				}
+				WndHandler.ClickAt(temp_chaBar.GetSpecialPointInResultRect(0));
 				if (!WndHandler.WaitFor(temp_newFight, TimeSpan.FromSeconds(1)))
 					needManual = true;
 				break;
@@ -363,12 +372,22 @@ namespace Helper.Step {
 				case Navigate.Page.MatchResult:
 					break;
 				default:
+					if (!res) {
+						needManual = true;
+						break;
+					}
+					if (!WndHandler.WaitFor(temp_chaBar, TimeSpan.FromSeconds(3))) {
+						needManual = true;
+						break;
+					}
+					WndHandler.ClickAt(temp_chaBar.GetSpecialPointInResultRect(0));
 					if (!WndHandler.WaitFor(temp_lastFight, TimeSpan.FromSeconds(1)))
 						needManual = true;
 					break;
 				}
 				break;
 			}
+			WndHandler.Hand.MoveCursorTo(new Point(0, 0));
 			if (needManual) {
 				if (Settings.challenge.AskForManual) {
 					WndHandler.Reset();

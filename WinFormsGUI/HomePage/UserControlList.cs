@@ -111,6 +111,8 @@ namespace WinFormsGUI {
 			m_listTasks = list;
 			flowLayoutPanel1.Controls.Clear();
 			int cnt = 0;
+
+			int btnSize = (int)(24.0f * DeviceDpi / 96);
 			foreach (var i in list) {
 				ListItemUserData data = new() {
 					coreTaskEnum = i,
@@ -118,10 +120,11 @@ namespace WinFormsGUI {
 				};
 				cnt++;
 
-				var checkBox = new CheckBox() {
+				var checkBox = new CheckBox {
 					DataContext = data,
-					Width = 135,
+					Width = (int)float.Floor(flowLayoutPanel1.Width * 0.75f),
 					Text = Strings.Main.ResourceManager.GetString("Task" + i.ToString("000")),
+					Height = btnSize
 				};
 				checkBox.CheckedChanged += OnListCheckBoxChanged;
 				checkBox.MouseEnter += OnListCheckBoxEnter;
@@ -130,8 +133,8 @@ namespace WinFormsGUI {
 
 				var radioBtn = new RadioButton() {
 					DataContext = data,
-					Width = 24,
-					Height = 24,
+					Width = btnSize,
+					Height = btnSize,
 					Image = Resources.Img.set0,
 					Appearance = Appearance.Button,
 				};

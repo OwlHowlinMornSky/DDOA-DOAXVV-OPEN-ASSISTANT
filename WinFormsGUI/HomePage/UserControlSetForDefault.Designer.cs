@@ -27,8 +27,7 @@
 			// 
 			// UserControlSetForDefault
 			// 
-			AutoScaleDimensions = new SizeF(7F, 17F);
-			AutoScaleMode = AutoScaleMode.Font;
+			AutoScaleMode = AutoScaleMode.Inherit;
 			Name = "UserControlSetForDefault";
 			ResumeLayout(false);
 		}
