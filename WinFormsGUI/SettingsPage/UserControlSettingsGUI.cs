@@ -28,11 +28,11 @@ namespace WinFormsGUI.SettingsPage {
 		private void UserControlSettingsGUI_Load(object sender, EventArgs e) {
 			chkBox_SetHideToTray.Checked = Settings.GUI.Default.HideToTray;
 			chkBox_SetNotify.Checked = Settings.GUI.Default.UseNotify;
-			chkBox_SetDisableClose.Checked = Settings.GUI.Default.DisableClose;
+			//chkBox_SetDisableClose.Checked = Settings.GUI.Default.DisableClose;
 		}
 
 		private void ChkBox_SetDisableClose_CheckedChanged(object sender, EventArgs e) {
-			Settings.GUI.Default.DisableClose = chkBox_SetDisableClose.Checked;
+			//Settings.GUI.Default.DisableClose = chkBox_SetDisableClose.Checked;
 		}
 
 		private void ChkBox_SetHideToTray_CheckedChanged(object sender, EventArgs e) {

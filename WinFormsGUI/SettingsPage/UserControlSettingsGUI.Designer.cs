@@ -31,6 +31,7 @@
 			// chkBox_SetDisableClose
 			// 
 			chkBox_SetDisableClose.AutoSize = true;
+			chkBox_SetDisableClose.Enabled = false;
 			chkBox_SetDisableClose.ImeMode = ImeMode.NoControl;
 			chkBox_SetDisableClose.Location = new Point(3, 3);
 			chkBox_SetDisableClose.Name = "chkBox_SetDisableClose";
